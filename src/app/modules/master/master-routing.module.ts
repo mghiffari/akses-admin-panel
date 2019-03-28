@@ -4,6 +4,7 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { BannerListComponent } from './pages/banner-list/banner-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
+import { ArticleListComponent } from './pages/article-list/article-list.component';
 
 const routes: Routes = [
   {
@@ -47,7 +48,14 @@ const routes: Routes = [
     data: {
       title: 'Update Banner'
     }
-  }
+  },
+  {
+    path: 'articles',
+    component: ArticleListComponent,
+    data: {
+      title: 'Articles'
+    }
+  },
 ];
 
 @NgModule({

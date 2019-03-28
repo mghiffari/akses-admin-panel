@@ -10,13 +10,16 @@ import { BannerDetailsService } from './pages/banner-details/services/banner-det
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { Ng2ImgToolsModule } from 'ng2-img-tools';
 import { BannerService } from './services/banner.service';
+import { ArticleListComponent } from './pages/article-list/article-list.component';
+import { ArticleService } from './services/article.service';
 
 @NgModule({
   declarations: [
     UserListComponent,
     BannerListComponent,
     UserDetailsComponent,
-    BannerDetailsComponent
+    BannerDetailsComponent,
+    ArticleListComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,8 @@ import { BannerService } from './services/banner.service';
   ],
   providers: [
     BannerDetailsService,
-    BannerService
+    BannerService,
+    ArticleService
   ]
 })
 export class MasterModule { }
