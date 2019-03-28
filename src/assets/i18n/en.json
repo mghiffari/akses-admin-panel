@@ -4,7 +4,8 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banners",
-                "users": "Users"
+                "users": "Users",
+                "articles": "Articles"
             }
         }
     },
@@ -139,6 +140,7 @@
             "active": "active",
             "inactive": "inactive"
         },
+        "uniqueTag": "Unique Tag",
         "bannersTable": {
             "title": "Title",
             "preview": "Preview",
@@ -151,6 +153,10 @@
             "lastName": "Last Name",
             "email": "Email",
             "createdDate": "Created Date"
+        },
+        "articlesTable": {
+            "category": "Category",
+            "title": "Title"
         }
     },
     "bannerListScreen": {
@@ -206,6 +212,12 @@
         "emailNotChangeAble": "Email is not updateable",
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new user"
+    },
+    "articleListScreen": {
+        "title": "Articles Data",
+        "createArticle": "create article",
+        "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
+        "loadFailed": "failed to get list of users"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

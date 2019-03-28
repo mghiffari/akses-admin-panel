@@ -4,7 +4,8 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banner",
-                "users": "User"
+                "users": "User",
+                "articles": "Artikel"
             }
         }
     },
@@ -139,18 +140,23 @@
             "active": "Aktif",
             "inactive": "Non-aktif"
         },
+        "uniqueTag": "Unique Tag",
         "bannersTable": {
             "title": "Judul",
             "preview": "Preview",
             "startDate": "Tanggal Mulai",
             "endDate": "Tanggal Selesai",
-            "order": "Order"
+            "order": "Urutan"
         },
         "userTable": {
             "firstName": "Nama Depan",
             "lastName": "Nama Belakang",
             "email": "Email",
             "createdDate": "Tanggal Dibuat"
+        },
+        "articlesTable": {
+            "category": "Kategori",
+            "title": "Judul"
         }
     },
     "bannerListScreen": {
@@ -206,6 +212,12 @@
         "emailNotChangeAble": "Email tidak dapat diganti",
         "updateFailed": "gagal mengubah data user",
         "createFailed": "gagal membuat user baru"
+    },
+    "articleListScreen": {
+        "title": "Data Artikel",
+        "createArticle": "tambahkan artikel baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus artikel {{title}}?",
+        "loadFailed": "gagal mendapatkan list artikel"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
