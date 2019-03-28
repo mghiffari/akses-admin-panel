@@ -1,0 +1,18 @@
+<div  class="background-success">
+    <div fxLayout="row" style="height: 100%; width: 100%" fxLayoutAlign="center center">
+      <div fxLayoutAlign="center center" class="content" #symbol>
+        <mat-icon color="accent" class="icon-left">done</mat-icon>
+      </div>
+      <div fxFlex="grow" style="height: 100%" [style.min-height]="symbol.offsetHeight + 'px'" fxLayoutAlign="start center" class="background-success-light content">
+        <div fxFlex="column">
+          <mat-icon color="accent" class="close-icon cursor-pointer" (click)="onClose()">clear</mat-icon>
+          <div fxLayout="row" fxLayoutAlign="start center" class="title">
+            {{data.title | translate}}
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" class="description">
+            <span class="description-text">{{data.content.text | translate: data.content.data}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

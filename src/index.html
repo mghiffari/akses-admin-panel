@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>AdiraAksesAdminPanel</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" type="image/png" href="favicon.png"> -->
+  <link rel="icon" type="image/x-icon" href="adiraicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    localStorage.clear()
+    const sessionStorageTransfer = function (event) {
+      console.log('index.html | sessionStorageTransfer')
+      if (!event) { event = window.event; } // for ie
+      if (!event.newValue) return;          // do nothing if no value to work with
+      const storageKey = {
+        syncStorage: "SyncStorage",
+        logout: "Logout",
+        initStorage: "InitSessionStorage"
+      }
+      if (event.key == storageKey.initStorage) {
+        // another tab asked for the sessionStorage -> send it
+        localStorage.setItem(storageKey.syncStorage, JSON.stringify(sessionStorage));
+      } else if (event.key == storageKey.syncStorage) {
+        const data = JSON.parse(event.newValue);
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            console.log(key)
+            sessionStorage.setItem(key, data[key]);
+          }
+        }
+      } else if (event.key == storageKey.logout) {
+        sessionStorage.clear();
+        localStorage.clear();
+      }
+    };
+
+    // listen for changes to localStorage
+    if (window.addEventListener) {
+      window.addEventListener("storage", sessionStorageTransfer, false);
+    } else {
+      window.attachEvent("onstorage", sessionStorageTransfer);
+    };
+
+
+    // Ask other tabs for session storage (this is ONLY to trigger event)
+    localStorage.setItem("InitSessionStorage", (new Date()).toString()) 
+  </script>
+</head>
+
+<body>
+  <app-root></app-root>
+</body>
+
+</html>
+

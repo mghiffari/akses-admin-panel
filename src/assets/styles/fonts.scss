@@ -1,0 +1,33 @@
+$font-sizes: (
+    super-headline: 56px,
+    headline: 32px,
+    sub-headline: 28px,
+    title: 24px,
+    sub-title: 22px,
+    content: 20px,
+    sub-content: 18px,
+    description: 16px,
+    sub-description: 14px,
+    tag: 12px,
+    sub-tag: 10px
+);
+
+$font-families: (
+    roboto: 'Roboto',
+    roboto-bold: 'Roboto-Bold',
+    gotham-bold: 'Gotham-Bold',
+    gotham: 'Gotham',
+    gotham-light: 'Gotham-Light'
+);
+  
+@each $name, $value in $font-families {
+    .font-#{$name} {
+        font-family: $value;
+    }
+}
+
+@each $name, $value in $font-sizes {
+    .font-#{$name} {
+        font-size: $value;
+    }
+}

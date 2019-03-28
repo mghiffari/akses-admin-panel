@@ -1,0 +1,135 @@
+@import '~src/assets/styles/colors';
+@import '~src/assets/styles/fonts';
+
+$black: map-get($colors, black);
+$yellow: map-get($colors, yellow);
+$white: map-get($colors, white);
+$gray: map-get($colors, gray);
+$medium-gray: map-get($colors, medium-gray);
+$light-gray: map-get($colors, light-gray);
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 240px;
+}
+
+.sidenav-bottom {
+  color: $white;
+  position: fixed;
+  bottom: 0;
+} 
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+::ng-deep .nav-panel .mat-expansion-panel-body {
+  padding: 0 !important;
+  background-color: $black;
+  color: $white;
+}
+
+::ng-deep .nav-panel .mat-list-item-content {
+  padding: 0 24px !important;
+  @extend .font-gotham;
+  font-size: 13px;
+  background-color: rgba(160, 160, 160, 0.2);
+  color: $white;
+}
+
+::ng-deep .mat-list-item {
+  height: 40px !important;
+}
+
+::ng-deep .nav-panel .mat-list-item-content:hover {
+  background-color: rgba(160, 160, 160, 0.4);
+}
+
+mat-nav-list {
+  padding: 0 !important;
+}
+
+.mat-expansion-panel {
+  box-shadow: none;
+  border-radius: 0;
+  background-color: $black;
+}
+
+::ng-deep .nav-panel .mat-expansion-indicator:after {
+  color: $white;
+}
+
+.mat-expansion-panel-header-title {
+  color: $white;
+  @extend .font-gotham-light;
+  letter-spacing: 0.15px;
+}
+
+.mat-expansion-panel-header {
+  background: black;
+}
+
+.mat-expansion-panel-header:hover {
+  background-color: rgba(160, 160, 160, 0.4) !important;
+}
+
+.mat-divider {
+  border-top-color:#A9A9A9;
+}
+
+.mat-drawer-container {
+  background-color: $white;
+}
+
+::ng-deep .mat-drawer-inner-container {
+ background-color: $black;
+}
+
+::ng-deep .active-nav .mat-list-item-content {
+  color: $yellow !important;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.name-text {
+font-style: normal;
+font-weight: normal;
+line-height: normal;
+font-size: 12px;
+letter-spacing: 0.4px;
+color: $black;
+}
+
+.role-text {
+  @extend .font-gotham-light;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: $medium-gray;
+}
+
+.profile-circle{
+  background-color: #C4C4C4;
+  border-radius: 50%;
+}
+
+.profile-circle mat-icon{
+  padding-top: 4px;
+  padding-left: 2px;
+  padding-right: 2px;
+  color: #6B6B6B;
+}
+
+mat-toolbar{
+  border-bottom: 1px solid $gray;
+}

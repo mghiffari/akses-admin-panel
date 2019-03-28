@@ -1,0 +1,278 @@
+{
+    "navMenus": {
+        "master": {
+            "title": "Master",
+            "children": {
+                "banners": "Home Banner",
+                "users": "User"
+            }
+        }
+    },
+    "userAction": {
+        "logout": "Logout",
+        "profile": "Profil",
+        "changePassword": "Ubah Password"
+    },
+    "forms": {
+        "email": {
+            "fieldTitle": "Email",
+            "errorRequired": "Email wajib diisi",
+            "errorFormat": "Format Email salah",
+            "errorAdira": "Wajib menggunakan Email Adira",
+            "placeholder": "Email"
+        },
+        "password": {
+            "fieldTitle": "Password",
+            "errorRequired": "Password wajib diisi",
+            "placeholder": "Password"
+        },
+        "oldPassword": {
+            "fieldTitle": "Password Saat Ini",
+            "errorRequired": "Masukkan Password Saat Ini",
+            "placeholder": "Password saat ini"
+        },
+        "newPassword": {
+            "fieldTitle": "Password Baru",
+            "errorRequired": "Masukkan Password Baru",
+            "errorMinLength": "Jumlah karakter minimum untuk Password Baru adalah {{minLength}}",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Password Baru adalah {{maxLength}}",
+            "errorFormat": "Password Baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, dan satu angka",
+            "placeholder": "Password baru"
+        },
+        "confirmPassword": {
+            "fieldTitle": "Konfirmasi Password",
+            "errorMatch": "Password tidak sesuai",
+            "placeholder": "Konfirmasi password"
+        },
+        "recaptcha": {
+            "fieldTitle": "Captcha",
+            "errorRequired": "Captcha wajib diisi",
+            "errorFormat": "Captcha yang Anda masukkan belum sesuai",
+            "placeholder": "Captcha"
+        },
+        "firstName": {
+            "fieldTitle": "Nama Depan",
+            "errorRequired": "Nama Depan wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Nama Depan adalah {{maxLength}}",
+            "errorFormat": "Nama Depan hanya boleh mengandung huruf, spasi, dan karakter sebagai berikut ,.'- tanpa spasi di awal dan akhir huruf",
+            "placeholder": "Nama depan"
+        },
+        "lastName": {
+            "fieldTitle": "Nama Belakang",
+            "errorRequired": "Nama Belakang wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Nama Belakang adalah {{maxLength}}",
+            "errorFormat": "Nama Belakang hanya boleh mengandung huruf, spasi, dan karakter sebagai berikut ,.'- tanpa spasi di awal dan akhir huruf",
+            "placeholder": "Nama belakang"
+        },
+        "bannerTitle": {
+            "fieldTitle": "Judul Home Banner",
+            "errorRequired": "Judul Home Banner wajib diisi",
+            "placeholder": "Judul home banner"
+        },
+        "homeBanner": {
+            "fieldTitle": "Gambar Home Banner",
+            "errorRequired": "Gambar Home Banner wajib diisi",
+            "errorRatio": "Hanya rasio 16:10 yang dapat diupload",
+            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload"
+        },
+        "orderBanner": {
+            "fieldTitle": "Urutan ",
+            "placeholder": "Urutan",
+            "errorRequired": "Urutan wajib diisi"
+        },
+        "startDateBanner": {
+            "fieldTitle": "Tanggal Mulai",
+            "placeholder": "Pilih tanggal mulai",
+            "errorRequired": "Tanggal mulai wajib diisi"
+        },
+        "endDateBanner": {
+            "fieldTitle": "Tanggal Selesai",
+            "placeholder": "Pilih tanggal selesai",
+            "errorRequired": "Tanggal selesai wajib diisi"
+        },
+        "clickableCheck": {
+            "fieldTitle": "Dapat diklik?"
+        },
+        "urlRadioBanner": {
+            "fieldDetailPage": "Detil Halaman",
+            "fieldDescBox": "Deskripsi",
+            "fieldURL": "Pemilihan URL",
+            "fieldModulAccess": "Halaman Aplikasi Akses",
+            "fieldExternalURLAccess": "URL Eksternal",
+            "fieldExternalURLAccessPlaceholder": "Masukkan URL di sini",
+            "errorRequired": "Halaman aplikasi Akses atau pemilihan URL wajib diisi"
+        },
+        "addFooterBanner": {
+            "fieldTitle": "Tambahkan Footer",
+            "footerTextTitle": "Teks",
+            "footerTextPlaceholder": "Masukan teks di sini",
+            "footerImageTitle": "Image",
+            "footerButtonTitle": "Button",
+            "footerButtonPlaceholder": "Masukkan nama tombol di sini",
+            "footerURLTitle": "Masukkan URL Teks"
+        },
+        "buttonText": {
+            "save": "Simpan",
+            "back": "Kembali"
+        }
+    },
+    "loginScreen": {
+        "forgotPassword": "Lupa Password?",
+        "loginFailed": "login gagal",
+        "login": "login",
+        "backToLogin": "kembali ke login",
+        "sendNewPassword": "kirim password baru",
+        "changePassword": "ubah password",
+        "changeYourPassword": "Ubah Password Anda untuk melanjutkan",
+        "forgotYourPassword": "Lupa Password?",
+        "passwordSendToEmail": "password baru sudah dikirim ke email anda",
+        "passwordSendFailed": "gagal reset password",
+        "passwordChanged": "password berhasil diubah, login ulang dengan password baru"
+    },
+    "table": {
+        "noRecordsFound": "Data Kosong",
+        "search": "Cari di sini",
+        "actions": "Actions",
+        "numbers": "No.",
+        "status": {
+            "title": "Status",
+            "active": "Aktif",
+            "inactive": "Non-aktif"
+        },
+        "bannersTable": {
+            "title": "Judul",
+            "preview": "Preview",
+            "startDate": "Tanggal Mulai",
+            "endDate": "Tanggal Selesai",
+            "order": "Order"
+        },
+        "userTable": {
+            "firstName": "Nama Depan",
+            "lastName": "Nama Belakang",
+            "email": "Email",
+            "createdDate": "Tanggal Dibuat"
+        }
+    },
+    "bannerListScreen": {
+        "title": "Data Banner",
+        "createBanner": "Tambahkan home banner",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus home banner {{title}}?",
+        "loadFailed": "Gagal mendapatkan list home banner" 
+    },
+    "bannersDetailScreen": {
+        "createBannerTitle": "Tambahkan Home Banner",
+        "updateBannerTitle": "Ubah Home Banner",
+        "seeBannerList": "Lihat Data Banner",
+        "successCreateBanner": "Berhasil membuat banner baru",
+        "successUpdateBanner": "Berhasil mengubah data banner",
+        "updateFailed": "Gagal mengubah data banner",
+        "createFailed": "Gagal membuat banner baru",
+        "loadFailed": "Gagal mendapatkan data banner",
+        "urlNotValid": "Masukkan URL yang valid"
+    },
+    "changePasswordScreen": {
+        "title": "Ubah Password",
+        "passwordChanged": "password berhasil diubah",
+        "seeMyProfile": "lihat profile saya",
+        "failed": "gagal ubah password"
+    },
+    "dateLocale": "id",
+    "loading": "loading",
+    "save": "simpan",
+    "close": "tutup",
+    "yesContinue": "ya, lanjutkan!",
+    "cancel": "batalkan",
+    "success": "berhasil",
+    "deleteConfirmation": "Konfirmasi Hapus",
+    "dataDeleted": "data berhasil dihapus",
+    "failedToDelete": "gagal menghapus data",
+    "backToList": "kembali ke list",
+    "loggedOutModal": {
+        "title": "Unauthorized",
+        "content": "Login ulang untuk mengakses halaman ini",
+        "button": "OK"
+    },
+    "userListScreen": {
+        "title": "Data User",
+        "createUser": "tambahkan user baru",
+        "loadFailed": "gagal mendapatkan list user"
+    },
+    "userDetailsScreen": {
+        "getUserFailed": "gagal mendapatkan data user",
+        "createTitle": "Tambahkan User Baru",
+        "updateTitle": "Update Data User",
+        "succesCreated": "user baru berhasil ditambahkan",
+        "succesUpdated": "data user berhasil diupdate",
+        "emailNotChangeAble": "Email tidak dapat diganti",
+        "updateFailed": "gagal mengubah data user",
+        "createFailed": "gagal membuat user baru"
+    },
+    "apiErrors": {
+        "noInternet": "tidak ada koneksi internet",
+        "01000": "internal server error",
+        "01001": "email tidak boleh kosong",
+        "01002": "email tidak boleh kosong",
+        "01003": "user tidak ditemukan",
+        "01004": "user tidak aktif",
+        "01005": "password tidak cocok",
+        "01006": "email tidak boleh kosong",
+        "01007": "email gagal dikirim",
+        "01008": "unauthorized",
+        "01009": "format email salah",
+        "01010": "gagal menambah admin baru",
+        "01011": "gagal menambah profil admin",
+        "01012": "gagal menambah profil grup admin",
+        "01013": "error mengambil data login",
+        "01014": "error mengambil akun admin",
+        "01015": "password baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, satu angka, dengan minimal jumlah karakter 8",
+        "01016": "password saat ini salah",
+        "01017": "password gagal diubah",
+        "01018": "account gagal diupdate",
+        "01019": "gagal menambah artikel baru",
+        "01020": "gagal menyimpan artikel",
+        "01021": "artikel tidak ditemukan",
+        "01022": "gagal mengambil artikel",
+        "01023": "update artikel gagal",
+        "01024": "delete artikel gagal",
+        "01025": "gagal menambah home banner baru",
+        "01026": "gagal menyimpan banner",
+        "01027": "banner tidak ditemukan",
+        "01028": "gagal mengambil banner ",
+        "01029": "update banner gagal",
+        "01030": "delete banner gagal",
+        "01031": "masukkan semua parameter",
+        "01032": "gagal menambah cabang baru",
+        "01033": "gagal mengambil cabang",
+        "01034": "update cabang gagal",
+        "01035": "gagal menambah tipe list of value",
+        "01036": "gagal mengabil tipe list of value",
+        "01037": "update tipe list of value gagal",
+        "01038": "delete tipe list of value gagal",
+        "01039": "gagal menambah list of value",
+        "01040": "gagal mengambil list of value",
+        "01041": "update list of value gagal",
+        "01042": "delete list of value gagal",
+        "01043": "nama depan wajib diisi",
+        "01044": "nama belakang wajib diisi",
+        "01045": "password wajib diisi",
+        "01046": "password baru wajib diisi",
+        "01047": "kategori wajib diisi",
+        "01048": "sub kategori wajib diisi",
+        "01049": "judul wajib diisi",
+        "01050": "konten wajib diisi",
+        "01051": "halaman wajib angka",
+        "01052": "id artikel wajib diisi",
+        "01053": "deskripsi harus diisi",
+        "01054": "banner wajib diisi",
+        "01055": "order wajib diisi",
+        "01056": "tanggal mulai wajib diisi",
+        "01057": "tanggal selesai wajib diisi",
+        "01058": "id banner wajib diisi",
+        "01059": "gagal mengambil gambar banner",
+        "01060": "upload file gagal",
+        "01061": "upload file gagal, koneksi gagal!",
+        "01062": "akses token tidak boleh kosong",
+        "01063": "invalid akses token",
+        "01064": "file tidak boleh kosong"
+    }
+}

@@ -1,0 +1,278 @@
+{
+    "navMenus": {
+        "master": {
+            "title": "Master",
+            "children": {
+                "banners": "Home Banners",
+                "users": "Users"
+            }
+        }
+    },
+    "userAction": {
+        "logout": "Logout",
+        "profile": "Profile",
+        "changePassword": "Change Password"
+    },
+    "forms": {
+        "email": {
+            "fieldTitle": "Email",
+            "errorRequired": "Email is required",
+            "errorFormat": "Email is invalid",
+            "errorAdira": "Must be an adira email",
+            "placeholder": "Email"
+        },
+        "password": {
+            "fieldTitle": "Password",
+            "errorRequired": "Password is required",
+            "placeholder": "Password"
+        },
+        "oldPassword": {
+            "fieldTitle": "Old Password",
+            "errorRequired": "Old Password is required",
+            "placeholder": "Old password"
+        },
+        "newPassword": {
+            "fieldTitle": "New Password",
+            "errorRequired": "New Password is required",
+            "errorMinLength": "Min. length of New Password is {{minLength}}",
+            "errorMaxLength": "Max. length of New Password is {{maxLength}}",
+            "errorFormat": "New Password should contain at least one uppercase one lowercase and one number",
+            "placeholder": "New password"
+        },
+        "confirmPassword": {
+            "fieldTitle": "Confirm Password",
+            "errorMatch": "Password not match",
+            "placeholder": "Confirm password"
+        },
+        "recaptcha": {
+            "fieldTitle": "Captcha",
+            "errorRequired": "Captcha is required",
+            "errorFormat": "Captcha is wrong",
+            "placeholder": "Captcha"
+        },
+        "firstName": {
+            "fieldTitle": "First Name",
+            "errorRequired": "First Name is required",
+            "errorMaxLength": "Max. length of First Name is {{maxLength}}",
+            "errorFormat": "First Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
+            "placeholder": "First name"
+        },
+        "lastName": {
+            "fieldTitle": "Last Name",
+            "errorRequired": "Lastname is required",
+            "errorMaxLength": "Max. length of Last Name is {{maxLength}}",
+            "errorFormat": "Last Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
+            "placeholder": "Last name"
+        },
+        "bannerTitle": {
+            "fieldTitle": "Home Banner Title",
+            "errorRequired": "Home Banner Title is required",
+            "placeholder": "Home banner title"
+        },
+        "homeBanner": {
+            "fieldTitle": "Home Banner Picture",
+            "errorRequired": "Home Banner Picture is required",
+            "errorRatio": "Only 16:10 size ratio is valid.",
+            "errorType": "Only .jpg, .jpeg and .png format are supported"
+        },
+        "orderBanner": {
+            "fieldTitle": "Order",
+            "placeholder": "Order",
+            "errorRequired": "Order is required"
+        },
+        "startDateBanner": {
+            "fieldTitle": "Start Date",
+            "placeholder": "Choose start date",
+            "errorRequired": "Start Date is required"
+        },
+        "endDateBanner": {
+            "fieldTitle": "End Date",
+            "placeholder": "Choose end date",
+            "errorRequired": "End Date is required"
+        },
+        "clickableCheck": {
+            "fieldTitle": "Clickable?"
+        },
+        "urlRadioBanner": {
+            "fieldDetailPage": "Page Detail",
+            "fieldDescBox": "Description",
+            "fieldURL": "URL Option",
+            "fieldModulAccess": "Akses Page",
+            "fieldExternalURLAccess": "External URL",
+            "fieldEcternalURLAccessPlaceholder": "Input URL here",
+            "errorRequired": "Detail Page or URL is required"
+        },
+        "addFooterBanner": {
+            "fieldTitle": "Add Footer",
+            "footerTextTitle": "Text",
+            "footerTextPlaceholder": "Input name of text here",
+            "footerImageTitle": "Image",
+            "footerButtonTitle": "Button",
+            "footerButtonPlaceholder": "Input name of button here",
+            "footerURLTitle": "Input URL Text"
+        },
+        "buttonText": {
+            "save": "Save",
+            "back": "Back"
+        }
+    },
+    "loginScreen": {
+        "forgotPassword": "Forgot Password?",
+        "loginFailed": "login failed",
+        "login": "login",
+        "backToLogin": "back to login",
+        "sendNewPassword": "send new password",
+        "changePassword": "change password",
+        "changeYourPassword": "Change Your Password to Continue",
+        "forgotYourPassword": "Forgot Your Password?",
+        "passwordSendToEmail": "New password was sent to your email",
+        "passwordSendFailed": "reset password failed",
+        "passwordChanged": "password successfully changed, relogin with the new password"
+    },
+    "table": {
+        "noRecordsFound": "No Records Found",
+        "search": "search",
+        "actions": "Actions",
+        "numbers": "No.",
+        "status": {
+            "title": "Status",
+            "active": "active",
+            "inactive": "inactive"
+        },
+        "bannersTable": {
+            "title": "Title",
+            "preview": "Preview",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "order": "Order"
+        },
+        "userTable": {
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "createdDate": "Created Date"
+        }
+    },
+    "bannerListScreen": {
+        "title": "Banners Data",
+        "createBanner": "create banner",
+        "deleteConfirmation": "Are you sure you want to delete home banner {{title}}?",
+        "loadFailed": "failed to load home banner list"
+    },
+    "bannersDetailScreen": {
+        "createBannerTitle": "Add Home Banner",
+        "updateBannerTitle": "Update Home Banner",
+        "seeBannerList": "See Banner List",
+        "successCreateBanner": "Banner successfully created",
+        "successUpdateBanner": "Banner successfully updated",
+        "updateFailed": "Failed to Update Banner",
+        "createFailed": "Failed to Create Banner",
+        "loadFailed": "Failed to load data Banner",
+        "urlNotValid": "Input URL is not valid"
+    },
+    "changePasswordScreen": {
+        "title": "Change Password",
+        "passwordChanged": "password successfully changed",
+        "seeMyProfile": "ee my profile",
+        "failed": "change password failed"
+    },
+    "dateLocale": "en-US",
+    "loading": "loading",
+    "save": "save",
+    "close": "close",
+    "yesContinue": "yes, continue!",
+    "cancel": "cancel",
+    "success": "success",
+    "deleteConfirmation": "Delete Confirmation",
+    "dataDeleted": "data deleted",
+    "failedToDelete": "delete failed",
+    "backToList": "back to list",
+    "loggedOutModal": {
+        "title": "You're unauthorized to access this page",
+        "content": "Please re-login to access this page",
+        "button": "OK"
+    },
+    "userListScreen": {
+        "title": "Users Data",
+        "createUser": "create user",
+        "loadFailed": "failed to get list of users"
+    },
+    "userDetailsScreen": {
+        "getUserFailed": "failed to get user data",
+        "createTitle": "Create New User",
+        "updateTitle": "Update User Data",
+        "succesCreated": "new user successfully created",
+        "succesUpdated": "user data successfully updated",
+        "emailNotChangeAble": "Email is not updateable",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new user"
+    },
+    "apiErrors": {
+        "noInternet": "no internet connection",
+        "01000": "internal server error",
+        "01001": "email can not be empty",
+        "01002": "password can not be empty",
+        "01003": "user not found",
+        "01004": "user is not active",
+        "01005": "password not match",
+        "01006": "missing input email account",
+        "01007": "failed to send email",
+        "01008": "unauthorized",
+        "01009": "invalid email format",
+        "01010": "failed to create new admin",
+        "01011": "failed to create admin profile",
+        "01012": "failed to create admin profile group",
+        "01013": "error get login data",
+        "01014": "error get admin account",
+        "01015": "password must be alphanumeric, one uppercase, and minimal 8 letters",
+        "01016": "wrong old password",
+        "01017": "failed to change password",
+        "01018": "failed to update account",
+        "01019": "failed to create new article record",
+        "01020": "failed to save article record",
+        "01021": "failed to retrieve article, article not found",
+        "01022": "failed to get article",
+        "01023": "failed to update article",
+        "01024": "failed to delete article",
+        "01025": "failed to create new home banner",
+        "01026": "failed to save home banner",
+        "01027": "failed to get home banner, banner not found",
+        "01028": "failed to get banner",
+        "01029": "failed to update banner",
+        "01030": "failed to delete banner",
+        "01031": "please input all parameters",
+        "01032": "failed to create branch",
+        "01033": "failed to get branch",
+        "01034": "failed to update branch",
+        "01035": "failed to create list of value type",
+        "01036": "failed to get list of value type",
+        "01037": "failed to update list of value type",
+        "01038": "failed to delete list of value type",
+        "01039": "failed to create list of value",
+        "01040": "failed to get list of value",
+        "01041": "failed to update list of value",
+        "01042": "failed to delete list of value",
+        "01043": "missing firstname parameter",
+        "01044": "missing lastname parameter",
+        "01045": "missing password parameter",
+        "01046": "missing new password parameter",
+        "01047": "missing category parameter",
+        "01048": "missing subcategory parameter",
+        "01049": "missing title parameter",
+        "01050": "missing content parameter",
+        "01051": "page must be a number",
+        "01052": "missing article id parameter",
+        "01053": "missing description parameter",
+        "01054": "missing banner parameter",
+        "01055": "missing order parameter",
+        "01056": "missing start date parameter",
+        "01057": "missing end date parameter",
+        "01058": "missing banner id parameter",
+        "01059": "failed to get banner image",
+        "01060": "failed to upload file",
+        "01061": "failed to upload file, connection timeout!",
+        "01062": "no access token provided",
+        "01063": "invalid access token",
+        "01064": "file can not be empty"
+    }
+}

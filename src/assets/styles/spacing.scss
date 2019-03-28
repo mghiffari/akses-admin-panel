@@ -1,0 +1,106 @@
+$sizes: (
+    56: 56px,
+    32: 32px,
+    28: 28px,
+    24: 24px,
+    22: 22px,
+    20: 20px,
+    18: 18px,
+    16: 16px,
+    14: 14px,
+    12: 12px,
+    10: 10px,
+    5: 5px
+);
+
+@each $name, $value in $sizes {
+    .padding-#{$name} {
+        padding: $value;
+    }
+
+    .padding-top-#{$name} {
+        padding-top: $value;
+    }
+
+    .padding-bottom-#{$name} {
+        padding-bottom: $value;
+    }
+
+    .padding-left-#{$name} {
+        padding-left: $value;
+    }
+
+    .padding-right-#{$name} {
+        padding-right: $value;
+    }
+
+    .margin-#{$name} {
+        margin: $value;
+    }
+
+    .margin-top-#{$name} {
+        margin-top: $value;
+    }
+
+    .margin-bottom-#{$name} {
+        margin-bottom: $value;
+    }
+
+    .margin-left-#{$name} {
+        margin-left: $value;
+    }
+
+    .margin-right-#{$name} {
+        margin-right: $value;
+    }
+
+    .padding-#{$name}-important {
+        padding: $value !important;
+    }
+
+    .padding-top-#{$name}-important {
+        padding-top: $value !important;
+    }
+
+    .padding-bottom-#{$name}-important {
+        padding-bottom: $value !important;
+    }
+
+    .padding-left-#{$name}-important {
+        padding-left: $value !important;
+    }
+
+    .padding-right-#{$name}-important {
+        padding-right: $value !important;
+    }
+
+    .margin-#{$name}-important {
+        margin: $value !important;
+    }
+
+    .margin-top-#{$name}-important {
+        margin-top: $value !important;
+    }
+
+    .margin-bottom-#{$name}-important {
+        margin-bottom: $value !important;
+    }
+
+    .margin-left-#{$name}-important {
+        margin-left: $value !important;
+    }
+
+    .margin-right-#{$name}-important {
+        margin-right: $value !important;
+    }
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+

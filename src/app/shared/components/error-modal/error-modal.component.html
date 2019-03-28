@@ -1,0 +1,15 @@
+<div fxLayout="column" style="height: 100%">
+  <div mat-dialog-title class="text-center font-gotham-bold">
+    <h3>{{'loggedOutModal.title' | translate}}</h3>
+  </div>
+  <div mat-dialog-content fxFlex="grow">
+    <div style="height: 100; width: 100%">
+      <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%" class="text-center text-gray">
+        <div>{{'loggedOutModal.content' | translate}}</div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+      <button mat-raised-button color="primary" [mat-dialog-close]="" block-button >{{'loggedOutModal.button' | translate}}</button>
+  </div>
+</div>

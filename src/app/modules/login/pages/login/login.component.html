@@ -1,0 +1,184 @@
+<div style="min-height: 100%; padding: 24px 0" fxLayout="row" fxLayoutAlign="center center">
+  <div #container style="width: 250px; max-width: 100%">
+    <div fxLayout="row" fxLayoutAlign="center center" [style.height]="container.offsetWidth + 'px'" class="bg-yellow-adira">
+      <img width="80%" src="./../../../../assets/img/Logo.Adira.svg">
+    </div>
+    <form [formGroup]="authForm" *ngIf="mode === 'login'" #loginFormDirective="ngForm">
+      <div fxLayout="row" class="margin-top-20">
+        {{'forms.email.fieldTitle' | translate}}
+      </div>
+      <div fxLayout="row" class="margin-top-10">
+        <div fxFlex="100%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.email.placeholder' | translate}}" type="email"
+              formControlName="email">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <span *ngIf="email.errors.required">{{'forms.email.errorRequired' | translate}}</span>
+            <span *ngIf="email.errors.email">{{'forms.email.errorFormat' | translate}}</span>
+            <span
+              *ngIf="email.errors.adiraEmail && !email.errors.email && !email.errors.required">{{'forms.email.errorAdira' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxLayout="row" class="margin-top-20">
+        {{'forms.password.fieldTitle' | translate}}
+      </div>
+      <div fxLayout="row" class="margin-top-10">
+        <div fxFlex="100%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.password.placeholder' | translate}}" type="password"
+              formControlName="password">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="password.invalid && (password.dirty || password.touched)">
+            <span *ngIf="password.errors.required">{{'forms.password.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <ng-container *ngIf="wrongPasswordCount >= 3">
+        <div fxLayout="row" class="margin-top-20">
+          {{'forms.recaptcha.fieldTitle' | translate}}
+        </div>
+        <div fxLayout="row" class="margin-top-10">
+          <div fxFlex="100%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.recaptcha.placeholder' | translate}}" formControlName="recaptcha">
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)">
+              <span *ngIf="recaptcha.errors.required">{{'forms.recaptcha.errorRequired' | translate}}</span>
+              <span *ngIf="recaptcha.errors.equal && !recaptcha.errors.required">{{'forms.recaptcha.errorFormat' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div #canvasContainerDiv fxLayout="row" class="margin-top-10" id="canvas-container">
+          <canvas #captchaCanvas height="50px" [width]="canvasContainerDiv.offsetWidth ">
+
+          </canvas>
+        </div>
+      </ng-container>
+      <div fxLayout="row" class="margin-top-10" *ngIf="!onSubmittingForm">
+        <a class="link-purple cursor-pointer" (click)="goToResetPasswordForm()">{{'loginScreen.forgotPassword' | translate}}</a>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end center" class="margin-top-20">
+        <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="!authForm.valid"
+          *ngIf="!onSubmittingForm">{{'loginScreen.login' | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+    </form>
+    <form [formGroup]="changePasswordForm" *ngIf="mode === 'changePassword'" #changeFormDirective="ngForm">
+      <div fxLayout="row" class="margin-top-20">
+        <h2>{{'loginScreen.changeYourPassword' | translate}}</h2>
+      </div>
+      <div fxLayout="row" class="margin-top-20">
+        {{'forms.oldPassword.fieldTitle' | translate}}
+      </div>
+      <div fxLayout="row" class="margin-top-10">
+        <div fxFlex="100%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.oldPassword.placeholder' | translate}}" type="password"
+              formControlName="oldPassword">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="oldPassword.invalid && (oldPassword.dirty || oldPassword.touched)">
+            <span *ngIf="oldPassword.errors.required">{{'forms.oldPassword.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxLayout="row" class="margin-top-20">
+        {{'forms.newPassword.fieldTitle' | translate}}
+      </div>
+      <div fxLayout="row" class="margin-top-10">
+        <div fxFlex="100%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.newPassword.placeholder' | translate}}" type="password"
+              formControlName="newPassword">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)">
+            <span *ngIf="newPassword.errors.required">{{'forms.newPassword.errorRequired' | translate}}</span>
+            <span
+              *ngIf="newPassword.errors.minlength && !newPassword.errors.pattern">{{'forms.newPassword.errorMinLength' | translate: passwordLength }}</span>
+            <span
+              *ngIf="newPassword.errors.maxlength && !newPassword.errors.pattern">{{'forms.newPassword.errorMaxLength' | translate: passwordLength }}</span>
+            <span *ngIf="newPassword.errors.pattern">{{'forms.newPassword.errorFormat' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxLayout="row" class="margin-top-20">
+        {{'forms.confirmPassword.fieldTitle' | translate}}
+      </div>
+      <div fxLayout="row" class="margin-top-10">
+        <div fxFlex="100%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.confirmPassword.placeholder' | translate}}" type="password"
+              formControlName="confirmPassword">
+          </mat-form-field>
+          <mat-error class="bottom-error"
+            *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+            <span *ngIf="confirmPassword.errors.matchPassword">{{'forms.confirmPassword.errorMatch' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end center" class="margin-top-20">
+        <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="changePassword()"
+          [disabled]="!changePasswordForm.valid" block-button>{{'loginScreen.changePassword' | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm" block-button>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+    </form>
+    <form [formGroup]="resetPasswordForm" *ngIf="mode === 'resetPassword'" #restFormDirective="ngForm">
+      <div fxLayout="row" class="pointer margin-top-20">
+        <h2>{{'loginScreen.forgotYourPassword' | translate}}</h2>
+      </div>
+      <div fxLayout="row">
+        {{'forms.email.fieldTitle' | translate}}
+      </div>
+      <div fxLayout="row" class="margin-top-10">
+        <div fxFlex="100%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="Email" type="{{'forms.email.placeholder' | translate}}"
+              formControlName="email">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <span *ngIf="email.errors.required">{{'forms.email.errorRequired' | translate}}</span>
+            <span *ngIf="email.errors.email">{{'forms.email.errorFormat' | translate}}</span>
+            <span
+              *ngIf="email.errors.adiraEmail && !email.errors.email && !email.errors.required">{{'forms.email.errorAdira' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="center center" class="margin-top-20">
+        <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="sendNewPassword()"
+          [disabled]="!resetPasswordForm.valid" block-button>{{'loginScreen.sendNewPassword' | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm" block-button>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="center center" class="margin-top-5" *ngIf="!onSubmittingForm">
+        <button mat-raised-button color="accent" (click)="goToLoginForm()"
+          block-button>{{'loginScreen.backToLogin' | translate}}</button>
+      </div>
+    </form>
+    <div fxLayout="row" fxLayoutAlign="center center" class="padding-top-20">
+      <div class="font-tag">version: {{versionNo}} ({{versionDate | date: 'MMM, dd yyyy' : undefined : dateLocale }})</div>
+    </div>
+    
+  </div>
+
+</div>

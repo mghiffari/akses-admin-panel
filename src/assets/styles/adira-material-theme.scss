@@ -1,0 +1,317 @@
+@import '~@angular/material/theming';
+@import './colors';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$adira-primary-pallete: (
+    50: map-get($colors, purple),
+    100: map-get($colors, purple),
+    200: map-get($colors, purple),
+    300: map-get($colors, purple),
+    400: map-get($colors, purple),
+    500: map-get($colors, purple),
+    600: map-get($colors, purple),
+    700: map-get($colors, purple),
+    800: map-get($colors, purple),
+    900: map-get($colors, purple),
+    A100: map-get($colors, purple),
+    A200: map-get($colors, purple),
+    A400: map-get($colors, purple),
+    A700: map-get($colors, purple),
+    contrast: (
+        50: map-get($colors, white),
+        100: map-get($colors, white),
+        200: map-get($colors, white),
+        300: map-get($colors, white),
+        400: map-get($colors, white),
+        500: map-get($colors, white),
+        600: map-get($colors, white),
+        700: map-get($colors, white),
+        800: map-get($colors, white),
+        900: map-get($colors, white),
+        A100: map-get($colors, white),
+        A200: map-get($colors, white),
+        A400: map-get($colors, white),
+        A700: map-get($colors, white),
+    )
+);
+
+$adira-accent-pallete: (
+    50: map-get($colors, white),
+    100: map-get($colors, white),
+    200: map-get($colors, white),
+    300: map-get($colors, white),
+    400: map-get($colors, white),
+    500: map-get($colors, white),
+    600: map-get($colors, white),
+    700: map-get($colors, white),
+    800: map-get($colors, white),
+    900: map-get($colors, white),
+    A100: map-get($colors, white),
+    A200: map-get($colors, white),
+    A400: map-get($colors, white),
+    A700: map-get($colors, white),
+    contrast: (
+        50: map-get($colors, purple),
+        100: map-get($colors, purple),
+        200: map-get($colors, purple),
+        300: map-get($colors, purple),
+        400: map-get($colors, purple),
+        500: map-get($colors, purple),
+        600: map-get($colors, purple),
+        700: map-get($colors, purple),
+        800: map-get($colors, purple),
+        900: map-get($colors, purple),
+        A100: map-get($colors, purple),
+        A200: map-get($colors, purple),
+        A400: map-get($colors, purple),
+        A700: map-get($colors, purple),
+    )
+);
+
+$adira-app-primary: mat-palette($adira-primary-pallete);
+$adira-app-accent:  mat-palette($adira-accent-pallete, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$adira-app-warn:    mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$adira-app-theme: mat-light-theme($adira-app-primary, $adira-app-accent, $adira-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($adira-app-theme);
+.adira-purple-theme{
+    @include angular-material-theme($adira-app-theme);  
+}
+
+$adira-yellow-primary-pallete: (
+    50: map-get($colors, yellow),
+    100: map-get($colors, yellow),
+    200: map-get($colors, yellow),
+    300: map-get($colors, yellow),
+    400: map-get($colors, yellow),
+    500: map-get($colors, yellow),
+    600: map-get($colors, yellow),
+    700: map-get($colors, yellow),
+    800: map-get($colors, yellow),
+    900: map-get($colors, yellow),
+    A100: map-get($colors, yellow),
+    A200: map-get($colors, yellow),
+    A400: map-get($colors, yellow),
+    A700: map-get($colors, yellow),
+    contrast: (
+        50: map-get($colors, black),
+        100: map-get($colors, black),
+        200: map-get($colors, black),
+        300: map-get($colors, black),
+        400: map-get($colors, black),
+        500: map-get($colors, black),
+        600: map-get($colors, black),
+        700: map-get($colors, black),
+        800: map-get($colors, black),
+        900: map-get($colors, black),
+        A100: map-get($colors, black),
+        A200: map-get($colors, black),
+        A400: map-get($colors, black),
+        A700: map-get($colors, black),
+    )
+);
+
+$adira-yellow-accent-pallete: (
+    50: map-get($colors, black),
+    100: map-get($colors, black),
+    200: map-get($colors, black),
+    300: map-get($colors, black),
+    400: map-get($colors, black),
+    500: map-get($colors, black),
+    600: map-get($colors, black),
+    700: map-get($colors, black),
+    800: map-get($colors, black),
+    900: map-get($colors, black),
+    A100: map-get($colors, black),
+    A200: map-get($colors, black),
+    A400: map-get($colors, black),
+    A700: map-get($colors, black),
+    contrast: (
+        50: map-get($colors, yellow),
+        100: map-get($colors, yellow),
+        200: map-get($colors, yellow),
+        300: map-get($colors, yellow),
+        400: map-get($colors, yellow),
+        500: map-get($colors, yellow),
+        600: map-get($colors, yellow),
+        700: map-get($colors, yellow),
+        800: map-get($colors, yellow),
+        900: map-get($colors, yellow),
+        A100: map-get($colors, yellow),
+        A200: map-get($colors, yellow),
+        A400: map-get($colors, yellow),
+        A700: map-get($colors, yellow),
+    )
+);
+$adira-yellow-primary: mat-palette($adira-yellow-primary-pallete);
+$adira-yellow-accent:  mat-palette($adira-yellow-accent-pallete, A200, A100, A400);
+$adira-yellow-warn:    mat-palette($mat-red);
+$adira-yellow-theme:   mat-light-theme($adira-yellow-primary, $adira-yellow-accent, $adira-yellow-warn);
+
+.adira-yellow-theme {
+  @include angular-material-theme($adira-yellow-theme);
+}
+
+$adira-dark-primary-pallete: (
+    50: map-get($colors, black),
+    100: map-get($colors, black),
+    200: map-get($colors, black),
+    300: map-get($colors, black),
+    400: map-get($colors, black),
+    500: map-get($colors, black),
+    600: map-get($colors, black),
+    700: map-get($colors, black),
+    800: map-get($colors, black),
+    900: map-get($colors, black),
+    A100: map-get($colors, black),
+    A200: map-get($colors, black),
+    A400: map-get($colors, black),
+    A700: map-get($colors, black),
+    contrast: (
+        50: map-get($colors, white),
+        100: map-get($colors, white),
+        200: map-get($colors, white),
+        300: map-get($colors, white),
+        400: map-get($colors, white),
+        500: map-get($colors, white),
+        600: map-get($colors, white),
+        700: map-get($colors, white),
+        800: map-get($colors, white),
+        900: map-get($colors, white),
+        A100: map-get($colors, white),
+        A200: map-get($colors, white),
+        A400: map-get($colors, white),
+        A700: map-get($colors, white),
+    )
+);
+
+$adira-dark-accent-pallete: (
+    50: map-get($colors, white),
+    100: map-get($colors, white),
+    200: map-get($colors, white),
+    300: map-get($colors, white),
+    400: map-get($colors, white),
+    500: map-get($colors, white),
+    600: map-get($colors, white),
+    700: map-get($colors, white),
+    800: map-get($colors, white),
+    900: map-get($colors, white),
+    A100: map-get($colors, white),
+    A200: map-get($colors, white),
+    A400: map-get($colors, white),
+    A700: map-get($colors, white),
+    contrast: (
+        50: map-get($colors, black),
+        100: map-get($colors, black),
+        200: map-get($colors, black),
+        300: map-get($colors, black),
+        400: map-get($colors, black),
+        500: map-get($colors, black),
+        600: map-get($colors, black),
+        700: map-get($colors, black),
+        800: map-get($colors, black),
+        900: map-get($colors, black),
+        A100: map-get($colors, black),
+        A200: map-get($colors, black),
+        A400: map-get($colors, black),
+        A700: map-get($colors, black),
+    )
+);
+// Define an alternate dark theme.
+$adira-dark-primary: mat-palette($adira-dark-primary-pallete);
+$adira-dark-accent:  mat-palette($adira-dark-accent-pallete, A200, A100, A400);
+$adira-dark-warn:    mat-palette($mat-red);
+$adira-dark-theme:   mat-dark-theme($adira-dark-primary, $adira-dark-accent, $adira-dark-warn);
+
+.adira-dark-theme {
+  @include angular-material-theme($adira-dark-theme);
+}
+
+$success-error-primary-pallete: (
+    50: map-get($colors, success-green),
+    100: map-get($colors, success-green),
+    200: map-get($colors, success-green),
+    300: map-get($colors, success-green),
+    400: map-get($colors, success-green),
+    500: map-get($colors, success-green),
+    600: map-get($colors, success-green),
+    700: map-get($colors, success-green),
+    800: map-get($colors, success-green),
+    900: map-get($colors, success-green),
+    A100: map-get($colors, success-green),
+    A200: map-get($colors, success-green),
+    A400: map-get($colors, success-green),
+    A700: map-get($colors, success-green),
+    contrast: (
+        50: map-get($colors, white),
+        100: map-get($colors, white),
+        200: map-get($colors, white),
+        300: map-get($colors, white),
+        400: map-get($colors, white),
+        500: map-get($colors, white),
+        600: map-get($colors, white),
+        700: map-get($colors, white),
+        800: map-get($colors, white),
+        900: map-get($colors, white),
+        A100: map-get($colors, white),
+        A200: map-get($colors, white),
+        A400: map-get($colors, white),
+        A700: map-get($colors, white),
+    )
+);
+
+$success-error-accent-pallete: (
+    50: map-get($colors, danger-red),
+    100: map-get($colors, danger-red),
+    200: map-get($colors, danger-red),
+    300: map-get($colors, danger-red),
+    400: map-get($colors, danger-red),
+    500: map-get($colors, danger-red),
+    600: map-get($colors, danger-red),
+    700: map-get($colors, danger-red),
+    800: map-get($colors, danger-red),
+    900: map-get($colors, danger-red),
+    A100: map-get($colors, danger-red),
+    A200: map-get($colors, danger-red),
+    A400: map-get($colors, danger-red),
+    A700: map-get($colors, danger-red),
+    contrast: (
+        50: map-get($colors, white),
+        100: map-get($colors, white),
+        200: map-get($colors, white),
+        300: map-get($colors, white),
+        400: map-get($colors, white),
+        500: map-get($colors, white),
+        600: map-get($colors, white),
+        700: map-get($colors, white),
+        800: map-get($colors, white),
+        900: map-get($colors, white),
+        A100: map-get($colors, white),
+        A200: map-get($colors, white),
+        A400: map-get($colors, white),
+        A700: map-get($colors, white),
+    )
+);
+$success-error-primary: mat-palette($success-error-primary-pallete);
+$success-error-accent:  mat-palette($success-error-accent-pallete, A200, A100, A400);
+$success-error-warn:    mat-palette($mat-red);
+$success-error-theme:   mat-dark-theme($success-error-primary, $adira-dark-accent, $adira-dark-warn);
+
+.success-error-theme {
+    @include angular-material-theme($success-error-theme);
+}
