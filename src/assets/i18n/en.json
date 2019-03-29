@@ -113,6 +113,26 @@
             "footerButtonPlaceholder": "Input name of button here",
             "footerURLTitle": "Input URL Text"
         },
+        "articleTitle": {
+            "fieldTitle": "Article Title",
+            "errorRequired": "Article Title is required",
+            "placeholder": "Article title"
+        },
+        "articlePicture": {
+            "fieldTitle": "Article Picture",
+            "errorRequired": "Article Picture is required",
+            "errorType": "Only .jpg, .jpeg and .png format are supported"
+        },
+        "uniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "errorRequired": "Unique Tag is required",
+            "placeholder": "Unique Tag"
+        },
+        "category": {
+            "fieldTitle": "Category",
+            "errorRequired": "Category is required",
+            "placeholder": "Category"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -224,6 +244,17 @@
         "loadFailed": "failed to get list of FAQ",
         "removeBookmark": "click to remove from bookmark",
         "addBookmark": "click to add to bookmark"
+    },
+    "articleDetailsScreen": {
+        "createArticleTitle": "Create New Article",
+        "updateArticleTitle": "Update Article",
+        "seeArticleList": "See Article List",
+        "successCreateArticle": "Article successfully created",
+        "successUpdateArticle": "Banner successfully updated",
+        "updateFailed": "Failed to Update Article",
+        "createFailed": "Failed to Create Article",
+        "loadFailed": "Failed to load article data",
+        "urlNotValid": "Input URL is not valid"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
