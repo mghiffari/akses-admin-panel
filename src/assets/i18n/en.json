@@ -225,6 +225,15 @@
         "removeBookmark": "click to remove from bookmark",
         "addBookmark": "click to add to bookmark"
     },
+    "faqDetailsScreen": {
+        "getFaqFailed": "failed to get FAQ data",
+        "createTitle": "Create New FAQ",
+        "updateTitle": "Update FAQ",
+        "succesCreated": "new FAQ successfully created",
+        "succesUpdated": "FAQ data successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new FAQ"
+    },
     "apiErrors": {
         "noInternet": "no internet connection",
         "01000": "internal server error",

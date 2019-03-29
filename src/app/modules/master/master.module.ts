@@ -14,6 +14,7 @@ import { ArticleListComponent } from './pages/article-list/article-list.componen
 import { ArticleService } from './services/article.service';
 import { FAQListComponent } from './pages/faq-list/faq-list.component';
 import { FAQService } from './services/faq.service';
+import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { FAQService } from './services/faq.service';
     UserDetailsComponent,
     BannerDetailsComponent,
     ArticleListComponent,
-    FAQListComponent
+    FAQListComponent,
+    FAQDetailsComponent
   ],
   imports: [
     CommonModule,

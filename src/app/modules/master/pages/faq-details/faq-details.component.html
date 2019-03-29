@@ -1,0 +1,97 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div class="adira-dark-theme" fxLayout="row">
+    <mat-toolbar color="accent" class="page-title">
+      <span *ngIf="isCreate">{{'faqDetailsScreen.createTitle' | translate}}</span>
+      <span *ngIf="!isCreate">{{'faqDetailsScreen.updateTitle' | translate}}</span>
+    </mat-toolbar>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
+    <div fxFlex="100%">
+      <a class="top-action-text" routerLink="/master/faqs" fxLayoutAlign="start center">
+        <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
+        <div>
+          {{'backToList' | translate}}
+        </div>
+      </a>
+    </div>
+  </div>
+  <form [formGroup]="faqForm" *ngIf="!loading">
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.firstName.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput placeholder="{{'forms.firstName.placeholder' | translate}}" formControlName="firstName">
+        </mat-form-field>
+        <mat-error class="bottom-error" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+          <span *ngIf="firstName.errors.required">{{'forms.firstName.errorRequired' | translate}}</span>
+          <span *ngIf="firstName.errors.maxlength">{{'forms.firstName.errorMaxLength' | translate: maxLength }}</span>
+          <span
+            *ngIf="firstName.errors.internationalname && !firstName.errors.required">{{'forms.firstName.errorFormat' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div fxLayout="row" class="border-bottom-gray padding-16">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.lastName.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput placeholder="{{'forms.lastName.placeholder' | translate}}" formControlName="lastName">
+        </mat-form-field>
+        <mat-error class="bottom-error" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+          <span *ngIf="lastName.errors.required">{{'forms.lastName.errorRequired' | translate}}</span>
+          <span *ngIf="lastName.errors.maxlength">{{'forms.lastName.errorMaxLength' | translate: maxLength }}</span>
+          <span
+            *ngIf="lastName.errors.internationalname && !firstName.errors.required">{{'forms.lastName.errorFormat' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.email.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput 
+          placeholder="{{'forms.email.placeholder' | translate}}" 
+          type="email" 
+          formControlName="email">
+        </mat-form-field>
+        <mat-hint class="bottom-hint" *ngIf="!email.invalid || (!email.dirty && !email.touched)">
+          {{'userDetailsScreen.emailNotChangeAble' | translate}}</mat-hint>
+        <mat-error class="bottom-error" *ngIf="email.invalid && (email.dirty || email.touched)">
+          <span *ngIf="email.errors.required">{{'forms.email.errorRequired' | translate}}</span>
+          <span *ngIf="email.errors.email">{{'forms.email.errorFormat' | translate}}</span>
+          <span
+            *ngIf="email.errors.adiraEmail && !email.errors.email && !email.errors.required">{{'forms.email.errorAdira' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+      </div>
+      <div fxFlex="25%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%" fxLayoutAlign="start center">
+        <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"
+          [disabled]="!userForm.valid">{{'save' | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+</div>

@@ -204,7 +204,7 @@
     "userDetailsScreen": {
         "getUserFailed": "gagal mendapatkan data user",
         "createTitle": "Tambahkan User Baru",
-        "updateTitle": "Update Data User",
+        "updateTitle": "Ubah Data User",
         "succesCreated": "user baru berhasil ditambahkan",
         "succesUpdated": "data user berhasil diupdate",
         "emailNotChangeAble": "Email tidak dapat diganti",
@@ -224,6 +224,15 @@
         "loadFailed": "gagal mendapatkan list FAQ",
         "removeBookmark": "click untuk menghapus dari bookmark",
         "addBookmark": "click untuk menambahkan ke bookmark"
+    },
+    "faqDetailsScreen": {
+        "getFaqFailed": "gagal mendapatkan data FAQ",
+        "createTitle": "Tambahkan FAQ Baru",
+        "updateTitle": "Ubah FAQ",
+        "succesCreated": "FAQ baru berhasil ditambahkan",
+        "succesUpdated": "data FAQ berhasil diubah",
+        "updateFailed": "gagal mengubah FAQ",
+        "createFailed": "gagal menambahkan FAQ baru"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
