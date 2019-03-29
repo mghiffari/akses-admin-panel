@@ -113,6 +113,36 @@
             "footerButtonPlaceholder": "Input name of button here",
             "footerURLTitle": "Input URL Text"
         },
+        "faqCategory": {
+            "fieldTitle": "Category",
+            "placeholder": "Select a Category",
+            "errorRequired": "Category is required"
+        },
+        "faqTitle": {
+            "fieldTitle": "FAQ Title",
+            "placeholder": "FAQ title",
+            "errorRequired": "FAQ Title is required"
+        },
+        "faqOrder": {
+            "fieldTitle": "Order",
+            "placeholder": "Order",
+            "errorRequired": "Order is required",
+            "errorFormat": "Order must be a number",
+            "errorMin": "Order must be a positive number > 0"
+        },
+        "faqUniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "placeholder": "Unique tag",
+            "errorRequired": "Unique Tag is required"
+        },
+        "faqContent": {
+            "fieldTitle": "Description",
+            "placeholder": "Description",
+            "errorRequired": "Description is required"
+        },
+        "faqBookmark": {
+            "fieldTitle": "Bookmark FAQ"
+        },
         "articleTitle": {
             "fieldTitle": "Article Title",
             "errorRequired": "Article Title is required",
@@ -237,14 +267,6 @@
         "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
         "loadFailed": "failed to get list of articles"
     },
-    "faqListScreen": {
-        "title": "FAQs Data",
-        "createFAQ": "create faq",
-        "deleteConfirmation": "Are you sure you want to delete faq {{title}}?",
-        "loadFailed": "failed to get list of FAQ",
-        "removeBookmark": "click to remove from bookmark",
-        "addBookmark": "click to add to bookmark"
-    },
     "articleDetailsScreen": {
         "createArticleTitle": "Create New Article",
         "updateArticleTitle": "Update Article",
@@ -255,6 +277,23 @@
         "createFailed": "Failed to Create Article",
         "loadFailed": "Failed to load article data",
         "urlNotValid": "Input URL is not valid"
+    },
+    "faqListScreen": {
+        "title": "FAQs Data",
+        "createFAQ": "create faq",
+        "deleteConfirmation": "Are you sure you want to delete faq {{title}}?",
+        "loadFailed": "failed to get list of FAQ",
+        "removeBookmark": "click to remove from bookmark",
+        "addBookmark": "click to add to bookmark"
+    },
+    "faqDetailsScreen": {
+        "getFaqFailed": "failed to get FAQ data",
+        "createTitle": "Create New FAQ",
+        "updateTitle": "Update FAQ",
+        "succesCreated": "new FAQ successfully created",
+        "succesUpdated": "FAQ data successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new FAQ"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

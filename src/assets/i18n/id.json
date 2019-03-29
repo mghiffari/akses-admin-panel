@@ -113,6 +113,36 @@
             "footerButtonPlaceholder": "Masukkan nama tombol di sini",
             "footerURLTitle": "Masukkan URL Teks"
         },
+        "faqCategory": {
+            "fieldTitle": "Kategori",
+            "placeholder": "Pilih Kategori",
+            "errorRequired": "Kategori wajib dipilih"
+        },
+        "faqTitle": {
+            "fieldTitle": "Judul FAQ",
+            "placeholder": "Judul FAQ",
+            "errorRequired": "Judul FAQ wajib diisi"
+        },
+        "faqOrder": {
+            "fieldTitle": "Order",
+            "placeholder": "Order",
+            "errorRequired": "Order wajib diisi",
+            "errorFormat": "Order hanya terdiri dari angka",
+            "errorMin": "Order harus terdiri dari bilangan positif > 0"
+        },
+        "faqUniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "placeholder": "Unique tag",
+            "errorRequired": "Unique Tag harus diisi"
+        },
+        "faqContent": {
+            "fieldTitle": "Deskripsi",
+            "placeholder": "Deskripsi",
+            "errorRequired": "Deskripsi wajib diisi"
+        },
+        "faqBookmark": {
+            "fieldTitle": "Bookmark FAQ"
+        },
         "articleTitle": {
             "fieldTitle": "Judul Artikel",
             "errorRequired": "Judul Artikel wajib diisi",
@@ -224,12 +254,29 @@
     "userDetailsScreen": {
         "getUserFailed": "gagal mendapatkan data user",
         "createTitle": "Tambahkan User Baru",
-        "updateTitle": "Update Data User",
+        "updateTitle": "Ubah Data User",
         "succesCreated": "user baru berhasil ditambahkan",
         "succesUpdated": "data user berhasil diupdate",
         "emailNotChangeAble": "Email tidak dapat diganti",
         "updateFailed": "gagal mengubah data user",
         "createFailed": "gagal membuat user baru"
+    },
+    "faqListScreen": {
+        "title": "Data FAQ",
+        "createFAQ": "tambahkan faq baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus faq {{title}}?",
+        "loadFailed": "gagal mendapatkan list FAQ",
+        "removeBookmark": "click untuk menghapus dari bookmark",
+        "addBookmark": "click untuk menambahkan ke bookmark"
+    },
+    "faqDetailsScreen": {
+        "getFaqFailed": "gagal mendapatkan data FAQ",
+        "createTitle": "Tambahkan FAQ Baru",
+        "updateTitle": "Ubah FAQ",
+        "succesCreated": "FAQ baru berhasil ditambahkan",
+        "succesUpdated": "data FAQ berhasil diubah",
+        "updateFailed": "gagal mengubah FAQ",
+        "createFailed": "gagal menambahkan FAQ baru"
     },
     "articleListScreen": {
         "title": "Data Artikel",
@@ -247,14 +294,6 @@
         "createFailed": "Gagal membuat artikel baru",
         "loadFailed": "Gagal mendapatkan data artikel",
         "urlNotValid": "Masukkan URL yang valid"
-    },
-    "faqListScreen": {
-        "title": "Data FAQ",
-        "createFAQ": "tambahkan faq baru",
-        "deleteConfirmation": "Apakah anda yakin untuk menghapus faq {{title}}?",
-        "loadFailed": "gagal mendapatkan list FAQ",
-        "removeBookmark": "click untuk menghapus dari bookmark",
-        "addBookmark": "click untuk menambahkan ke bookmark"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

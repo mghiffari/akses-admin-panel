@@ -1,0 +1,120 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div class="adira-dark-theme" fxLayout="row">
+    <mat-toolbar color="accent" class="page-title">
+      <span *ngIf="isCreate">{{'faqDetailsScreen.createTitle' | translate}}</span>
+      <span *ngIf="!isCreate">{{'faqDetailsScreen.updateTitle' | translate}}</span>
+    </mat-toolbar>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
+    <div fxFlex="100%">
+      <a class="top-action-text" routerLink="/master/faqs" fxLayoutAlign="start center">
+        <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
+        <div>
+          {{'backToList' | translate}}
+        </div>
+      </a>
+    </div>
+  </div>
+  <form [formGroup]="faqForm" *ngIf="!loading">
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.faqCategory.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <mat-select formControlName="category">
+            <mat-option value="">{{'forms.faqCategory.placeholder' | translate}}</mat-option>
+            <mat-option value="carabayar">cara bayar</mat-option>
+            <mat-option value="caratopup">cara top up</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">
+          <span *ngIf="category.errors.required">{{'forms.faqCategory.errorRequired' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.faqTitle.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput placeholder="{{'forms.faqTitle.placeholder' | translate}}" formControlName="title">
+        </mat-form-field>
+        <mat-error class="bottom-error" *ngIf="title.invalid && (title.dirty || title.touched)">
+          <span *ngIf="title.errors.required">{{'forms.faqTitle.errorRequired' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.faqOrder.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput type="number" placeholder="{{'forms.faqOrder.placeholder' | translate}}"
+            formControlName="titleOrder">
+        </mat-form-field>
+        <mat-error class="bottom-error" *ngIf="titleOrder.invalid && (titleOrder.dirty || titleOrder.touched)">
+          <span *ngIf="titleOrder.errors.required">{{'forms.faqOrder.errorRequired' | translate}}</span>
+          <span *ngIf="titleOrder.errors.min">{{'forms.faqOrder.errorMin' | translate }}</span>
+          <span *ngIf="titleOrder.errors.pattern">{{'forms.faqOrder.errorFormat' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.faqUniqueTag.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput placeholder="{{'forms.faqUniqueTag.placeholder' | translate}}" formControlName="uniqueTag">
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.faqContent.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <editor [init]="tinyMceSettings" formControlName="content" plugins="link" height="500px"></editor>
+        <mat-error class="bottom-error" *ngIf="content.invalid && (content.dirty || content.touched)">
+          <span *ngIf="content.errors.required">{{'forms.faqContent.errorRequired' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <mat-checkbox color="primary" formControlName="bookmark">
+          {{'forms.faqBookmark.fieldTitle' | translate}}
+        </mat-checkbox>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%" fxLayoutAlign="start center">
+        <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"
+          [disabled]="!faqForm.valid">{{'save' | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+</div>
