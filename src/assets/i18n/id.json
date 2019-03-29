@@ -5,7 +5,8 @@
             "children": {
                 "banners": "Home Banner",
                 "users": "User",
-                "articles": "Artikel"
+                "articles": "Artikel",
+                "faqs": "FAQ"
             }
         }
     },
@@ -141,22 +142,19 @@
             "inactive": "Non-aktif"
         },
         "uniqueTag": "Unique Tag",
+        "title": "Judul",
+        "category": "Kategori",
+        "order": "Urutan",
         "bannersTable": {
-            "title": "Judul",
             "preview": "Preview",
             "startDate": "Tanggal Mulai",
-            "endDate": "Tanggal Selesai",
-            "order": "Urutan"
+            "endDate": "Tanggal Selesai"
         },
         "userTable": {
             "firstName": "Nama Depan",
             "lastName": "Nama Belakang",
             "email": "Email",
             "createdDate": "Tanggal Dibuat"
-        },
-        "articlesTable": {
-            "category": "Kategori",
-            "title": "Judul"
         }
     },
     "bannerListScreen": {
@@ -218,6 +216,14 @@
         "createArticle": "tambahkan artikel baru",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus artikel {{title}}?",
         "loadFailed": "gagal mendapatkan list artikel"
+    },
+    "faqListScreen": {
+        "title": "Data FAQ",
+        "createFAQ": "tambahkan faq baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus faq {{title}}?",
+        "loadFailed": "gagal mendapatkan list FAQ",
+        "removeBookmark": "click untuk menghapus dari bookmark",
+        "addBookmark": "click untuk menambahkan ke bookmark"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
