@@ -143,6 +143,26 @@
         "faqBookmark": {
             "fieldTitle": "Bookmark FAQ"
         },
+        "articleTitle": {
+            "fieldTitle": "Article Title",
+            "errorRequired": "Article Title is required",
+            "placeholder": "Article title"
+        },
+        "articlePicture": {
+            "fieldTitle": "Article Picture",
+            "errorRequired": "Article Picture is required",
+            "errorType": "Only .jpg, .jpeg and .png format are supported"
+        },
+        "uniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "errorRequired": "Unique Tag is required",
+            "placeholder": "Unique Tag"
+        },
+        "category": {
+            "fieldTitle": "Category",
+            "errorRequired": "Category is required",
+            "placeholder": "Category"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -246,6 +266,17 @@
         "createArticle": "create article",
         "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
         "loadFailed": "failed to get list of articles"
+    },
+    "articleDetailsScreen": {
+        "createArticleTitle": "Create New Article",
+        "updateArticleTitle": "Update Article",
+        "seeArticleList": "See Article List",
+        "successCreateArticle": "Article successfully created",
+        "successUpdateArticle": "Banner successfully updated",
+        "updateFailed": "Failed to Update Article",
+        "createFailed": "Failed to Create Article",
+        "loadFailed": "Failed to load article data",
+        "urlNotValid": "Input URL is not valid"
     },
     "faqListScreen": {
         "title": "FAQs Data",

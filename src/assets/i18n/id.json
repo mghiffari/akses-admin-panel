@@ -143,6 +143,26 @@
         "faqBookmark": {
             "fieldTitle": "Bookmark FAQ"
         },
+        "articleTitle": {
+            "fieldTitle": "Judul Artikel",
+            "errorRequired": "Judul Artikel wajib diisi",
+            "placeholder": "Judul article"
+        },
+        "articlePicture": {
+            "fieldTitle": "Gambar Artikel",
+            "errorRequired": "Gambar Artikel wajib diisi",
+            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload"
+        },
+        "uniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "errorRequired": "Unique Tag wajib diisi",
+            "placeholder": "Unique Tag"
+        },
+        "category": {
+            "fieldTitle": "Kategori",
+            "errorRequired": "Kategori wajib diisi",
+            "placeholder": "Kategori"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -241,12 +261,6 @@
         "updateFailed": "gagal mengubah data user",
         "createFailed": "gagal membuat user baru"
     },
-    "articleListScreen": {
-        "title": "Data Artikel",
-        "createArticle": "tambahkan artikel baru",
-        "deleteConfirmation": "Apakah anda yakin untuk menghapus artikel {{title}}?",
-        "loadFailed": "gagal mendapatkan list artikel"
-    },
     "faqListScreen": {
         "title": "Data FAQ",
         "createFAQ": "tambahkan faq baru",
@@ -263,6 +277,23 @@
         "succesUpdated": "data FAQ berhasil diubah",
         "updateFailed": "gagal mengubah FAQ",
         "createFailed": "gagal menambahkan FAQ baru"
+    },
+    "articleListScreen": {
+        "title": "Data Artikel",
+        "createArticle": "tambahkan artikel baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus artikel {{title}}?",
+        "loadFailed": "gagal mendapatkan list artikel"
+    },
+    "articleDetailsScreen": {
+        "createArticleTitle": "Tambahkan Artikel Baru",
+        "updateArticleTitle": "Ubah Artikel",
+        "seeArticleList": "Lihat Data Artikel",
+        "successCreateArticle": "Berhasil membuat artikel baru",
+        "successUpdateArticle": "Berhasil mengubah data artikel",
+        "updateFailed": "Gagal mengubah data artikel",
+        "createFailed": "Gagal membuat artikel baru",
+        "loadFailed": "Gagal mendapatkan data artikel",
+        "urlNotValid": "Masukkan URL yang valid"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

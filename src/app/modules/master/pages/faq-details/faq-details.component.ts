@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-faq-details',
   templateUrl: './faq-details.component.html',
-  styleUrls: ['./faq-details.component.scss']
+  styleUrls: []
 })
 export class FAQDetailsComponent implements OnInit {
   faqForm: FormGroup;
@@ -111,7 +111,7 @@ export class FAQDetailsComponent implements OnInit {
         category: new FormControl('', [Validators.required]),
         title: new FormControl('', [Validators.required]),
         titleOrder: new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
-        uniqueTag: new FormControl('', [Validators.required]),
+        uniqueTag: new FormControl(''),
         content: new FormControl('', [Validators.required]),
         bookmark: new FormControl(false)
       })

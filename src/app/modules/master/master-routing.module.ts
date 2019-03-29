@@ -5,6 +5,7 @@ import { BannerListComponent } from './pages/banner-list/banner-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
+import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
 import { FAQListComponent } from './pages/faq-list/faq-list.component';
 import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 
@@ -56,6 +57,20 @@ const routes: Routes = [
     component: ArticleListComponent,
     data: {
       title: 'Articles'
+    }
+  },
+  {
+    path: 'articles/create',
+    component: ArticleDetailsComponent,
+    data: {
+      title: 'Create Article'
+    }
+  },
+  {
+    path: 'articles/update/:id',
+    component: ArticleDetailsComponent,
+    data: {
+      title: 'Update Article'
     }
   },
   {

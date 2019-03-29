@@ -70,9 +70,6 @@
         <mat-form-field appearance="fill">
           <input matInput placeholder="{{'forms.faqUniqueTag.placeholder' | translate}}" formControlName="uniqueTag">
         </mat-form-field>
-        <mat-error class="bottom-error" *ngIf="uniqueTag.invalid && (uniqueTag.dirty || uniqueTag.touched)">
-          <span *ngIf="uniqueTag.errors.required">{{'forms.faqUniqueTag.errorRequired' | translate}}</span>
-        </mat-error>
       </div>
     </div>
     <div fxLayout="row" class="padding-16 border-bottom-gray">
