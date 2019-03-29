@@ -9,7 +9,7 @@ import { BannerData, UpdateBannerData } from '../models/banner-detail';
 })
 export class BannerService {
   
-  uploadApiUrl = environment.apiurl + 'upload/'
+  uploadApiUrl = environment.apiurl + 'upload/';
   bannerApiUrl = environment.apiurl + 'banner/';
 
   //constructor

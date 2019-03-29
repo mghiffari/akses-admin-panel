@@ -248,7 +248,7 @@
   <div fxLayout="row" class="padding-16 border-bottom-gray">
     <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
-      <button mat-raised-button color="primary" *ngIf="!isLoading()" [disabled]="isDisableCreateArticle()" (click)="isDisableCreateArticle() || createArticle()">
+      <button mat-raised-button color="primary" *ngIf="!isLoading()" [disabled]="isDisableCreateArticle()" (click)="isDisableCreateArticle() || saveArticle()">
         {{'forms.buttonText.save' | translate}}
       </button>
       <button mat-raised-button color="primary" [disabled]="true" *ngIf="isLoading()">

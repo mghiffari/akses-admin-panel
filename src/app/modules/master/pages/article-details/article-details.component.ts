@@ -51,10 +51,10 @@ export class ArticleDetailsComponent implements OnInit {
     this.vCurrentPage = this._routerService.url;
     if(this.vCurrentPage.includes("create")) {
       this._articleDetailsService.resetArticleData();
-      // this.resetCheckBox();
+      this.resetCheckBox();
     } else if(this.vCurrentPage.includes("update")){
       this.vId = this._activatedRouteService.snapshot.params['id'];
-      // this._bannerDetailService.loadBannerById(this.vId).then(response => {
+      // this._articleDetailsService.loadArticleById(this.vId).then(response => {
       //   this.initiateCheckBox();
       // }).catch( err =>{
       //   console.table(err);
@@ -80,6 +80,24 @@ export class ArticleDetailsComponent implements OnInit {
     return this._articleDetailsService.isLoadingForm();
   }
 
+  //initiate check box for update component
+  initiateCheckBox() {
+    console.log('ArticleDetailComponent | initiateCheckBox');
+    this.vShowFooterText = this.getArticleData().foot_text_content != "";
+    this.vShowFooterTextModul = this.getArticleData().foot_text_flg === "int";
+    this.vShowFooterTextURL = this.getArticleData().foot_text_flg == "ext";
+    this.vShowFooterImage = this.getArticleData().foot_image_content != "" && this.getArticleData().foot_image_content !== undefined && this.getArticleData().foot_image_content !== null;
+    this.vShowFooterImageModul = this.getArticleData().foot_image_flg == "int";
+    this.vShowFooterImageURL = this.getArticleData().foot_image_flg == "ext";
+    this.vShowFooterButton = this.getArticleData().foot_button_content != "";
+    this.vShowFooterButtonModul = this.getArticleData().foot_button_flg == "int";
+    this.vShowFooterButtonURL = this.getArticleData().foot_button_flg == "ext";
+    // console.log("initiate check box: ", this.vClickableChecked, this.vShowDetailPage, this.vShowURL, this.vShowFooterText,
+    // this.vShowFooterTextModul, this.vShowFooterTextURL, this.vShowFooterImage, this.vShowFooterImageModul,
+    // this.vShowFooterImageURL, this.vShowFooterButton, this.vShowFooterButtonModul, this.vShowFooterButtonURL,
+    // this.vShowExternalURL, this.vShowModul);
+  }
+
   //get category data from services
   getCategoryData() {
     console.log('ArticleDetailComponent | getCategoryData');
@@ -103,6 +121,20 @@ export class ArticleDetailsComponent implements OnInit {
     return this._articleDetailsService.getErrorMessage();
   }
 
+  //reset check box by default (all not checked)
+  resetCheckBox() {
+    console.log('ArticleDetailComponent | resetCheckbox');
+    this.vShowFooterText = false;
+    this.vShowFooterTextModul = false;
+    this.vShowFooterTextURL = false;
+    this.vShowFooterImage = false;
+    this.vShowFooterImageModul = false;
+    this.vShowFooterImageURL = false;
+    this.vShowFooterButton = false;
+    this.vShowFooterButtonModul = false;
+    this.vShowFooterButtonURL = false;
+  }
+
   //preview and compress image process when image choosen
   uploadImage(component: string, files){
     console.log('ArticleDetailComponent | uploadImage');
@@ -115,8 +147,13 @@ export class ArticleDetailsComponent implements OnInit {
     return this._articleDetailsService.isDisableCreateArticle();
   }
 
-  createArticle() {
-    console.log('ArticleDetailComponent | createArticle');
+  //when button save clicked
+  saveArticle() {
+    console.log('ArticleDetailComponent | saveArticle');
+    if(this.vCurrentPage.includes("create")) {
+      this.resetCheckBox();
+    }
+    this._articleDetailsService.buttonSave();
   }
 
   //triggered when check box footer text clicked
