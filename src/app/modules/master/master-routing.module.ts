@@ -6,6 +6,7 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
+import { FAQListComponent } from './pages/faq-list/faq-list.component';
 
 const routes: Routes = [
   {
@@ -70,7 +71,14 @@ const routes: Routes = [
     data: {
       title: 'Update Article'
     }
-  }
+  },
+  {
+    path: 'faqs',
+    component: FAQListComponent,
+    data: {
+      title: 'FAQs'
+    }
+  },
 ];
 
 @NgModule({

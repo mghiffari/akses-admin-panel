@@ -82,7 +82,6 @@ export class ArticleDetailsComponent implements OnInit {
 
   //get category data from services
   getCategoryData() {
-    console.log(this._articleDetailsService.getCategoryData());
     console.log('ArticleDetailComponent | getCategoryData');
     return this._articleDetailsService.getCategoryData();
   }

@@ -65,7 +65,6 @@ export class ArticleDetailsService {
 
   getArticleData() {
     console.log('ArticleDetailsService | getArticleData');
-    console.log(this.vArticleData);
     return this.vArticleData;
   }
 

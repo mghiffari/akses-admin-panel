@@ -12,6 +12,8 @@ import { BannerService } from './services/banner.service';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleService } from './services/article.service';
 import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
+import { FAQListComponent } from './pages/faq-list/faq-list.component';
+import { FAQService } from './services/faq.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { ArticleDetailsComponent } from './pages/article-details/article-details
     UserDetailsComponent,
     BannerDetailsComponent,
     ArticleListComponent,
-    ArticleDetailsComponent
+    ArticleDetailsComponent,
+    FAQListComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { ArticleDetailsComponent } from './pages/article-details/article-details
   providers: [
     BannerDetailsService,
     BannerService,
-    ArticleService
+    ArticleService,
+    FAQService
   ]
 })
 export class MasterModule { }
