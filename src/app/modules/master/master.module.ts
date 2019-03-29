@@ -8,10 +8,10 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
 import { BannerDetailsService } from './pages/banner-details/services/banner-details.service';
 import { EditorModule } from '@tinymce/tinymce-angular';
-import { Ng2ImgToolsModule } from 'ng2-img-tools';
 import { BannerService } from './services/banner.service';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleService } from './services/article.service';
+import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
 
 @NgModule({
   declarations: [
@@ -19,14 +19,14 @@ import { ArticleService } from './services/article.service';
     BannerListComponent,
     UserDetailsComponent,
     BannerDetailsComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    ArticleDetailsComponent
   ],
   imports: [
     CommonModule,
     MasterRoutingModule,
     SharedModule,
-    EditorModule,
-    Ng2ImgToolsModule
+    EditorModule
   ],
   providers: [
     BannerDetailsService,
