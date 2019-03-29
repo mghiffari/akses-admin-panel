@@ -24,7 +24,8 @@ import {
   MatCheckboxModule,
   MatRadioModule,
   MatProgressSpinnerModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTooltipModule
 } from '@angular/material';
 
 
@@ -55,7 +56,8 @@ import {
     MatCheckboxModule,
     MatRadioModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   exports: [
     FlexLayoutModule,
@@ -80,7 +82,8 @@ import {
     MatCheckboxModule,
     MatRadioModule,
     MatProgressSpinnerModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ]
 })
 export class AngularMaterialModule { }

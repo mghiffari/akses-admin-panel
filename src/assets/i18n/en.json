@@ -5,7 +5,8 @@
             "children": {
                 "banners": "Home Banners",
                 "users": "Users",
-                "articles": "Articles"
+                "articles": "Articles",
+                "faqs": "FAQs"
             }
         }
     },
@@ -141,22 +142,19 @@
             "inactive": "inactive"
         },
         "uniqueTag": "Unique Tag",
+        "title": "Title",
+        "category": "Category",
+        "order": "Order",
         "bannersTable": {
-            "title": "Title",
             "preview": "Preview",
             "startDate": "Start Date",
-            "endDate": "End Date",
-            "order": "Order"
+            "endDate": "End Date"
         },
         "userTable": {
             "firstName": "First Name",
             "lastName": "Last Name",
             "email": "Email",
             "createdDate": "Created Date"
-        },
-        "articlesTable": {
-            "category": "Category",
-            "title": "Title"
         }
     },
     "bannerListScreen": {
@@ -217,7 +215,15 @@
         "title": "Articles Data",
         "createArticle": "create article",
         "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
-        "loadFailed": "failed to get list of users"
+        "loadFailed": "failed to get list of articles"
+    },
+    "faqListScreen": {
+        "title": "FAQs Data",
+        "createFAQ": "create faq",
+        "deleteConfirmation": "Are you sure you want to delete faq {{title}}?",
+        "loadFailed": "failed to get list of FAQ",
+        "removeBookmark": "click to remove from bookmark",
+        "addBookmark": "click to add to bookmark"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

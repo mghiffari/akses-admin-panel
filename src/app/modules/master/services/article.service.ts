@@ -13,14 +13,14 @@ export class ArticleService {
     console.log('ArticleService | constructor')
   }
 
-  //get banner list with pagination and search
+  //get article list with pagination and search
   getArticleList(page, pageSize, search) {
     let url = this.articleApiUrl + page + '/' + pageSize + '/' + search;
     console.log("ArticleService | getArticleList ", url);
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //delete banner by id
+  //delete article by id
   deleteArticle(id){
     let url = this.articleApiUrl + id;
     console.log("ArticleService | deleteArticle ", url);

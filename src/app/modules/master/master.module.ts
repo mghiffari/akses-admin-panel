@@ -12,6 +12,8 @@ import { Ng2ImgToolsModule } from 'ng2-img-tools';
 import { BannerService } from './services/banner.service';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleService } from './services/article.service';
+import { FAQListComponent } from './pages/faq-list/faq-list.component';
+import { FAQService } from './services/faq.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { ArticleService } from './services/article.service';
     BannerListComponent,
     UserDetailsComponent,
     BannerDetailsComponent,
-    ArticleListComponent
+    ArticleListComponent,
+    FAQListComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,8 @@ import { ArticleService } from './services/article.service';
   providers: [
     BannerDetailsService,
     BannerService,
-    ArticleService
+    ArticleService,
+    FAQService
   ]
 })
 export class MasterModule { }
