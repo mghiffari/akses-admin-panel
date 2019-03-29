@@ -6,6 +6,7 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { FAQListComponent } from './pages/faq-list/faq-list.component';
+import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 
 const routes: Routes = [
   {
@@ -64,6 +65,20 @@ const routes: Routes = [
       title: 'FAQs'
     }
   },
+  {
+    path: 'faqs/create',
+    component: FAQDetailsComponent,
+    data: {
+      title: 'Create FAQ'
+    }
+  },
+  {
+    path: 'faqs/update/:id',
+    component: FAQDetailsComponent,
+    data: {
+      title: 'Update FAQ'
+    }
+  }
 ];
 
 @NgModule({
