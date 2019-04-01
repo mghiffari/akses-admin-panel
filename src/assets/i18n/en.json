@@ -163,6 +163,73 @@
             "errorRequired": "Category is required",
             "placeholder": "Category"
         },
+        "branchName": {
+            "fieldTitle": "Branch Name",
+            "placeholder": "Branch name",
+            "errorRequired": "Branch Name is required"
+        },
+        "branchCode": {
+            "fieldTitle": "Branch Code",
+            "placeholder": "Branch code",
+            "errorRequired": "Branch Code is required",
+            "errorFormat": "Branch Code should only contain numbers",
+            "errorLength": "Branch Code should contain 4 numbers"
+        },
+        "branchType": {
+            "fieldTitle": "Branch Type",
+            "placeholder": "Select a Branch Type",
+            "errorRequired": "Branch Type is required"
+        },
+        "longitude": {
+            "fieldTitle": "Longitude",
+            "placeholder": "Longitude",
+            "errorRequired": "Longitude is required"
+        },
+        "latitude": {
+            "fieldTitle": "Latitude",
+            "placeholder": "Latitude",
+            "errorRequired": "Latitude is required"
+        },
+        "region": {
+            "fieldTitle": "Region",
+            "placeholder": "Region",
+            "errorRequired": "Region is required"
+        },
+        "province": {
+            "fieldTitle": "Province",
+            "placeholder": "Select a Province",
+            "errorRequired": "Province is required"
+        },
+        "city": {
+            "fieldTitle": "City",
+            "placeholder": "Select a City",
+            "errorRequired": "City is required"
+        },
+        "subDistrict": {
+            "fieldTitle": "Sub-District",
+            "placeholder": "Select a Sub-district",
+            "errorRequired": "Sub-District is required"
+        },
+        "village": {
+            "fieldTitle": "Village",
+            "placeholder": "Select a Village",
+            "errorRequired": "Village is required"
+        },
+        "address": {
+            "fieldTitle": "Address",
+            "placeholder": "Address",
+            "errorRequired": "Address is required"
+        },
+        "createdBy": {
+            "fieldTitle": "Created By",
+            "placeholder": "Created by",
+            "errorRequired": "Created By is required"
+        },
+        "updatedBy": {
+            "fieldTitle": "Updated By",
+            "placeholder": "Updated by",
+            "errorRequired": "Updated By is required"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -294,6 +361,15 @@
         "succesUpdated": "FAQ data successfully updated",
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new FAQ"
+    },
+    "branchDetailsScreen": {
+        "getBranchFailed": "failed to get Branch Location data",
+        "createTitle": "Create New Branch Location",
+        "updateTitle": "Update Branch Location",
+        "succesCreated": "new Branch Location successfully created",
+        "succesUpdated": "Branch Location successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new Branch Location"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
