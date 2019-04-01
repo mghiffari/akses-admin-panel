@@ -272,7 +272,7 @@
         "updateArticleTitle": "Update Article",
         "seeArticleList": "See Article List",
         "successCreateArticle": "Article successfully created",
-        "successUpdateArticle": "Banner successfully updated",
+        "successUpdateArticle": "Article successfully updated",
         "updateFailed": "Failed to Update Article",
         "createFailed": "Failed to Create Article",
         "loadFailed": "Failed to load article data",

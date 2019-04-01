@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   providedIn: 'root'
 })
 export class ArticleService {
+  uploadApiUrl = environment.apiurl + 'upload/';
   articleApiUrl = environment.apiurl + 'article/';
 
   //constructor
@@ -25,5 +26,33 @@ export class ArticleService {
     let url = this.articleApiUrl + id;
     console.log("ArticleService | deleteArticle ", url);
     return this.authService.wrapTokenDeleteApi(url)
+  }
+
+  //upload image
+  uploadImage(vFormDataImageUpload: FormData) {
+    let url = this.uploadApiUrl;
+    console.log("ArticleService | uploadImage " + url);
+    return this.authService.wrapTokenPutApi(url, vFormDataImageUpload);
+  }
+
+  //load article
+  loadArticleById(id: string) {
+    let url = this.articleApiUrl+id;
+    console.log("ArticleService | loadArticleById " + url);
+    return this.authService.wrapTokenGetApi(url);
+  }
+
+  //create article
+  createArticle(data) {
+    let url = this.articleApiUrl;
+    console.log("ArticleService | createArticle " + url);
+    return this.authService.wrapTokenPostApi(url, data);
+  }
+
+  //update article
+  updateArticle(data) {
+    let url = this.articleApiUrl;
+    console.log("ArticleService | updateArticle " + url);
+    return this.authService.wrapTokenPutApi(url, data);
   }
 }

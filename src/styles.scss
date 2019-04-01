@@ -288,6 +288,13 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
     height: 1em !important;
 }
 
+.mat-datepicker-toggle {
+    .mat-icon-button {
+        width: 1em !important;
+        height: 1em !important;
+    }
+}
+
 .mat-form-field-appearance-fill 
 .mat-select-arrow-wrapper {
     transform: none !important;
