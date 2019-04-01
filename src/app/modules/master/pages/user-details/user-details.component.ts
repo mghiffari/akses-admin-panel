@@ -17,7 +17,7 @@ export class UserDetailsComponent implements OnInit {
   userForm: FormGroup;
   userModel: UserForm;
   onSubmittingForm = false;
-  maxLength = { maxLength: 100 }
+  maxLength = { maxLength: CustomValidation.nameField.maxLength }
   id;
   isCreate = true;
   loading = true;
@@ -60,11 +60,11 @@ export class UserDetailsComponent implements OnInit {
             let editedUser = data.data;
             this.userForm = new FormGroup({
               firstName: new FormControl(editedUser.firstname, [Validators.required,
-              Validators.maxLength(100),
+              Validators.maxLength(CustomValidation.nameField.maxLength),
               CustomValidation.internationalName
               ]),
               lastName: new FormControl(editedUser.lastname, [Validators.required,
-              Validators.maxLength(100),
+              Validators.maxLength(CustomValidation.nameField.maxLength),
               CustomValidation.internationalName
               ]),
               email: new FormControl({

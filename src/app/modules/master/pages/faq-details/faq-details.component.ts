@@ -17,7 +17,6 @@ export class FAQDetailsComponent implements OnInit {
   faqForm: FormGroup;
   faqModel: FAQ;
   onSubmittingForm = false;
-  maxLength = { maxLength: 100 }
   id;
   isCreate = true;
   loading = true;

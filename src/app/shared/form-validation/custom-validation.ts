@@ -2,6 +2,9 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, Valid
 import { environment } from 'src/environments/environment';
 
 export class CustomValidation {
+  static nameField = {
+    maxLength: 100
+  }
   static password = {
     minLength: 8,
     maxLength: 20

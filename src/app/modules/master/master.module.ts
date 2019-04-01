@@ -15,6 +15,7 @@ import { ArticleDetailsComponent } from './pages/article-details/article-details
 import { FAQListComponent } from './pages/faq-list/faq-list.component';
 import { FAQService } from './services/faq.service';
 import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
+import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
 import { BranchService } from './services/branch.service';
 
@@ -29,6 +30,7 @@ import { BranchService } from './services/branch.service';
     FAQDetailsComponent,
     ArticleDetailsComponent,
     FAQListComponent,
+    BranchDetailsComponent,
     BranchListComponent
   ],
   imports: [
