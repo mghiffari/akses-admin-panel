@@ -316,6 +316,7 @@
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
     "backToList": "back to list",
+    "upload": "upload",
     "loggedOutModal": {
         "title": "You're unauthorized to access this page",
         "content": "Please re-login to access this page",
@@ -385,6 +386,19 @@
         "uploadCSV": "upload CSV",
         "deleteConfirmation": "Are you sure you want to delete branch location {{name}}?",
         "loadFailed": "failed to get list of branch locations"
+    },
+    "uploadCSVModal": {
+        "title": "Upload CSV",
+        "errorFormat": "File should be in csv format",
+        "fileExample": "Example File",
+        "uploadFailed": "Upload Failed",
+        "uploadSuccess": "Upload Success",
+        "instructions":{
+            "format": "Upload file format should be csv with pipe (|) as delimiter",
+            "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
+            "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the location on the app",
+            "columnSequence": "The sequnce of the column should be the same as the example file"
+        }
     },
     "apiErrors": {
         "noInternet": "no internet connection",

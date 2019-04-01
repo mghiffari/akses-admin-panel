@@ -18,6 +18,7 @@ import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
 import { BranchService } from './services/branch.service';
+import { BranchUploadModalComponent } from './components/branch-upload-modal/branch-upload-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { BranchService } from './services/branch.service';
     ArticleDetailsComponent,
     FAQListComponent,
     BranchDetailsComponent,
-    BranchListComponent
+    BranchListComponent,
+    BranchUploadModalComponent
   ],
   imports: [
     CommonModule,
@@ -45,6 +47,7 @@ import { BranchService } from './services/branch.service';
     ArticleService,
     FAQService,
     BranchService
-  ]
+  ],
+  entryComponents: [BranchUploadModalComponent]
 })
 export class MasterModule { }

@@ -46,4 +46,13 @@ export class BranchService {
     console.log("BranchService | updateBranch ", this.branchApiUrl);
     return this.authService.wrapTokenPutApi(this.branchApiUrl, data);
   }
+
+  //upload csv
+  uploadCSV(file: File){
+    let url = this.branchApiUrl + 'uploadCSV';
+    console.log("BranchService | uploadCSV ", url);
+    let data = new FormData();
+    data.append('file', file);
+    return this.authService.wrapTokenPostApi(url, data);
+  }
 }

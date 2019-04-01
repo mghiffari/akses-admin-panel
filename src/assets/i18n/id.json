@@ -312,6 +312,7 @@
     "yesContinue": "ya, lanjutkan!",
     "cancel": "batalkan",
     "success": "berhasil",
+    "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
     "failedToDelete": "gagal menghapus data",
@@ -385,6 +386,19 @@
         "uploadCSV": "upload CSV",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus lokasi cabang {{name}}?",
         "loadFailed": "gagal mendapatkan list lokasi cabang"
+    },
+    "uploadCSVModal": {
+        "title": "Upload CSV",
+        "errorFormat": "File harus dalam format csv",
+        "fileExample": "Contoh File",
+        "uploadFailed": "Gagal Upload File",
+        "uploadSuccess": "Berhasil Upload File",
+        "instructions":{
+            "format": "Format file upload harus csv dengan delimiter pipe (|)",
+            "numberFormat": "Gunakan titik (.) bukan (,) dalam penanda desimal di longitude/latitude dan hanya boleh ada satu titik di setiap longitude/latitude",
+            "precise": "Pastikan longitude dan latitude sudah sesuai. Sedikit kesalahan pada longitude dan latitiude akan berpengaruh pada lokasi cabang di app",
+            "columnSequence": "Urutan kolom file upload harus sesuai dengan contoh file"
+        }
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
