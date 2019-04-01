@@ -16,7 +16,6 @@ export class FAQListComponent implements OnInit {
     length: 0,
     pageIndex: 0
   }
-  today = new Date();
 
   faqColumns: string[] = [
     'bookmark',
@@ -172,8 +171,6 @@ export class FAQListComponent implements OnInit {
     console.log('ArticleListComponent | lazyLoadData');
     let isFocusedInput = this.isFocusedInput;
     this.loading = true;
-    this.today = new Date();
-    this.today.setHours(0, 0, 0, 0);
     this.faqService.getFaqList(
       this.paginatorProps.pageIndex + 1,
       this.paginatorProps.pageSize,
