@@ -81,8 +81,8 @@
         </td>
       </ng-container>
 
-      <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="userColums; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: userColums;" [hidden]="loading"></tr>
+      <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="userColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: userColumns;" [hidden]="loading"></tr>
     </table>
   </div>
   <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">

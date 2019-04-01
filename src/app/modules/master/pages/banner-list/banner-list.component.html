@@ -94,8 +94,8 @@
           <mat-icon color="primary" class="cursor-pointer" [routerLink]="['/master/banners/update', element.id]">edit</mat-icon>
         </td>
       </ng-container>
-      <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="bannerColums; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: bannerColums;" [hidden]="loading"></tr>
+      <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="bannerColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: bannerColumns;" [hidden]="loading"></tr>
     </table>
   </div>
   <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">

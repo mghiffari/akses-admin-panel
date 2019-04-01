@@ -44,6 +44,10 @@ export class MainNavComponent {
         {
           title: 'navMenus.master.children.faqs',
           link: '/faqs'
+        },
+        {
+          title: 'navMenus.master.children.branches',
+          link: '/branches'
         }
       ]
     }

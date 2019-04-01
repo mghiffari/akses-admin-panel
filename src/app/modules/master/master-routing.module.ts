@@ -8,6 +8,7 @@ import { ArticleListComponent } from './pages/article-list/article-list.componen
 import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
 import { FAQListComponent } from './pages/faq-list/faq-list.component';
 import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
+import { BranchListComponent } from './pages/branch-list/branch-list.component';
 
 const routes: Routes = [
   {
@@ -92,6 +93,13 @@ const routes: Routes = [
     component: FAQDetailsComponent,
     data: {
       title: 'Update FAQ'
+    }
+  },
+  {
+    path: 'branches',
+    component: BranchListComponent,
+    data: {
+      title: 'Branch Locations'
     }
   }
 ];
