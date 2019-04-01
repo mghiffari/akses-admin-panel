@@ -6,7 +6,8 @@
                 "banners": "Home Banners",
                 "users": "Users",
                 "articles": "Articles",
-                "faqs": "FAQs"
+                "faqs": "FAQs",
+                "branches": "Branch Locations"
             }
         }
     },
@@ -272,6 +273,13 @@
             "lastName": "Last Name",
             "email": "Email",
             "createdDate": "Created Date"
+        },
+        "branchTable": {
+            "branchName": "Branch Name",
+            "branchCode": "Branch Code",
+            "branchType": "Branch Type",
+            "address": "Address",
+            "province": "Province"
         }
     },
     "bannerListScreen": {
@@ -370,6 +378,13 @@
         "succesUpdated": "Branch Location successfully updated",
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new Branch Location"
+    },
+    "branchListScreen": {
+        "title": "Branch Locations Data",
+        "createBranch": "create branch location",
+        "uploadCSV": "upload CSV",
+        "deleteConfirmation": "Are you sure you want to delete branch location {{name}}?",
+        "loadFailed": "failed to get list of branch locations"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

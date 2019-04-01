@@ -6,7 +6,8 @@
                 "banners": "Home Banner",
                 "users": "User",
                 "articles": "Artikel",
-                "faqs": "FAQ"
+                "faqs": "FAQ",
+                "branches": "Lokasi Cabang"
             }
         }
     },
@@ -272,6 +273,13 @@
             "lastName": "Nama Belakang",
             "email": "Email",
             "createdDate": "Tanggal Dibuat"
+        },
+        "branchTable": {
+            "branchName": "Nama Cabang",
+            "branchCode": "Kode Cabang",
+            "branchType": "Tipe Cabang",
+            "address": "Alamat",
+            "province": "Provinsi"
         }
     },
     "bannerListScreen": {
@@ -370,6 +378,13 @@
         "succesUpdated": "data Lokasi Cabang berhaisl diubah",
         "updateFailed": "gagal mengubah data Lokasi Cabang",
         "createFailed": "gagal menambahkan Lokasi Cabang baru"
+    },
+    "branchListScreen": {
+        "title": "Data Lokasi Cabang",
+        "createBranch": "tambahkan lokasi cabang",
+        "uploadCSV": "upload CSV",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus lokasi cabang {{name}}?",
+        "loadFailed": "gagal mendapatkan list lokasi cabang"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

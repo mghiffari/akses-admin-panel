@@ -21,7 +21,7 @@ export class BannerListComponent implements OnInit {
   }
   today = new Date();
 
-  bannerColums: string[] = [
+  bannerColumns: string[] = [
     'number',
     'title',
     'banner',

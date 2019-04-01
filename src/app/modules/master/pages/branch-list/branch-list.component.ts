@@ -1,16 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
+import { BranchService } from '../../services/branch.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
-import { ArticleService } from '../../services/article.service';
 
 @Component({
-  selector: 'app-article-list',
-  templateUrl: './article-list.component.html',
+  selector: 'app-branch-list',
+  templateUrl: './branch-list.component.html',
   styleUrls: []
 })
-export class ArticleListComponent implements OnInit {
+export class BranchListComponent implements OnInit {
   paginatorProps = {
     pageSizeOptions: [10, 25, 50, 100],
     pageSize: 10,
@@ -19,38 +18,24 @@ export class ArticleListComponent implements OnInit {
     pageIndex: 0
   }
 
-  articleColumns: string[] = [
+  branchColumns: string[] = [
     'number',
-    'category',
-    'title',
-    'uniqueTag',
-    'action',
+    'branchName',
+    'branchCode',
+    'branchType',
+    'address',
+    'province',
+    'action'
   ]
 
-  articles = [
+  branches = [
     {
       id: 'ID1',
-      category: 'about adira',
-      title: 'about adira title 1',
-      unique_tag: 'unique tag 1'
-    },
-    {
-      id: 'ID2',
-      category: 'about adira',
-      title: 'about adira title 2',
-      unique_tag: 'unique tag 2'
-    },
-    {
-      id: 'ID3',
-      category: 'product information',
-      title: 'product information title 1',
-      unique_tag: 'unique tag 3'
-    },
-    {
-      id: 'ID4',
-      category: 'product information',
-      title: 'product information title 2',
-      unique_tag: 'unique tag 4'
+      branchName: 'Aceh - Bireun',
+      branchType: 'RO',
+      branchCode: 'CODE1',
+      address: 'Jl. Laksamana Malahayati No.5',
+      province: 'Nangroe Aceh Darussalam'
     }
   ];
   search = '';
@@ -60,7 +45,7 @@ export class ArticleListComponent implements OnInit {
   isFocusedInput = false;
 
   private table: any;
-  @ViewChild('articlesTable') set tabl(table: ElementRef) {
+  @ViewChild('branchesTable') set tabl(table: ElementRef) {
     this.table = table;
   }
 
@@ -70,28 +55,28 @@ export class ArticleListComponent implements OnInit {
   }
 
   constructor(
-    private articleService: ArticleService,
+    private branchService: BranchService,
     private snackBar: MatSnackBar,
     private modalConfirmation: MatDialog
   ) { }
 
   ngOnInit() {
-    console.log('ArticleListComponent | ngOnInit');
-    this.paginatorProps.length = this.articles.length
+    console.log('BranchListComponent | ngOnInit');
+    this.paginatorProps.length = this.branches.length
     // this.lazyLoadData()
   }
 
   //delete
-  onDelete(article){
-    // console.log("ArticleListComponent | onDelete")
+  onDelete(branch){
+    // console.log("BranchListComponent | onDelete")
     // const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
     //   width: '260px',
     //   data: {
     //     title: 'deleteConfirmation',
     //     content: {
-    //       string: 'articleListScreen.deleteConfirmation',
+    //       string: 'branchListScreen.deleteConfirmation',
     //       data: {
-    //         title: article.title
+    //         name: branch.branchName
     //       }
     //     }
     //   }
@@ -99,7 +84,7 @@ export class ArticleListComponent implements OnInit {
     // modalRef.afterClosed().subscribe(result => {
     //   if(result){
     //     this.loading = true;
-    //     this.articleService.deleteArticle(article.id).subscribe(
+    //     this.branchService.deleteBranch(branch.id).subscribe(
     //       (data: any) => {
     //         try {
     //           console.table(data);
@@ -141,14 +126,14 @@ export class ArticleListComponent implements OnInit {
 
   // event handling paginator value changed (page index and page size)
   onPaginatorChange(e) {
-    // console.log('ArticleListComponent | onPaginatorChange');
+    // console.log('BranchListComponent | onPaginatorChange');
     // this.paginatorProps = Object.assign(this.paginatorProps, e)
     // this.lazyLoadData()
   }
 
   // event handling when user is typing on search input
   onSearch() {
-    // console.log('ArticleListComponent | onSearch');
+    // console.log('BranchListComponent | onSearch');
     // this.searchTexts.push(this.search)
     // if (this.paginatorProps.pageIndex !== 0) {
     //   //this will call paginator change
@@ -160,17 +145,17 @@ export class ArticleListComponent implements OnInit {
 
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
-    console.log('ArticleListComponent | lazyLoadData');
+    console.log('BranchListComponent | lazyLoadData');
     let isFocusedInput = this.isFocusedInput;
     this.loading = true;
-    this.articleService.getArticleList(
+    this.branchService.getBranchList(
       this.paginatorProps.pageIndex + 1,
       this.paginatorProps.pageSize,
       this.search).subscribe(
         (data: any) => {
           try {            
             console.table(data);
-            this.articles = data.data;
+            this.branches = data.data;
             this.paginatorProps.length = data.count;
             if (this.table) {
               this.table.renderRows();
@@ -184,7 +169,7 @@ export class ArticleListComponent implements OnInit {
             console.table(error);
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
-                title: 'articleListScreen.loadFailed',
+                title: 'branchListScreen.loadFailed',
                 content: {
                   text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
                   data: null
