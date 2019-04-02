@@ -453,6 +453,18 @@
         "01061": "failed to upload file, connection timeout!",
         "01062": "no access token provided",
         "01063": "invalid access token",
-        "01064": "file can not be empty"
+        "01064": "failed to create new FAQ",
+        "01065": "failed to save faq record",
+        "01066": "failed to retrieve FAQ, FAQ not found",
+        "01067": "failed to get FAQ",
+        "01068": "failed to update FAQ",
+        "01069": "failed to delete FAQ",
+        "01070": "file can not be empty",
+        "01071": "bookmark already reach maximum number",
+        "01072": "mising bookmark parameter",
+        "01073": "value already exist",
+        "01074": "missing approval",
+        "01075": "data not found",
+        "01076": "failed to update"
     }
 }
