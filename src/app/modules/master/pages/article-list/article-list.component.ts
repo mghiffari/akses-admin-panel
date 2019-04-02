@@ -27,32 +27,7 @@ export class ArticleListComponent implements OnInit {
     'action',
   ]
 
-  articles = [
-    {
-      id: 'ID1',
-      category: 'about adira',
-      title: 'about adira title 1',
-      unique_tag: 'unique tag 1'
-    },
-    {
-      id: 'ID2',
-      category: 'about adira',
-      title: 'about adira title 2',
-      unique_tag: 'unique tag 2'
-    },
-    {
-      id: 'ID3',
-      category: 'product information',
-      title: 'product information title 1',
-      unique_tag: 'unique tag 3'
-    },
-    {
-      id: 'ID4',
-      category: 'product information',
-      title: 'product information title 2',
-      unique_tag: 'unique tag 4'
-    }
-  ];
+  articles = [];
   search = '';
   searchTexts = [];
   closeText = '';
@@ -77,85 +52,84 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit() {
     console.log('ArticleListComponent | ngOnInit');
-    this.paginatorProps.length = this.articles.length
-    // this.lazyLoadData()
+    this.lazyLoadData()
   }
 
   //delete
   onDelete(article){
-    // console.log("ArticleListComponent | onDelete")
-    // const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
-    //   width: '260px',
-    //   data: {
-    //     title: 'deleteConfirmation',
-    //     content: {
-    //       string: 'articleListScreen.deleteConfirmation',
-    //       data: {
-    //         title: article.title
-    //       }
-    //     }
-    //   }
-    // })
-    // modalRef.afterClosed().subscribe(result => {
-    //   if(result){
-    //     this.loading = true;
-    //     this.articleService.deleteArticle(article.id).subscribe(
-    //       (data: any) => {
-    //         try {
-    //           console.table(data);
-    //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //             data: {
-    //               title: 'success',
-    //               content: {
-    //                 text: 'dataDeleted',
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //           this.lazyLoadData()              
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       },
-    //       error => {
-    //         try {
-    //           console.table(error);
-    //           this.loading = false;
-    //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //             data: {
-    //               title: 'failedToDelete',
-    //               content: {
-    //                 text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-    //                 data: null
-    //               }
-    //             }
-    //           })              
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       }
-    //     )
-    //   }
-    // })
+    console.log("ArticleListComponent | onDelete")
+    const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+      width: '260px',
+      data: {
+        title: 'deleteConfirmation',
+        content: {
+          string: 'articleListScreen.deleteConfirmation',
+          data: {
+            title: article.title
+          }
+        }
+      }
+    })
+    modalRef.afterClosed().subscribe(result => {
+      if(result){
+        this.loading = true;
+        this.articleService.deleteArticle(article).subscribe(
+          (data: any) => {
+            try {
+              console.table(data);
+              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                data: {
+                  title: 'success',
+                  content: {
+                    text: 'dataDeleted',
+                    data: null
+                  }
+                }
+              })
+              this.lazyLoadData()              
+            } catch (error) {
+              console.table(error)
+            }
+          },
+          error => {
+            try {
+              console.table(error);
+              this.loading = false;
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'failedToDelete',
+                  content: {
+                    text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })              
+            } catch (error) {
+              console.table(error)
+            }
+          }
+        )
+      }
+    })
   }
 
   // event handling paginator value changed (page index and page size)
   onPaginatorChange(e) {
-    // console.log('ArticleListComponent | onPaginatorChange');
-    // this.paginatorProps = Object.assign(this.paginatorProps, e)
-    // this.lazyLoadData()
+    console.log('ArticleListComponent | onPaginatorChange');
+    this.paginatorProps = Object.assign(this.paginatorProps, e)
+    this.lazyLoadData()
   }
 
   // event handling when user is typing on search input
   onSearch() {
-    // console.log('ArticleListComponent | onSearch');
-    // this.searchTexts.push(this.search)
-    // if (this.paginatorProps.pageIndex !== 0) {
-    //   //this will call paginator change
-    //   this.paginatorProps.pageIndex = 0;
-    // } else {
-    //   this.lazyLoadData();
-    // }
+    console.log('ArticleListComponent | onSearch');
+    this.searchTexts.push(this.search)
+    if (this.paginatorProps.pageIndex !== 0) {
+      //this will call paginator change
+      this.paginatorProps.pageIndex = 0;
+    } else {
+      this.lazyLoadData();
+    }
   }
 
   // call api to get data based on table page, page size, and search keyword

@@ -21,11 +21,11 @@ export class ArticleService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //delete article by id
-  deleteArticle(id){
-    let url = this.articleApiUrl + id;
-    console.log("ArticleService | deleteArticle ", url);
-    return this.authService.wrapTokenDeleteApi(url)
+  //delete article with update
+  deleteArticle(article){
+    let newArticle = Object.assign(article, {is_deleted: true})
+    console.log("ArticleService | deleteArticle ", this.articleApiUrl);
+    return this.authService.wrapTokenPutApi(this.articleApiUrl, newArticle)
   }
 
   //upload image
