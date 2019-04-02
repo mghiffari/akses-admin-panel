@@ -143,7 +143,7 @@
             <div><strong>{{'forms.urlRadioBanner.fieldModulAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
               <mat-select [(ngModel)]="getCreateBannerData().foot_text_redirect">
-                <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+                <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
                   {{modul.name}}
                 </mat-option>
               </mat-select>
@@ -205,7 +205,7 @@
             <div><strong>{{'forms.urlRadioBanner.fieldModulAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
               <mat-select [(ngModel)]="getCreateBannerData().foot_image_redirect">
-                <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+                <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
                   {{modul.name}}
                 </mat-option>
               </mat-select>
@@ -266,7 +266,7 @@
             <div><strong>{{'forms.urlRadioBanner.fieldModulAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
               <mat-select [(ngModel)]="getCreateBannerData().foot_button_redirect">
-                <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+                <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
                   {{modul.name}}
                 </mat-option>
               </mat-select>
@@ -311,7 +311,7 @@
       <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
         <mat-form-field appearance="fill">
           <mat-select [(ngModel)]="getCreateBannerData().clickable_redirect">
-            <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+            <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
               {{modul.name}}
             </mat-option>
           </mat-select>
