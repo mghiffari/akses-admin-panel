@@ -59,7 +59,7 @@
         <mat-error class="bottom-error" *ngIf="titleOrder.invalid && (titleOrder.dirty || titleOrder.touched)">
           <span *ngIf="titleOrder.errors.required">{{'forms.faqOrder.errorRequired' | translate}}</span>
           <span *ngIf="titleOrder.errors.min">{{'forms.faqOrder.errorMin' | translate }}</span>
-          <span *ngIf="titleOrder.errors.pattern">{{'forms.faqOrder.errorFormat' | translate}}</span>
+          <span *ngIf="titleOrder.errors.pattern && !titleOrder.errors.min">{{'forms.faqOrder.errorFormat' | translate}}</span>
         </mat-error>
       </div>
     </div>

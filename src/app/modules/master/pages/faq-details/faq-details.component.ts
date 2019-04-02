@@ -157,56 +157,56 @@ export class FAQDetailsComponent implements OnInit {
   //save button click event handler
   save() {
     console.log('FAQDetailsComponent | save')
-    // this.onSubmittingForm = true;
-    // let form = this.faqForm.value;
-    // this.faqModel = new FAQ();
-    // this.faqModel.category = form.category;
-    // this.faqModel.title = form.title;
-    // this.faqModel.title_order = form.titleOrder;
-    // this.faqModel.unique_tag = form.uniqueTag;
-    // this.faqModel.content = form.content;
-    // this.faqModel.bookmark = form.bookmark;
+    this.onSubmittingForm = true;
+    let form = this.faqForm.value;
+    this.faqModel = new FAQ();
+    this.faqModel.category = form.category;
+    this.faqModel.title = form.title;
+    this.faqModel.title_order = form.titleOrder;
+    this.faqModel.unique_tag = form.uniqueTag;
+    this.faqModel.content = form.content;
+    this.faqModel.bookmark = form.bookmark;
     // if (this.isCreate) {
-    //   this.faqService.createFaq(this.faqModel)
-    //     .subscribe(
-    //       (data: any) => {
-    //         try {            
-    //           console.table(data);
-    //           this.onSubmittingForm = false;
-    //           let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //             data: {
-    //               title: 'success',
-    //               content: {
-    //                 text: 'faqDetailsScreen.succesCreated',
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //           snackbarSucess.afterDismissed().subscribe(() => {
-    //             this.goToListScreen();
-    //           })
-    //         } catch (error) {
-    //           console.log(error)
-    //         }
-    //       },
-    //       error => {
-    //         try {            
-    //           console.table(error);
-    //           this.onSubmittingForm = false;
-    //           this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //             data: {
-    //               title: 'faqDetailsScreen.createFailed',
-    //               content: {
-    //                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //         } catch (error) {
-    //           console.log(error)
-    //         }
-    //       }
-    //     )
+    this.faqService.createFaq(this.faqModel)
+      .subscribe(
+        (data: any) => {
+          try {
+            console.table(data);
+            this.onSubmittingForm = false;
+            let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+              data: {
+                title: 'success',
+                content: {
+                  text: 'faqDetailsScreen.succesCreated',
+                  data: null
+                }
+              }
+            })
+            snackbarSucess.afterDismissed().subscribe(() => {
+              this.goToListScreen();
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        },
+        error => {
+          try {
+            console.table(error);
+            this.onSubmittingForm = false;
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'faqDetailsScreen.createFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      )
     // } else {
     //   this.faqModel.id = this.id;
     //   this.onSubmittingForm = true;
