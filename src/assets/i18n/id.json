@@ -351,7 +351,8 @@
         "succesCreated": "FAQ baru berhasil ditambahkan",
         "succesUpdated": "data FAQ berhasil diubah",
         "updateFailed": "gagal mengubah data FAQ",
-        "createFailed": "gagal menambahkan FAQ baru"
+        "createFailed": "gagal menambahkan FAQ baru",
+        "getFaqCategoriesFailed": "gagal mendapatkan Kategori FAQ"
     },
     "articleListScreen": {
         "title": "Data Artikel",

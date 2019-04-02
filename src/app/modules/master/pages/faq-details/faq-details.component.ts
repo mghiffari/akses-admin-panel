@@ -7,6 +7,8 @@ import { FAQService } from '../../services/faq.service';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { environment } from 'src/environments/environment';
+import { LovData } from 'src/app/shared/models/lov';
+import { LovService } from 'src/app/shared/services/lov.service';
 
 @Component({
   selector: 'app-faq-details',
@@ -16,6 +18,7 @@ import { environment } from 'src/environments/environment';
 export class FAQDetailsComponent implements OnInit {
   faqForm: FormGroup;
   faqModel: FAQ;
+  categories: LovData[] = [];
   onSubmittingForm = false;
   id;
   isCreate = true;
@@ -25,10 +28,11 @@ export class FAQDetailsComponent implements OnInit {
   //constructor
   constructor(
     private faqService: FAQService,
+    private lovService: LovService,
     private router: Router,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute
-  ) { 
+  ) {
     console.log("FAQDetailsComponent | constructor")
   }
 
@@ -66,6 +70,7 @@ export class FAQDetailsComponent implements OnInit {
   ngOnInit() {
     console.log("FAQDetailsComponent | OnInit")
     this.loading = true;
+    this.getCategories();
     // if (this.router.url.includes('update')) {
     //   this.isCreate = false;
     //   this.id = this.route.snapshot.params['id'];
@@ -106,16 +111,47 @@ export class FAQDetailsComponent implements OnInit {
     //       this.loading = false;
     //     })
     // } else {
-      this.faqForm = new FormGroup({
-        category: new FormControl('', [Validators.required]),
-        title: new FormControl('', [Validators.required]),
-        titleOrder: new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
-        uniqueTag: new FormControl(''),
-        content: new FormControl('', [Validators.required]),
-        bookmark: new FormControl(false)
-      })
-      this.loading = false;
+    this.faqForm = new FormGroup({
+      category: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required]),
+      titleOrder: new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
+      uniqueTag: new FormControl(''),
+      content: new FormControl('', [Validators.required]),
+      bookmark: new FormControl(false)
+    })
+    this.loading = false;
     // }
+  }
+
+  //call service to get faq categories lov
+  getCategories() {
+    console.log('FAQDetailsComponent | getCategories')
+    this.lovService.getFAQCategory().subscribe(
+      data => {
+        try {
+          console.table(data);
+          this.categories = data.data[0].aks_adm_lovs;
+        } catch (error) {
+          console.table(error)
+        }
+      },
+      error => {
+        try {
+          console.table(error);
+          let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'faqDetailsScreen.getFaqCategoriesFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    )
   }
 
   //save button click event handler
