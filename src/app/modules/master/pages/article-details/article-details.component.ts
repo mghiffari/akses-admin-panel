@@ -106,6 +106,7 @@ export class ArticleDetailsComponent implements OnInit {
     return this._articleDetailsService.getModuls();
   }
 
+  //get article data for page
   getArticleData() {
     console.log('ArticleDetailComponent | getArticleData');
     return this._articleDetailsService.getArticleData();
