@@ -71,11 +71,11 @@ export class ArticleListComponent implements OnInit {
         }
       }
     })
-    let delArticle = Object.assign(article, {});
-    delArticle.is_deleted = true;
     modalRef.afterClosed().subscribe(result => {
       if(result){
         this.loading = true;
+        let delArticle = Object.assign({}, article);
+        delArticle.is_deleted = true;
         this.articleService.updateArticle(delArticle).subscribe(
           (data: any) => {
             try {
