@@ -202,9 +202,9 @@
             "errorRequired": "Provinsi wajib diisi"
         },
         "city": {
-            "fieldTitle": "Kota/Kabupaten",
-            "placeholder": "Pilih Kota/Kabupaten",
-            "errorRequired": "Kota/Kabupaten wajib diisi"
+            "fieldTitle": "Kota / Kabupaten",
+            "placeholder": "Pilih Kota / Kabupaten",
+            "errorRequired": "Kota / Kabupaten wajib diisi"
         },
         "subDistrict": {
             "fieldTitle": "Kecamatan",
@@ -297,7 +297,9 @@
         "updateFailed": "Gagal mengubah data banner",
         "createFailed": "Gagal membuat banner baru",
         "loadFailed": "Gagal mendapatkan data banner",
-        "urlNotValid": "Masukkan URL yang valid"
+        "urlNotValid": "Masukkan URL yang valid",
+        "getBranchTypeFailed": "gagal mendapatkan data tipe branch",
+        "getIndonesiaZonesFailed": "gagal mendapatkan list daerah Indonesia"
     },
     "changePasswordScreen": {
         "title": "Ubah Password",

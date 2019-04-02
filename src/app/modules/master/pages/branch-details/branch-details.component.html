@@ -55,8 +55,7 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="branchType">
               <mat-option value="">{{'forms.branchType.placeholder' | translate}}</mat-option>
-              <mat-option value="1">type 1</mat-option>
-              <mat-option value="2">type 2</mat-option>
+              <mat-option *ngFor="let type of branchTypes" [value]="type.value">{{type.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="branchType.invalid && (branchType.dirty || branchType.touched)">
@@ -72,8 +71,7 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="province">
               <mat-option value="">{{'forms.province.placeholder' | translate}}</mat-option>
-              <mat-option value="1">DKI Jakarta</mat-option>
-              <mat-option value="2">Jawa Barat</mat-option>
+              <mat-option *ngFor="let prov of provinces" [value]="prov.value" (click)="resetCities()">{{prov.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="province.invalid && (province.dirty || province.touched)">
@@ -103,6 +101,40 @@
       </div>
       <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
         <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.city.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="city">
+              <mat-option value="">{{'forms.city.placeholder' | translate}}</mat-option>
+              <mat-option value="1">City 1</mat-option>
+              <mat-option value="2">City 2</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="city.invalid && (city.dirty || city.touched)">
+            <span *ngIf="city.errors.required">{{'forms.city.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+      ngClass.md="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.latitude.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput type="number" placeholder="{{'forms.latitude.placeholder' | translate}}"
+              formControlName="latitude">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="latitude.invalid && (latitude.dirty || latitude.touched)">
+            <span *ngIf="latitude.errors.required">{{'forms.latitude.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
           {{'forms.subDistrict.fieldTitle' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
@@ -122,16 +154,16 @@
     <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
       ngClass.md="border-bottom-gray">
       <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
-        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-          {{'forms.latitude.fieldTitle' | translate}}
+        <div #longitudeLabel fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.longitude.fieldTitle' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <input matInput type="number" placeholder="{{'forms.latitude.placeholder' | translate}}"
-              formControlName="latitude">
+            <input matInput type="number" placeholder="{{'forms.longitude.placeholder' | translate}}"
+              formControlName="longitude">
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="latitude.invalid && (latitude.dirty || latitude.touched)">
-            <span *ngIf="latitude.errors.required">{{'forms.latitude.errorRequired' | translate}}</span>
+          <mat-error class="bottom-error" *ngIf="longitude.invalid && (longitude.dirty || latitude.touched)">
+            <span *ngIf="longitude.errors.required">{{'forms.longitude.errorRequired' | translate}}</span>
           </mat-error>
         </div>
       </div>
@@ -155,20 +187,6 @@
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
       ngClass.md="border-bottom-gray">
-      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
-        <div #longitudeLabel fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-          {{'forms.longitude.fieldTitle' | translate}}
-        </div>
-        <div fxFlexAlign="center" fxFlex="70%">
-          <mat-form-field appearance="fill">
-            <input matInput type="number" placeholder="{{'forms.longitude.placeholder' | translate}}"
-              formControlName="longitude">
-          </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="longitude.invalid && (longitude.dirty || latitude.touched)">
-            <span *ngIf="longitude.errors.required">{{'forms.longitude.errorRequired' | translate}}</span>
-          </mat-error>
-        </div>
-      </div>
       <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray" *ngIf="isCreate">
         <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
           {{'forms.createdBy.fieldTitle' | translate}}
