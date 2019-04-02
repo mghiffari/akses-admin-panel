@@ -71,7 +71,7 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="province">
               <mat-option value="">{{'forms.province.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let prov of provinces" [value]="prov.value" (click)="resetCities()">{{prov.value}}</mat-option>
+              <mat-option *ngFor="let prov of provinces" [value]="prov.value" (click)="setCities(prov)">{{prov.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="province.invalid && (province.dirty || province.touched)">
@@ -107,8 +107,7 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="city">
               <mat-option value="">{{'forms.city.placeholder' | translate}}</mat-option>
-              <mat-option value="1">City 1</mat-option>
-              <mat-option value="2">City 2</mat-option>
+              <mat-option *ngFor="let elCity of cities" [value]="elCity.value" (click)="setSubDistricts(elCity)">{{elCity.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="city.invalid && (city.dirty || city.touched)">
@@ -141,8 +140,7 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="subDistrict">
               <mat-option value="">{{'forms.subDistrict.placeholder' | translate}}</mat-option>
-              <mat-option value="1">Kecamatan 1</mat-option>
-              <mat-option value="2">Kecamatan 2</mat-option>
+              <mat-option *ngFor="let subDist of subDistricts" [value]="subDist.value" (click)="setVillages(subDist)">{{subDist.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="subDistrict.invalid && (subDistrict.dirty || subDistrict.touched)">
@@ -175,8 +173,7 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="village">
               <mat-option value="">{{'forms.village.placeholder' | translate}}</mat-option>
-              <mat-option value="1">Kelurahan 1</mat-option>
-              <mat-option value="2">Kelurahan 2</mat-option>
+              <mat-option *ngFor="let vil of villages" [value]="vil.value">{{vil.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="village.invalid && (village.dirty || village.touched)">

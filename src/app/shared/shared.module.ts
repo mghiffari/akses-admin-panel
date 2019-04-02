@@ -19,7 +19,8 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
     CommonModule,
     AngularMaterialModule,
     HttpClientModule,
-    TranslateModule
+    TranslateModule,
+    ReactiveFormsModule
   ], 
   exports: [
     AngularMaterialModule,

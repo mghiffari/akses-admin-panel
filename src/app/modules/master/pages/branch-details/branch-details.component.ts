@@ -25,7 +25,7 @@ export class BranchDetailsComponent implements OnInit {
   branchTypes = [];
   provinces = [];
   cities = [];
-  subDisctricts = [];
+  subDistricts = [];
   villages = [];
 
   //constructor
@@ -205,6 +205,17 @@ export class BranchDetailsComponent implements OnInit {
           data => {
             console.table(data);
             this.provinces = data.data;
+            if(!this.isCreate){
+              let selectedProvince = this.provinces.find(el => {
+                return el.value === this.province.value;
+              })
+              if(selectedProvince){
+                this.setCities(selectedProvince, false)
+              } else {
+                this.province.reset()
+                this.setCities(null)
+              }
+            }
           }, error => {
             try {
               console.table(error);
@@ -224,6 +235,87 @@ export class BranchDetailsComponent implements OnInit {
             this.loading = false;
           })
       })
+  }
+
+  // set list of cities based on province
+  setCities(province = null, reset = true){
+    console.log('BranchDetailsComponent | setCities')
+    if(reset){
+      this.city.reset()
+      this.city.setValue('')
+    }
+    if(!province){
+      this.cities = [];
+      this.setSubDistricts(null)
+    } else {
+      this.cities = province.aks_adm_lovs;
+      if(this.city.value && this.city.value !== ''){
+        let selectedCity = this.cities.find(el => {
+          return el.value === this.city.value;
+        })
+        if(selectedCity){
+          this.setSubDistricts(selectedCity, reset)
+        } else {
+          this.city.reset()
+          this.city.setValue('')
+          this.setSubDistricts(null)
+        }
+      } else {
+        this.setSubDistricts(null)
+      }
+    }
+  }
+
+  // set list of sub disctricts based on city
+  setSubDistricts(city = null, reset = true){
+    console.log('BranchDetailsComponent | setSubDistricts')
+    if(reset){
+      this.subDistrict.reset()
+      this.subDistrict.setValue('')
+    }
+    if(!city){
+      this.subDistricts = [];
+      this.setVillages(null)
+    } else {
+      this.subDistricts = city.aks_adm_lovs;
+      if(this.subDistrict.value && this.subDistrict.value !== ''){
+        let selectedSubDiscrict = this.subDistricts.find(el => {
+          return el.value === this.subDistrict.value;
+        })
+        if(selectedSubDiscrict){
+          this.setVillages(selectedSubDiscrict, reset)
+        } else {
+          this.subDistrict.reset()
+          this.subDistrict.setValue('')
+          this.setVillages(null)
+        }
+      } else {
+        this.setVillages(null)
+      }
+    }
+  }
+
+  // set list of villages based on sub disctrict
+  setVillages(subDistrict = null, reset = true){
+    console.log('BranchDetailsComponent | setVillages')
+    if(reset){
+      this.village.reset()
+      this.village.setValue('')
+    }
+    if(!subDistrict){
+      this.villages = [];
+    } else {
+      this.villages = subDistrict.aks_adm_lovs;
+      if(this.village.value && this.village.value !== ''){
+        let selectedVillage = this.villages.find(el => {
+          return el.value === this.village.value;
+        })
+        if(!selectedVillage){
+          this.village.reset()
+          this.village.setValue('')
+        }
+      }
+    }
   }
 
   //save button click event handler
