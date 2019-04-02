@@ -356,10 +356,14 @@
     "faqListScreen": {
         "title": "FAQs Data",
         "createFAQ": "create faq",
-        "deleteConfirmation": "Are you sure you want to delete faq {{title}}?",
+        "deleteConfirmation": "Are you sure you want to delete FAQ {{title}}?",
         "loadFailed": "failed to get list of FAQ",
         "removeBookmark": "click to remove from bookmark",
-        "addBookmark": "click to add to bookmark"
+        "addBookmark": "click to add to bookmark",
+        "bookmarkSuccess": "FAQ is now bookmarked",
+        "removeBookmarkSuccess": "FAQ is removed from bookmark",
+        "bookmarkFailed": "failed to bookmark FAQ",
+        "removeBookmarkFailed": "failed to remove FAQ from bookmark"
     },
     "faqDetailsScreen": {
         "getFaqFailed": "failed to get FAQ data",

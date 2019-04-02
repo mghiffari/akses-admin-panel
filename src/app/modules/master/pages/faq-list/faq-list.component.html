@@ -38,10 +38,12 @@
           <mat-icon *ngIf="element.bookmark" 
             color="primary" 
             class="cursor-pointer"
-            matTooltip="{{'faqListScreen.removeBookmark' | translate}}">star</mat-icon>
+            matTooltip="{{'faqListScreen.removeBookmark' | translate}}" 
+            (click)="onToggleBookmark(element)">star</mat-icon>
           <mat-icon *ngIf="!element.bookmark" 
             class="cursor-pointer"
-            matTooltip="{{'faqListScreen.addBookmark' | translate}}">star_border</mat-icon>
+            matTooltip="{{'faqListScreen.addBookmark' | translate}}"
+            (click)="onToggleBookmark(element)">star_border</mat-icon>
         </td>
       </ng-container>
       <ng-container matColumnDef="number">
