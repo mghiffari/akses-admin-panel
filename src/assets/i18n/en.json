@@ -356,7 +356,7 @@
     "faqListScreen": {
         "title": "FAQs Data",
         "createFAQ": "create faq",
-        "deleteConfirmation": "Are you sure you want to delete faq {{title}}?",
+        "deleteConfirmation": "Are you sure you want to delete FAQ {{title}}?",
         "loadFailed": "failed to get list of FAQ",
         "removeBookmark": "click to remove from bookmark",
         "addBookmark": "click to add to bookmark",

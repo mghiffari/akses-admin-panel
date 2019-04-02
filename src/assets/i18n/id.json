@@ -339,7 +339,7 @@
     "faqListScreen": {
         "title": "Data FAQ",
         "createFAQ": "tambahkan faq baru",
-        "deleteConfirmation": "Apakah anda yakin untuk menghapus faq {{title}}?",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus FAQ {{title}}?",
         "loadFailed": "gagal mendapatkan list FAQ",
         "removeBookmark": "click untuk menghapus dari bookmark",
         "addBookmark": "click untuk menambahkan ke bookmark",
