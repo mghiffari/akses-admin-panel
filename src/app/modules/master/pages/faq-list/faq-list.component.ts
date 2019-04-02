@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { FAQService } from '../../services/faq.service';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
+import { FAQ } from '../../models/faq';
+import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-faq-list',
@@ -27,40 +30,7 @@ export class FAQListComponent implements OnInit {
     'action',
   ]
 
-  faqs = [
-    {
-      id: 'ID1',
-      category: 'about adira',
-      title: 'about adira title 1',
-      unique_tag: 'unique tag 1',
-      bookmark: true,
-      title_order: 1,
-    },
-    {
-      id: 'ID2',
-      category: 'about adira',
-      title: 'about adira title 2',
-      unique_tag: 'unique tag 2',
-      bookmark: false,
-      title_order: 2,
-    },
-    {
-      id: 'ID3',
-      category: 'product information',
-      title: 'product information title 1',
-      unique_tag: 'unique tag 3',
-      bookmark: false,
-      title_order: 1,
-    },
-    {
-      id: 'ID4',
-      category: 'product information',
-      title: 'product information title 2',
-      unique_tag: 'unique tag 4',
-      bookmark: true,
-      title_order: 1,
-    }
-  ];
+  faqs: FAQ[] = [];
   search = '';
   searchTexts = [];
   closeText = '';
@@ -84,91 +54,136 @@ export class FAQListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('ArticleListComponent | ngOnInit');
-    this.paginatorProps.length = this.faqs.length
-    // this.lazyLoadData()
+    console.log('FAQListComponent | ngOnInit');
+    this.lazyLoadData()
   }
 
   //delete
-  onDelete(){
-    // console.log("ArticleListComponent | onDelete")
-    // const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
-    //   width: '260px',
-    //   data: {
-    //     title: 'deleteConfirmation',
-    //     content: {
-    //       string: 'articleListScreen.deleteConfirmation',
-    //       data: {
-    //         title: article.title
-    //       }
-    //     }
-    //   }
-    // })
-    // modalRef.afterClosed().subscribe(result => {
-    //   if(result){
-    //     this.loading = true;
-    //     this.articleService.deleteArticle(article.id).subscribe(
-    //       (data: any) => {
-    //         try {
-    //           console.table(data);
-    //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //             data: {
-    //               title: 'success',
-    //               content: {
-    //                 text: 'dataDeleted',
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //           this.lazyLoadData()              
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       },
-    //       error => {
-    //         try {
-    //           console.table(error);
-    //           this.loading = false;
-    //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //             data: {
-    //               title: 'failedToDelete',
-    //               content: {
-    //                 text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-    //                 data: null
-    //               }
-    //             }
-    //           })              
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       }
-    //     )
-    //   }
-    // })
+  onDelete(faq) {
+    console.log("FAQListComponent | onDelete")
+    const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+      width: '260px',
+      data: {
+        title: 'deleteConfirmation',
+        content: {
+          string: 'faqListScreen.deleteConfirmation',
+          data: {
+            title: faq.title
+          }
+        }
+      }
+    })
+    modalRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loading = true;
+        let delFAQ: FAQ = new FAQ();
+        delFAQ.is_deleted = true;
+        delFAQ = Object.assign(faq, delFAQ)
+        this.faqService.updateFaq(delFAQ).subscribe(
+          (data: any) => {
+            try {
+              console.table(data);
+              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                data: {
+                  title: 'success',
+                  content: {
+                    text: 'dataDeleted',
+                    data: null
+                  }
+                }
+              })
+              this.lazyLoadData()
+            } catch (error) {
+              console.table(error)
+            }
+          },
+          error => {
+            try {
+              console.table(error);
+              this.loading = false;
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'failedToDelete',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          }
+        )
+      }
+    })
   }
 
   // event handling paginator value changed (page index and page size)
   onPaginatorChange(e) {
-    // console.log('ArticleListComponent | onPaginatorChange');
-    // this.paginatorProps = Object.assign(this.paginatorProps, e)
-    // this.lazyLoadData()
+    console.log('FAQListComponent | onPaginatorChange');
+    this.paginatorProps = Object.assign(this.paginatorProps, e)
+    this.lazyLoadData()
   }
 
   // event handling when user is typing on search input
   onSearch() {
-    // console.log('ArticleListComponent | onSearch');
-    // this.searchTexts.push(this.search)
-    // if (this.paginatorProps.pageIndex !== 0) {
-    //   //this will call paginator change
-    //   this.paginatorProps.pageIndex = 0;
-    // } else {
-    //   this.lazyLoadData();
-    // }
+    console.log('FAQListComponent | onSearch');
+    this.searchTexts.push(this.search)
+    if (this.paginatorProps.pageIndex !== 0) {
+      //this will call paginator change
+      this.paginatorProps.pageIndex = 0;
+    } else {
+      this.lazyLoadData();
+    }
+  }
+
+  // event handling when toggling faq bookmark
+  onToggleBookmark(faq) {
+    console.log('FAQListComponent | onToggleBookmark');
+    let toggleFAQ: FAQ = Object.assign(new FAQ, faq)
+    toggleFAQ.bookmark = !faq.bookmark;
+    this.faqService.updateFaq(toggleFAQ).subscribe(
+      (data: any) => {
+        try {
+          console.table(data);
+          this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+            data: {
+              title: 'success',
+              content: {
+                text: toggleFAQ.bookmark ? 'faqListScreen.bookmarkSuccess' : 'faqListScreen.removeBookmarkSuccess',
+                data: null
+              }
+            }
+          })
+          this.lazyLoadData()
+        } catch (error) {
+          console.table(error)
+        }
+      },
+      error => {
+        try {
+          console.table(error);
+          this.loading = false;
+          let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: toggleFAQ.bookmark ? 'faqListScreen.bookmarkFailed' : 'faqListScreen.removeBookmarkFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
   }
 
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
-    console.log('ArticleListComponent | lazyLoadData');
+    console.log('FAQListComponent | lazyLoadData');
     let isFocusedInput = this.isFocusedInput;
     this.loading = true;
     this.faqService.getFaqList(
@@ -176,7 +191,7 @@ export class FAQListComponent implements OnInit {
       this.paginatorProps.pageSize,
       this.search).subscribe(
         (data: any) => {
-          try {            
+          try {
             console.table(data);
             this.faqs = data.data;
             this.paginatorProps.length = data.count;
@@ -188,13 +203,13 @@ export class FAQListComponent implements OnInit {
           }
         },
         error => {
-          try {            
+          try {
             console.table(error);
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
-                title: 'articleListScreen.loadFailed',
+                title: 'faqListScreen.loadFailed',
                 content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                   data: null
                 }
               }
@@ -206,7 +221,7 @@ export class FAQListComponent implements OnInit {
       ).add(
         () => {
           this.loading = false;
-          if ( this.searchInput && isFocusedInput){
+          if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
               this.searchInput.nativeElement.focus();
             });
