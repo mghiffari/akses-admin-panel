@@ -24,13 +24,6 @@ export class BannerService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //delete banner by id
-  deleteBanner(id){
-    let url = this.bannerApiUrl + id;
-    console.log("Banner Service | deleteBanner ", url);
-    return this.authService.wrapTokenDeleteApi(url)
-  }
-
   //upload image
   uploadImage(vFormDataImageUpload: FormData) {
     let url = this.uploadApiUrl;
@@ -51,7 +44,7 @@ export class BannerService {
     return this.authService.wrapTokenPostApi(url, vBannerData)
   }
 
-  updateBanner(vUpdateBannerData: UpdateBannerData) {
+  updateBanner(vUpdateBannerData) {
     let url = this.bannerApiUrl;
     return this.authService.wrapTokenPutApi(url, vUpdateBannerData)
   }
