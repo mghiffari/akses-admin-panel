@@ -130,8 +130,7 @@ export class LoginComponent implements OnInit {
             data: {
               title: 'loginScreen.loginFailed',
               content: {
-                text: "apiErrors." + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+                text: "apiErrors." + (error.status ? error.error.err_code : 'noInternet')
               }
             }
           })

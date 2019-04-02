@@ -338,8 +338,7 @@ export class BannerDetailsService {
             data: {
               title: 'bannersDetailScreen.loadFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
               }
             }
           });
@@ -391,8 +390,7 @@ export class BannerDetailsService {
               data: {
                 title: 'bannersDetailScreen.loadFailed',
                 content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
                 }
               }
             });
@@ -518,8 +516,7 @@ export class BannerDetailsService {
                 data: {
                   title: 'bannersDetailScreen.createFailed',
                   content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
                   }
                 }
               });
@@ -528,8 +525,7 @@ export class BannerDetailsService {
                 data: {
                   title: 'bannersDetailScreen.updateFailed',
                   content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
                   }
                 }
               });
@@ -556,8 +552,7 @@ export class BannerDetailsService {
           data: {
             title: 'success',
             content: {
-              text: 'bannersDetailScreen.successCreateBanner',
-              data: null
+              text: 'bannersDetailScreen.successCreateBanner'
             }
           }
         })
@@ -573,8 +568,7 @@ export class BannerDetailsService {
             data: {
               title: 'bannersDetailScreen.createFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
               }
             }
           });
@@ -619,8 +613,7 @@ export class BannerDetailsService {
           data: {
             title: 'success',
             content: {
-              text: 'bannersDetailScreen.successUpdateBanner',
-              data: null
+              text: 'bannersDetailScreen.successUpdateBanner'
             }
           }
         })
@@ -635,8 +628,7 @@ export class BannerDetailsService {
             data: {
               title: 'bannersDetailScreen.updateFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
               }
             }
           });
