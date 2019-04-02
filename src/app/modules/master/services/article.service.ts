@@ -21,13 +21,6 @@ export class ArticleService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //delete article with update
-  deleteArticle(article){
-    let newArticle = Object.assign(article, {is_deleted: true})
-    console.log("ArticleService | deleteArticle ", this.articleApiUrl);
-    return this.authService.wrapTokenPutApi(this.articleApiUrl, newArticle)
-  }
-
   //upload image
   uploadImage(vFormDataImageUpload: FormData) {
     let url = this.uploadApiUrl;

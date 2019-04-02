@@ -4,6 +4,7 @@ import { ConfirmationModalComponent } from 'src/app/shared/components/confirmati
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { ArticleService } from '../../services/article.service';
+import { ArticleData } from '../../models/articles';
 
 @Component({
   selector: 'app-article-list',
@@ -27,7 +28,7 @@ export class ArticleListComponent implements OnInit {
     'action',
   ]
 
-  articles = [];
+  articles: ArticleData[] = [];
   search = '';
   searchTexts = [];
   closeText = '';
@@ -70,10 +71,12 @@ export class ArticleListComponent implements OnInit {
         }
       }
     })
+    let delArticle = Object.assign(article, {});
+    delArticle.is_deleted = true;
     modalRef.afterClosed().subscribe(result => {
       if(result){
         this.loading = true;
-        this.articleService.deleteArticle(article).subscribe(
+        this.articleService.updateArticle(delArticle).subscribe(
           (data: any) => {
             try {
               console.table(data);
