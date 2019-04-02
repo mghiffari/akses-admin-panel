@@ -68,6 +68,7 @@ export class ArticleDetailsService {
     return this.vPageTitle;
   }
 
+  //get data article for page
   getArticleData() {
     console.log('ArticleDetailsService | getArticleData');
     return this.vArticleData;
@@ -149,6 +150,7 @@ export class ArticleDetailsService {
     this.vUpdateFooterURL = data.foot_image_content;
   }
 
+  //reset error message when done or first create or update
   resetErrorMessage() {
     console.log('ArticleDetailsService | resetErrorMessage');
     this.vErrorMessage = {
@@ -307,10 +309,36 @@ export class ArticleDetailsService {
   //load category data from LOV API
   loadCategoryData() {
     console.log('ArticleDetailsService | loadCategoryData');
-    this.vLovCategoryData = [
-      {id: 'category-0', name: 'About Adira'},
-      {id: 'category-1', name: 'Product Information'},
-    ];
+    this.vLoadingFormStatus = true;
+    this._lovService.getArticleCategory()
+    .subscribe(
+      (data: any) => {
+        try {
+          console.table(data);
+          this.vLoadingFormStatus = false;
+          this.vLovCategoryData = data.data[0].aks_adm_lovs;
+        } catch (error) {
+          console.table(error);
+        }
+      },
+      error => {
+        try {
+          this.vLoadingFormStatus = false;
+          console.error(error);
+          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'articleListScreen.loadFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    )
   }
 
   //used to load moduls data
@@ -348,6 +376,7 @@ export class ArticleDetailsService {
     );
   }
 
+  //load article data by id when first load update
   // loadArticleById(id: string) {
   //   console.log('ArticleDetailComponent | loadArticleById');
   //   this.vUpdateArticleId = id;
@@ -579,7 +608,7 @@ export class ArticleDetailsService {
             if(this.vCurrentPage.includes("create")) {
               this.createArticle();
             } else {
-              // this.updateArticle()
+              // this.updateArticle();
             }
           }).catch(err => {
             this.vLoadingStatus = false;
@@ -594,7 +623,7 @@ export class ArticleDetailsService {
       if(this.vCurrentPage.includes("create")) {
         this.createArticle();
       } else {
-        // this.updateArticle()
+        // this.updateArticle();
       }
     } else {
       if(this.vArticleData.article_image.includes("data")) {
@@ -602,7 +631,7 @@ export class ArticleDetailsService {
           if(this.vCurrentPage.includes("create")) {
             this.createArticle();
           } else {
-            // this.updateArticle()
+            // this.updateArticle();
           }
         }).catch(err => {
           this.vLoadingStatus = false;
@@ -613,7 +642,7 @@ export class ArticleDetailsService {
           if(this.vCurrentPage.includes("create")) {
             this.createArticle();
           } else {
-            // this.updateArticle()
+            // this.updateArticle();
           }
         }).catch(err => {
           this.vLoadingStatus = false;
@@ -623,7 +652,7 @@ export class ArticleDetailsService {
         if(this.vCurrentPage.includes("create")) {
           this.createArticle();
         } else {
-          // this.updateArticle()
+          // this.updateArticle();
         }
       }
     }

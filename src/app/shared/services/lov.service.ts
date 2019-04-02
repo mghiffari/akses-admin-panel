@@ -6,7 +6,10 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   providedIn: 'root'
 })
 export class LovService {
-  getModulsApiUrl = environment.apiurl + 'lov/type?value=internal_navigation'
+  lovApiUrl = environment.apiurl + 'lov/';
+  lovTypeApiUrl = this.lovApiUrl + 'type?value=';
+  getModulsApiUrl = this.lovTypeApiUrl + 'internal_navigation';
+  getArticleCatApiUrl = this.lovTypeApiUrl + 'article_category';
   
   constructor(private authService: AuthService) {
     console.log('LovService | constructor')
@@ -15,7 +18,13 @@ export class LovService {
   //get lov of internal link moduls
   getModuls() {
     let url = this.getModulsApiUrl;
-    console.log("Banner Service | getModuls " + url);
+    console.log("LovService | getModuls " + url);
+    return this.authService.wrapTokenGetApi(url);
+  }
+
+  getArticleCategory() {
+    let url = this.getArticleCatApiUrl;
+    console.log("LovService | getArticleCategory " + url);
     return this.authService.wrapTokenGetApi(url);
   }
 }

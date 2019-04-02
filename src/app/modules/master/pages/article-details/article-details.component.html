@@ -17,8 +17,8 @@
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
       <mat-form-field appearance="fill">
         <mat-select name="orders" [(ngModel)]="getArticleData().category">
-          <mat-option *ngFor="let category of getCategoryData()" [value]="category.id">
-            {{category.name}}
+          <mat-option *ngFor="let category of getCategoryData()" [value]="category.value">
+            {{category.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
