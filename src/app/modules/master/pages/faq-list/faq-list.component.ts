@@ -76,9 +76,8 @@ export class FAQListComponent implements OnInit {
     modalRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = true;
-        let delFAQ: FAQ = new FAQ();
+        let delFAQ: FAQ = Object.assign(new FAQ(), faq);
         delFAQ.is_deleted = true;
-        delFAQ = Object.assign(faq, delFAQ)
         this.faqService.updateFaq(delFAQ).subscribe(
           (data: any) => {
             try {
@@ -141,7 +140,7 @@ export class FAQListComponent implements OnInit {
   // event handling when toggling faq bookmark
   onToggleBookmark(faq) {
     console.log('FAQListComponent | onToggleBookmark');
-    let toggleFAQ: FAQ = Object.assign(new FAQ, faq)
+    let toggleFAQ: FAQ = Object.assign(new FAQ(), faq)
     toggleFAQ.bookmark = !faq.bookmark;
     this.faqService.updateFaq(toggleFAQ).subscribe(
       (data: any) => {
