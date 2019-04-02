@@ -44,6 +44,6 @@ export class FAQService {
   //update FAQ by id
   updateFaq(data: FAQ){
     console.log("FAQService | updateFaq ", this.faqApiUrl);
-    return this.authService.wrapTokenPatchApi(this.faqApiUrl, data);
+    return this.authService.wrapTokenPutApi(this.faqApiUrl, data);
   }
 }
