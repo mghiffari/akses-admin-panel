@@ -10,6 +10,7 @@ export class LovService {
   lovTypeApiUrl = this.lovApiUrl + 'type?value=';
   getModulsApiUrl = this.lovTypeApiUrl + 'internal_navigation';
   getArticleCatApiUrl = this.lovTypeApiUrl + 'article_category';
+  getFAQCatApiUrl = this.lovTypeApiUrl + 'faq_category';
   
   constructor(private authService: AuthService) {
     console.log('LovService | constructor')
@@ -22,9 +23,17 @@ export class LovService {
     return this.authService.wrapTokenGetApi(url);
   }
 
+  //get lov of article category
   getArticleCategory() {
     let url = this.getArticleCatApiUrl;
     console.log("LovService | getArticleCategory " + url);
+    return this.authService.wrapTokenGetApi(url);
+  }
+
+  //get lov of faq category
+  getFAQCategory() {
+    let url = this.getFAQCatApiUrl;
+    console.log("LovService | getFAQCategory " + url);
     return this.authService.wrapTokenGetApi(url);
   }
 }
