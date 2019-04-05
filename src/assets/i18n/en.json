@@ -382,7 +382,9 @@
         "succesCreated": "new Branch Location successfully created",
         "succesUpdated": "Branch Location successfully updated",
         "updateFailed": "failed to update data",
-        "createFailed": "failed to create new Branch Location"
+        "createFailed": "failed to create new Branch Location",
+        "getBranchTypeFailed": "failed to get Branch Types",
+        "getIndonesiaZonesFailed": "failed to get Indonesia Region list"
     },
     "branchListScreen": {
         "title": "Branch Locations Data",
