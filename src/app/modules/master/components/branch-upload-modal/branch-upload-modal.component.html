@@ -2,8 +2,8 @@
   <div mat-dialog-title class="text-center font-gotham-bold font-title">
     {{'uploadCSVModal.title' | translate}}
   </div>
-  <div mat-dialog-content fxFlex="grow">
-    <div style="height: 100; width: 100%">
+  <div mat-dialog-content>
+    <div fxFlex="grow" style="height: 100%; width: 100%">
       <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%" class="text-gray">
         <div>
           <input type="file" (change)="onChangeFile($event)" accept=".csv">
@@ -27,10 +27,10 @@
     </div>
   </div>
   <div mat-dialog-actions class="margin-top-12 padding-bottom-24-important" fxLayoutAlign="end center">
-    <div fxLayout="row" fxFlex="20%" fxFlex.lt-md="100%" *ngIf="!onSubmittingForm">
+    <div fxLayout="row" fxFlex="40%" fxFlex.lt-md="100%" *ngIf="!onSubmittingForm">
       <button mat-raised-button color="accent" [mat-dialog-close]="false" block-button>{{'cancel' | translate}}</button>
     </div>
-    <div fxLayout="row" fxFlex="20%" fxFlex.lt-md="100%" ngClass.lt-md="margin-top-5" ngClass.md="margin-left-5"
+    <div fxLayout="row" fxFlex="40%" fxFlex.lt-md="100%" ngClass.lt-md="margin-top-5" ngClass.md="margin-left-5"
       ngClass.gt-md="margin-left-5">
       <button mat-raised-button color="primary" block-button *ngIf="!onSubmittingForm" [disabled]="!isValidFile" (click)="onUpload()">{{'upload' | translate}}</button>
       <button mat-raised-button color="primary" block-button *ngIf="onSubmittingForm" disabled>

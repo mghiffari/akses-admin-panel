@@ -4,6 +4,7 @@ import { BranchService } from '../../services/branch.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { BranchUploadModalComponent } from '../../components/branch-upload-modal/branch-upload-modal.component';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-branch-list',
@@ -58,7 +59,8 @@ export class BranchListComponent implements OnInit {
   constructor(
     private branchService: BranchService,
     private snackBar: MatSnackBar,
-    private modal: MatDialog
+    private modal: MatDialog,
+    private overlay: Overlay
   ) { }
 
   ngOnInit() {
@@ -148,7 +150,10 @@ export class BranchListComponent implements OnInit {
   onUpload() {
     console.log('BranchListComponent | onUpload');
     const modalRef = this.modal.open(BranchUploadModalComponent, {
-      width: '80%'
+      width: '80%',
+      maxHeight: '100%',
+      maxWidth: '500px',
+      scrollStrategy: this.overlay.scrollStrategies.reposition()
     })
     modalRef.afterClosed().subscribe(result => {
       if (result) {
