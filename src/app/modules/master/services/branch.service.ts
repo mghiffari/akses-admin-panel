@@ -30,7 +30,7 @@ export class BranchService {
   //get branch by id
   getBranchById(id){
     let url = this.branchApiUrl + id;
-    console.log("BranchService | getFaqById ", url);
+    console.log("BranchService | getBranchById ", url);
     return this.authService.wrapTokenGetApi(url);
   }
 

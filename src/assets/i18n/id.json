@@ -175,7 +175,7 @@
             "placeholder": "Kode Cabang",
             "errorRequired": "Kode Cabang wajib diisi",
             "errorFormat": "Kode Cabang hanya terdiri oleh angka",
-            "errorLength": "Kode Cabang harus terdiri 4 angka"
+            "errorLength": "Kode Cabang harus terdiri {{minLength}} angka"
         },
         "branchType": {
             "fieldTitle": "Tipe Cabang",
@@ -208,19 +208,26 @@
             "errorRequired": "Kota / Kabupaten wajib diisi"
         },
         "subDistrict": {
-            "fieldTitle": "Kecamatan",
-            "placeholder": "Pilih Kecamatan",
-            "errorRequired": "Sub-District wajib diisi"
-        },
-        "village": {
             "fieldTitle": "Kelurahan",
             "placeholder": "Pilih Kelurahan",
             "errorRequired": "Kelurahan wajib diisi"
+        },
+        "district": {
+            "fieldTitle": "Kecamatan",
+            "placeholder": "Pilih Kecamatan",
+            "errorRequired": "Kecamatan wajib diisi"
         },
         "address": {
             "fieldTitle": "Alamat",
             "placeholder": "Alamat",
             "errorRequired": "Alamat wajib diisi"
+        },
+        "postalCode": {
+            "fieldTitle": "Kode Pos",
+            "placeholder": "Kode Pos",
+            "errorFormat": "Kode Pos hanya terdiri dari angka",
+            "errorMinLength": "Jumlah karakter minimum untuk Kode Pos adalah {{minLength}}",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Kode Pos adalah {{maxLength}}"
         },
         "createdBy": {
             "fieldTitle": "Created By",
@@ -316,9 +323,7 @@
         "updateFailed": "Gagal mengubah data banner",
         "createFailed": "Gagal membuat banner baru",
         "loadFailed": "Gagal mendapatkan data banner",
-        "urlNotValid": "Masukkan URL yang valid",
-        "getBranchTypeFailed": "gagal mendapatkan data tipe branch",
-        "getIndonesiaZonesFailed": "gagal mendapatkan list daerah Indonesia"
+        "urlNotValid": "Masukkan URL yang valid"
     },
     "changePasswordScreen": {
         "title": "Ubah Password",
@@ -413,7 +418,9 @@
         "succesCreated": "Lokasi Cabang baru berhasil ditambahkan",
         "succesUpdated": "data Lokasi Cabang berhaisl diubah",
         "updateFailed": "gagal mengubah data Lokasi Cabang",
-        "createFailed": "gagal menambahkan Lokasi Cabang baru"
+        "createFailed": "gagal menambahkan Lokasi Cabang baru",
+        "getBranchTypeFailed": "gagal mendapatkan data tipe branch",
+        "getIndonesiaZonesFailed": "gagal mendapatkan list daerah Indonesia"
     },
     "branchListScreen": {
         "title": "Data Lokasi Cabang",

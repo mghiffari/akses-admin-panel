@@ -175,7 +175,7 @@
             "placeholder": "Branch code",
             "errorRequired": "Branch Code is required",
             "errorFormat": "Branch Code should only contain numbers",
-            "errorLength": "Branch Code should contain 4 numbers"
+            "errorLength": "Branch Code should contain {{minLength}} numbers"
         },
         "branchType": {
             "fieldTitle": "Branch Type",
@@ -209,13 +209,13 @@
         },
         "subDistrict": {
             "fieldTitle": "Sub-District",
-            "placeholder": "Select a Sub-district",
+            "placeholder": "Select a Sub-District",
             "errorRequired": "Sub-District is required"
         },
-        "village": {
-            "fieldTitle": "Village",
-            "placeholder": "Select a Village",
-            "errorRequired": "Village is required"
+        "district": {
+            "fieldTitle": "District",
+            "placeholder": "Select a District",
+            "errorRequired": "District is required"
         },
         "address": {
             "fieldTitle": "Address",
@@ -237,6 +237,13 @@
             "placeholder": "Remark",
             "errorRequired": "Remark is required",
             "errorMaxLength": "Max. length of Remark is {{maxLength}}"
+        },
+        "postalCode": {
+            "fieldTitle": "Postal Code",
+            "placeholder": "Postal code",
+            "errorFormat": "Postal Code should only contain numbers",
+            "errorMinLength": "Min. length of Postal Code is {{minLength}}",
+            "errorMaxLength": "Max. length of Postal Code is {{maxLength}}"
         },
         "buttonText": {
             "save": "Save",

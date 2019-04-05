@@ -20,14 +20,18 @@
       ngClass.md="border-bottom-gray">
       <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
         <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-          {{'forms.branchName.fieldTitle' | translate}}
+          {{'forms.branchCode.fieldTitle' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <input matInput placeholder="{{'forms.branchName.placeholder' | translate}}" formControlName="branchName">
+            <input matInput placeholder="{{'forms.branchCode.placeholder' | translate}}" formControlName="branchCode">
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="branchName.invalid && (branchName.dirty || branchName.touched)">
-            <span *ngIf="branchName.errors.required">{{'forms.branchName.errorRequired' | translate}}</span>
+          <mat-error class="bottom-error" *ngIf="branchCode.invalid && (branchCode.dirty || branchCode.touched)">
+            <span *ngIf="branchCode.errors.required">{{'forms.branchCode.errorRequired' | translate}}</span>
+            <span *ngIf="branchCode.errors.pattern">{{'forms.branchCode.errorFormat' | translate}}</span>
+            <span *ngIf="!branchCode.errors.pattern && (branchCode.errors.minlength || branchCode.errors.maxlength)">
+              {{'forms.branchCode.errorLength' | translate: branchCodeLength}}
+            </span>
           </mat-error>
         </div>
       </div>
@@ -53,13 +57,13 @@
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <mat-select formControlName="branchType">
+            <mat-select formControlName="type">
               <mat-option value="">{{'forms.branchType.placeholder' | translate}}</mat-option>
               <mat-option *ngFor="let type of branchTypes" [value]="type.value">{{type.value}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="branchType.invalid && (branchType.dirty || branchType.touched)">
-            <span *ngIf="branchType.errors.required">{{'forms.branchType.errorRequired' | translate}}</span>
+          <mat-error class="bottom-error" *ngIf="type.invalid && (type.dirty || type.touched)">
+            <span *ngIf="type.errors.required">{{'forms.branchType.errorRequired' | translate}}</span>
           </mat-error>
         </div>
       </div>
@@ -85,18 +89,14 @@
       ngClass.md="border-bottom-gray">
       <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
         <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-          {{'forms.branchCode.fieldTitle' | translate}}
+          {{'forms.branchName.fieldTitle' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <input matInput placeholder="{{'forms.branchCode.placeholder' | translate}}" formControlName="branchCode">
+            <input matInput placeholder="{{'forms.branchName.placeholder' | translate}}" formControlName="name">
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="branchCode.invalid && (branchCode.dirty || branchCode.touched)">
-            <span *ngIf="branchCode.errors.required">{{'forms.branchCode.errorRequired' | translate}}</span>
-            <span *ngIf="branchCode.errors.pattern">{{'forms.branchCode.errorFormat' | translate}}</span>
-            <span *ngIf="!branchCode.errors.pattern && (branchCode.errors.minlength || branchCode.errors.maxlength)">
-              {{'forms.branchCode.errorLength' | translate}}
-            </span>
+          <mat-error class="bottom-error" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <span *ngIf="name.errors.required">{{'forms.branchName.errorRequired' | translate}}</span>
           </mat-error>
         </div>
       </div>
@@ -136,18 +136,18 @@
       </div>
       <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
         <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-          {{'forms.subDistrict.fieldTitle' | translate}}
+          {{'forms.district.fieldTitle' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <mat-select formControlName="subDistrict">
-              <mat-option value="">{{'forms.subDistrict.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let subDist of subDistricts" [value]="subDist.value" (click)="setVillages(subDist)">
-                {{subDist.value}}</mat-option>
+            <mat-select formControlName="district">
+              <mat-option value="">{{'forms.district.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let dist of districts" [value]="dist.value" (click)="setSubDistricts(dist)">
+                {{dist.value}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="subDistrict.invalid && (subDistrict.dirty || subDistrict.touched)">
-            <span *ngIf="subDistrict.errors.required">{{'forms.subDistrict.errorRequired' | translate}}</span>
+          <mat-error class="bottom-error" *ngIf="district.invalid && (district.dirty || district.touched)">
+            <span *ngIf="district.errors.required">{{'forms.district.errorRequired' | translate}}</span>
           </mat-error>
         </div>
       </div>
@@ -170,17 +170,17 @@
       </div>
       <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
         <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-          {{'forms.village.fieldTitle' | translate}}
+          {{'forms.subDistrict.fieldTitle' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <mat-select formControlName="village">
-              <mat-option value="">{{'forms.village.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let vil of villages" [value]="vil.value">{{vil.value}}</mat-option>
+            <mat-select formControlName="subDistrict">
+              <mat-option value="">{{'forms.subDistrict.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let subDist of subDistricts" [value]="subDist.value">{{subDist.value}}</mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="village.invalid && (village.dirty || village.touched)">
-            <span *ngIf="village.errors.required">{{'forms.village.errorRequired' | translate}}</span>
+          <mat-error class="bottom-error" *ngIf="subDistrict.invalid && (subDistrict.dirty || subDistrict.touched)">
+            <span *ngIf="subDistrict.errors.required">{{'forms.subDistrict.errorRequired' | translate}}</span>
           </mat-error>
         </div>
       </div>
@@ -213,6 +213,25 @@
           </mat-error>
         </div>
       </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+          <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+            {{'forms.postalCode.fieldTitle' | translate}}
+          </div>
+          <div fxFlexAlign="center" fxFlex="70%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.postalCode.placeholder' | translate}}" formControlName="postalCode">
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)">
+              <span *ngIf="postalCode.errors.pattern">{{'forms.postalCode.errorFormat' | translate}}</span>
+              <span *ngIf="!postalCode.errors.pattern && postalCode.errors.minlength">
+                {{'forms.postalCode.errorMinLength' | translate: postalCodeLength}}
+              </span>
+              <span *ngIf="!postalCode.errors.pattern && postalCode.errors.maxlength">
+                  {{'forms.postalCode.errorMaxLength' | translate: postalCodeLength}}
+                </span>
+            </mat-error>
+          </div>
+        </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray" ngClass.md="border-bottom-gray">
       <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
