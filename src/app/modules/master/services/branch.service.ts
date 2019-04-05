@@ -21,13 +21,6 @@ export class BranchService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //delete branch by id
-  deleteBranch(id){
-    let url = this.branchApiUrl + id;
-    console.log("BranchService | deleteBranch ", url);
-    return this.authService.wrapTokenDeleteApi(url)
-  }
-
   //create branch
   createBranch(data){
     console.log("BranchService | createBranch ", this.branchApiUrl);

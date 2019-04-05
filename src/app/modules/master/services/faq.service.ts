@@ -21,13 +21,6 @@ export class FAQService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //delete faq by id
-  deleteFaq(id){
-    let url = this.faqApiUrl + id;
-    console.log("FAQService | deleteFaq ", url);
-    return this.authService.wrapTokenDeleteApi(url)
-  }
-
   //create FAQ
   createFaq(data: FAQ){
     console.log("FAQService | createFAQ ", this.faqApiUrl);
@@ -44,6 +37,6 @@ export class FAQService {
   //update FAQ by id
   updateFaq(data: FAQ){
     console.log("FAQService | updateFaq ", this.faqApiUrl);
-    return this.authService.wrapTokenPatchApi(this.faqApiUrl, data);
+    return this.authService.wrapTokenPutApi(this.faqApiUrl, data);
   }
 }

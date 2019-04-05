@@ -7,7 +7,7 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="adiraicon.png">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script>
     localStorage.clear()
     const sessionStorageTransfer = function (event) {
@@ -30,6 +30,7 @@
             sessionStorage.setItem(key, data[key]);
           }
         }
+        localStorage.clear();
       } else if (event.key == storageKey.logout) {
         sessionStorage.clear();
         localStorage.clear();

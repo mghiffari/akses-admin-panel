@@ -54,11 +54,11 @@ export class ArticleDetailsComponent implements OnInit {
       this.resetCheckBox();
     } else if(this.vCurrentPage.includes("update")){
       this.vId = this._activatedRouteService.snapshot.params['id'];
-      // this._articleDetailsService.loadArticleById(this.vId).then(response => {
-      //   this.initiateCheckBox();
-      // }).catch( err =>{
-      //   console.table(err);
-      // });
+      this._articleDetailsService.loadArticleById(this.vId).then(response => {
+        this.initiateCheckBox();
+      }).catch( err =>{
+        console.table(err);
+      });
     }
   }
 
@@ -92,10 +92,6 @@ export class ArticleDetailsComponent implements OnInit {
     this.vShowFooterButton = this.getArticleData().foot_button_content != "";
     this.vShowFooterButtonModul = this.getArticleData().foot_button_flg == "int";
     this.vShowFooterButtonURL = this.getArticleData().foot_button_flg == "ext";
-    // console.log("initiate check box: ", this.vClickableChecked, this.vShowDetailPage, this.vShowURL, this.vShowFooterText,
-    // this.vShowFooterTextModul, this.vShowFooterTextURL, this.vShowFooterImage, this.vShowFooterImageModul,
-    // this.vShowFooterImageURL, this.vShowFooterButton, this.vShowFooterButtonModul, this.vShowFooterButtonURL,
-    // this.vShowExternalURL, this.vShowModul);
   }
 
   //get category data from services
@@ -110,6 +106,7 @@ export class ArticleDetailsComponent implements OnInit {
     return this._articleDetailsService.getModuls();
   }
 
+  //get article data for page
   getArticleData() {
     console.log('ArticleDetailComponent | getArticleData');
     return this._articleDetailsService.getArticleData();

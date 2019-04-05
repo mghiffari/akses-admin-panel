@@ -1,9 +1,9 @@
 <div fxLayout="column" style="min-height: 100%">
-  <div class="adira-dark-theme" fxLayout="row">
-    <mat-toolbar color="accent" class="page-title">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
       <span *ngIf="isCreate">{{'faqDetailsScreen.createTitle' | translate}}</span>
       <span *ngIf="!isCreate">{{'faqDetailsScreen.updateTitle' | translate}}</span>
-    </mat-toolbar>
+    </div>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
     <div fxFlex="100%">
@@ -24,8 +24,9 @@
         <mat-form-field appearance="fill">
           <mat-select formControlName="category">
             <mat-option value="">{{'forms.faqCategory.placeholder' | translate}}</mat-option>
-            <mat-option value="carabayar">cara bayar</mat-option>
-            <mat-option value="caratopup">cara top up</mat-option>
+            <mat-option *ngFor="let cat of categories" [value]="cat.value">
+              {{cat.value}}
+            </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">
@@ -58,7 +59,8 @@
         <mat-error class="bottom-error" *ngIf="titleOrder.invalid && (titleOrder.dirty || titleOrder.touched)">
           <span *ngIf="titleOrder.errors.required">{{'forms.faqOrder.errorRequired' | translate}}</span>
           <span *ngIf="titleOrder.errors.min">{{'forms.faqOrder.errorMin' | translate }}</span>
-          <span *ngIf="titleOrder.errors.pattern">{{'forms.faqOrder.errorFormat' | translate}}</span>
+          <span
+            *ngIf="titleOrder.errors.pattern && !titleOrder.errors.min">{{'forms.faqOrder.errorFormat' | translate}}</span>
         </mat-error>
       </div>
     </div>

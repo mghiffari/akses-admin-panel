@@ -10,6 +10,7 @@ import { FAQListComponent } from './pages/faq-list/faq-list.component';
 import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
+import { ChangePhonenumberRequestListComponent } from './pages/change-phonenumber-request-list/change-phonenumber-request-list.component';
 
 const routes: Routes = [
   {
@@ -104,10 +105,24 @@ const routes: Routes = [
     }
   },
   {
+    path: 'branches/update/:id',
+    component: BranchDetailsComponent,
+    data: {
+      title: 'Update Branch'
+    }
+  },
+  {
     path: 'branches',
     component: BranchListComponent,
     data: {
       title: 'Branch Locations'
+    }
+  },
+  {
+    path: 'change-phonenumber-requests',
+    component: ChangePhonenumberRequestListComponent,
+    data: {
+      title: 'Change Phonenumber Requests'
     }
   }
 ];

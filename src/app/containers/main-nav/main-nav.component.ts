@@ -48,6 +48,10 @@ export class MainNavComponent {
         {
           title: 'navMenus.master.children.branches',
           link: '/branches'
+        },
+        {
+          title: 'navMenus.master.children.changePhonenumberRequests',
+          link: '/change-phonenumber-requests'
         }
       ]
     }
