@@ -1,9 +1,9 @@
 <div fxLayout="column" style="min-height: 100%">
-  <div class="adira-dark-theme" fxLayout="row">
-    <mat-toolbar color="accent" class="page-title">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
       <span *ngIf="isCreate">{{'userDetailsScreen.createTitle' | translate}}</span>
       <span *ngIf="!isCreate">{{'userDetailsScreen.updateTitle' | translate}}</span>
-    </mat-toolbar>
+    </div>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
     <div fxFlex="100%">
@@ -54,10 +54,7 @@
       </div>
       <div fxFlex="25%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
         <mat-form-field appearance="fill">
-          <input matInput 
-          placeholder="{{'forms.email.placeholder' | translate}}" 
-          type="email" 
-          formControlName="email">
+          <input matInput placeholder="{{'forms.email.placeholder' | translate}}" type="email" formControlName="email">
         </mat-form-field>
         <mat-hint class="bottom-hint" *ngIf="!email.invalid || (!email.dirty && !email.touched)">
           {{'userDetailsScreen.emailNotChangeAble' | translate}}</mat-hint>

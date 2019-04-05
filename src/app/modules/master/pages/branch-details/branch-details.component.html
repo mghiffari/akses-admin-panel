@@ -1,9 +1,9 @@
 <div fxLayout="column" style="min-height: 100%">
-  <div class="adira-dark-theme" fxLayout="row">
-    <mat-toolbar color="accent" class="page-title">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
       <span *ngIf="isCreate">{{'branchDetailsScreen.createTitle' | translate}}</span>
       <span *ngIf="!isCreate">{{'branchDetailsScreen.updateTitle' | translate}}</span>
-    </mat-toolbar>
+    </div>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
     <div fxFlex="100%">
@@ -71,7 +71,8 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="province">
               <mat-option value="">{{'forms.province.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let prov of provinces" [value]="prov.value" (click)="setCities(prov)">{{prov.value}}</mat-option>
+              <mat-option *ngFor="let prov of provinces" [value]="prov.value" (click)="setCities(prov)">{{prov.value}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="province.invalid && (province.dirty || province.touched)">
@@ -107,7 +108,8 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="city">
               <mat-option value="">{{'forms.city.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let elCity of cities" [value]="elCity.value" (click)="setSubDistricts(elCity)">{{elCity.value}}</mat-option>
+              <mat-option *ngFor="let elCity of cities" [value]="elCity.value" (click)="setSubDistricts(elCity)">
+                {{elCity.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="city.invalid && (city.dirty || city.touched)">
@@ -140,7 +142,8 @@
           <mat-form-field appearance="fill">
             <mat-select formControlName="subDistrict">
               <mat-option value="">{{'forms.subDistrict.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let subDist of subDistricts" [value]="subDist.value" (click)="setVillages(subDist)">{{subDist.value}}</mat-option>
+              <mat-option *ngFor="let subDist of subDistricts" [value]="subDist.value" (click)="setVillages(subDist)">
+                {{subDist.value}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="subDistrict.invalid && (subDistrict.dirty || subDistrict.touched)">
