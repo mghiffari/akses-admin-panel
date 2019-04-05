@@ -7,7 +7,8 @@
                 "users": "User",
                 "articles": "Artikel",
                 "faqs": "FAQ",
-                "branches": "Lokasi Cabang"
+                "branches": "Lokasi Cabang",
+                "changePhonenumberRequests": "Ubah Nomor Handphone"
             }
         }
     },
@@ -231,6 +232,12 @@
             "placeholder": "Updated by",
             "errorRequired": "Updated By wajib diisi"
         },
+        "remark": {
+            "fieldTitle": "Keterangan",
+            "placeholder": "Keterangan",
+            "errorRequired": "Keterangan wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Keterangan adalah {{maxLength}}"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -257,7 +264,9 @@
         "status": {
             "title": "Status",
             "active": "Aktif",
-            "inactive": "Non-aktif"
+            "inactive": "Non-aktif",
+            "approved": "Approved",
+            "rejected": "Rejected"
         },
         "uniqueTag": "Unique Tag",
         "title": "Judul",
@@ -280,13 +289,23 @@
             "branchType": "Tipe Cabang",
             "address": "Alamat",
             "province": "Provinsi"
+        },
+        "changePhonenumberRequestTable": {
+            "requestDate": "Tanggal / Waktu Permohonan",
+            "customerName": "Nama Customer",
+            "requestDuration": "Umur Request",
+            "oldPhoneNumber": "Nomor HP Lama",
+            "newPhoneNumber": "Nomor HP Baru",
+            "lastUpdated": "Terakhir Diubah & Oleh",
+            "actionsStatus": "Action / Status",
+            "remark": "Keterangan"
         }
     },
     "bannerListScreen": {
         "title": "Data Banner",
         "createBanner": "Tambahkan home banner",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus home banner {{title}}?",
-        "loadFailed": "Gagal mendapatkan list home banner" 
+        "loadFailed": "Gagal mendapatkan list home banner"
     },
     "bannersDetailScreen": {
         "createBannerTitle": "Tambahkan Home Banner",
@@ -318,6 +337,16 @@
     "dataDeleted": "data berhasil dihapus",
     "failedToDelete": "gagal menghapus data",
     "backToList": "kembali ke list",
+    "approve": "approve",
+    "reject": "reject",
+    "add": "tambah",
+    "by": "by",
+    "duration": {
+        "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
+        "fromHourToMin": "{{hour}} jam {{min}} menit",
+        "inMin": "{{min}} menit",
+        "inSec": "{{sec}} detik"
+    },
     "loggedOutModal": {
         "title": "Unauthorized",
         "content": "Login ulang untuk mengakses halaman ini",
@@ -392,6 +421,33 @@
         "uploadCSV": "upload CSV",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus lokasi cabang {{name}}?",
         "loadFailed": "gagal mendapatkan list lokasi cabang"
+    },
+    "changePhonenumberRequestListScreen": {
+        "title": "Ubah Nomor Handphone",
+        "loadFailed": "gagal mendapatkan list permohonan ubah nomor HP",
+        "rejectSuccess": "permohonan ubah nomor HP berhasil ditolak",
+        "allRejectSuccess": "seluruh {{totalRequest}} berhasil ditolak",
+        "rejectFailed": "permohonan ubah nomor HP gagal ditolak",
+        "partialRejectFailed": "tolak {{totalRequest}} permohonan: {{errorCount}} gagal, {{successCount}} berhasil",
+        "allRejectFailed": "gagal tolak seluruh {{totalRequest}} permohonan",
+        "approveSuccess": "permohonan ubah nomor HP berhasil disetujui",
+        "approveFailed": "permohonan ubah nomor HP gagal disetujui",
+        "allApproveSuccess": "seluruh {{totalRequest}} berhasil disetujui",
+        "partialApproveFailed": "setujui {{totalRequest}} permohonan: {{errorCount}} gagal, {{successCount}} berhasil",
+        "allApproveFailed": "gagal setujui seluruh {{totalRequest}} permohonan",
+        "totalRequestSelected": "{{totalRequest}} permohonan dipilih",
+        "confirmationModal": {
+            "reject": {
+                "title": "Konfirmasi Penolakan",
+                "content": "Apakah anda yakin untuk menolak perubahan nomor handphone?"
+            },
+            "approve": {
+                "title": "Approval Confirmation",
+                "content": "Apakah anda yakin untuk menyetujui perubahan nomor handphone?"
+            }
+        },
+        "addRemarkSuccess": "berhasil menambahkan keterangan",
+        "addRemarkFailed": "gagal menambahkan keterangan"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

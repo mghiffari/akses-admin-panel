@@ -1,0 +1,41 @@
+<div mat-dialog-content style="width: 100%">
+  <form [formGroup]="remarkForm">
+    <div style="width: 100%">
+      <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%">
+        <div class="font-gotham-bold font-sub-description">{{'forms.remark.fieldTitle' | translate}}</div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%" class="margin-top-5">
+        <mat-form-field appearance="fill">
+          <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="5"
+            placeholder="{{'forms.remark.placeholder' | translate}}" formControlName="remark">
+          </textarea>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start center" style="max-width: 100%">
+        <mat-error fxFlex="100%" class="bottom-error" *ngIf="remark.invalid && (remark.dirty || remark.touched)">
+          <span *ngIf="remark.errors.required">{{'forms.remark.errorRequired' | translate}}</span>
+          <span *ngIf="remark.errors.maxlength">{{'forms.remark.errorMaxLength' | translate: maxLength}}</span>
+        </mat-error>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
+  <div fxLayout="row" style="width: 100%" *ngIf="!onSubmittingForm">
+    <button mat-raised-button color="accent" [mat-dialog-close]="false" block-button>{{'cancel' | translate}}</button>
+  </div>
+  <div fxLayout="row" style="width: 100%" class="margin-top-5" *ngIf="!onSubmittingForm">
+    <button mat-raised-button color="primary" [disabled]="!remarkForm.valid" (click)="save()"
+      block-button>{{'add' | translate}}</button>
+  </div>
+  <div fxLayout="row" style="width: 100%" class="margin-top-5" *ngIf="onSubmittingForm">
+    <button mat-raised-button color="primary" disabled block-button>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div>
+          <mat-spinner diameter="16"></mat-spinner>
+        </div>
+        <div class="margin-left-5">{{'loading' | translate}}</div>
+      </div>
+    </button>
+  </div>
+</div>
