@@ -11,7 +11,9 @@ export class LovService {
   getModulsApiUrl = this.lovTypeApiUrl + 'internal_navigation';
   getArticleCatApiUrl = this.lovTypeApiUrl + 'article_category';
   getFAQCatApiUrl = this.lovTypeApiUrl + 'faq_category';
-  
+  indonesiaZoneApiUrl = this.lovApiUrl + 'indonesia-zone';
+  branchTypeApiUrl = this.lovTypeApiUrl + 'branch_type';
+
   constructor(private authService: AuthService) {
     console.log('LovService | constructor')
   }
@@ -35,5 +37,17 @@ export class LovService {
     let url = this.getFAQCatApiUrl;
     console.log("LovService | getFAQCategory " + url);
     return this.authService.wrapTokenGetApi(url);
+  }
+
+  //get indonesia zone hierarchichal lov
+  getIndonesiaZone(){
+    console.log("LovService | getIndonesiaZone " + this.indonesiaZoneApiUrl);
+    return this.authService.wrapTokenGetApi(this.indonesiaZoneApiUrl);
+  }
+
+  //get lov of branch type
+  getBranchType(){
+    console.log("LovService | getBranchType " + this.branchTypeApiUrl);
+    return this.authService.wrapTokenGetApi(this.branchTypeApiUrl);
   }
 }
