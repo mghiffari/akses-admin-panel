@@ -30,6 +30,7 @@
             sessionStorage.setItem(key, data[key]);
           }
         }
+        localStorage.clear();
       } else if (event.key == storageKey.logout) {
         sessionStorage.clear();
         localStorage.clear();

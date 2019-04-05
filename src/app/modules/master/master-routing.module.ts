@@ -105,6 +105,13 @@ const routes: Routes = [
     }
   },
   {
+    path: 'branches/update/:id',
+    component: BranchDetailsComponent,
+    data: {
+      title: 'Update Branch'
+    }
+  },
+  {
     path: 'branches',
     component: BranchListComponent,
     data: {
