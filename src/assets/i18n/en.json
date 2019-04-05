@@ -7,7 +7,8 @@
                 "users": "Users",
                 "articles": "Articles",
                 "faqs": "FAQs",
-                "branches": "Branch Locations"
+                "branches": "Branch Locations",
+                "changePhonenumberRequests": "Change Phonenumber Requests"
             }
         }
     },
@@ -231,6 +232,12 @@
             "placeholder": "Updated by",
             "errorRequired": "Updated By is required"
         },
+        "remark": {
+            "fieldTitle": "Remark",
+            "placeholder": "Remark",
+            "errorRequired": "Remark is required",
+            "errorMaxLength": "Max. length of Remark is {{maxLength}}"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -256,8 +263,10 @@
         "numbers": "No.",
         "status": {
             "title": "Status",
-            "active": "active",
-            "inactive": "inactive"
+            "active": "Active",
+            "inactive": "Inactive",
+            "approved": "Approved",
+            "rejected": "Rejected"
         },
         "uniqueTag": "Unique Tag",
         "title": "Title",
@@ -280,6 +289,16 @@
             "branchType": "Branch Type",
             "address": "Address",
             "province": "Province"
+        },
+        "changePhonenumberRequestTable": {
+            "requestDate": "Request Date & Time",
+            "customerName": "Customer Name",
+            "requestDuration": "Request Duration",
+            "oldPhoneNumber": "Old Phonenumber",
+            "newPhoneNumber": "New Phonenumber",
+            "lastUpdated": "Last Updated Date & By",
+            "actionsStatus": "Action / Status",
+            "remark": "Remark"
         }
     },
     "bannerListScreen": {
@@ -316,6 +335,16 @@
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
     "backToList": "back to list",
+    "approve": "approve",
+    "reject": "reject",
+    "add": "add",
+    "by": "by",
+    "duration": {
+        "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
+        "fromHourToSec": "{{hour}} hour {{min}} minute",
+        "inMin": "{{min}} minute",
+        "inSec": "{{sec}} sec"
+    },
     "loggedOutModal": {
         "title": "You're unauthorized to access this page",
         "content": "Please re-login to access this page",
@@ -390,6 +419,33 @@
         "uploadCSV": "upload CSV",
         "deleteConfirmation": "Are you sure you want to delete branch location {{name}}?",
         "loadFailed": "failed to get list of branch locations"
+    },
+    "changePhonenumberRequestListScreen": {
+        "title": "Change Handphone",
+        "loadFailed": "failed to get list of change phonenumber requests",
+        "rejectSuccess": "change phone number request successfully rejected",
+        "allRejectSuccess": "all {{totalRequest}} requests are successfully rejected",
+        "rejectFailed": "failed to reject change phone number request",
+        "partialRejectFailed": "rejecting {{totalRequest}} requests: {{errorCount}} failed, {{successCount}} success",
+        "allRejectFailed": "failed to reject all {{totalRequest}} requests",
+        "approveSuccess": "change phone number request successfully approved",
+        "approveFailed": "failed to approve change phone number request",
+        "allApproveSuccess": "all {{totalRequest}} requests are successfully approved",
+        "partialApproveFailed": "approving {{totalRequest}} requests: {{errorCount}} failed, {{successCount}} success",
+        "allApproveFailed": "failed to approve all {{totalRequest}} requests",
+        "totalRequestSelected": "{{totalRequest}} requests are selected",
+        "confirmationModal":{
+            "reject": {
+                "title": "Rejecting Confirmation",
+                "content": "Are you sure you want to reject change phonenumber request?"
+            },
+            "approve": {
+                "title": "Approval Confirmation",
+                "content": "Are you sure you want to approve change phonenumber request?"
+            }
+        },
+        "addRemarkSuccess": "remark successfuly added",
+        "addRemarkFailed": "failed to add remark"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
