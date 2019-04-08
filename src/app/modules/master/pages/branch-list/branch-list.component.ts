@@ -3,6 +3,8 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { BranchService } from '../../services/branch.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
+import { BranchUploadModalComponent } from '../../components/branch-upload-modal/branch-upload-modal.component';
+import { Overlay } from '@angular/cdk/overlay';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { Branch } from '../../models/branch';
 
@@ -49,7 +51,8 @@ export class BranchListComponent implements OnInit {
   constructor(
     private branchService: BranchService,
     private snackBar: MatSnackBar,
-    private modalConfirmation: MatDialog
+    private modal: MatDialog,
+    private overlay: Overlay
   ) { }
 
   ngOnInit() {
@@ -58,9 +61,9 @@ export class BranchListComponent implements OnInit {
   }
 
   //delete
-  onDelete(branch){
+  onDelete(branch) {
     console.log("BranchListComponent | onDelete")
-    const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+    const modalRef = this.modal.open(ConfirmationModalComponent, {
       width: '260px',
       data: {
         title: 'deleteConfirmation',
@@ -73,7 +76,7 @@ export class BranchListComponent implements OnInit {
       }
     })
     modalRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.loading = true;
         let delBranch = Object.assign({}, branch);
         delBranch.is_deleted = true;
@@ -90,7 +93,7 @@ export class BranchListComponent implements OnInit {
                   }
                 }
               })
-              this.lazyLoadData()              
+              this.lazyLoadData()
             } catch (error) {
               console.table(error)
             }
@@ -103,11 +106,11 @@ export class BranchListComponent implements OnInit {
                 data: {
                   title: 'failedToDelete',
                   content: {
-                    text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                     data: null
                   }
                 }
-              })              
+              })
             } catch (error) {
               console.table(error)
             }
@@ -135,6 +138,21 @@ export class BranchListComponent implements OnInit {
     }
   }
 
+  // handle upload modal
+  onUpload() {
+    console.log('BranchListComponent | onUpload');
+    const modalRef = this.modal.open(BranchUploadModalComponent, {
+      width: '80%',
+      maxHeight: '100%',
+      maxWidth: '500px',
+      scrollStrategy: this.overlay.scrollStrategies.reposition()
+    })
+    modalRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.onSearch()
+      }
+    })
+  }
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
     console.log('BranchListComponent | lazyLoadData');
@@ -145,7 +163,7 @@ export class BranchListComponent implements OnInit {
       this.paginatorProps.pageSize,
       this.search).subscribe(
         (data: any) => {
-          try {            
+          try {
             console.table(data);
             this.branches = data.data;
             this.paginatorProps.length = data.count;
@@ -157,13 +175,13 @@ export class BranchListComponent implements OnInit {
           }
         },
         error => {
-          try {            
+          try {
             console.table(error);
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'branchListScreen.loadFailed',
                 content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                   data: null
                 }
               }
@@ -175,7 +193,7 @@ export class BranchListComponent implements OnInit {
       ).add(
         () => {
           this.loading = false;
-          if ( this.searchInput && isFocusedInput){
+          if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
               this.searchInput.nativeElement.focus();
             });

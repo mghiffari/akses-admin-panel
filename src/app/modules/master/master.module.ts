@@ -18,6 +18,7 @@ import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
 import { BranchService } from './services/branch.service';
+import { BranchUploadModalComponent } from './components/branch-upload-modal/branch-upload-modal.component';
 import { ChangePhonenumberRequestListComponent } from './pages/change-phonenumber-request-list/change-phonenumber-request-list.component';
 import { ChangePhonenumberRequestService } from './services/change-phonenumber-request.service';
 import { ChangePhonenumberRequestRejectedRemarkInputModalComponent } from './components/change-phonenumber-request-rejected-remark-input-modal/change-phonenumber-request-rejected-remark-input-modal.component';
@@ -35,6 +36,7 @@ import { ChangePhonenumberRequestRejectedRemarkInputModalComponent } from './com
     FAQListComponent,
     BranchDetailsComponent,
     BranchListComponent,
+    BranchUploadModalComponent,
     ChangePhonenumberRequestListComponent,
     ChangePhonenumberRequestRejectedRemarkInputModalComponent
   ],
@@ -53,6 +55,7 @@ import { ChangePhonenumberRequestRejectedRemarkInputModalComponent } from './com
     ChangePhonenumberRequestService
   ],
   entryComponents: [
+    BranchUploadModalComponent,
     ChangePhonenumberRequestRejectedRemarkInputModalComponent,
   ]
 })

@@ -126,11 +126,11 @@
             "errorRequired": "Judul FAQ wajib diisi"
         },
         "faqOrder": {
-            "fieldTitle": "Order",
-            "placeholder": "Order",
-            "errorRequired": "Order wajib diisi",
-            "errorFormat": "Order hanya terdiri dari angka",
-            "errorMin": "Order harus terdiri dari bilangan positif > 0"
+            "fieldTitle": "Urutan",
+            "placeholder": "Urutan",
+            "errorRequired": "Urutan wajib diisi dengan angka",
+            "errorFormat": "Urutan harus dalam bilangan bulat",
+            "errorMin": "Urutan harus terdiri dari bilangan positif > 0"
         },
         "faqUniqueTag": {
             "fieldTitle": "Unique Tag",
@@ -148,7 +148,7 @@
         "articleTitle": {
             "fieldTitle": "Judul Artikel",
             "errorRequired": "Judul Artikel wajib diisi",
-            "placeholder": "Judul article"
+            "placeholder": "Judul artikel"
         },
         "articlePicture": {
             "fieldTitle": "Gambar Artikel",
@@ -174,7 +174,7 @@
             "fieldTitle": "Kode Cabang",
             "placeholder": "Kode Cabang",
             "errorRequired": "Kode Cabang wajib diisi",
-            "errorFormat": "Kode Cabang hanya terdiri oleh angka",
+            "errorFormat": "Kode Cabang hanya harus dalam angka",
             "errorLength": "Kode Cabang harus terdiri {{minLength}} angka"
         },
         "branchType": {
@@ -338,6 +338,7 @@
     "yesContinue": "ya, lanjutkan!",
     "cancel": "batalkan",
     "success": "berhasil",
+    "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
     "failedToDelete": "gagal menghapus data",
@@ -431,6 +432,20 @@
         "uploadCSV": "upload CSV",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus lokasi cabang {{name}}?",
         "loadFailed": "gagal mendapatkan list lokasi cabang"
+    },
+    "uploadCSVModal": {
+        "title": "Upload CSV",
+        "errorFormat": "File harus dalam format csv",
+        "fileExample": "Contoh File",
+        "uploadFailed": "gagal upload file",
+        "uploadSuccess": "berhasil upload file",
+        "instructions":{
+            "format": "Format file upload harus csv dengan delimiter titik koma (;), pastikan tidak ada titik koma (;) pada setiap data kolom",
+            "numberFormat": "Gunakan titik (.) bukan (,) dalam penanda desimal di longitude/latitude dan hanya boleh ada satu titik di setiap longitude/latitude",
+            "precise": "Pastikan longitude dan latitude sudah sesuai. Sedikit kesalahan pada longitude dan latitiude akan berpengaruh pada lokasi cabang terdekat di app",
+            "columnSequence": "Urutan kolom file upload harus sesuai dengan contoh file: nama cabang, tipe cabang, region, provinsi, kota / kabupaten, kecamatan, kelurahan, kode pos, alamat, latitude, longitude, kode cabang",
+            "branchCode": "Kode Cabang harus terdiri 4 angka"
+        }
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",

@@ -26,7 +26,7 @@
           </a>
         </div>
         <div fxFlex="50%">
-          <a routerLink="/master/branches/upload" class="top-action-text" fxLayoutAlign="start center">
+          <a (click)="onUpload()" class="top-action-text cursor-pointer" fxLayoutAlign="start center">
             <mat-icon class="title-add-icon margin-right-10">add</mat-icon>
             <span>
               {{'branchListScreen.uploadCSV' | translate}}

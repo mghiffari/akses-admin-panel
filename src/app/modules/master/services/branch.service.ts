@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Injectable({
@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class BranchService {
 
   branchApiUrl = environment.apiurl + 'branch/';
+  uploadCSVApiUrl = this.branchApiUrl + 'csv';
 
   //constructor
   constructor(private authService: AuthService) { 
@@ -38,5 +39,13 @@ export class BranchService {
   updateBranch(data){
     console.log("BranchService | updateBranch ", this.branchApiUrl);
     return this.authService.wrapTokenPutApi(this.branchApiUrl, data);
+  }
+
+  //upload csv
+  uploadCSV(file: File){
+    console.log("BranchService | uploadCSV ", this.uploadCSVApiUrl);
+    let data = new FormData();
+    data.append('csv', file);
+    return this.authService.wrapTokenPostApi(this.uploadCSVApiUrl, data);
   }
 }

@@ -19,7 +19,7 @@ export class ChangePasswordComponent implements OnInit {
   changePasswordModel = new ChangePassword();
   onSubmittingForm = false;
   passwordLength = CustomValidation.password;
-  
+
   //constructor
   constructor(
     private accountService: AccountService,
@@ -78,18 +78,22 @@ export class ChangePasswordComponent implements OnInit {
 
         },
         error => {
-          console.table(error);
-          this.onSubmittingForm = false;
-          this.changePasswordForm.reset();
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'changePasswordScreen.failed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+          try {
+            console.table(error);
+            this.onSubmittingForm = false;
+            this.changePasswordForm.reset();
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'changePasswordScreen.failed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
               }
-            }
-          })
+            })
+          } catch (error) {
+            console.table(error)
+          }
         }
       )
   }
