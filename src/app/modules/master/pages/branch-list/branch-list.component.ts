@@ -61,7 +61,7 @@ export class BranchListComponent implements OnInit {
   }
 
   //delete
-  onDelete(branch){
+  onDelete(branch) {
     console.log("BranchListComponent | onDelete")
     const modalRef = this.modal.open(ConfirmationModalComponent, {
       width: '260px',
@@ -76,7 +76,7 @@ export class BranchListComponent implements OnInit {
       }
     })
     modalRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.loading = true;
         let delBranch = Object.assign({}, branch);
         delBranch.is_deleted = true;
@@ -93,7 +93,7 @@ export class BranchListComponent implements OnInit {
                   }
                 }
               })
-              this.lazyLoadData()              
+              this.lazyLoadData()
             } catch (error) {
               console.table(error)
             }
@@ -106,11 +106,11 @@ export class BranchListComponent implements OnInit {
                 data: {
                   title: 'failedToDelete',
                   content: {
-                    text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                     data: null
                   }
                 }
-              })              
+              })
             } catch (error) {
               console.table(error)
             }
@@ -149,7 +149,7 @@ export class BranchListComponent implements OnInit {
     })
     modalRef.afterClosed().subscribe(result => {
       if (result) {
-        //reload data
+        this.onSearch()
       }
     })
   }

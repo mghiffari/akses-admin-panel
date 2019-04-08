@@ -24,6 +24,7 @@ export class BranchUploadModalComponent implements OnInit {
   onSubmittingForm = false;
   fileUrl = environment.branchCSVFileExampleUrl;
 
+  //constructor
   constructor(public dialogRef: MatDialogRef<BranchUploadModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackBar: MatSnackBar,
@@ -31,10 +32,12 @@ export class BranchUploadModalComponent implements OnInit {
       dialogRef.disableClose = true;
     }
 
+  //on init
   ngOnInit() {
     console.log('BranchUploadModalComponent | ngOnInit')
   }
 
+  //event handling when file input value change
   onChangeFile(e){
     console.log('BranchUploadModalComponent | onChangeFile')
     this.file = null;
@@ -55,19 +58,10 @@ export class BranchUploadModalComponent implements OnInit {
     }
   }
 
+  //event handling when clicking upload button; call upload csv api
   onUpload(){
-    this.onSubmittingForm = true;
-    let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      data: {
-        title: 'success',
-        content: {
-          text: 'uploadCSV.success'
-        }
-      }
-    })
-    this.dialogRef.close(true)
-
     console.log('BranchUploadModalComponent | onUpload')
+    this.onSubmittingForm = true;
     this.branchService.uploadCSV(this.file).subscribe(
       data => {
         this.onSubmittingForm = false;
@@ -75,7 +69,7 @@ export class BranchUploadModalComponent implements OnInit {
           data: {
             title: 'success',
             content: {
-              text: 'uploadCSV.success'
+              text: 'uploadCSVModal.uploadSuccess'
             }
           }
         })
@@ -87,7 +81,7 @@ export class BranchUploadModalComponent implements OnInit {
           this.onSubmittingForm = false;
           this.snackBar.openFromComponent(ErrorSnackbarComponent, {
             data: {
-              title: 'uploadCSV.failed',
+              title: 'uploadCSVModal.uploadFailed',
               content: {
                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
               }
