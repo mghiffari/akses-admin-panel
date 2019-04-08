@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class BranchService {
 
   branchApiUrl = environment.apiurl + 'branch/';
+  uploadCSVApiUrl = this.branchApiUrl + 'csv';
 
   //constructor
   constructor(private authService: AuthService) { 
@@ -42,10 +43,9 @@ export class BranchService {
 
   //upload csv
   uploadCSV(file: File){
-    let url = this.branchApiUrl + 'uploadCSV';
-    console.log("BranchService | uploadCSV ", url);
+    console.log("BranchService | uploadCSV ", this.uploadCSVApiUrl);
     let data = new FormData();
-    data.append('file', file);
-    return this.authService.wrapTokenPostApi(url, data);
+    data.append('csv', file);
+    return this.authService.wrapTokenPostApi(this.uploadCSVApiUrl, data);
   }
 }

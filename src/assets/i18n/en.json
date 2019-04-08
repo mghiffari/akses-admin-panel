@@ -433,7 +433,8 @@
             "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
             "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
             "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the location on the app",
-            "columnSequence": "The sequnce of the column should be the same as the example file"
+            "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, longitude, latitude, branch code",
+            "branchCode": "Each branch code should contain 4 numbers"
         }
     },
     "changePhonenumberRequestListScreen": {
