@@ -74,7 +74,7 @@
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
             <mat-select formControlName="province">
-              <mat-option value="">{{'forms.province.placeholder' | translate}}</mat-option>
+              <mat-option value="" (click)="setCities(null)">{{'forms.province.placeholder' | translate}}</mat-option>
               <mat-option *ngFor="let prov of provinces" [value]="prov.value" (click)="setCities(prov)">{{prov.value}}
               </mat-option>
             </mat-select>
@@ -107,8 +107,8 @@
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
             <mat-select formControlName="city">
-              <mat-option value="">{{'forms.city.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let elCity of cities" [value]="elCity.value" (click)="setSubDistricts(elCity)">
+              <mat-option value="" (click)="setDistricts(null)">{{'forms.city.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let elCity of cities" [value]="elCity.value" (click)="setDistricts(elCity)">
                 {{elCity.value}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -141,7 +141,7 @@
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
             <mat-select formControlName="district">
-              <mat-option value="">{{'forms.district.placeholder' | translate}}</mat-option>
+              <mat-option value="" (click)="setSubDistricts(null)">{{'forms.district.placeholder' | translate}}</mat-option>
               <mat-option *ngFor="let dist of districts" [value]="dist.value" (click)="setSubDistricts(dist)">
                 {{dist.value}}</mat-option>
             </mat-select>

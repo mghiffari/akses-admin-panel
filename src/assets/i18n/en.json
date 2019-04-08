@@ -419,8 +419,11 @@
         "succesUpdated": "Branch Location successfully updated",
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new Branch Location",
-        "getBranchTypeFailed": "failed to get Branch Types",
-        "getIndonesiaZonesFailed": "failed to get Indonesia Region list"
+        "getBranchTypesFailed": "failed to get branch types",
+        "getProvincesFailed": "failed to get province list",
+        "getCitiesFailed": "failed to get city list",
+        "getDistrictsFailed": "failed to get district list",
+        "getSubDistrictsFailed": "failed to get sub-district list"
     },
     "branchListScreen": {
         "title": "Branch Locations Data",

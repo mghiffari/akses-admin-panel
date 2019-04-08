@@ -419,8 +419,11 @@
         "succesUpdated": "data Lokasi Cabang berhaisl diubah",
         "updateFailed": "gagal mengubah data Lokasi Cabang",
         "createFailed": "gagal menambahkan Lokasi Cabang baru",
-        "getBranchTypeFailed": "gagal mendapatkan data tipe branch",
-        "getIndonesiaZonesFailed": "gagal mendapatkan list daerah Indonesia"
+        "getBranchTypesFailed": "gagal mendapatkan list tipe branch",
+        "getProvincesFailed": "gagal mendapatkan list provinsi",
+        "getCitiesFailed": "gagal mendapatkan list kota / kabupaten",
+        "getDistrictsFailed": "gagal mendapatkan list kecamatan",
+        "getSubDistrictsFailed": "gagal mendapatkan list kelurahan"
     },
     "branchListScreen": {
         "title": "Data Lokasi Cabang",

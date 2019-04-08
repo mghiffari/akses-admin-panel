@@ -11,6 +11,8 @@ import { forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Branch } from '../../models/branch';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-branch-details',
@@ -201,11 +203,14 @@ export class BranchDetailsComponent implements OnInit {
   getLOVs() {
     console.log('BranchDetailsComponent | getLOVs')
     this.loading = true;
-    this.lovService.getBranchType().subscribe(
-      data => {
-        console.table(data);
-        this.branchTypes = data.data[0].aks_adm_lovs;
-      }, error => {
+    let lovTasks = [
+      this.lovService.getBranchType().pipe(map(res => res), catchError(e => of(e))),
+      this.lovService.getIndonesiaProvince().pipe(map(res => res), catchError(e => of(e))),
+    ]
+    forkJoin(lovTasks).subscribe((response: any) => {
+      this.loading = false;
+      if (response[0] instanceof HttpErrorResponse) {
+        const error = response[0];
         try {
           console.table(error);
           this.snackBar.openFromComponent(ErrorSnackbarComponent, {
@@ -220,41 +225,51 @@ export class BranchDetailsComponent implements OnInit {
         } catch (error) {
           console.table(error)
         }
-      }).add(() => {
-        // this.lovService.getIndonesiaZone().subscribe(
-        //   data => {
-        //     console.table(data);
-        //     this.provinces = data.data;
-        //     if (!this.isCreate) {
-        //       let selectedProvince = this.provinces.find(el => {
-        //         return el.value === this.province.value;
-        //       })
-        //       if (selectedProvince) {
-        //         this.setCities(selectedProvince, false)
-        //       } else {
-        //         this.province.reset()
-        //         this.setCities(null)
-        //       }
-        //     }
-        //   }, error => {
-        //     try {
-        //       console.table(error);
-        //       this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-        //         data: {
-        //           title: 'branchDetailsScreen.getIndonesiaZonesFailed',
-        //           content: {
-        //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-        //             data: null
-        //           }
-        //         }
-        //       })
-        //     } catch (error) {
-        //       console.table(error)
-        //     }
-        //   }).add(() => {
-        this.loading = false;
-        // })
-      })
+      } else {
+        try {
+          console.table(response[0]);
+          this.branchTypes = response[0].data[0].aks_adm_lovs;
+        } catch (error) {
+          console.table(error)
+        }
+      }
+
+      if (response[1] instanceof HttpErrorResponse) {
+        const error = response[1];
+        try {
+          console.table(error);
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'branchDetailsScreen.getProvincesFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      } else {
+        try {
+          console.table(response[1]);
+          this.provinces = response[1].data;
+          if (!this.isCreate) {
+            let selectedProvince = this.provinces.find(el => {
+              return el.value === this.province.value;
+            })
+            if (selectedProvince) {
+              this.setCities(selectedProvince, false)
+            } else {
+              this.province.reset()
+              this.setCities(null)
+            }
+          }
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    })
   }
 
   // set list of cities based on province
@@ -264,25 +279,51 @@ export class BranchDetailsComponent implements OnInit {
       this.city.reset()
       this.city.setValue('')
     }
-    if (!province) {
+    if (!province || province === '') {
       this.cities = [];
+      this.city.reset()
+      this.city.setValue('')
       this.setDistricts(null)
     } else {
-      this.cities = province.aks_adm_lovs;
-      if (this.city.value && this.city.value !== '') {
-        let selectedCity = this.cities.find(el => {
-          return el.value === this.city.value;
-        })
-        if (selectedCity) {
-          this.setDistricts(selectedCity, reset)
-        } else {
-          this.city.reset()
-          this.city.setValue('')
-          this.setDistricts(null)
+      this.lovService.getIndonesiaProvinceCities(province.id).subscribe(
+        response => {
+          try {
+            this.cities = response.data;
+            if (this.city.value && this.city.value !== '') {
+              let selectedCity = this.cities.find(el => {
+                return el.value === this.city.value;
+              })
+              if (selectedCity) {
+                this.setDistricts(selectedCity, reset)
+              } else {
+                this.city.reset()
+                this.city.setValue('')
+                this.setDistricts(null)
+              }
+            } else {
+              this.setDistricts(null)
+            }
+          } catch (error) {
+            console.table(error)
+          }
+        },
+        error => {
+          try {
+            console.table(error);
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'branchDetailsScreen.getCitiesFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.table(error)
+          }
         }
-      } else {
-        this.setDistricts(null)
-      }
+      )
     }
   }
 
@@ -293,25 +334,51 @@ export class BranchDetailsComponent implements OnInit {
       this.district.reset()
       this.district.setValue('')
     }
-    if (!city) {
+    if (!city || city === '') {
       this.districts = [];
+      this.district.reset()
+      this.district.setValue('')
       this.setSubDisctricts(null)
     } else {
-      this.districts = city.aks_adm_lovs;
-      if (this.district.value && this.district.value !== '') {
-        let selectedDiscrict = this.districts.find(el => {
-          return el.value === this.district.value;
-        })
-        if (selectedDiscrict) {
-          this.setSubDisctricts(selectedDiscrict, reset)
-        } else {
-          this.district.reset()
-          this.district.setValue('')
-          this.setSubDisctricts(null)
+      this.lovService.getIndonesiaCityDistricts(city.id).subscribe(
+        response => {
+          try {
+            this.districts = response.data;
+            if (this.district.value && this.district.value !== '') {
+              let selectedDiscrict = this.districts.find(el => {
+                return el.value === this.district.value;
+              })
+              if (selectedDiscrict) {
+                this.setSubDisctricts(selectedDiscrict, reset)
+              } else {
+                this.district.reset()
+                this.district.setValue('')
+                this.setSubDisctricts(null)
+              }
+            } else {
+              this.setSubDisctricts(null)
+            }
+          } catch (error) {
+            console.table(error)
+          }
+        },
+        error => {
+          try {
+            console.table(error);
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'branchDetailsScreen.getDistrictsFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.table(error)
+          }
         }
-      } else {
-        this.setSubDisctricts(null)
-      }
+      )     
     }
   }
 
@@ -322,19 +389,45 @@ export class BranchDetailsComponent implements OnInit {
       this.subDistrict.reset()
       this.subDistrict.setValue('')
     }
-    if (!district) {
+    if (!district || district === '') {
       this.subDistricts = [];
+      this.subDistrict.reset()
+      this.subDistrict.setValue('')
     } else {
-      this.subDistricts = district.aks_adm_lovs;
-      if (this.subDistrict.value && this.subDistrict.value !== '') {
-        let selectedSubDistrict = this.subDistricts.find(el => {
-          return el.value === this.subDistrict.value;
-        })
-        if (!selectedSubDistrict) {
-          this.subDistrict.reset()
-          this.subDistrict.setValue('')
+      this.lovService.getIndonesiaDistrictSubDistricts(district.id).subscribe(
+        response => {
+          try {
+            this.subDistricts = response.data;
+            if (this.subDistrict.value && this.subDistrict.value !== '') {
+              let selectedSubDistrict = this.subDistricts.find(el => {
+                return el.value === this.subDistrict.value;
+              })
+              if (!selectedSubDistrict) {
+                this.subDistrict.reset()
+                this.subDistrict.setValue('')
+              }
+            }
+          } catch (error) {
+            console.table(error)
+          }
+        },
+        error => {
+          try {
+            console.table(error);
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'branchDetailsScreen.getSubDistrictsFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.table(error)
+          }
         }
-      }
+      ) 
     }
   }
 
