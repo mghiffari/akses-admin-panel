@@ -327,9 +327,9 @@ export class BranchDetailsComponent implements OnInit {
     }
   }
 
-  // set list of disctricts based on city
+  // set list of districts based on city
   setDistricts(city = null, reset = true) {
-    console.log('BranchDetailsComponent | setSubDistricts')
+    console.log('BranchDetailsComponent | setDistricts')
     if (reset) {
       this.district.reset()
       this.district.setValue('')
@@ -338,25 +338,25 @@ export class BranchDetailsComponent implements OnInit {
       this.districts = [];
       this.district.reset()
       this.district.setValue('')
-      this.setSubDisctricts(null)
+      this.setSubDistricts(null)
     } else {
       this.lovService.getIndonesiaCityDistricts(city.id).subscribe(
         response => {
           try {
             this.districts = response.data;
             if (this.district.value && this.district.value !== '') {
-              let selectedDiscrict = this.districts.find(el => {
+              let selectedDistrict = this.districts.find(el => {
                 return el.value === this.district.value;
               })
-              if (selectedDiscrict) {
-                this.setSubDisctricts(selectedDiscrict, reset)
+              if (selectedDistrict) {
+                this.setSubDistricts(selectedDistrict, reset)
               } else {
                 this.district.reset()
                 this.district.setValue('')
-                this.setSubDisctricts(null)
+                this.setSubDistricts(null)
               }
             } else {
-              this.setSubDisctricts(null)
+              this.setSubDistricts(null)
             }
           } catch (error) {
             console.table(error)
@@ -382,9 +382,9 @@ export class BranchDetailsComponent implements OnInit {
     }
   }
 
-  // set list of sub districts based on disctrict
-  setSubDisctricts(district = null, reset = true) {
-    console.log('BranchDetailsComponent | setVillages')
+  // set list of sub districts based on district
+  setSubDistricts(district = null, reset = true) {
+    console.log('BranchDetailsComponent | setSubDistricts')
     if (reset) {
       this.subDistrict.reset()
       this.subDistrict.setValue('')
@@ -439,14 +439,14 @@ export class BranchDetailsComponent implements OnInit {
     this.branchModel = new Branch();
     this.branchModel.name = form.name;
     this.branchModel.branch_code = form.branchCode;
-    this.branchModel.type = form.branchType;
+    this.branchModel.type = form.type;
     this.branchModel.latitude = form.latitude;
     this.branchModel.longitude = form.longitude;
     this.branchModel.region = form.region;
     this.branchModel.province = form.province;
     this.branchModel.city = form.city;
     this.branchModel.sub_district = form.subDistrict;
-    this.branchModel.district = form.disctrict;
+    this.branchModel.district = form.district;
     this.branchModel.address = form.address;
     this.branchModel.postal_code = form.postalCode;
     if (this.isCreate) {

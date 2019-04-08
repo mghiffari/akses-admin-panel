@@ -416,7 +416,7 @@
         "createTitle": "Tambahkan Lokasi Cabang",
         "updateTitle": "Ubah Lokasi Cabang",
         "succesCreated": "Lokasi Cabang baru berhasil ditambahkan",
-        "succesUpdated": "data Lokasi Cabang berhaisl diubah",
+        "succesUpdated": "data Lokasi Cabang berhasil diubah",
         "updateFailed": "gagal mengubah data Lokasi Cabang",
         "createFailed": "gagal menambahkan Lokasi Cabang baru",
         "getBranchTypesFailed": "gagal mendapatkan list tipe branch",
