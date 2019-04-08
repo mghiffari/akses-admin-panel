@@ -63,7 +63,8 @@ export class BranchUploadModalComponent implements OnInit {
     console.log('BranchUploadModalComponent | onUpload')
     this.onSubmittingForm = true;
     this.branchService.uploadCSV(this.file).subscribe(
-      data => {
+      response => {
+        console.table(response)
         this.onSubmittingForm = false;
         let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
           data: {
