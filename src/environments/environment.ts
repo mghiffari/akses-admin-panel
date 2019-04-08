@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   apiurl: 'http://149.129.250.31:30001/api/v1/',
   enableAdiraEmailValidation: false,
-  version: '1.0.3',
-  versionDate: new Date(2019, 3, 2),
+  version: '1.0.4',
+  versionDate: new Date(2019, 3, 5),
   tinyMceSettings: {
     inline: false,
     statusbar: false,
