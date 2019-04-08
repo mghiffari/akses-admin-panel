@@ -7,14 +7,14 @@
       <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%" class="margin-top-5">
         <mat-form-field appearance="fill">
           <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="5"
-            placeholder="{{'forms.remark.placeholder' | translate}}" formControlName="remark">
+            placeholder="{{'forms.remark.placeholder' | translate}}" formControlName="remarks">
           </textarea>
         </mat-form-field>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="start center" style="max-width: 100%">
-        <mat-error fxFlex="100%" class="bottom-error" *ngIf="remark.invalid && (remark.dirty || remark.touched)">
-          <span *ngIf="remark.errors.required">{{'forms.remark.errorRequired' | translate}}</span>
-          <span *ngIf="remark.errors.maxlength">{{'forms.remark.errorMaxLength' | translate: maxLength}}</span>
+        <mat-error fxFlex="100%" class="bottom-error" *ngIf="remarks.invalid && (remarks.dirty || remarks.touched)">
+          <span *ngIf="remarks.errors.required">{{'forms.remark.errorRequired' | translate}}</span>
+          <span *ngIf="remarks.errors.maxlength">{{'forms.remark.errorMaxLength' | translate: maxLength}}</span>
         </mat-error>
       </div>
     </div>

@@ -26,61 +26,64 @@
     <table mat-table [dataSource]="requests" width="100%" #branchesTable>
       <ng-container matColumnDef="selection">
         <th mat-header-cell *matHeaderCellDef class="font-th th-width-25">
-          <mat-checkbox color="primary" (change)="onChangeSelectAll($event)" [checked]="selectableRequestCount == selectedRequests.length"></mat-checkbox>
+          <mat-checkbox color="primary" (change)="onChangeSelectAll($event)"
+            [checked]="selectableRequestCount == selectedRequests.length && selectableRequestCount > 0"></mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let element">
           <mat-checkbox color="primary" *ngIf="element.status === null || element.status === ''"
-          (change)="onChangeSelect($event, element)" [checked]="element.isSelected">
+            (change)="onChangeSelect($event, element)" [checked]="element.isSelected">
           </mat-checkbox>
         </td>
       </ng-container>
       <ng-container matColumnDef="requestDate">
         <th mat-header-cell *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.changePhonenumberRequestTable.requestDate' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.requestDate | date : 'dd/MM/yyyy hh:mm'}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.requested_dt | date : 'dd/MM/yyyy hh:mm'}} </td>
       </ng-container>
       <ng-container matColumnDef="customerName">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50">
           {{'table.changePhonenumberRequestTable.customerName' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.cust_name}} </td>
       </ng-container>
       <ng-container matColumnDef="requestDuration">
         <th mat-header-cell *matHeaderCellDef class="font-th th-min-width">
           {{'table.changePhonenumberRequestTable.requestDuration' | translate}} </th>
         <td mat-cell *matCellDef="let element">
-          {{getDuration(element.requestDate).text | translate: getDuration(element.requestDate).duration}}
+          {{getDurationText(element).text | translate: getDurationText(element).duration}}
         </td>
       </ng-container>
       <ng-container matColumnDef="oldPhoneNumber">
         <th mat-header-cell *matHeaderCellDef class="font-th th-min-width">
           {{'table.changePhonenumberRequestTable.oldPhoneNumber' | translate}} </th>
         <td mat-cell *matCellDef="let element">
-          {{element.oldPhoneNumber}}
+          {{element.old_phone}}
         </td>
       </ng-container>
       <ng-container matColumnDef="newPhoneNumber">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
           {{'table.changePhonenumberRequestTable.newPhoneNumber' | translate}} </th>
         <td mat-cell *matCellDef="let element">
-          {{element.newPhoneNumber}}
+          {{element.new_phone}}
         </td>
       </ng-container>
       <ng-container matColumnDef="lastUpdated">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
           {{'table.changePhonenumberRequestTable.lastUpdated' | translate}} </th>
         <td mat-cell *matCellDef="let element">
-          {{element.lastUpdatedDate | date : 'dd/MM/yyyy hh:mm'}} {{'by' | translate}} {{element.lastUpdatedBy}}
+          <span *ngIf="element.action_dt && element.action_by">            
+            {{element.action_dt | date : 'dd/MM/yyyy hh:mm'}} {{'by' | translate}} {{element.action_by}}
+          </span>
         </td>
       </ng-container>
       <ng-container matColumnDef="actionsStatus">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width text-center-important">
           {{'table.changePhonenumberRequestTable.actionsStatus' | translate}} </th>
         <td mat-cell *matCellDef="let element" [align]="!element.status || element.status === '' ? 'center' : 'left'">
-          <div *ngIf="element.status && element.status !== ''">
-            <span *ngIf="element.status === 'approved'" class="text-success">
+          <div *ngIf="element.status && element.status.toLowerCase() === status.closed.toLowerCase()">
+            <span *ngIf="element.action.toLowerCase() === action.approved.toLowerCase()" class="text-success">
               {{'table.status.approved' | translate}}
             </span>
-            <span *ngIf="element.status === 'rejected'" class="text-danger">
+            <span *ngIf="element.action.toLowerCase() === action.rejected.toLowerCase()" class="text-danger">
               {{'table.status.rejected' | translate}}
             </span>
           </div>
@@ -88,11 +91,11 @@
             class="padding-top-10 padding-bottom-10 success-error-theme">
             <div style="width: 100%">
               <button block-button mat-raised-button color="primary"
-                (click)="approveRequest(request)">{{'approve' | translate}}</button>
+                (click)="approveRequest(element)">{{'approve' | translate}}</button>
             </div>
             <div style="width: 100%" class="margin-top-5">
               <button block-button mat-raised-button color="accent"
-                (click)="rejectRequest(request)">{{'reject' | translate}}</button>
+                (click)="rejectRequest(element)">{{'reject' | translate}}</button>
             </div>
           </div>
         </td>
@@ -101,10 +104,11 @@
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
           {{'table.changePhonenumberRequestTable.remark' | translate}} </th>
         <td mat-cell *matCellDef="let element" align="center">
-          <mat-icon *ngIf="(!element.remark || element.remark === '') && element.status === 'rejected'"
-            class="cursor-pointer" (click)="editRemark(element)">edit</mat-icon>
-          <span
-            *ngIf="element.remark && element.remark !== '' && element.status === 'rejected'">{{element.remark}}</span>
+          <div *ngIf="element.action?.toLowerCase() === 'rejected'">
+            <mat-icon *ngIf="(!element.remarks || element.remarks === '')" class="cursor-pointer"
+              (click)="editRemark(element)">edit</mat-icon>
+            <span *ngIf="element.remarks && element.remarks !== ''">{{element.remarks}}</span>
+          </div>
         </td>
       </ng-container>
       <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="requestColumns; sticky: true"></tr>
@@ -125,11 +129,11 @@
       {{'table.noRecordsFound' | translate}}
     </div>
   </div>
-  <div fxLayout="row wrap" fxLayoutAlign="start center" *ngIf="selectedRequests.length > 0"
+  <div fxLayout="row wrap" fxLayoutAlign="start center" *ngIf="selectedRequests.length > 0 && !loading"
     class="padding-16 padding-top-10 padding-bottom-10 border-top-gray bottom-sticky-toolbar">
     <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="start center" class="font-gotham-bold font-sub-content">
       <div flexAlign="center" fxLayout="column" fxLayoutAlign="center center">
-        <mat-icon>clear</mat-icon>
+        <mat-icon class="cursor-pointer" (click)="deselectAll()">clear</mat-icon>
       </div>
       <div flexAlign="center" class="margin-left-10">
         {{'changePhonenumberRequestListScreen.totalRequestSelected' | translate: {totalRequest: this.selectedRequests.length} }}
@@ -137,10 +141,10 @@
     </div>
     <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="end center" class="success-error-theme">
       <div class="margin-right-10">
-        <button mat-raised-button color="accent" (click)="bulkReject()">{{'reject' | translate}}</button>
+        <button mat-raised-button color="accent" (click)="bulkRejectRequest()">{{'reject' | translate}}</button>
       </div>
       <div class="margin-right-10">
-        <button mat-raised-button color="primary" (click)="bulkApprove()">{{'approve' | translate}}</button>
+        <button mat-raised-button color="primary" (click)="bulkApproveRequest()">{{'approve' | translate}}</button>
       </div>
     </div>
   </div>

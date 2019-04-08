@@ -128,7 +128,7 @@
         "faqOrder": {
             "fieldTitle": "Order",
             "placeholder": "Order",
-            "errorRequired": "Order is required",
+            "errorRequired": "Order must have numeric value",
             "errorFormat": "Order must be a number",
             "errorMin": "Order must be a positive number > 0"
         },
@@ -157,7 +157,7 @@
         },
         "uniqueTag": {
             "fieldTitle": "Unique Tag",
-            "errorRequired": "Unique Tag is required",
+            "errorRequired": "Unique tag is required",
             "placeholder": "Unique Tag"
         },
         "category": {
@@ -185,12 +185,14 @@
         "longitude": {
             "fieldTitle": "Longitude",
             "placeholder": "Longitude",
-            "errorRequired": "Longitude is required"
+            "errorRequired": "Longitude must have numeric value",
+            "errorMaxDecimalLength": "Longitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
         },
         "latitude": {
             "fieldTitle": "Latitude",
             "placeholder": "Latitude",
-            "errorRequired": "Latitude is required"
+            "errorRequired": "Latitude must have numeric value",
+            "errorMaxDecimalLength": "Latitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
         },
         "region": {
             "fieldTitle": "Region",
@@ -451,15 +453,13 @@
         "title": "Change Handphone",
         "loadFailed": "failed to get list of change phonenumber requests",
         "rejectSuccess": "change phone number request successfully rejected",
-        "allRejectSuccess": "all {{totalRequest}} requests are successfully rejected",
         "rejectFailed": "failed to reject change phone number request",
-        "partialRejectFailed": "rejecting {{totalRequest}} requests: {{errorCount}} failed, {{successCount}} success",
-        "allRejectFailed": "failed to reject all {{totalRequest}} requests",
         "approveSuccess": "change phone number request successfully approved",
         "approveFailed": "failed to approve change phone number request",
-        "allApproveSuccess": "all {{totalRequest}} requests are successfully approved",
-        "partialApproveFailed": "approving {{totalRequest}} requests: {{errorCount}} failed, {{successCount}} success",
-        "allApproveFailed": "failed to approve all {{totalRequest}} requests",
+        "bulkRejectFailed": "failed to reject {{totalRequest}} requests",
+        "bulkRejectSuccess": "{{totalRequest}} requests are rejected",
+        "bulkApproveFailed": "failed to approve {{totalRequest}} requests",
+        "bulkApproveSuccess": "{{totalRequest}} requests are approved",
         "totalRequestSelected": "{{totalRequest}} requests are selected",
         "confirmationModal":{
             "reject": {
@@ -552,6 +552,10 @@
         "01073": "value already exist",
         "01074": "missing approval",
         "01075": "data not found",
-        "01076": "failed to update"
+        "01076": "failed to update",
+        "01077": "failed to get data",
+        "01078": "missing action parameter or value",
+        "01079": "body parameter should be array object",
+        "01080": "fancy text is not supported"
     }
 }
