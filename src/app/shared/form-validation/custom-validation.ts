@@ -88,14 +88,12 @@ export class CustomValidation {
         const arr = String(value).split('.');
         let integerDigitCount= 0;
         let fractionalDigitCount = 0;
-        console.log(arr)
         let valid = true;
 
         for (let val of arr[0]) {
           console.log(val)
           if (!isNaN(val as any)) {
             integerDigitCount += 1;
-            console.log(integerDigitCount)
             if (integerDigitCount > integerDigitMaxLength) {
               valid = false;
               break;
