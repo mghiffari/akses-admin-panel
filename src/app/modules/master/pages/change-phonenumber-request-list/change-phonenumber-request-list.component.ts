@@ -7,7 +7,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
-import { ChangePhonenumberRequestRejectedRemarkInputModalComponent } from '../../components/change-phonenumber-request-rejected-remark-input-modal/change-phonenumber-request-rejected-remark-input-modal.component';
+import { RemarkInputModalComponent } from '../../components/remark-input-modal/remark-input-modal.component';
 import { ChangePhoneNumberRequest } from '../../models/change-phone-number-request';
 
 @Component({
@@ -389,7 +389,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
   // show modal to edit remark for rejected request
   editRemark(request) {
     console.log('ChangePhonenumberRequestListComponent | editRemark');
-    const modalRef = this.modal.open(ChangePhonenumberRequestRejectedRemarkInputModalComponent, {
+    const modalRef = this.modal.open(RemarkInputModalComponent, {
       data: {
         request: request
       }

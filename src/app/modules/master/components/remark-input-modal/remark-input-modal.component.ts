@@ -8,29 +8,29 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
 import { ChangePhoneNumberRequest } from '../../models/change-phone-number-request';
 
 @Component({
-  selector: 'app-change-phonenumber-request-rejected-remark-input-modal',
-  templateUrl: './change-phonenumber-request-rejected-remark-input-modal.component.html',
+  selector: 'app-remark-input-modal',
+  templateUrl: './remark-input-modal.component.html',
   styleUrls: []
 })
-export class ChangePhonenumberRequestRejectedRemarkInputModalComponent implements OnInit {
+export class RemarkInputModalComponent implements OnInit {
   remarkForm: FormGroup;
   maxLength = CustomValidation.requestRemark;
   onSubmittingForm = false;
   request;
 
   //constructor
-  constructor(public dialogRef: MatDialogRef<ChangePhonenumberRequestRejectedRemarkInputModalComponent>,
+  constructor(public dialogRef: MatDialogRef<RemarkInputModalComponent>,
     private requestService: ChangePhonenumberRequestService,
     private snackbar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log('ChangePhonenumberRequestRejectedRemarkInputModalComponent | constructor')
+    console.log('RemarkInputModalComponent | constructor')
     dialogRef.disableClose = true;
     this.request = data.request;
   }
 
   // onInit
   ngOnInit() {
-    console.log('ChangePhonenumberRequestRejectedRemarkInputModalComponent | ngOnInit')
+    console.log('RemarkInputModalComponent | ngOnInit')
     this.remarkForm = new FormGroup(
       {
         remarks: new FormControl('', [Validators.required, Validators.maxLength(CustomValidation.requestRemark.maxLength)])
@@ -45,7 +45,7 @@ export class ChangePhonenumberRequestRejectedRemarkInputModalComponent implement
 
   // handle submit button to update request remark
   save() {
-    console.log('ChangePhonenumberRequestRejectedRemarkInputModalComponent | save')
+    console.log('RemarkInputModalComponent | save')
     this.onSubmittingForm = true;
     let request = new ChangePhoneNumberRequest();
     request.id = this.request.id

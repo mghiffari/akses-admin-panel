@@ -21,7 +21,7 @@ import { BranchService } from './services/branch.service';
 import { BranchUploadModalComponent } from './components/branch-upload-modal/branch-upload-modal.component';
 import { ChangePhonenumberRequestListComponent } from './pages/change-phonenumber-request-list/change-phonenumber-request-list.component';
 import { ChangePhonenumberRequestService } from './services/change-phonenumber-request.service';
-import { ChangePhonenumberRequestRejectedRemarkInputModalComponent } from './components/change-phonenumber-request-rejected-remark-input-modal/change-phonenumber-request-rejected-remark-input-modal.component';
+import { RemarkInputModalComponent } from './components/remark-input-modal/remark-input-modal.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { ChangePhonenumberRequestRejectedRemarkInputModalComponent } from './com
     BranchListComponent,
     BranchUploadModalComponent,
     ChangePhonenumberRequestListComponent,
-    ChangePhonenumberRequestRejectedRemarkInputModalComponent
+    RemarkInputModalComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +56,7 @@ import { ChangePhonenumberRequestRejectedRemarkInputModalComponent } from './com
   ],
   entryComponents: [
     BranchUploadModalComponent,
-    ChangePhonenumberRequestRejectedRemarkInputModalComponent,
+    RemarkInputModalComponent,
   ]
 })
 export class MasterModule { }
