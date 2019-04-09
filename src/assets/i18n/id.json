@@ -226,7 +226,7 @@
         },
         "postalCode": {
             "fieldTitle": "Kode Pos",
-            "placeholder": "Kode Pos",
+            "placeholder": "Kode pos",
             "errorFormat": "Kode Pos hanya terdiri dari angka",
             "errorMinLength": "Jumlah karakter minimum untuk Kode Pos adalah {{minLength}}",
             "errorMaxLength": "Jumlah karakter maksimum untuk Kode Pos adalah {{maxLength}}"
