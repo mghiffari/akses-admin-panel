@@ -186,13 +186,13 @@
             "fieldTitle": "Longitude",
             "placeholder": "Longitude",
             "errorRequired": "Longitude wajib diisi dengan angka",
-            "errorMaxDecimalLength": "Longitude hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (.) and {{fractionDigitLength}} digit di belakang (.)"
+            "errorMaxDecimalLength": "Longitude hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (.) dan {{fractionDigitLength}} digit di belakang (.)"
         },
         "latitude": {
             "fieldTitle": "Latitude",
             "placeholder": "Latitude",
             "errorRequired": "Latitude wajib diisi dengan angka",
-            "errorMaxDecimalLength": "Latitude hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (.) and {{fractionDigitLength}} digit di belakang (.)"
+            "errorMaxDecimalLength": "Latitude hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (.) dan {{fractionDigitLength}} digit di belakang (.)"
         },
         "region": {
             "fieldTitle": "Region",
