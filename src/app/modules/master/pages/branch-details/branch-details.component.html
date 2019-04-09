@@ -131,6 +131,7 @@
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="latitude.invalid && (latitude.dirty || latitude.touched)">
             <span *ngIf="latitude.errors.required">{{'forms.latitude.errorRequired' | translate}}</span>
+            <span *ngIf="!latitude.errors.required && latitude.errors.maxdecimallength">{{'forms.latitude.errorMaxDecimalLength' | translate: latitudeLength}}</span>
           </mat-error>
         </div>
       </div>
@@ -163,8 +164,9 @@
             <input matInput type="number" placeholder="{{'forms.longitude.placeholder' | translate}}"
               formControlName="longitude">
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="longitude.invalid && (longitude.dirty || latitude.touched)">
+          <mat-error class="bottom-error" *ngIf="longitude.invalid && (longitude.dirty || longitude.touched)">
             <span *ngIf="longitude.errors.required">{{'forms.longitude.errorRequired' | translate}}</span>
+            <span *ngIf="!longitude.errors.required && longitude.errors.maxdecimallength">{{'forms.longitude.errorMaxDecimalLength' | translate: longitudeLength}}</span>
           </mat-error>
         </div>
       </div>

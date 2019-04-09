@@ -12,7 +12,6 @@ import { map, catchError } from 'rxjs/operators';
 import { Branch } from '../../models/branch';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-branch-details',
@@ -33,6 +32,8 @@ export class BranchDetailsComponent implements OnInit {
   districts = [];
   branchCodeLength = CustomValidation.branchCode;
   postalCodeLength = CustomValidation.postalCode;
+  longitudeLength = CustomValidation.longitude;
+  latitudeLength = CustomValidation.latitude;
 
   //constructor
   constructor(
@@ -136,8 +137,13 @@ export class BranchDetailsComponent implements OnInit {
               branchCode: new FormControl(editedBranch.branch_code, [Validators.required,
               Validators.minLength(this.branchCodeLength.minLength),
               Validators.maxLength(this.branchCodeLength.maxLength), Validators.pattern("^[0-9]*$")]),
-              latitude: new FormControl(editedBranch.latitude, [Validators.required]),
-              longitude: new FormControl(editedBranch.longitude, [Validators.required]),
+              latitude: new FormControl(editedBranch.latitude, [
+                Validators.required,
+                CustomValidation.maxDecimalLength(this.latitudeLength.integerDigitLength, this.latitudeLength.fractionDigitLength)
+              ]),
+              longitude: new FormControl(editedBranch.longitude, [Validators.required,
+                CustomValidation.maxDecimalLength(this.longitudeLength.integerDigitLength, this.longitudeLength.fractionDigitLength)
+              ]),
               updatedBy: new FormControl(username),
               region: new FormControl(editedBranch.region, [Validators.required]),
               province: new FormControl(editedBranch.province, [Validators.required]),
@@ -181,8 +187,12 @@ export class BranchDetailsComponent implements OnInit {
         branchCode: new FormControl('', [Validators.required,
         Validators.minLength(this.branchCodeLength.minLength),
         Validators.maxLength(this.branchCodeLength.maxLength), Validators.pattern("^[0-9]*$")]),
-        latitude: new FormControl('', [Validators.required]),
-        longitude: new FormControl('', [Validators.required]),
+        latitude: new FormControl('', [Validators.required,
+          CustomValidation.maxDecimalLength(this.latitudeLength.integerDigitLength, this.latitudeLength.fractionDigitLength)
+        ]),
+        longitude: new FormControl('', [Validators.required,
+          CustomValidation.maxDecimalLength(this.longitudeLength.integerDigitLength, this.longitudeLength.fractionDigitLength)
+        ]),
         createdBy: new FormControl(username),
         region: new FormControl('', [Validators.required]),
         province: new FormControl('', [Validators.required]),

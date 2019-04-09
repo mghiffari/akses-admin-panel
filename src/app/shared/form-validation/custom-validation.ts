@@ -20,9 +20,20 @@ export class CustomValidation {
     minLength: 5,
     maxLength: 6
   }
+
+  static latitude = {
+    integerDigitLength: 3,
+    fractionDigitLength: 6
+  }
+
+  static longitude = {
+    integerDigitLength: 3,
+    fractionDigitLength: 6
+  }
+
   static adiraEmailPattern = environment.enableAdiraEmailValidation ? /@adira.co.id$/ : /^/;
   static intenationalNamePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+[ ][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+|[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u;
-  
+
   //used to check password valid or not
   static matchPassword: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
     console.log('CustomValidation | matchPassword');
@@ -37,20 +48,20 @@ export class CustomValidation {
   };
 
   //used to check patern validation
-  static pattern(reg: RegExp) : ValidatorFn {
+  static pattern(reg: RegExp): ValidatorFn {
     console.log('CustomValidation | pattern');
     return (control: AbstractControl): { [key: string]: any } => {
       var value = <string>control.value;
       return value.match(reg) ? null : { 'pattern': { value } };
     }
   }
-  
+
   //used to check text equal
-  static equal(text: string) : ValidatorFn {
+  static equal(text: string): ValidatorFn {
     console.log('CustomValidation | equal');
     return (control: AbstractControl): { [key: string]: any } => {
       var value = <string>control.value;
-      return value==text ? null : { 'equal': { value } };
+      return value == text ? null : { 'equal': { value } };
     }
   }
 
@@ -68,6 +79,47 @@ export class CustomValidation {
     return value.match(CustomValidation.intenationalNamePattern) ? null : { 'internationalname': { value } };
   }
 
+  //used to validate number of digit before and after
+  static maxDecimalLength(integerDigitMaxLength: number, fractionDigitMaxLength: number): ValidatorFn {
+    console.log('CustomValidation | decimalLength');
+    return (control: AbstractControl): { [key: string]: any } => {
+      const value = <string>control.value;
+      if (value) {
+        const arr = String(value).split('.');
+        let integerDigitCount= 0;
+        let fractionalDigitCount = 0;
+        let valid = true;
+
+        for (let val of arr[0]) {
+          console.log(val)
+          if (!isNaN(val as any)) {
+            integerDigitCount += 1;
+            if (integerDigitCount > integerDigitMaxLength) {
+              valid = false;
+              break;
+            }
+          }
+        }
+
+        if (valid && arr.length > 1) {
+          for (let val of arr[1]) {
+            if (!isNaN(val as any)) {
+              fractionalDigitCount += 1;
+              if (fractionalDigitCount > fractionDigitMaxLength) {
+                valid = false;
+                break;
+              }
+            }
+          }
+        }
+
+        return valid ? null : { 'maxdecimallength': { value } }
+      } else {
+        return null;
+      }
+    }
+  }
+
   //change password validation pattern
   static getChangePasswordValidation() {
     return new FormGroup({
@@ -79,7 +131,7 @@ export class CustomValidation {
       ]),
       confirmPassword: new FormControl('')
     }, {
-      validators: CustomValidation.matchPassword
-    })
+        validators: CustomValidation.matchPassword
+      })
   }
 }

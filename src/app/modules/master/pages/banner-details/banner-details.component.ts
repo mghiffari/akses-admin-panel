@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BannerDetailsService } from './services/banner-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-banner-detail',
@@ -33,15 +34,7 @@ export class BannerDetailsComponent implements OnInit {
   vShowFooterButtonURL: boolean = false;
 
   //used for default rich text editor
-  tinyMceSettings = {
-    inline: false,
-    statusbar: false,
-    browser_spellcheck: true,
-    height: 320,
-    plugins: ["lists", "table"],
-    toolbar:
-      "undo redo | formatselect | bold italic | forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table",
-  };
+  tinyMceSettings = environment.tinyMceSettings;
 
   constructor(
     private _bannerDetailService: BannerDetailsService,

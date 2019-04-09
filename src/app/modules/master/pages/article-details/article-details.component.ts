@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleDetailsService } from 'src/app/modules/master/pages/article-details/services/article-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-article-details',
@@ -22,15 +23,7 @@ export class ArticleDetailsComponent implements OnInit {
   vShowFooterButtonModul: boolean = false;
   vShowFooterButtonURL: boolean = false;
 
-  tinyMceSettings = {
-    inline: false,
-    statusbar: false,
-    browser_spellcheck: true,
-    height: 320,
-    plugins: ["lists", "table"],
-    toolbar:
-      "undo redo | formatselect | bold italic | forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table",
-  };
+  tinyMceSettings = environment.tinyMceSettings;
 
   constructor(
     private _articleDetailsService: ArticleDetailsService,
