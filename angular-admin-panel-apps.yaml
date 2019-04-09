@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: angular-admin-panel
+spec:
+  replicas: 1
+  template:
+    metadata:
+     labels:
+      app: angular-admin-panel
+    spec:
+      containers:
+      - name: angular-admin-panel
+        image: 10.50.3.83:5000/angular-admin-panel:latest
+        imagePullPolicy: Always
+      restartPolicy: Always
+      hostNetwork: true
