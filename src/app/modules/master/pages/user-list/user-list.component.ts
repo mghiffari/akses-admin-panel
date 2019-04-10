@@ -18,7 +18,7 @@ export class UserListComponent implements OnInit {
     pageIndex: 0
   }
 
-  userColums: string[] = [
+  userColumns: string[] = [
     'number',
     'firstname',
     'lastname',

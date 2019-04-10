@@ -1,0 +1,282 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      <span *ngIf="isCreate">{{'branchDetailsScreen.createTitle' | translate}}</span>
+      <span *ngIf="!isCreate">{{'branchDetailsScreen.updateTitle' | translate}}</span>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
+    <div fxFlex="100%">
+      <a class="top-action-text" routerLink="/master/branches" fxLayoutAlign="start center">
+        <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
+        <div>
+          {{'backToList' | translate}}
+        </div>
+      </a>
+    </div>
+  </div>
+  <form [formGroup]="branchForm" *ngIf="!loading">
+    <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+      ngClass.md="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.branchCode.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.branchCode.placeholder' | translate}}" formControlName="branchCode">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="branchCode.invalid && (branchCode.dirty || branchCode.touched)">
+            <span *ngIf="branchCode.errors.required">{{'forms.branchCode.errorRequired' | translate}}</span>
+            <span *ngIf="branchCode.errors.pattern">{{'forms.branchCode.errorFormat' | translate}}</span>
+            <span *ngIf="!branchCode.errors.pattern && (branchCode.errors.minlength || branchCode.errors.maxlength)">
+              {{'forms.branchCode.errorLength' | translate: branchCodeLength}}
+            </span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.region.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.region.placeholder' | translate}}" formControlName="region">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="region.invalid && (region.dirty || region.touched)">
+            <span *ngIf="region.errors.required">{{'forms.region.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+      ngClass.md="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.branchType.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="type">
+              <mat-option value="">{{'forms.branchType.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let type of branchTypes" [value]="type.value">{{type.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="type.invalid && (type.dirty || type.touched)">
+            <span *ngIf="type.errors.required">{{'forms.branchType.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.province.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="province">
+              <mat-option value="" (click)="setCities(null)">{{'forms.province.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let prov of provinces" [value]="prov.value" (click)="setCities(prov)">{{prov.value}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="province.invalid && (province.dirty || province.touched)">
+            <span *ngIf="province.errors.required">{{'forms.province.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+      ngClass.md="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.branchName.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.branchName.placeholder' | translate}}" formControlName="name">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <span *ngIf="name.errors.required">{{'forms.branchName.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.city.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="city">
+              <mat-option value="" (click)="setDistricts(null)">{{'forms.city.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let elCity of cities" [value]="elCity.value" (click)="setDistricts(elCity)">
+                {{elCity.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="city.invalid && (city.dirty || city.touched)">
+            <span *ngIf="city.errors.required">{{'forms.city.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+      ngClass.md="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.latitude.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput type="number" placeholder="{{'forms.latitude.placeholder' | translate}}"
+              formControlName="latitude">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="latitude.invalid && (latitude.dirty || latitude.touched)">
+            <span *ngIf="latitude.errors.required">{{'forms.latitude.errorRequired' | translate}}</span>
+            <span *ngIf="!latitude.errors.required && latitude.errors.maxdecimallength">{{'forms.latitude.errorMaxDecimalLength' | translate: latitudeLength}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.district.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="district">
+              <mat-option value="" (click)="setSubDistricts(null)">{{'forms.district.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let dist of districts" [value]="dist.value" (click)="setSubDistricts(dist)">
+                {{dist.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="district.invalid && (district.dirty || district.touched)">
+            <span *ngIf="district.errors.required">{{'forms.district.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+      ngClass.md="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div #longitudeLabel fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.longitude.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput type="number" placeholder="{{'forms.longitude.placeholder' | translate}}"
+              formControlName="longitude">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="longitude.invalid && (longitude.dirty || longitude.touched)">
+            <span *ngIf="longitude.errors.required">{{'forms.longitude.errorRequired' | translate}}</span>
+            <span *ngIf="!longitude.errors.required && longitude.errors.maxdecimallength">{{'forms.longitude.errorMaxDecimalLength' | translate: longitudeLength}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.subDistrict.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="subDistrict">
+              <mat-option value="">{{'forms.subDistrict.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let subDist of subDistricts" [value]="subDist.value">{{subDist.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="subDistrict.invalid && (subDistrict.dirty || subDistrict.touched)">
+            <span *ngIf="subDistrict.errors.required">{{'forms.subDistrict.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+      ngClass.md="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray" *ngIf="isCreate">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.createdBy.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.createdBy.placeholder' | translate}}" formControlName="createdBy">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="createdBy.invalid && (createdBy.dirty || createdBy.touched)">
+            <span *ngIf="createdBy.errors.required">{{'forms.createdBy.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray" *ngIf="!isCreate">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'forms.updatedBy.fieldTitle' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.updatedBy.placeholder' | translate}}" formControlName="updatedBy">
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="updatedBy.invalid && (updatedBy.dirty || updatedBy.touched)">
+            <span *ngIf="updatedBy.errors.required">{{'forms.updatedBy.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+          <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+            {{'forms.postalCode.fieldTitle' | translate}}
+          </div>
+          <div fxFlexAlign="center" fxFlex="70%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.postalCode.placeholder' | translate}}" formControlName="postalCode">
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)">
+              <span *ngIf="postalCode.errors.pattern">{{'forms.postalCode.errorFormat' | translate}}</span>
+              <span *ngIf="!postalCode.errors.pattern && postalCode.errors.minlength">
+                {{'forms.postalCode.errorMinLength' | translate: postalCodeLength}}
+              </span>
+              <span *ngIf="!postalCode.errors.pattern && postalCode.errors.maxlength">
+                  {{'forms.postalCode.errorMaxLength' | translate: postalCodeLength}}
+                </span>
+            </mat-error>
+          </div>
+        </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray" ngClass.md="border-bottom-gray">
+      <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div [fxFlex]="longitudeLabel.offsetWidth + 'px'">
+          {{'forms.address.fieldTitle' | translate}}
+        </div>
+        <div fxFlex="grow">
+          <mat-form-field appearance="fill">
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"
+              placeholder="{{'forms.address.placeholder' | translate}}" formControlName="address">
+            </textarea>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="address.invalid && (address.dirty || address.touched)">
+            <span *ngIf="address.errors.required">{{'forms.address.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" class="border-bottom-gray">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+        </div>
+        <div fxLayout="row" fxFlexAlign="center" fxFlex="70%" fxLayoutAlign="start center">
+          <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"
+            [disabled]="!branchForm.valid">{{'save' | translate}}</button>
+          <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div>
+                <mat-spinner diameter="16"></mat-spinner>
+              </div>
+              <div class="margin-left-5">{{'loading' | translate}}</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+</div>

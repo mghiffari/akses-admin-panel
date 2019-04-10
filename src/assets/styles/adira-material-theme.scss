@@ -309,8 +309,8 @@ $success-error-accent-pallete: (
 );
 $success-error-primary: mat-palette($success-error-primary-pallete);
 $success-error-accent:  mat-palette($success-error-accent-pallete, A200, A100, A400);
-$success-error-warn:    mat-palette($mat-red);
-$success-error-theme:   mat-dark-theme($success-error-primary, $adira-dark-accent, $adira-dark-warn);
+$success-error-accent:    mat-palette($mat-red);
+$success-error-theme:   mat-dark-theme($success-error-primary, $success-error-accent, $success-error-accent);
 
 .success-error-theme {
     @include angular-material-theme($success-error-theme);

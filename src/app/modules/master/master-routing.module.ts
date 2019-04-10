@@ -4,6 +4,13 @@ import { UserListComponent } from './pages/user-list/user-list.component';
 import { BannerListComponent } from './pages/banner-list/banner-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
+import { ArticleListComponent } from './pages/article-list/article-list.component';
+import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
+import { FAQListComponent } from './pages/faq-list/faq-list.component';
+import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
+import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
+import { BranchListComponent } from './pages/branch-list/branch-list.component';
+import { ChangePhonenumberRequestListComponent } from './pages/change-phonenumber-request-list/change-phonenumber-request-list.component';
 
 const routes: Routes = [
   {
@@ -46,6 +53,76 @@ const routes: Routes = [
     component: BannerDetailsComponent,
     data: {
       title: 'Update Banner'
+    }
+  },
+  {
+    path: 'articles',
+    component: ArticleListComponent,
+    data: {
+      title: 'Articles'
+    }
+  },
+  {
+    path: 'articles/create',
+    component: ArticleDetailsComponent,
+    data: {
+      title: 'Create Article'
+    }
+  },
+  {
+    path: 'articles/update/:id',
+    component: ArticleDetailsComponent,
+    data: {
+      title: 'Update Article'
+    }
+  },
+  {
+    path: 'faqs',
+    component: FAQListComponent,
+    data: {
+      title: 'FAQs'
+    }
+  },
+  {
+    path: 'faqs/create',
+    component: FAQDetailsComponent,
+    data: {
+      title: 'Create FAQ'
+    }
+  },
+  {
+    path: 'faqs/update/:id',
+    component: FAQDetailsComponent,
+    data: {
+      title: 'Update FAQ'
+    }
+  },
+  {
+    path: 'branches/create',
+    component: BranchDetailsComponent,
+    data: {
+      title: 'Create Branch'
+    }
+  },
+  {
+    path: 'branches/update/:id',
+    component: BranchDetailsComponent,
+    data: {
+      title: 'Update Branch'
+    }
+  },
+  {
+    path: 'branches',
+    component: BranchListComponent,
+    data: {
+      title: 'Branch Locations'
+    }
+  },
+  {
+    path: 'change-phonenumber-requests',
+    component: ChangePhonenumberRequestListComponent,
+    data: {
+      title: 'Change Phonenumber Requests'
     }
   }
 ];

@@ -1,9 +1,12 @@
-<div class="adira-dark-theme" fxLayout="row">
-  <mat-toolbar color="accent" class="page-title">{{getTitle()}}</mat-toolbar>
+<div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+  <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+    <span>{{getTitle()}}</span>
+  </div>
 </div>
 <div fxLayout="row" class="padding-16 border-bottom-gray">
   <a>
-    <div fxLayout="row" style="cursor: pointer;" routerLink="/master/banners" fxLayoutAlign="start center" class="top-action-text">
+    <div fxLayout="row" style="cursor: pointer;" routerLink="/master/banners" fxLayoutAlign="start center"
+      class="top-action-text">
       <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
       <span>{{'bannersDetailScreen.seeBannerList' | translate}}</span>
     </div>
@@ -16,7 +19,8 @@
     </div>
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
       <mat-form-field appearance="fill">
-        <input matInput type="text" placeholder="{{'forms.bannerTitle.placeholder' | translate}}" [(ngModel)]="getCreateBannerData().title" />
+        <input matInput type="text" placeholder="{{'forms.bannerTitle.placeholder' | translate}}"
+          [(ngModel)]="getCreateBannerData().title" />
       </mat-form-field>
     </div>
   </div>
@@ -25,9 +29,11 @@
       {{'forms.homeBanner.fieldTitle' | translate}}
     </div>
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
-      <input #bannerImage type="file" accept='image/*' (change)="uploadImage('banner', bannerImage.files)" class="text-label" [(ngModel)]="getCreateBannerData().banner"/>
+      <input #bannerImage type="file" accept='image/*' (change)="uploadImage('banner', bannerImage.files)"
+        class="text-label" [(ngModel)]="getCreateBannerData().banner" />
       <img [src]="getCreateBannerData().banner" *ngIf="getCreateBannerData().banner" height="200" width="320">
-      <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().imageBanner">{{getErrorMessage().imageBanner}}</div>
+      <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().imageBanner">
+        {{getErrorMessage().imageBanner}}</div>
     </div>
   </div>
   <div fxLayout="row" class="padding-16 border-bottom-gray">
@@ -50,8 +56,9 @@
     </div>
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
       <mat-form-field appearance="fill">
-        <input matInput [max]="getCreateBannerData().end_date" [matDatepicker]="startDatePicker" 
-          placeholder="{{'forms.startDateBanner.placeholder' | translate}}" [(ngModel)]="getCreateBannerData().start_date">
+        <input matInput [max]="getCreateBannerData().end_date" [matDatepicker]="startDatePicker"
+          placeholder="{{'forms.startDateBanner.placeholder' | translate}}"
+          [(ngModel)]="getCreateBannerData().start_date">
         <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #startDatePicker class="calendar-mat-icon-button"></mat-datepicker>
       </mat-form-field>
@@ -63,7 +70,7 @@
     </div>
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
       <mat-form-field appearance="fill">
-        <input matInput [min]="getCreateBannerData().start_date" [matDatepicker]="endDatePicker" 
+        <input matInput [min]="getCreateBannerData().start_date" [matDatepicker]="endDatePicker"
           placeholder="{{'forms.endDateBanner.placeholder' | translate}}" [(ngModel)]="getCreateBannerData().end_date">
         <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
         <mat-datepicker #endDatePicker class="calendar-mat-icon-button"></mat-datepicker>
@@ -81,10 +88,12 @@
   <div fxLayout="row" class="padding-16 border-bottom-gray">
     <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
-      <mat-radio-group [disabled]="!vClickableChecked" fxLayout="row wrap" >
-        <mat-radio-button [checked]="vShowDetailPage" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%" color="primary" [value]="true"
-          (change)="showDetailPage()">{{'forms.urlRadioBanner.fieldDetailPage' | translate}}</mat-radio-button>
-        <mat-radio-button [checked]="vShowURL" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%" color="primary" [value]="false" (change)="showURL()">
+      <mat-radio-group [disabled]="!vClickableChecked" fxLayout="row wrap">
+        <mat-radio-button [checked]="vShowDetailPage" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+          fxFlex.lt-sm="100%" color="primary" [value]="true" (change)="showDetailPage()">
+          {{'forms.urlRadioBanner.fieldDetailPage' | translate}}</mat-radio-button>
+        <mat-radio-button [checked]="vShowURL" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%"
+          color="primary" [value]="false" (change)="showURL()">
           {{'forms.urlRadioBanner.fieldURL' | translate}}</mat-radio-button>
       </mat-radio-group>
     </div>
@@ -116,7 +125,7 @@
           <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
           <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
             <mat-form-field appearance="fill">
-              <input matInput placeholder="{{'forms.addFooterBanner.footerTextPlaceholder' | translate}}" 
+              <input matInput placeholder="{{'forms.addFooterBanner.footerTextPlaceholder' | translate}}"
                 [(ngModel)]="getCreateBannerData().foot_text_content" type="text">
             </mat-form-field>
           </div>
@@ -125,13 +134,14 @@
           <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
           <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
             <div><strong>{{'forms.addFooterBanner.footerURLTitle' | translate}}</strong></div>
-            <mat-radio-group class="padding-top-20" fxLayout="row wrap" [(ngModel)]="getCreateBannerData().foot_text_flg">
-              <mat-radio-button [checked]="vShowFooterTextModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%" 
-                color="primary" value="int" (change)="showFooterTextModul()">
+            <mat-radio-group class="padding-top-20" fxLayout="row wrap"
+              [(ngModel)]="getCreateBannerData().foot_text_flg">
+              <mat-radio-button [checked]="vShowFooterTextModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+                fxFlex.lt-sm="100%" color="primary" value="int" (change)="showFooterTextModul()">
                 {{'forms.urlRadioBanner.fieldModulAccess' | translate}}
               </mat-radio-button>
-              <mat-radio-button [checked]="vShowFooterTextURL" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%" 
-                color="primary" value="ext" (change)="showFooterTextURL()">
+              <mat-radio-button [checked]="vShowFooterTextURL" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+                fxFlex.lt-sm="100%" color="primary" value="ext" (change)="showFooterTextURL()">
                 {{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}
               </mat-radio-button>
             </mat-radio-group>
@@ -143,7 +153,7 @@
             <div><strong>{{'forms.urlRadioBanner.fieldModulAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
               <mat-select [(ngModel)]="getCreateBannerData().foot_text_redirect">
-                <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+                <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
                   {{modul.name}}
                 </mat-option>
               </mat-select>
@@ -155,10 +165,11 @@
           <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
             <div><strong>{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
-              <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}" 
+              <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}"
                 [(ngModel)]="getCreateBannerData().foot_text_redirect" type="text">
             </mat-form-field>
-            <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlFooterText">{{getErrorMessage().extUrlFooterText}}</div>
+            <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlFooterText">
+              {{getErrorMessage().extUrlFooterText}}</div>
           </div>
         </div>
       </div>
@@ -178,22 +189,26 @@
         <div fxLayout="row" class="padding-16">
           <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
           <div class="text-label" fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
-            <input #footImage type="file" accept='image/*' (change)="uploadImage('footer', footImage.files)" [(ngModel)]="getCreateBannerData().foot_image_content" />
-            <img [src]="getCreateBannerData().foot_image_content" *ngIf="getCreateBannerData().foot_image_content" height="200" width="320">
-            <span class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().imageFooter">{{getErrorMessage().imageFooter}}</span>
+            <input #footImage type="file" accept='image/*' (change)="uploadImage('footer', footImage.files)"
+              [(ngModel)]="getCreateBannerData().foot_image_content" />
+            <img [src]="getCreateBannerData().foot_image_content" *ngIf="getCreateBannerData().foot_image_content"
+              height="200" width="320">
+            <span class="bottom-error mat-error ng-star-inserted"
+              *ngIf="getErrorMessage().imageFooter">{{getErrorMessage().imageFooter}}</span>
           </div>
         </div>
         <div fxLayout="row" class="padding-16">
           <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
           <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
             <div><strong>{{'forms.addFooterBanner.footerURLTitle' | translate}}</strong></div>
-            <mat-radio-group class="padding-top-20" fxLayout="row wrap" [(ngModel)]="getCreateBannerData().foot_image_flg">
-              <mat-radio-button [checked]="vShowFooterImageModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%" 
-                color="primary" value="int" (change)="showFooterImageModul()">
+            <mat-radio-group class="padding-top-20" fxLayout="row wrap"
+              [(ngModel)]="getCreateBannerData().foot_image_flg">
+              <mat-radio-button [checked]="vShowFooterImageModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+                fxFlex.lt-sm="100%" color="primary" value="int" (change)="showFooterImageModul()">
                 {{'forms.urlRadioBanner.fieldModulAccess' | translate}}
               </mat-radio-button>
-              <mat-radio-button [checked]="vShowFooterImageURL" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%"
-                color="primary" value="ext" (change)="showFooterImageURL()">
+              <mat-radio-button [checked]="vShowFooterImageURL" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+                fxFlex.lt-sm="100%" color="primary" value="ext" (change)="showFooterImageURL()">
                 {{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}
               </mat-radio-button>
             </mat-radio-group>
@@ -205,7 +220,7 @@
             <div><strong>{{'forms.urlRadioBanner.fieldModulAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
               <mat-select [(ngModel)]="getCreateBannerData().foot_image_redirect">
-                <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+                <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
                   {{modul.name}}
                 </mat-option>
               </mat-select>
@@ -217,10 +232,11 @@
           <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
             <div><strong>{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
-              <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}" 
-              [(ngModel)]="getCreateBannerData().foot_image_redirect" type="text" />
+              <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}"
+                [(ngModel)]="getCreateBannerData().foot_image_redirect" type="text" />
             </mat-form-field>
-            <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlFooterImage">{{getErrorMessage().extUrlFooterImage}}</div>
+            <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlFooterImage">
+              {{getErrorMessage().extUrlFooterImage}}</div>
           </div>
         </div>
       </div>
@@ -231,7 +247,8 @@
       <div fxLayout="row" class="padding-16">
         <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
         <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
-          <mat-checkbox [checked]="vShowFooterButton" (change)="showFooterButton()" color="primary">{{'forms.addFooterBanner.footerButtonTitle' | translate}}</mat-checkbox>
+          <mat-checkbox [checked]="vShowFooterButton" (change)="showFooterButton()" color="primary">
+            {{'forms.addFooterBanner.footerButtonTitle' | translate}}</mat-checkbox>
         </div>
       </div>
       <div *ngIf="vShowFooterButton">
@@ -248,12 +265,13 @@
           <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
           <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
             <div><strong>{{'forms.addFooterBanner.footerURLTitle' | translate}}</strong></div>
-            <mat-radio-group class="padding-top-20" fxLayout="row wrap" [(ngModel)]="getCreateBannerData().foot_button_flg">
-              <mat-radio-button [checked]="vShowFooterButtonModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%" 
-                color="primary" value="int" (change)="showFooterButtonModul()">
+            <mat-radio-group class="padding-top-20" fxLayout="row wrap"
+              [(ngModel)]="getCreateBannerData().foot_button_flg">
+              <mat-radio-button [checked]="vShowFooterButtonModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+                fxFlex.lt-sm="100%" color="primary" value="int" (change)="showFooterButtonModul()">
                 {{'forms.urlRadioBanner.fieldModulAccess' | translate}}
               </mat-radio-button>
-              <mat-radio-button [checked]="vShowFooterButtonURL" fxFlex="50%" color="primary" value="ext" 
+              <mat-radio-button [checked]="vShowFooterButtonURL" fxFlex="50%" color="primary" value="ext"
                 (change)="showFooterButtonURL()">
                 {{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}
               </mat-radio-button>
@@ -266,7 +284,7 @@
             <div><strong>{{'forms.urlRadioBanner.fieldModulAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
               <mat-select [(ngModel)]="getCreateBannerData().foot_button_redirect">
-                <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+                <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
                   {{modul.name}}
                 </mat-option>
               </mat-select>
@@ -278,10 +296,11 @@
           <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
             <div><strong>{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}</strong></div>
             <mat-form-field class="padding-top-20" appearance="fill">
-              <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}" 
+              <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}"
                 [(ngModel)]="getCreateBannerData().foot_button_redirect" type="text" />
             </mat-form-field>
-            <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlFooterButton">{{getErrorMessage().extUrlFooterButton}}</div>
+            <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlFooterButton">
+              {{getErrorMessage().extUrlFooterButton}}</div>
           </div>
         </div>
       </div>
@@ -293,8 +312,8 @@
       <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
       <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
         <mat-radio-group fxLayout="row wrap" [(ngModel)]="getCreateBannerData().clickable_is_internal">
-          <mat-radio-button [checked]="vShowModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%" 
-            color="primary" [value]="true" (change)="showModul()">
+          <mat-radio-button [checked]="vShowModul" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+            fxFlex.lt-sm="100%" color="primary" [value]="true" (change)="showModul()">
             {{'forms.urlRadioBanner.fieldModulAccess' | translate}}
           </mat-radio-button>
           <mat-radio-button [checked]="vShowExternalURL" fxFlex="50%" color="primary" [value]="false"
@@ -311,7 +330,7 @@
       <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
         <mat-form-field appearance="fill">
           <mat-select [(ngModel)]="getCreateBannerData().clickable_redirect">
-            <mat-option *ngFor="let modul of getModuls()" [value]="modul.id">
+            <mat-option *ngFor="let modul of getModuls()" [value]="modul.value">
               {{modul.name}}
             </mat-option>
           </mat-select>
@@ -324,17 +343,19 @@
       </div>
       <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
         <mat-form-field appearance="fill">
-          <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}" 
+          <input matInput placeholder="{{'forms.urlRadioBanner.fieldExternalURLAccess' | translate}}"
             [(ngModel)]="getCreateBannerData().clickable_redirect" type="text" />
         </mat-form-field>
-        <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlShow">{{getErrorMessage().extUrlShow}}</div>
+        <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().extUrlShow">
+          {{getErrorMessage().extUrlShow}}</div>
       </div>
     </div>
   </div>
   <div fxLayout="row" class="padding-16 border-bottom-gray">
     <div class="text-label" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
-      <button mat-raised-button color="primary" *ngIf="!isLoading()" [disabled]="isDisableCreateBanner()" (click)="isDisableCreateBanner() || createBanner()">
+      <button mat-raised-button color="primary" *ngIf="!isLoading()" [disabled]="isDisableCreateBanner()"
+        (click)="isDisableCreateBanner() || createBanner()">
         {{'forms.buttonText.save' | translate}}
       </button>
       <button mat-raised-button color="primary" [disabled]="true" *ngIf="isLoading()">
@@ -348,7 +369,7 @@
     </div>
   </div>
 </div>
-<div  *ngIf="isLoadingForm()" class="padding-top-20">
+<div *ngIf="isLoadingForm()" class="padding-top-20">
   <div fxLayout="row" fxLayoutAlign="center center">
     <mat-spinner diameter="50"></mat-spinner>
   </div>

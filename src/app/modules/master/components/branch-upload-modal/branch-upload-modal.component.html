@@ -1,0 +1,46 @@
+<div fxLayout="column" style="height: 100%">
+  <div mat-dialog-title class="text-center font-gotham-bold font-title">
+    {{'uploadCSVModal.title' | translate}}
+  </div>
+  <div mat-dialog-content>
+    <div fxFlex="grow" style="height: 100%; width: 100%">
+      <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%" class="text-gray">
+        <div>
+          <input type="file" (change)="onChangeFile($event)" accept=".csv">
+          <mat-error class="bottom-error" *ngIf="!isValidFile && isTouchedInput">
+            <span>{{'uploadCSVModal.errorFormat' | translate}}</span>
+          </mat-error>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="width: 100%" *ngFor="let el of instructions"
+          class="padding-10">
+          <div class="margin-right-10">
+            <mat-icon color="primary">check_box</mat-icon>
+          </div>
+          <div fxFlex="grow" fxLayout="row wrap">
+            {{el | translate}}
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" style="width: 100%" class="padding-10">
+          <a class="link-purple cursor-pointer" [href]="fileUrl" target="_blank">{{'uploadCSVModal.fileExample' | translate}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions class="margin-top-12 padding-bottom-24-important" fxLayoutAlign="end center">
+    <div fxLayout="row" fxFlex="40%" fxFlex.lt-md="100%" *ngIf="!onSubmittingForm">
+      <button mat-raised-button color="accent" [mat-dialog-close]="false" block-button>{{'cancel' | translate}}</button>
+    </div>
+    <div fxLayout="row" fxFlex="40%" fxFlex.lt-md="100%" ngClass.lt-md="margin-top-5" ngClass.md="margin-left-5"
+      ngClass.gt-md="margin-left-5">
+      <button mat-raised-button color="primary" block-button *ngIf="!onSubmittingForm" [disabled]="!isValidFile" (click)="onUpload()">{{'upload' | translate}}</button>
+      <button mat-raised-button color="primary" block-button *ngIf="onSubmittingForm" disabled>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <div>
+            <mat-spinner diameter="16"></mat-spinner>
+          </div>
+          <div class="margin-left-5">{{'loading' | translate}}</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>

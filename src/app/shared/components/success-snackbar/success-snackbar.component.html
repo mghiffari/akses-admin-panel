@@ -10,7 +10,7 @@
             {{data.title | translate}}
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" class="description">
-            <span class="description-text">{{data.content.text | translate: data.content.data}}</span>
+            <span class="description-text">{{data.content.text | translate: data.content.data ? data.content.data : ''}}</span>
           </div>
         </div>
       </div>

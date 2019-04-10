@@ -8,26 +8,55 @@ import { UserDetailsComponent } from './pages/user-details/user-details.componen
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
 import { BannerDetailsService } from './pages/banner-details/services/banner-details.service';
 import { EditorModule } from '@tinymce/tinymce-angular';
-import { Ng2ImgToolsModule } from 'ng2-img-tools';
 import { BannerService } from './services/banner.service';
+import { ArticleListComponent } from './pages/article-list/article-list.component';
+import { ArticleService } from './services/article.service';
+import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
+import { FAQListComponent } from './pages/faq-list/faq-list.component';
+import { FAQService } from './services/faq.service';
+import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
+import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
+import { BranchListComponent } from './pages/branch-list/branch-list.component';
+import { BranchService } from './services/branch.service';
+import { BranchUploadModalComponent } from './components/branch-upload-modal/branch-upload-modal.component';
+import { ChangePhonenumberRequestListComponent } from './pages/change-phonenumber-request-list/change-phonenumber-request-list.component';
+import { ChangePhonenumberRequestService } from './services/change-phonenumber-request.service';
+import { RemarkInputModalComponent } from './components/remark-input-modal/remark-input-modal.component';
 
 @NgModule({
   declarations: [
     UserListComponent,
     BannerListComponent,
     UserDetailsComponent,
-    BannerDetailsComponent
+    BannerDetailsComponent,
+    ArticleListComponent,
+    FAQListComponent,
+    FAQDetailsComponent,
+    ArticleDetailsComponent,
+    FAQListComponent,
+    BranchDetailsComponent,
+    BranchListComponent,
+    BranchUploadModalComponent,
+    ChangePhonenumberRequestListComponent,
+    RemarkInputModalComponent
   ],
   imports: [
     CommonModule,
     MasterRoutingModule,
     SharedModule,
-    EditorModule,
-    Ng2ImgToolsModule
+    EditorModule
   ],
   providers: [
     BannerDetailsService,
-    BannerService
+    BannerService,
+    ArticleService,
+    FAQService,
+    BranchService,
+    ChangePhonenumberRequestService
+  ],
+  entryComponents: [
+    BranchUploadModalComponent,
+    RemarkInputModalComponent,
   ]
 })
 export class MasterModule { }

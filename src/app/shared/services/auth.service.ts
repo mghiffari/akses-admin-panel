@@ -198,6 +198,34 @@ export class AuthService {
       )
   }
 
+  //wraping the patch API with access token or not inside header
+  wrapTokenPatchApi(url, data, accessToken = null) {
+    console.log('AuthService | wrapTokenPatchApi ', url);
+    return this.http
+      .patch<HttpResponse<Object>>(url, data, {
+        observe: 'response',
+        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+      })
+      .pipe(
+        tap((resp: any) => {
+          this.getTokenInResponse(resp) 
+        }),
+        catchError(err => {
+          if (err.status === 401) {
+            this.logout();
+            this.showLoggedOutDialog()
+          } else {
+            let token = err.headers.get('access-token')
+            if (this.getAccessToken() && token) {
+              this.setAccessToken(token)
+            }
+            return throwError(err)
+          }
+        }),
+        map((resp: any) => resp.body),
+      )
+  }
+
   //wraping the delete API with access token or not inside header
   wrapTokenDeleteApi(url, accessToken = null) {
     console.log('AuthService | wrapTokenDeleteApi ', url);

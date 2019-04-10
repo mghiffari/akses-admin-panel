@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ImageUpload } from 'src/app/shared/models/image-upload';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { BannerData, UpdateBannerData } from '../models/banner-detail';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BannerService {
   
+  uploadApiUrl = environment.apiurl + 'upload/';
   bannerApiUrl = environment.apiurl + 'banner/';
 
   //constructor
@@ -23,10 +24,28 @@ export class BannerService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //delete banner by id
-  deleteBanner(id){
-    let url = this.bannerApiUrl + id;
-    console.log("Banner Service | deleteBanner ", url);
-    return this.authService.wrapTokenDeleteApi(url)
+  //upload image
+  uploadImage(vFormDataImageUpload: FormData) {
+    let url = this.uploadApiUrl;
+    console.log("Banner Service | uploadImage " + url);
+    return this.authService.wrapTokenPutApi(this.uploadApiUrl, vFormDataImageUpload);
+  }
+
+  //get banner data by id
+  loadBannerById(id: string) {
+    let url = this.bannerApiUrl+id;
+    console.log("Banner Service | loadBannerById " + url);
+    return this.authService.wrapTokenGetApi(url);
+  }
+
+  createBanner(vBannerData: BannerData) {
+    let url = this.bannerApiUrl;
+    console.log("Banner Service | createBanner " + url);
+    return this.authService.wrapTokenPostApi(url, vBannerData)
+  }
+
+  updateBanner(vUpdateBannerData) {
+    let url = this.bannerApiUrl;
+    return this.authService.wrapTokenPutApi(url, vUpdateBannerData)
   }
 }

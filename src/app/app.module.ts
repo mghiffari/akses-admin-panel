@@ -10,6 +10,7 @@ import { FullLayoutComponent } from './containers/full-layout/full-layout.compon
 import { AuthGuard } from './_guard/auth.guard';
 import { SharedModule } from './shared/shared.module';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import { Ng2ImgToolsModule } from 'ng2-img-tools';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { HttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
@@ -31,6 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    Ng2ImgToolsModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,

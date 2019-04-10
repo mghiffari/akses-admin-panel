@@ -21,7 +21,7 @@ export class BannerListComponent implements OnInit {
   }
   today = new Date();
 
-  bannerColums: string[] = [
+  bannerColumns: string[] = [
     'number',
     'title',
     'banner',
@@ -78,7 +78,9 @@ export class BannerListComponent implements OnInit {
     modalRef.afterClosed().subscribe(result => {
       if(result){
         this.loading = true;
-        this.bannerService.deleteBanner(banner.id).subscribe(
+        let bannerDel: Banner = Object.assign(new Banner(), banner);
+        bannerDel.is_deleted = true;
+        this.bannerService.updateBanner(bannerDel).subscribe(
           (data: any) => {
             try {
               console.table(data);

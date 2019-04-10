@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
+import { TranslateService } from '@ngx-translate/core';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { UpdateBannerData, BannerData } from 'src/app/modules/master/models/banner-detail';
 import { ImageUpload } from 'src/app/shared/models/image-upload';
 import { LovData } from 'src/app/shared/models/lov';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { environment } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
-import { MatSnackBar } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { Router } from '@angular/router';
+import { BannerService } from 'src/app/modules/master/services/banner.service';
+import { LovService } from 'src/app/shared/services/lov.service';
 
 @Injectable()
 export class BannerDetailsService {
-  //variable for hit API URL
-  uploadApiUrl = environment.apiurl + 'upload/'
-  createBannerApiUrl = environment.apiurl + 'banner/'
-  getModulsApiUrl = environment.apiurl + 'lov/type?value=internal_navigation'
-
   vPageTitle: string;
   vCurrentPage: string;
 
@@ -52,7 +47,8 @@ export class BannerDetailsService {
 
   constructor(
     private _ng2ImgToolsService: Ng2ImgToolsService,
-    private _authService: AuthService,
+    private _bannerService: BannerService,
+    private _lovService: LovService,
     private _translateService: TranslateService,
     private _snackBarService: MatSnackBar,
     private _routerService: Router
@@ -323,7 +319,7 @@ export class BannerDetailsService {
   loadModuls() {
     console.log('BannerDetailService | loadModuls');
     this.vLoadingFormStatus = true;
-    this._authService.wrapTokenGetApi(this.getModulsApiUrl)
+    this._lovService.getModuls()
     .subscribe(
       (data: any) => {
         try {
@@ -342,8 +338,7 @@ export class BannerDetailsService {
             data: {
               title: 'bannersDetailScreen.loadFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
               }
             }
           });
@@ -356,11 +351,11 @@ export class BannerDetailsService {
 
   //used to load banner data by id from sevices
   loadBannerById(id: string) {
-    console.log('BannerDetailService | loadBannerById ', this.createBannerApiUrl+id);
+    console.log('BannerDetailService | loadBannerById');
     this.vUpdateBannerData.id = id;
     this.vLoadingFormStatus = true;
     let promise = new Promise((resolve, reject) => {
-      this._authService.wrapTokenGetApi(this.createBannerApiUrl+id)
+      this._bannerService.loadBannerById(id)
       .subscribe(
         (data: any) => {
           try {           
@@ -395,8 +390,7 @@ export class BannerDetailsService {
               data: {
                 title: 'bannersDetailScreen.loadFailed',
                 content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
                 }
               }
             });
@@ -484,7 +478,7 @@ export class BannerDetailsService {
 
   //used to upload image (banner and footer using same function)
   uploadImage(component: string, vImageUpload: ImageUpload) {
-    console.log('BannerDetailService | uploadImage ', this.uploadApiUrl);
+    console.log('BannerDetailService | uploadImage');
     var vFormDataImageUpload = new FormData();
     vFormDataImageUpload.append('component', vImageUpload.component);
     vFormDataImageUpload.append('file', vImageUpload.file);
@@ -492,7 +486,7 @@ export class BannerDetailsService {
       vFormDataImageUpload.append('url', vImageUpload.url);
     }
     let promise = new Promise((resolve, reject) => {
-      this._authService.wrapTokenPutApi(this.uploadApiUrl, vFormDataImageUpload)
+      this._bannerService.uploadImage(vFormDataImageUpload)
       .subscribe(
         (data: any) => {
           console.table(data);
@@ -522,8 +516,7 @@ export class BannerDetailsService {
                 data: {
                   title: 'bannersDetailScreen.createFailed',
                   content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
                   }
                 }
               });
@@ -532,8 +525,7 @@ export class BannerDetailsService {
                 data: {
                   title: 'bannersDetailScreen.updateFailed',
                   content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
                   }
                 }
               });
@@ -550,8 +542,8 @@ export class BannerDetailsService {
 
   //used to hit create banner API
   createBanner() {
-    console.log('BannerDetailService | createBanner ', this.createBannerApiUrl);
-    this._authService.wrapTokenPostApi(this.createBannerApiUrl, this.vBannerData)
+    console.log('BannerDetailService | createBanner');
+    this._bannerService.createBanner(this.vBannerData)
     .subscribe(
       (data: any) => {
         console.table(data);
@@ -560,8 +552,7 @@ export class BannerDetailsService {
           data: {
             title: 'success',
             content: {
-              text: 'bannersDetailScreen.successCreateBanner',
-              data: null
+              text: 'bannersDetailScreen.successCreateBanner'
             }
           }
         })
@@ -577,8 +568,7 @@ export class BannerDetailsService {
             data: {
               title: 'bannersDetailScreen.createFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
               }
             }
           });
@@ -591,7 +581,7 @@ export class BannerDetailsService {
 
   //used to hit update banner API
   updateBanner() {
-    console.log('BannerDetailService | updateBanner ', this.createBannerApiUrl);
+    console.log('BannerDetailService | updateBanner');
     this.vUpdateBannerData = {
       id: this.vUpdateBannerData.id,
       title: this.vBannerData.title,
@@ -614,7 +604,7 @@ export class BannerDetailsService {
       foot_button_flg: this.vBannerData.foot_button_flg,
       foot_button_content: this.vBannerData.foot_button_content,
     }
-    this._authService.wrapTokenPutApi(this.createBannerApiUrl, this.vUpdateBannerData)
+    this._bannerService.updateBanner(this.vUpdateBannerData)
     .subscribe(
       (data: any) => {
         console.table(data);
@@ -623,8 +613,7 @@ export class BannerDetailsService {
           data: {
             title: 'success',
             content: {
-              text: 'bannersDetailScreen.successUpdateBanner',
-              data: null
+              text: 'bannersDetailScreen.successUpdateBanner'
             }
           }
         })
@@ -639,8 +628,7 @@ export class BannerDetailsService {
             data: {
               title: 'bannersDetailScreen.updateFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
               }
             }
           });
@@ -702,6 +690,12 @@ export class BannerDetailsService {
           this.vLoadingStatus = false;
           console.table(err);
         });
+      } else {
+        if(this.vCurrentPage.includes("create")) {
+          this.createBanner();
+        } else {
+          this.updateBanner()
+        }
       }
     }
   }

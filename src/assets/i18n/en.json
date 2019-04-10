@@ -4,7 +4,11 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banners",
-                "users": "Users"
+                "users": "Users",
+                "articles": "Articles",
+                "faqs": "FAQs",
+                "branches": "Branch Locations",
+                "changePhonenumberRequests": "Change Phonenumber Requests"
             }
         }
     },
@@ -111,6 +115,138 @@
             "footerButtonPlaceholder": "Input name of button here",
             "footerURLTitle": "Input URL Text"
         },
+        "faqCategory": {
+            "fieldTitle": "Category",
+            "placeholder": "Select a Category",
+            "errorRequired": "Category is required"
+        },
+        "faqTitle": {
+            "fieldTitle": "FAQ Title",
+            "placeholder": "FAQ title",
+            "errorRequired": "FAQ Title is required"
+        },
+        "faqOrder": {
+            "fieldTitle": "Order",
+            "placeholder": "Order",
+            "errorRequired": "Order must have numeric value",
+            "errorFormat": "Order must be a number",
+            "errorMin": "Order must be a positive number > 0"
+        },
+        "faqUniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "placeholder": "Unique tag",
+            "errorRequired": "Unique Tag is required"
+        },
+        "faqContent": {
+            "fieldTitle": "Description",
+            "placeholder": "Description",
+            "errorRequired": "Description is required"
+        },
+        "faqBookmark": {
+            "fieldTitle": "Bookmark FAQ"
+        },
+        "articleTitle": {
+            "fieldTitle": "Article Title",
+            "errorRequired": "Article Title is required",
+            "placeholder": "Article title"
+        },
+        "articlePicture": {
+            "fieldTitle": "Article Picture",
+            "errorRequired": "Article Picture is required",
+            "errorType": "Only .jpg, .jpeg and .png format are supported"
+        },
+        "uniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "errorRequired": "Unique tag is required",
+            "placeholder": "Unique Tag"
+        },
+        "category": {
+            "fieldTitle": "Category",
+            "errorRequired": "Category is required",
+            "placeholder": "Category"
+        },
+        "branchName": {
+            "fieldTitle": "Branch Name",
+            "placeholder": "Branch name",
+            "errorRequired": "Branch Name is required"
+        },
+        "branchCode": {
+            "fieldTitle": "Branch Code",
+            "placeholder": "Branch code",
+            "errorRequired": "Branch Code is required",
+            "errorFormat": "Branch Code should only contain numbers",
+            "errorLength": "Branch Code should contain {{minLength}} numbers"
+        },
+        "branchType": {
+            "fieldTitle": "Branch Type",
+            "placeholder": "Select a Branch Type",
+            "errorRequired": "Branch Type is required"
+        },
+        "longitude": {
+            "fieldTitle": "Longitude",
+            "placeholder": "Longitude",
+            "errorRequired": "Longitude must have numeric value",
+            "errorMaxDecimalLength": "Longitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
+        },
+        "latitude": {
+            "fieldTitle": "Latitude",
+            "placeholder": "Latitude",
+            "errorRequired": "Latitude must have numeric value",
+            "errorMaxDecimalLength": "Latitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
+        },
+        "region": {
+            "fieldTitle": "Region",
+            "placeholder": "Region",
+            "errorRequired": "Region is required"
+        },
+        "province": {
+            "fieldTitle": "Province",
+            "placeholder": "Select a Province",
+            "errorRequired": "Province is required"
+        },
+        "city": {
+            "fieldTitle": "City",
+            "placeholder": "Select a City",
+            "errorRequired": "City is required"
+        },
+        "subDistrict": {
+            "fieldTitle": "Sub-District",
+            "placeholder": "Select a Sub-District",
+            "errorRequired": "Sub-District is required"
+        },
+        "district": {
+            "fieldTitle": "District",
+            "placeholder": "Select a District",
+            "errorRequired": "District is required"
+        },
+        "address": {
+            "fieldTitle": "Address",
+            "placeholder": "Address",
+            "errorRequired": "Address is required"
+        },
+        "createdBy": {
+            "fieldTitle": "Created By",
+            "placeholder": "Created by",
+            "errorRequired": "Created By is required"
+        },
+        "updatedBy": {
+            "fieldTitle": "Updated By",
+            "placeholder": "Updated by",
+            "errorRequired": "Updated By is required"
+        },
+        "remark": {
+            "fieldTitle": "Remark",
+            "placeholder": "Remark",
+            "errorRequired": "Remark is required",
+            "errorMaxLength": "Max. length of Remark is {{maxLength}}"
+        },
+        "postalCode": {
+            "fieldTitle": "Postal Code",
+            "placeholder": "Postal code",
+            "errorFormat": "Postal Code should only contain numbers",
+            "errorMinLength": "Min. length of Postal Code is {{minLength}}",
+            "errorMaxLength": "Max. length of Postal Code is {{maxLength}}"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -136,21 +272,42 @@
         "numbers": "No.",
         "status": {
             "title": "Status",
-            "active": "active",
-            "inactive": "inactive"
+            "active": "Active",
+            "inactive": "Inactive",
+            "approved": "Approved",
+            "rejected": "Rejected"
         },
+        "uniqueTag": "Unique Tag",
+        "title": "Title",
+        "category": "Category",
+        "order": "Order",
         "bannersTable": {
-            "title": "Title",
             "preview": "Preview",
             "startDate": "Start Date",
-            "endDate": "End Date",
-            "order": "Order"
+            "endDate": "End Date"
         },
         "userTable": {
             "firstName": "First Name",
             "lastName": "Last Name",
             "email": "Email",
             "createdDate": "Created Date"
+        },
+        "branchTable": {
+            "branchName": "Branch Name",
+            "branchCode": "Branch Code",
+            "branchType": "Branch Type",
+            "address": "Address",
+            "province": "Province"
+        },
+        "changePhonenumberRequestTable": {
+            "requestDate": "Request Date & Time",
+            "customerName": "Customer Name",
+            "requestDuration": "Request Duration",
+            "oldPhoneNumber": "Old Phonenumber",
+            "newPhoneNumber": "New Phonenumber",
+            "lastUpdated": "Last Updated Date & By",
+            "actionsStatus": "Action / Status",
+            "remark": "Remark"
         }
     },
     "bannerListScreen": {
@@ -187,6 +344,17 @@
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
     "backToList": "back to list",
+    "upload": "upload",
+    "approve": "approve",
+    "reject": "reject",
+    "add": "add",
+    "by": "by",
+    "duration": {
+        "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
+        "fromHourToSec": "{{hour}} hour {{min}} minute",
+        "inMin": "{{min}} minute",
+        "inSec": "{{sec}} sec"
+    },
     "loggedOutModal": {
         "title": "You're unauthorized to access this page",
         "content": "Please re-login to access this page",
@@ -206,6 +374,105 @@
         "emailNotChangeAble": "Email is not updateable",
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new user"
+    },
+    "articleListScreen": {
+        "title": "Articles Data",
+        "createArticle": "create article",
+        "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
+        "loadFailed": "failed to get list of articles"
+    },
+    "articleDetailsScreen": {
+        "createArticleTitle": "Create New Article",
+        "updateArticleTitle": "Update Article",
+        "seeArticleList": "See Article List",
+        "successCreateArticle": "Article successfully created",
+        "successUpdateArticle": "Article successfully updated",
+        "updateFailed": "Failed to Update Article",
+        "createFailed": "Failed to Create Article",
+        "loadFailed": "Failed to load article data",
+        "urlNotValid": "Input URL is not valid"
+    },
+    "faqListScreen": {
+        "title": "FAQs Data",
+        "createFAQ": "create faq",
+        "deleteConfirmation": "Are you sure you want to delete FAQ {{title}}?",
+        "loadFailed": "failed to get list of FAQ",
+        "removeBookmark": "click to remove from bookmark",
+        "addBookmark": "click to add to bookmark",
+        "bookmarkSuccess": "FAQ is now bookmarked",
+        "removeBookmarkSuccess": "FAQ is removed from bookmark",
+        "bookmarkFailed": "failed to bookmark FAQ",
+        "removeBookmarkFailed": "failed to remove FAQ from bookmark"
+    },
+    "faqDetailsScreen": {
+        "getFaqFailed": "failed to get FAQ data",
+        "createTitle": "Create New FAQ",
+        "updateTitle": "Update FAQ",
+        "succesCreated": "new FAQ successfully created",
+        "succesUpdated": "FAQ data successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new FAQ",
+        "getFaqCategoriesFailed": "failed to get FAQ categories"
+    },
+    "branchDetailsScreen": {
+        "getBranchFailed": "failed to get Branch Location data",
+        "createTitle": "Create New Branch Location",
+        "updateTitle": "Update Branch Location",
+        "succesCreated": "new Branch Location successfully created",
+        "succesUpdated": "Branch Location successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new Branch Location",
+        "getBranchTypesFailed": "failed to get branch types",
+        "getProvincesFailed": "failed to get province list",
+        "getCitiesFailed": "failed to get city list",
+        "getDistrictsFailed": "failed to get district list",
+        "getSubDistrictsFailed": "failed to get sub-district list"
+    },
+    "branchListScreen": {
+        "title": "Branch Locations Data",
+        "createBranch": "create branch location",
+        "uploadCSV": "upload CSV",
+        "deleteConfirmation": "Are you sure you want to delete branch location {{name}}?",
+        "loadFailed": "failed to get list of branch locations"
+    },
+    "uploadCSVModal": {
+        "title": "Upload CSV",
+        "errorFormat": "File should be in csv format",
+        "fileExample": "Example File",
+        "uploadFailed": "Upload Failed",
+        "uploadSuccess": "Upload Success",
+        "instructions":{
+            "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
+            "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
+            "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the nearest branch location on the app",
+            "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, latitude, longitude, branch code",
+            "branchCode": "Each branch code should contain 4 numbers"
+        }
+    },
+    "changePhonenumberRequestListScreen": {
+        "title": "Change Handphone",
+        "loadFailed": "failed to get list of change phonenumber requests",
+        "rejectSuccess": "change phone number request successfully rejected",
+        "rejectFailed": "failed to reject change phone number request",
+        "approveSuccess": "change phone number request successfully approved",
+        "approveFailed": "failed to approve change phone number request",
+        "bulkRejectFailed": "failed to reject {{totalRequest}} requests",
+        "bulkRejectSuccess": "{{totalRequest}} requests are rejected",
+        "bulkApproveFailed": "failed to approve {{totalRequest}} requests",
+        "bulkApproveSuccess": "{{totalRequest}} requests are approved",
+        "totalRequestSelected": "{{totalRequest}} requests are selected",
+        "confirmationModal":{
+            "reject": {
+                "title": "Rejecting Confirmation",
+                "content": "Are you sure you want to reject change phonenumber request?"
+            },
+            "approve": {
+                "title": "Approval Confirmation",
+                "content": "Are you sure you want to approve change phonenumber request?"
+            }
+        },
+        "addRemarkSuccess": "remark successfuly added",
+        "addRemarkFailed": "failed to add remark"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -273,6 +540,22 @@
         "01061": "failed to upload file, connection timeout!",
         "01062": "no access token provided",
         "01063": "invalid access token",
-        "01064": "file can not be empty"
+        "01064": "failed to create new FAQ",
+        "01065": "failed to save faq record",
+        "01066": "failed to retrieve FAQ, FAQ not found",
+        "01067": "failed to get FAQ",
+        "01068": "failed to update FAQ",
+        "01069": "failed to delete FAQ",
+        "01070": "file can not be empty",
+        "01071": "bookmark already reach maximum number",
+        "01072": "mising bookmark parameter",
+        "01073": "value already exist",
+        "01074": "missing approval",
+        "01075": "data not found",
+        "01076": "failed to update",
+        "01077": "failed to get data",
+        "01078": "missing action parameter or value",
+        "01079": "body parameter should be array object",
+        "01080": "fancy text is not supported"
     }
 }

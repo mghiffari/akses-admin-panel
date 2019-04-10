@@ -4,7 +4,11 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banner",
-                "users": "User"
+                "users": "User",
+                "articles": "Artikel",
+                "faqs": "FAQ",
+                "branches": "Lokasi Cabang",
+                "changePhonenumberRequests": "Ubah Nomor Handphone"
             }
         }
     },
@@ -111,6 +115,138 @@
             "footerButtonPlaceholder": "Masukkan nama tombol di sini",
             "footerURLTitle": "Masukkan URL Teks"
         },
+        "faqCategory": {
+            "fieldTitle": "Kategori",
+            "placeholder": "Pilih Kategori",
+            "errorRequired": "Kategori wajib dipilih"
+        },
+        "faqTitle": {
+            "fieldTitle": "Judul FAQ",
+            "placeholder": "Judul FAQ",
+            "errorRequired": "Judul FAQ wajib diisi"
+        },
+        "faqOrder": {
+            "fieldTitle": "Urutan",
+            "placeholder": "Urutan",
+            "errorRequired": "Urutan wajib diisi dengan angka",
+            "errorFormat": "Urutan harus dalam bilangan bulat",
+            "errorMin": "Urutan harus terdiri dari bilangan positif > 0"
+        },
+        "faqUniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "placeholder": "Unique tag",
+            "errorRequired": "Unique Tag harus diisi"
+        },
+        "faqContent": {
+            "fieldTitle": "Deskripsi",
+            "placeholder": "Deskripsi",
+            "errorRequired": "Deskripsi wajib diisi"
+        },
+        "faqBookmark": {
+            "fieldTitle": "Bookmark FAQ"
+        },
+        "articleTitle": {
+            "fieldTitle": "Judul Artikel",
+            "errorRequired": "Judul Artikel wajib diisi",
+            "placeholder": "Judul artikel"
+        },
+        "articlePicture": {
+            "fieldTitle": "Gambar Artikel",
+            "errorRequired": "Gambar Artikel wajib diisi",
+            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload"
+        },
+        "uniqueTag": {
+            "fieldTitle": "Unique Tag",
+            "errorRequired": "Unique tag wajib diisi",
+            "placeholder": "Unique Tag"
+        },
+        "category": {
+            "fieldTitle": "Kategori",
+            "errorRequired": "Kategori wajib diisi",
+            "placeholder": "Kategori"
+        },
+        "branchName": {
+            "fieldTitle": "Nama Cabang",
+            "placeholder": "Nama cabang",
+            "errorRequired": "Nama Cabang wajib diisi"
+        },
+        "branchCode": {
+            "fieldTitle": "Kode Cabang",
+            "placeholder": "Kode cabang",
+            "errorRequired": "Kode Cabang wajib diisi",
+            "errorFormat": "Kode Cabang hanya harus dalam angka",
+            "errorLength": "Kode Cabang harus terdiri {{minLength}} angka"
+        },
+        "branchType": {
+            "fieldTitle": "Tipe Cabang",
+            "placeholder": "Pilih Tipe Cabang",
+            "errorRequired": "Tipe Cabang wajib diisi"
+        },
+        "longitude": {
+            "fieldTitle": "Longitude",
+            "placeholder": "Longitude",
+            "errorRequired": "Longitude wajib diisi dengan angka",
+            "errorMaxDecimalLength": "Longitude hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (.) dan {{fractionDigitLength}} digit di belakang (.)"
+        },
+        "latitude": {
+            "fieldTitle": "Latitude",
+            "placeholder": "Latitude",
+            "errorRequired": "Latitude wajib diisi dengan angka",
+            "errorMaxDecimalLength": "Latitude hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (.) dan {{fractionDigitLength}} digit di belakang (.)"
+        },
+        "region": {
+            "fieldTitle": "Region",
+            "placeholder": "Region",
+            "errorRequired": "Region wajib diisi"
+        },
+        "province": {
+            "fieldTitle": "Provinsi",
+            "placeholder": "Pilih Provinsi",
+            "errorRequired": "Provinsi wajib diisi"
+        },
+        "city": {
+            "fieldTitle": "Kota / Kabupaten",
+            "placeholder": "Pilih Kota / Kabupaten",
+            "errorRequired": "Kota / Kabupaten wajib diisi"
+        },
+        "subDistrict": {
+            "fieldTitle": "Kelurahan",
+            "placeholder": "Pilih Kelurahan",
+            "errorRequired": "Kelurahan wajib diisi"
+        },
+        "district": {
+            "fieldTitle": "Kecamatan",
+            "placeholder": "Pilih Kecamatan",
+            "errorRequired": "Kecamatan wajib diisi"
+        },
+        "address": {
+            "fieldTitle": "Alamat",
+            "placeholder": "Alamat",
+            "errorRequired": "Alamat wajib diisi"
+        },
+        "postalCode": {
+            "fieldTitle": "Kode Pos",
+            "placeholder": "Kode pos",
+            "errorFormat": "Kode Pos hanya terdiri dari angka",
+            "errorMinLength": "Jumlah karakter minimum untuk Kode Pos adalah {{minLength}}",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Kode Pos adalah {{maxLength}}"
+        },
+        "createdBy": {
+            "fieldTitle": "Created By",
+            "placeholder": "Created by",
+            "errorRequired": "Created By wajib diisi"
+        },
+        "updatedBy": {
+            "fieldTitle": "Updated By",
+            "placeholder": "Updated by",
+            "errorRequired": "Updated By wajib diisi"
+        },
+        "remark": {
+            "fieldTitle": "Keterangan",
+            "placeholder": "Keterangan",
+            "errorRequired": "Keterangan wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Keterangan adalah {{maxLength}}"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -137,27 +273,48 @@
         "status": {
             "title": "Status",
             "active": "Aktif",
-            "inactive": "Non-aktif"
+            "inactive": "Non-aktif",
+            "approved": "Approved",
+            "rejected": "Rejected"
         },
+        "uniqueTag": "Unique Tag",
+        "title": "Judul",
+        "category": "Kategori",
+        "order": "Urutan",
         "bannersTable": {
-            "title": "Judul",
             "preview": "Preview",
             "startDate": "Tanggal Mulai",
-            "endDate": "Tanggal Selesai",
-            "order": "Order"
+            "endDate": "Tanggal Selesai"
         },
         "userTable": {
             "firstName": "Nama Depan",
             "lastName": "Nama Belakang",
             "email": "Email",
             "createdDate": "Tanggal Dibuat"
+        },
+        "branchTable": {
+            "branchName": "Nama Cabang",
+            "branchCode": "Kode Cabang",
+            "branchType": "Tipe Cabang",
+            "address": "Alamat",
+            "province": "Provinsi"
+        },
+        "changePhonenumberRequestTable": {
+            "requestDate": "Tanggal / Waktu Permohonan",
+            "customerName": "Nama Customer",
+            "requestDuration": "Umur Request",
+            "oldPhoneNumber": "Nomor HP Lama",
+            "newPhoneNumber": "Nomor HP Baru",
+            "lastUpdated": "Terakhir Diubah & Oleh",
+            "actionsStatus": "Action / Status",
+            "remark": "Keterangan"
         }
     },
     "bannerListScreen": {
         "title": "Data Banner",
         "createBanner": "Tambahkan home banner",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus home banner {{title}}?",
-        "loadFailed": "Gagal mendapatkan list home banner" 
+        "loadFailed": "Gagal mendapatkan list home banner"
     },
     "bannersDetailScreen": {
         "createBannerTitle": "Tambahkan Home Banner",
@@ -183,10 +340,21 @@
     "yesContinue": "ya, lanjutkan!",
     "cancel": "batalkan",
     "success": "berhasil",
+    "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
     "failedToDelete": "gagal menghapus data",
     "backToList": "kembali ke list",
+    "approve": "approve",
+    "reject": "reject",
+    "add": "tambah",
+    "by": "by",
+    "duration": {
+        "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
+        "fromHourToMin": "{{hour}} jam {{min}} menit",
+        "inMin": "{{min}} menit",
+        "inSec": "{{sec}} detik"
+    },
     "loggedOutModal": {
         "title": "Unauthorized",
         "content": "Login ulang untuk mengakses halaman ini",
@@ -200,12 +368,111 @@
     "userDetailsScreen": {
         "getUserFailed": "gagal mendapatkan data user",
         "createTitle": "Tambahkan User Baru",
-        "updateTitle": "Update Data User",
+        "updateTitle": "Ubah Data User",
         "succesCreated": "user baru berhasil ditambahkan",
         "succesUpdated": "data user berhasil diupdate",
         "emailNotChangeAble": "Email tidak dapat diganti",
         "updateFailed": "gagal mengubah data user",
         "createFailed": "gagal membuat user baru"
+    },
+    "faqListScreen": {
+        "title": "Data FAQ",
+        "createFAQ": "tambahkan faq baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus FAQ {{title}}?",
+        "loadFailed": "gagal mendapatkan list FAQ",
+        "removeBookmark": "click untuk menghapus dari bookmark",
+        "addBookmark": "click untuk menambahkan ke bookmark",
+        "bookmarkSuccess": "berhasil menambahkan FAQ ke bookmark",
+        "removeBookmarkSuccess": "berhasil menghapus FAQ dari bookmark",
+        "bookmarkFailed": "gagal menambahkan FAQ ke bookmark",
+        "removeBookmarkFailed": "gagal menghapus FAQ dari bookmark"
+    },
+    "faqDetailsScreen": {
+        "getFaqFailed": "gagal mendapatkan data FAQ",
+        "createTitle": "Tambahkan FAQ Baru",
+        "updateTitle": "Ubah FAQ",
+        "succesCreated": "FAQ baru berhasil ditambahkan",
+        "succesUpdated": "data FAQ berhasil diubah",
+        "updateFailed": "gagal mengubah data FAQ",
+        "createFailed": "gagal menambahkan FAQ baru",
+        "getFaqCategoriesFailed": "gagal mendapatkan Kategori FAQ"
+    },
+    "articleListScreen": {
+        "title": "Data Artikel",
+        "createArticle": "tambahkan artikel baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus artikel {{title}}?",
+        "loadFailed": "gagal mendapatkan list artikel"
+    },
+    "articleDetailsScreen": {
+        "createArticleTitle": "Tambahkan Artikel Baru",
+        "updateArticleTitle": "Ubah Artikel",
+        "seeArticleList": "Lihat Data Artikel",
+        "successCreateArticle": "Berhasil membuat artikel baru",
+        "successUpdateArticle": "Berhasil mengubah data artikel",
+        "updateFailed": "Gagal mengubah data artikel",
+        "createFailed": "Gagal membuat artikel baru",
+        "loadFailed": "Gagal mendapatkan data artikel",
+        "urlNotValid": "Masukkan URL yang valid"
+    },
+    "branchDetailsScreen": {
+        "getBranchFailed": "gagal mendapatkan data lokasi cabang",
+        "createTitle": "Tambahkan Lokasi Cabang",
+        "updateTitle": "Ubah Lokasi Cabang",
+        "succesCreated": "Lokasi Cabang baru berhasil ditambahkan",
+        "succesUpdated": "data Lokasi Cabang berhasil diubah",
+        "updateFailed": "gagal mengubah data Lokasi Cabang",
+        "createFailed": "gagal menambahkan Lokasi Cabang baru",
+        "getBranchTypesFailed": "gagal mendapatkan list tipe branch",
+        "getProvincesFailed": "gagal mendapatkan list provinsi",
+        "getCitiesFailed": "gagal mendapatkan list kota / kabupaten",
+        "getDistrictsFailed": "gagal mendapatkan list kecamatan",
+        "getSubDistrictsFailed": "gagal mendapatkan list kelurahan"
+    },
+    "branchListScreen": {
+        "title": "Data Lokasi Cabang",
+        "createBranch": "tambahkan lokasi cabang",
+        "uploadCSV": "upload CSV",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus lokasi cabang {{name}}?",
+        "loadFailed": "gagal mendapatkan list lokasi cabang"
+    },
+    "uploadCSVModal": {
+        "title": "Upload CSV",
+        "errorFormat": "File harus dalam format csv",
+        "fileExample": "Contoh File",
+        "uploadFailed": "gagal upload file",
+        "uploadSuccess": "berhasil upload file",
+        "instructions":{
+            "format": "Format file upload harus csv dengan delimiter titik koma (;), pastikan tidak ada titik koma (;) pada setiap data kolom",
+            "numberFormat": "Gunakan titik (.) bukan (,) dalam penanda desimal di longitude/latitude dan hanya boleh ada satu titik di setiap longitude/latitude",
+            "precise": "Pastikan longitude dan latitude sudah sesuai. Sedikit kesalahan pada longitude dan latitiude akan berpengaruh pada lokasi cabang terdekat di app",
+            "columnSequence": "Urutan kolom file upload harus sesuai dengan contoh file: nama cabang, tipe cabang, region, provinsi, kota / kabupaten, kecamatan, kelurahan, kode pos, alamat, latitude, longitude, kode cabang",
+            "branchCode": "Kode Cabang harus terdiri 4 angka"
+        }
+    },
+    "changePhonenumberRequestListScreen": {
+        "title": "Ubah Nomor Handphone",
+        "loadFailed": "gagal mendapatkan list permohonan ubah nomor HP",
+        "rejectSuccess": "permohonan ubah nomor HP berhasil ditolak",
+        "rejectFailed": "permohonan ubah nomor HP gagal ditolak",
+        "approveSuccess": "permohonan ubah nomor HP berhasil disetujui",
+        "approveFailed": "permohonan ubah nomor HP gagal disetujui",
+        "bulkRejectFailed": "{{totalRequest}} permohonan gagal ditolak",
+        "bulkRejectSuccess": "{{totalRequest}} permohonan berhasil ditolak",
+        "bulkApproveFailed": "{{totalRequest}} permohonan gagal disetujui",
+        "bulkApproveSuccess": "{{totalRequest}} permohonan berhasil disetujui",
+        "totalRequestSelected": "{{totalRequest}} permohonan dipilih",
+        "confirmationModal": {
+            "reject": {
+                "title": "Konfirmasi Penolakan",
+                "content": "Apakah anda yakin untuk menolak perubahan nomor handphone?"
+            },
+            "approve": {
+                "title": "Konfirmasi Persetujuan",
+                "content": "Apakah anda yakin untuk menyetujui perubahan nomor handphone?"
+            }
+        },
+        "addRemarkSuccess": "berhasil menambahkan keterangan",
+        "addRemarkFailed": "gagal menambahkan keterangan"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
@@ -273,6 +540,22 @@
         "01061": "upload file gagal, koneksi gagal!",
         "01062": "akses token tidak boleh kosong",
         "01063": "invalid akses token",
-        "01064": "file tidak boleh kosong"
+        "01064": "gagal menambah FAQ baru",
+        "01065": "gagal menyimpan FAQ",
+        "01066": "gagal mendapatkan data FAQ, FAQ tidak ditemukan",
+        "01067": "gagal mendapatkan data FAQ",
+        "01068": "gagal mengubah data FAQ",
+        "01069": "gagal menghapus FAQ",
+        "01070": "file tidak boleh kosong",
+        "01071": "bookmark sudah mencapai batas maksimum",
+        "01072": "bookmark tidak boleh kosong",
+        "01073": "unique tag sudah digunakan",
+        "01074": "approval tidak boleh kosong",
+        "01075": "data tidak ditemukan",
+        "01076": "gagal mengubah data",
+        "01077": "gagal mengambil data",
+        "01078": "action tidak boleh kosong",
+        "01079": "parameter harus objek array",
+        "01080": "fancy text tidak disupport"
     }
 }

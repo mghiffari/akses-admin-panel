@@ -36,6 +36,22 @@ export class MainNavComponent {
         {
           title: 'navMenus.master.children.banners',
           link: '/banners'
+        },
+        {
+          title: 'navMenus.master.children.articles',
+          link: '/articles'
+        },
+        {
+          title: 'navMenus.master.children.faqs',
+          link: '/faqs'
+        },
+        {
+          title: 'navMenus.master.children.branches',
+          link: '/branches'
+        },
+        {
+          title: 'navMenus.master.children.changePhonenumberRequests',
+          link: '/change-phonenumber-requests'
         }
       ]
     }
