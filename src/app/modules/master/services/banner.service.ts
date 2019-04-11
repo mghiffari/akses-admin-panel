@@ -8,16 +8,22 @@ import { BannerData, UpdateBannerData } from '../models/banner-detail';
   providedIn: 'root'
 })
 export class BannerService {
-  
+
   uploadApiUrl = environment.apiurl + 'upload/';
   bannerApiUrl = environment.apiurl + 'banner/';
 
   //constructor
-  constructor(private authService: AuthService) { 
+  constructor(private authService: AuthService) {
     console.log('BannerService | constructor')
   }
 
-  //get banner list with pagination and search
+  // //get banner list with pagination and search and sort
+  // getBannerList(page, pageSize, search, datatableObject) {
+  //   let url = this.bannerApiUrl + page + '/' + pageSize + '/' + search;
+  //   console.log("Banner Service | getBannerListApi ", url);
+  //   return this.authService.wrapTokenPostApi(url, datatableObject)
+  // }
+
   getBannerList(page, pageSize, search) {
     let url = this.bannerApiUrl + page + '/' + pageSize + '/' + search;
     console.log("Banner Service | getBannerListApi ", url);
@@ -33,7 +39,7 @@ export class BannerService {
 
   //get banner data by id
   loadBannerById(id: string) {
-    let url = this.bannerApiUrl+id;
+    let url = this.bannerApiUrl + id;
     console.log("Banner Service | loadBannerById " + url);
     return this.authService.wrapTokenGetApi(url);
   }

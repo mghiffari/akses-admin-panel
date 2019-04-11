@@ -328,6 +328,14 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
     text-align: center !important;
 }
 
+.text-center-important
+.mat-sort-header-container {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
 a.top-action-text {
     text-decoration: none
 }
