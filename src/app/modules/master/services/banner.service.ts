@@ -17,17 +17,11 @@ export class BannerService {
     console.log('BannerService | constructor')
   }
 
-  // //get banner list with pagination and search and sort
-  // getBannerList(page, pageSize, search, datatableObject) {
-  //   let url = this.bannerApiUrl + page + '/' + pageSize + '/' + search;
-  //   console.log("Banner Service | getBannerListApi ", url);
-  //   return this.authService.wrapTokenPostApi(url, datatableObject)
-  // }
-
-  getBannerList(page, pageSize, search) {
+  //get banner list with pagination and search and sort
+  getBannerList(page, pageSize, search, datatableObject) {
     let url = this.bannerApiUrl + page + '/' + pageSize + '/' + search;
     console.log("Banner Service | getBannerListApi ", url);
-    return this.authService.wrapTokenGetApi(url)
+    return this.authService.wrapTokenPostApi(url, datatableObject)
   }
 
   //upload image
