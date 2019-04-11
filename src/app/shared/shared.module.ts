@@ -12,9 +12,10 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
 import { SuccessSnackbarComponent } from './components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from './components/error-snackbar/error-snackbar.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
+import { PasswordToggleInputComponent } from './components/password-toggle-input/password-toggle-input.component';
 
 @NgModule({
-  declarations: [ErrorModalComponent, ConfirmationModalComponent, SuccessSnackbarComponent, ErrorSnackbarComponent],
+  declarations: [ErrorModalComponent, ConfirmationModalComponent, SuccessSnackbarComponent, ErrorSnackbarComponent, PasswordToggleInputComponent],
   imports: [
     CommonModule,
     AngularMaterialModule,
@@ -28,7 +29,8 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    PasswordToggleInputComponent
   ],
   providers:[
     AuthService,
