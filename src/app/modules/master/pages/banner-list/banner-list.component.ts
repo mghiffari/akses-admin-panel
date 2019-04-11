@@ -142,25 +142,21 @@ export class BannerListComponent implements OnInit {
   onSortChange(e){
     console.log('BannerListComponent | onPaginatorChange');
     this.orderObject = e;
-    // this.onSearch();
+    this.onSearch();
   }
 
-  // call api to get data based on table page, page size, and search keyword
+  // call api to get data based on table page, page size, search keyword, and order
   lazyLoadData() {
     console.log('BannerListComponent | lazyLoadData');
     let isFocusedInput = this.isFocusedInput;
     this.loading = true;
     this.today = new Date();
     this.today.setHours(0, 0, 0, 0);
-    // this.bannerService.getBannerList(
-    //   this.paginatorProps.pageIndex + 1,
-    //   this.paginatorProps.pageSize,
-    //   this.search,
-    //   this.orderObject)
     this.bannerService.getBannerList(
-        this.paginatorProps.pageIndex + 1,
-        this.paginatorProps.pageSize,
-        this.search).subscribe(
+      this.paginatorProps.pageIndex + 1,
+      this.paginatorProps.pageSize,
+      this.search,
+      this.orderObject).subscribe(
         (data: any) => {
           try {            
             console.table(data);
