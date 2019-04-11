@@ -19,6 +19,7 @@ export class BannerListComponent implements OnInit {
     length: 0,
     pageIndex: 0
   }
+  orderObject = {};
   today = new Date();
 
   bannerColumns: string[] = [
@@ -34,7 +35,6 @@ export class BannerListComponent implements OnInit {
 
   banners: Banner[] = [];
   search = '';
-  searchTexts = [];
   closeText = '';
   loading = false;
   isFocusedInput = false;
@@ -130,13 +130,19 @@ export class BannerListComponent implements OnInit {
   // event handling when user is typing on search input
   onSearch() {
     console.log('BannerListComponent | onSearch');
-    this.searchTexts.push(this.search)
     if (this.paginatorProps.pageIndex !== 0) {
       //this will call paginator change
       this.paginatorProps.pageIndex = 0;
     } else {
       this.lazyLoadData();
     }
+  }
+
+  // event handling when sorting change
+  onSortChange(e){
+    console.log('BannerListComponent | onPaginatorChange');
+    this.orderObject = e;
+    // this.onSearch();
   }
 
   // call api to get data based on table page, page size, and search keyword
@@ -146,10 +152,15 @@ export class BannerListComponent implements OnInit {
     this.loading = true;
     this.today = new Date();
     this.today.setHours(0, 0, 0, 0);
+    // this.bannerService.getBannerList(
+    //   this.paginatorProps.pageIndex + 1,
+    //   this.paginatorProps.pageSize,
+    //   this.search,
+    //   this.orderObject)
     this.bannerService.getBannerList(
-      this.paginatorProps.pageIndex + 1,
-      this.paginatorProps.pageSize,
-      this.search).subscribe(
+        this.paginatorProps.pageIndex + 1,
+        this.paginatorProps.pageSize,
+        this.search).subscribe(
         (data: any) => {
           try {            
             console.table(data);
