@@ -110,9 +110,15 @@ body {
     background-color: map-get($colors, white);
 }
 
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    border-radius: 4px 4px 0 0;
+    padding: 0.75em .75em 0.75em 0.75em !important;
+}
+
 .mat-form-field-appearance-fill 
 .mat-form-field-infix {
     border-top: none !important;
+    padding: 0.25em 0 0.25em 0 !important;
 }
 
 .search
@@ -124,6 +130,11 @@ body {
 .search
 .mat-form-field-prefix {
     position: absolute;
+}
+
+.custom .mat-form-field-suffix {
+    position: absolute !important;
+    right: 0.75em;
 }
 
 .mat-form-field{
@@ -179,8 +190,8 @@ body {
     background-color: map-get($colors, light-gray);
 }
 
-.cursor-pointer {
-    cursor: pointer;
+.cursor-default{
+    cursor: default;
 }
 
 .page-title{
