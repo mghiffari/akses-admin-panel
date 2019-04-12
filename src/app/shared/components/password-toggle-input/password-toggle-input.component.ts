@@ -22,9 +22,9 @@ export class PasswordToggleInputComponent implements ControlValueAccessor {
     console.log('PasswordToggleInputComponent | constructor')
   }
 
-  private onChange: Function = () => {};
-  private onTouch: Function = () => {};
-  private disabled: boolean = false;
+  onChange: Function = () => {};
+  onTouch: Function = () => {};
+  disabled: boolean = false;
 
   handleChange(event){
     console.log('PasswordToggleInputComponent | handleChange')
