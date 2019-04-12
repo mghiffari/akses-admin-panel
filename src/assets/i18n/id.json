@@ -10,6 +10,9 @@
                 "branches": "Lokasi Cabang",
                 "changePhonenumberRequests": "Ubah Nomor Handphone"
             }
+        },
+        "creditSimulation": {
+            "title": "Simulasi Kredit"
         }
     },
     "userAction": {

@@ -24,38 +24,7 @@ export class MainNavComponent {
       map(result => result.matches)
     );
 
-  navList = [
-    {
-      title: 'navMenus.master.title',
-      link: '/master',
-      children: [
-        {
-          title: 'navMenus.master.children.users',
-          link: '/users'
-        },
-        {
-          title: 'navMenus.master.children.banners',
-          link: '/banners'
-        },
-        {
-          title: 'navMenus.master.children.articles',
-          link: '/articles'
-        },
-        {
-          title: 'navMenus.master.children.faqs',
-          link: '/faqs'
-        },
-        {
-          title: 'navMenus.master.children.branches',
-          link: '/branches'
-        },
-        {
-          title: 'navMenus.master.children.changePhonenumberRequests',
-          link: '/change-phonenumber-requests'
-        }
-      ]
-    }
-  ];
+  navList = [];
 
   //constructor
   constructor(
@@ -75,6 +44,90 @@ export class MainNavComponent {
     if(this.authService.isUserLoggedIn()) {
       this.userName = JSON.parse(this.authService.getUserLogin()).firstname
     }
+
+    setTimeout(() => {
+      const creditSimulationProducts = [
+        { 
+          id: 'prod0001',
+          name: 'New Car'
+        },
+        { 
+          id: 'prod0002',
+          name: 'Used Car'
+        },
+        { 
+          id: 'prod0003',
+          name: 'New Motorcycle'
+        },
+        { 
+          id: 'prod0004',
+          name: 'Used Motorcycle'
+        },
+        { 
+          id: 'prod0005',
+          name: 'MPL (Car)'
+        },
+        { 
+          id: 'prod0006',
+          name: 'MPL (Motorcycle)'
+        },
+        { 
+          id: 'prod0007',
+          name: 'Gadgets'
+        },
+        { 
+          id: 'prod0008',
+          name: 'Electronic'
+        },
+        { 
+          id: 'prod0009',
+          name: 'Furniture'
+        }
+      ]
+      const prodNavList = creditSimulationProducts.map(el => {
+        return {
+          title: el.name,
+          link: '/product/' + el.id
+        }
+      })
+      this.navList = [
+        {
+          title: 'navMenus.master.title',
+          link: '/master',
+          children: [
+            {
+              title: 'navMenus.master.children.users',
+              link: '/users'
+            },
+            {
+              title: 'navMenus.master.children.banners',
+              link: '/banners'
+            },
+            {
+              title: 'navMenus.master.children.articles',
+              link: '/articles'
+            },
+            {
+              title: 'navMenus.master.children.faqs',
+              link: '/faqs'
+            },
+            {
+              title: 'navMenus.master.children.branches',
+              link: '/branches'
+            },
+            {
+              title: 'navMenus.master.children.changePhonenumberRequests',
+              link: '/change-phonenumber-requests'
+            }
+          ]
+        },
+        {
+          title: 'navMenus.creditSimulation.title',
+          link: '/credit-simulation',
+          children: prodNavList
+        }
+      ]
+    },3000)
   }
 
   //logout
