@@ -473,7 +473,8 @@
     "productCreditSimulationScreen": {
         "title": "Simulasi Kredit",
         "getProductFailed": "gagal mendapatkan data produk",
-        "getProdCompFailed": "gagal medapatkan komponen produk"
+        "getProdCompFailed": "gagal medapatkan komponen produk",
+        "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",

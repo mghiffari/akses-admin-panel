@@ -33,4 +33,11 @@ export class CreditSimulationService {
     console.log('CreditSimulationService | getProductComponents ', url)
     return this.authService.wrapTokenGetApi(url);
   }
+
+  // get credit simulation based on product id and component id
+  getProdCompCS(productId, compId){
+    const url = this.creditSimulationApiUrl + productId + '/' + compId;
+    console.log('CreditSimulationService | getProdCompCS', url)
+    return this.authService.wrapTokenGetApi(url);
+  }
 }

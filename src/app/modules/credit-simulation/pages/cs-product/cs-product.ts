@@ -9,6 +9,7 @@ import { of, forkJoin } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CSProductComp } from '../../models/cs-product-comp';
+import { CreditSimulation } from '../../models/credit-simulation';
 
 @Component({
   selector: 'app-cs-product',
@@ -18,7 +19,7 @@ import { CSProductComp } from '../../models/cs-product-comp';
 export class CSProductComponent implements OnInit {
   loading = false;
   components: CSProductComp[] = [];
-  data = [];
+  data: CreditSimulation[] = [];
   productId;
   product: CSProduct;
   tenureMonths = [
@@ -159,320 +160,35 @@ export class CSProductComponent implements OnInit {
     this.edit = false;
     if(this.selectedIndex >= 0){
       let component = this.components[this.selectedIndex]
-      if (component.component.format.toLowerCase() === 'percentage') {
-        this.data = [
-          {
-            area: 'Jabotabek',
-            tnr_3: 0.123456,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Jabar',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Jatim',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Jateng',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Kalimantan',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Sulawesi, Maluku, Papua',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Bali & Nusa Tenggara',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Sumbagut',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
-          },
-          {
-            area: 'Sumbagsel',
-            tnr_3: 0.1,
-            tnr_6: 0.2,
-            tnr_9: 0.3,
-            tnr_12: 0.4,
-            tnr_15: 0.5,
-            tnr_18: 0.6,
-            tnr_21: 0.7,
-            tnr_24: 0.8,
-            tnr_30: 0.9,
-            tnr_36: 1.0,
-            tnr_42: 1.1,
-            tnr_48: 1.2,
-            tnr_54: 1.3,
-            tnr_60: 1.4,
+      this.creditSimulationService.getProdCompCS(this.productId, component.component_id).subscribe(
+        response => {
+          try {
+            console.table(response)
+            this.data = response.data;
+          } catch (error) {
+            console.table(error)
+          } finally {
+            this.loading = false;
           }
-        ]
-      } else {
-        this.data = [
-          {
-            area: 'Jabotabek',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Jabar',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Jatim',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Jateng',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Kalimantan',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Sulawesi, Maluku, Papua',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Bali & Nusa Tenggara',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Sumbagut',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
-          },
-          {
-            area: 'Sumbagsel',
-            tnr_3: 100000,
-            tnr_6: 200000,
-            tnr_9: 300000,
-            tnr_12: 400000,
-            tnr_15: 500000,
-            tnr_18: 600000,
-            tnr_21: 700000,
-            tnr_24: 800000,
-            tnr_30: 900000,
-            tnr_36: 1000000,
-            tnr_42: 1100000,
-            tnr_48: 1200000,
-            tnr_54: 1300000,
-            tnr_60: 1400000,
+        }, error => {
+          try {
+            console.table(error)
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'productCreditSimulationScreen.getCreditSimulationFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.table(error)
+          } finally {
+            this.loading = false;
           }
-        ]
-  
-      }
+        }
+      )
       if (this.table) {
         this.table.renderRows();
       }
