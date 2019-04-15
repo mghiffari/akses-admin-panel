@@ -20,6 +20,7 @@ export class MainNavComponent {
   userName = "Name";
   role = "Admin";
   dateLocale = 'id';
+  loading = false;
   versionNo = environment.version;
   versionDate = environment.versionDate;
 
@@ -86,7 +87,7 @@ export class MainNavComponent {
     if (this.authService.isUserLoggedIn()) {
       this.userName = JSON.parse(this.authService.getUserLogin()).firstname
     }
-
+    this.loading = true;
     let creditSimulationProducts: CSProduct[] = [];
     this.creditSimulationService.getProductList().subscribe(
       response => {
@@ -101,17 +102,25 @@ export class MainNavComponent {
           this.navList[1].children = prodNavList;
         } catch (error) {
           console.table(error)
+        } finally {
+          this.loading = false
         }
       }, error => {
-        this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-          data: {
-            title: 'navMenus.creditSimulation.failedGetProducts',
-            content: {
-              text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-              data: null
+        try {
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'navMenus.creditSimulation.failedGetProducts',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
             }
-          }
-        })
+          })          
+        } catch (error) {
+          console.table(error)
+        } finally {
+          this.loading = false
+        }
       }
     )
   }

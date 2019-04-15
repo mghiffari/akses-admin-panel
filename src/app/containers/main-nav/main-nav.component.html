@@ -9,7 +9,7 @@
         </div>
       </mat-toolbar>
     </div>
-    <mat-nav-list class="margin-bottom-32">
+    <mat-nav-list class="margin-bottom-32" *ngIf="!loading">
       <ng-container *ngFor="let nav of navList">
         <mat-expansion-panel class="nav-panel">
           <mat-expansion-panel-header collapsedHeight="50px" expandedHeight="50px">
@@ -20,7 +20,8 @@
           <mat-divider></mat-divider>
           <mat-nav-list>
             <ng-container *ngFor="let navChild of nav.children; let j = index">
-              <a mat-list-item [routerLink]="nav.link + navChild.link" routerLinkActive="active-nav" (click)="clickNav(drawer)"> {{navChild.title | translate}}
+              <a mat-list-item [routerLink]="nav.link + navChild.link" routerLinkActive="active-nav"
+                (click)="clickNav(drawer)"> {{navChild.title | translate}}
               </a>
               <mat-divider *ngIf="j !== nav.children.length - 1"></mat-divider>
             </ng-container>
@@ -29,10 +30,13 @@
         <mat-divider></mat-divider>
       </ng-container>
     </mat-nav-list>
-    <div 
-      class="sidenav-bottom padding-bottom-10" 
-      [style.width]="toolbar.offsetWidth + 'px'" 
-      fxLayout="row"
+    <div class="margin-bottom-32 margin-top-16" [style.width]="toolbar.offsetWidth + 'px'" fxLayout="row"
+      fxLayoutAlign="center center" *ngIf="loading">
+      <div>
+        <mat-spinner diameter="30" color="accent"></mat-spinner>
+      </div>
+    </div>
+    <div class="sidenav-bottom padding-bottom-10" [style.width]="toolbar.offsetWidth + 'px'" fxLayout="row"
       fxLayoutAlign="center center">
       <div class="font-tag">
         version: {{versionNo}} ({{versionDate | date: 'MMM, dd yyyy' : undefined : dateLocale }})
@@ -49,7 +53,8 @@
         <span class="spacer"></span>
         <mat-menu #menu="matMenu">
           <button mat-menu-item>{{'userAction.profile' | translate}}</button>
-          <button mat-menu-item routerLink="/account/change-password">{{'userAction.changePassword' | translate}}</button>
+          <button mat-menu-item
+            routerLink="/account/change-password">{{'userAction.changePassword' | translate}}</button>
           <button mat-menu-item (click)="logout()">{{'userAction.logout' | translate}}</button>
         </mat-menu>
         <button mat-button [matMenuTriggerFor]="menu" #menutrigger="matMenuTrigger">
