@@ -471,7 +471,9 @@
         }
     },
     "productCreditSimulationScreen": {
-        "title": "Simulasi Kredit"
+        "title": "Credit Simulation",
+        "getProductFailed": "failed to get product data",
+        "getProdCompFailed": "failed to get product components"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",

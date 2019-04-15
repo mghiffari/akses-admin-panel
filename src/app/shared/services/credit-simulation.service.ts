@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 export class CreditSimulationService {
   creditSimulationApiUrl = environment.apiurl + 'creditsimulation/';
   productApiUrl = this.creditSimulationApiUrl + 'products/';
+  componentApiUrl = this.creditSimulationApiUrl + 'components/';
 
   constructor(
     private authService: AuthService
@@ -17,5 +18,19 @@ export class CreditSimulationService {
   getProductList(){
     console.log('CreditSimulationService | getProductList ', this.productApiUrl)
     return this.authService.wrapTokenGetApi(this.productApiUrl);
+  }
+
+  // get credit simulation product by id
+  getProductById(id){
+    const url = this.productApiUrl + id;
+    console.log('CreditSimulationService | getProductById ', url)
+    return this.authService.wrapTokenGetApi(url);
+  }
+
+  // get list of components by product id
+  getProductComponents(productId){
+    const url = this.componentApiUrl + productId;
+    console.log('CreditSimulationService | getProductComponents ', url)
+    return this.authService.wrapTokenGetApi(url);
   }
 }
