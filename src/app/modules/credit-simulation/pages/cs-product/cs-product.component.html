@@ -19,7 +19,7 @@
                 <ng-container matColumnDef="area" sticky>
                   <th mat-header-cell *matHeaderCellDef class="font-th th-min-width text-center-important"> </th>
                   <td mat-cell *matCellDef="let element">
-                    {{element.area}}
+                    {{element.area.name}}
                   </td>
                 </ng-container>
                 <ng-container *ngFor="let month of tenureMonths" [matColumnDef]="'tnr'+month">
@@ -28,10 +28,10 @@
                   <td mat-cell *matCellDef="let element" align="right">
                     <div *ngIf="!edit">
                       <span *ngIf="comp.component.format?.toLowerCase() !== 'percentage'">
-                        {{element['tnr_'+month] | currency:'IDR':'symbol-narrow':'4.2-2': locale}}
+                        {{element['tnr_'+month+'m'] | currency:'IDR':'symbol-narrow':'4.2-2': locale}}
                       </span>
                       <span *ngIf="comp.component.format?.toLowerCase() === 'percentage'">
-                        {{element['tnr_'+month] | percent : '1.0-4' : locale}}
+                        {{element['tnr_'+month+'m'] | percent : '1.0-4' : locale}}
                       </span>
                     </div>
                   </td>

@@ -473,7 +473,8 @@
     "productCreditSimulationScreen": {
         "title": "Credit Simulation",
         "getProductFailed": "failed to get product data",
-        "getProdCompFailed": "failed to get product components"
+        "getProdCompFailed": "failed to get product components",
+        "getCreditSimulationFailed": "failed to get credit simulation data"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",
