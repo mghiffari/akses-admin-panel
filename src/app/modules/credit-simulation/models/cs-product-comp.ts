@@ -1,4 +1,4 @@
-import { CSProdCompComp } from './cs-prod-comp-comp';
+import { CSSubComp } from './cs-sub-comp';
 
 //credit simulation product component
 export class CSProductComp{
@@ -10,5 +10,5 @@ export class CSProductComp{
     modified_dt: Date;
     modified_by: string;
     is_deleted: boolean;
-    component: CSProdCompComp;
+    component: CSSubComp;
 }

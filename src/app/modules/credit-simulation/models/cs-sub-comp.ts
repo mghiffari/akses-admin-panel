@@ -1,5 +1,5 @@
 //credit simulation product component's component property
-export class CSProdCompComp{
+export class CSSubComp{
     name: string;
     format: string;
 }
