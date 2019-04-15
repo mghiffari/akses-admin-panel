@@ -28,7 +28,7 @@ const routes: Routes = [
       },
       {
         path: 'credit-simulation',
-        loadChildren: './modules/credit-simulation/credit-simulation.module#CreditSimulationModule'
+        loadChildren: './modules/credit-simulation/cs.module#CSModule'
       }
     ]
   },

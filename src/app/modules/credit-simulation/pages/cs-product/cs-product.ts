@@ -4,11 +4,11 @@ import { MatTabGroup, MatTab, MatTabHeader } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-credit-simulation-product',
-  templateUrl: './credit-simulation-product.component.html',
-  styleUrls: ['./credit-simulation-product.component.scss']
+  selector: 'app-cs-product',
+  templateUrl: './cs-product.component.html',
+  styleUrls: ['./cs-product.component.scss']
 })
-export class CreditSimulationProductComponent implements OnInit {
+export class CSProductComponent implements OnInit {
   loading = false;
   components = [];
   data = [];
