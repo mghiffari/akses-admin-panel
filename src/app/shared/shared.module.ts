@@ -13,6 +13,8 @@ import { SuccessSnackbarComponent } from './components/success-snackbar/success-
 import { ErrorSnackbarComponent } from './components/error-snackbar/error-snackbar.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { PasswordToggleInputComponent } from './components/password-toggle-input/password-toggle-input.component';
+import { LovService } from './services/lov.service';
+import { CreditSimulationService } from './services/credit-simulation.service';
 
 @NgModule({
   declarations: [ErrorModalComponent, ConfirmationModalComponent, SuccessSnackbarComponent, ErrorSnackbarComponent, PasswordToggleInputComponent],
@@ -39,7 +41,9 @@ import { PasswordToggleInputComponent } from './components/password-toggle-input
       duration: 5000,
       panelClass: ['notif-snackbar'],
       verticalPosition: 'top',
-    }}
+    }},
+    LovService,
+    CreditSimulationService
   ],
   entryComponents: [
     ErrorModalComponent,

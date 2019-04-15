@@ -12,7 +12,8 @@
             }
         },
         "creditSimulation": {
-            "title": "Credit Simulation"
+            "title": "Credit Simulation",
+            "failedGetProducts": "failed to get credit simulation products"
         }
     },
     "userAction": {
@@ -352,7 +353,6 @@
         "seeMyProfile": "ee my profile",
         "failed": "change password failed"
     },
-    "dateLocale": "en-US",
     "angularLocale": "en-US",
     "loading": "loading",
     "save": "save",

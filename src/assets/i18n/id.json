@@ -12,7 +12,8 @@
             }
         },
         "creditSimulation": {
-            "title": "Simulasi Kredit"
+            "title": "Simulasi Kredit",
+            "failedGetProducts": "gagal mendapatkan list produk simulasi kredit"
         }
     },
     "userAction": {
@@ -352,7 +353,6 @@
         "seeMyProfile": "lihat profile saya",
         "failed": "gagal ubah password"
     },
-    "dateLocale": "id",
     "angularLocale": "id",
     "loading": "loading",
     "save": "simpan",
