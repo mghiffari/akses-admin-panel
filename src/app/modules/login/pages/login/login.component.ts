@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit {
     this.resetPasswordForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email, CustomValidation.adiraEmail])
     })
-    this.translateService.get('dateLocale').subscribe(res => {
+    this.translateService.get('angularLocale').subscribe(res => {
       this.dateLocale = res;
     });
   }
