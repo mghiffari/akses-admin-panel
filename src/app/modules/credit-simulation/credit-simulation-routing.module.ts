@@ -4,7 +4,7 @@ import { CreditSimulationProductComponent } from './pages/credit-simulation-prod
 
 const routes: Routes = [
   { 
-    path: 'product/:product-id',
+    path: 'product/:productId',
     component: CreditSimulationProductComponent,
     data: {
       title: 'Credit Simulation'

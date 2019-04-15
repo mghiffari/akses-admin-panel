@@ -38,7 +38,7 @@ export class MainNavComponent {
   //ngOnInit get logged in user name and date locale
   ngOnInit(){
     console.log('MainNavComponent | ngOnInit')
-    this.translateService.get('dateLocale').subscribe(res => {
+    this.translateService.get('angularLocale').subscribe(res => {
       this.dateLocale = res;
     });
     if(this.authService.isUserLoggedIn()) {
