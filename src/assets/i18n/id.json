@@ -12,7 +12,8 @@
             }
         },
         "creditSimulation": {
-            "title": "Simulasi Kredit"
+            "title": "Simulasi Kredit",
+            "failedGetProducts": "gagal mendapatkan list produk simulasi kredit"
         }
     },
     "userAction": {

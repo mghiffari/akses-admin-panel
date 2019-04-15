@@ -12,7 +12,8 @@
             }
         },
         "creditSimulation": {
-            "title": "Credit Simulation"
+            "title": "Credit Simulation",
+            "failedGetProducts": "failed to get credit simulation products"
         }
     },
     "userAction": {
