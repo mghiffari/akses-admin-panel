@@ -312,6 +312,22 @@
             "lastUpdated": "Last Updated Date & By",
             "actionsStatus": "Action / Status",
             "remark": "Remark"
+        },
+        "creditSimulationTable": {
+            "tenureMonth3": "3 Month",
+            "tenureMonth6": "6 Month",
+            "tenureMonth9": "9 Month",
+            "tenureMonth12": "12 Month",
+            "tenureMonth15": "15 Month",
+            "tenureMonth18": "18 Month",
+            "tenureMonth21": "21 Month",
+            "tenureMonth24": "24 Month",
+            "tenureMonth30": "30 Month",
+            "tenureMonth36": "36 Month",
+            "tenureMonth42": "42 Month",
+            "tenureMonth48": "48 Month",
+            "tenureMonth54": "54 Month",
+            "tenureMonth60": "60 Month"
         }
     },
     "bannerListScreen": {
@@ -338,6 +354,7 @@
         "failed": "change password failed"
     },
     "dateLocale": "en-US",
+    "angularLocale": "en-US",
     "loading": "loading",
     "save": "save",
     "close": "close",
@@ -353,6 +370,7 @@
     "reject": "reject",
     "add": "add",
     "by": "by",
+    "edit": "edit",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -452,6 +470,9 @@
             "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, latitude, longitude, branch code",
             "branchCode": "Each branch code should contain 4 numbers"
         }
+    },
+    "productCreditSimulationScreen": {
+        "title": "Simulasi Kredit"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",
