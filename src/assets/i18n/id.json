@@ -311,6 +311,22 @@
             "lastUpdated": "Terakhir Diubah & Oleh",
             "actionsStatus": "Action / Status",
             "remark": "Keterangan"
+        },
+        "creditSimulationTable": {
+            "tenureMonth3": "3 Bln",
+            "tenureMonth6": "6 Bln",
+            "tenureMonth9": "9 Bln",
+            "tenureMonth12": "12 Bln",
+            "tenureMonth15": "15 Bln",
+            "tenureMonth18": "18 Bln",
+            "tenureMonth21": "21 Bln",
+            "tenureMonth24": "24 Bln",
+            "tenureMonth30": "30 Bln",
+            "tenureMonth36": "36 Bln",
+            "tenureMonth42": "42 Bln",
+            "tenureMonth48": "48 Bln",
+            "tenureMonth54": "54 Bln",
+            "tenureMonth60": "60 Bln"
         }
     },
     "bannerListScreen": {
@@ -337,6 +353,7 @@
         "failed": "gagal ubah password"
     },
     "dateLocale": "id",
+    "angularLocale": "id",
     "loading": "loading",
     "save": "simpan",
     "close": "tutup",
@@ -352,6 +369,7 @@
     "reject": "reject",
     "add": "tambah",
     "by": "by",
+    "edit": "edit",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -451,6 +469,9 @@
             "columnSequence": "Urutan kolom file upload harus sesuai dengan contoh file: nama cabang, tipe cabang, region, provinsi, kota / kabupaten, kecamatan, kelurahan, kode pos, alamat, latitude, longitude, kode cabang",
             "branchCode": "Kode Cabang harus terdiri 4 angka"
         }
+    },
+    "productCreditSimulationScreen": {
+        "title": "Simulasi Kredit"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",

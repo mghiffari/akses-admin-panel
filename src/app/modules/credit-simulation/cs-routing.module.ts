@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CreditSimulationProductComponent } from './pages/credit-simulation-product/credit-simulation-product';
+import { CSProductComponent } from './pages/cs-product/cs-product';
 
 const routes: Routes = [
   { 
-    path: 'product/:product-id',
-    component: CreditSimulationProductComponent,
+    path: 'product/:productId',
+    component: CSProductComponent,
     data: {
       title: 'Credit Simulation'
     }
@@ -16,4 +16,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CreditSimulationRoutingModule { }
+export class CSRoutingModule { }
