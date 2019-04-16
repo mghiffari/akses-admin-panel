@@ -251,6 +251,10 @@
             "errorRequired": "Keterangan wajib diisi",
             "errorMaxLength": "Jumlah karakter maksimum untuk Keterangan adalah {{maxLength}}"
         },
+        "tenure": {
+            "errorRequired": "Tenure wajib diisi dengan angka",
+            "errorMin": "Tenure harus terdiri dari bilangan positif"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -358,7 +362,8 @@
     "save": "simpan",
     "close": "tutup",
     "yesContinue": "ya, lanjutkan!",
-    "cancel": "batalkan",
+    "reset": "reset",
+    "cancel": "batal",
     "success": "berhasil",
     "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",

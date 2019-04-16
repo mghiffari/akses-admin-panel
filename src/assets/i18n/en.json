@@ -251,6 +251,10 @@
             "errorMinLength": "Min. length of Postal Code is {{minLength}}",
             "errorMaxLength": "Max. length of Postal Code is {{maxLength}}"
         },
+        "tenure": {
+            "errorRequired": "Tenure must have numeric value",
+            "errorMin": "Min. value of Postal Code is {{minValue}}"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -358,6 +362,7 @@
     "save": "save",
     "close": "close",
     "yesContinue": "yes, continue!",
+    "reset": "reset",
     "cancel": "cancel",
     "success": "success",
     "deleteConfirmation": "Delete Confirmation",
