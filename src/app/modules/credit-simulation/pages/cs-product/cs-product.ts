@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CreditSimulationService } from 'src/app/shared/services/credit-simulation.service';
 import { CSProduct } from 'src/app/shared/models/cs-product';
 import { map, catchError } from 'rxjs/operators';
-import { of, forkJoin } from 'rxjs';
+import { of, forkJoin, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CSProductComp } from '../../models/cs-product-comp';
@@ -52,6 +52,28 @@ export class CSProductComponent implements OnInit {
     private modalConfirmation: MatDialog
   ) { }
 
+  // show prompt when routing to another page in edit mode
+  canDeactivate(): Observable<boolean> | boolean {
+    console.log('CreditSimulationProductComponent | canDeactivate');
+    if (this.edit) {
+      const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+        width: '260px',
+        restoreFocus: false,
+        data: {
+          title: 'productCreditSimulationScreen.confirmationModal.title',
+          content: {
+            string: 'productCreditSimulationScreen.confirmationModal.content',
+            data: null
+          }
+        }
+      })
+      return modalRef.afterClosed();
+    } else {
+      return true;
+    }
+  }
+
+  //on init
   ngOnInit() {
     console.log('CreditSimulationProductComponent | ngOnInit')
     this.route.params.subscribe(params => {
