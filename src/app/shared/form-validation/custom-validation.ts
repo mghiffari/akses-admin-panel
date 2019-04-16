@@ -32,7 +32,7 @@ export class CustomValidation {
   }
 
   static tenure = {
-    integerDigitLength: 16,
+    integerDigitLength: 18,
     fractionDigitLength: 6
   }
 

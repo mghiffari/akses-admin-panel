@@ -25,10 +25,6 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
   @Input() format?: MaskedInputFormat = MaskedInputFormat.Decimal;
   @Input() currencySymbol?: string = null;
   @Input() locale?: string = 'id';
-  private textInput: ElementRef;
-  @ViewChild('textInput') set txtInput(textInput: ElementRef) {
-    this.textInput = textInput;
-  }
   maskedValue = '';
 
   ngOnInit(): void {
@@ -56,13 +52,7 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
     this.onChange(value);
     this.value = value;
     if(this.value !== null){
-      let newMaskValue = numeral(this.value).format(this.format, Math.floor)
-      if(this.maskedValue !== newMaskValue){
-        this.maskedValue = newMaskValue;
-      } else {
-        this.textInput.nativeElement.value = this.maskedValue;
-      }
-      
+      this.maskedValue = numeral(this.value).format(this.format, Math.floor)      
     }
   }
 
