@@ -12,11 +12,13 @@ import { CSProductComp } from '../../models/cs-product-comp';
 import { CreditSimulation } from '../../models/credit-simulation';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
+import { MaskedInputFormat } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Component({
   selector: 'app-cs-product',
   templateUrl: './cs-product.component.html',
-  styleUrls: ['./cs-product.component.scss']
+  styleUrls: []
 })
 export class CSProductComponent implements OnInit {
   loading = false;
@@ -33,6 +35,11 @@ export class CSProductComponent implements OnInit {
   edit = false;
   locale = 'id';
   csFormGroup: FormGroup;
+  inputMaskFormat = {
+    percentage: MaskedInputFormat.Percentage,
+    currency: MaskedInputFormat.Currency
+  };
+  maxDecimalLength;
 
   private table: any;
   @ViewChild('areaTenureTable') set tabl(table: ElementRef) {
@@ -90,7 +97,10 @@ export class CSProductComponent implements OnInit {
         this.csFormGroup = new FormGroup({
           areaForms: new FormArray([])
         });
-
+        this.inputMaskFormat = {
+          percentage: MaskedInputFormat.Percentage,
+          currency: MaskedInputFormat.Currency
+        };
         this.tenureMonths.forEach(month => {
           this.tableColumns.push('tnr' + month)
         })
@@ -195,7 +205,6 @@ export class CSProductComponent implements OnInit {
 
   // get form control of area form based on index and form control name
   getAreaFormControl(index, formControlName){
-    console.log('CreditSimulationProductComponent | getAreaFormControl');
     let formArray = this.csFormGroup.get('areaForms') as FormArray;
     return formArray.at(index).get(formControlName);
   }
@@ -203,25 +212,23 @@ export class CSProductComponent implements OnInit {
   //change to edit mode for component
   onEdit() {
     console.log('CreditSimulationProductComponent | onEdit');
-    this.onResetForm()
-    this.edit = true;
-  }
-
-  //reinitialize value for form
-  onResetForm(){
-    console.log('CreditSimulationProductComponent | onResetForm');
     let areaForms = [];
+    this.maxDecimalLength = CustomValidation.tenure;
     for(let i=0; i< this.data.length; i++){
       let cs: CreditSimulation = this.data[i];
       let formGroupContent: any = {};
       formGroupContent.id = new FormControl(cs.id);
       for(let month of this.tenureMonths){
         const key = 'tnr_'+month+'m';
-        formGroupContent[key] = new FormControl(cs[key], [Validators.required, Validators.min(0)])
+        formGroupContent[key] = new FormControl(Number(cs[key]), [
+          Validators.required, 
+          Validators.min(0),
+          CustomValidation.maxDecimalLength(this.maxDecimalLength.integerDigitLength, this.maxDecimalLength.fractionDigitLength)
+        ])
       }
       for(let num of this.tenure){
         const key = 'tnr_'+num;
-        formGroupContent[key] = new FormControl(cs[key])
+        formGroupContent[key] = new FormControl(Number(cs[key]))
       }
       areaForms.push(new FormGroup(formGroupContent))
     }
@@ -229,6 +236,28 @@ export class CSProductComponent implements OnInit {
     this.csFormGroup = new FormGroup({
       areaForms: formArray
     })
+    this.edit = true;
+  }
+
+  //reinitialize value for form
+  onResetForm(){
+    console.log('CreditSimulationProductComponent | onResetForm');
+    this.csFormGroup.reset()
+    let areaForms = this.csFormGroup.get('areaForms') as FormArray;
+    for (let i=0; i < areaForms.controls.length ; i++) {
+      let control = areaForms.controls[i];
+      let cs = this.data[i];
+      if (control instanceof FormGroup) {
+        for(let month of this.tenureMonths){
+          const key = 'tnr_'+month+'m';
+          control.get(key).setValue(Number(cs[key]))
+        }
+        for(let num of this.tenure){
+          const key = 'tnr_'+num;
+          control.get(key).setValue(Number(cs[key]))
+        }
+      }
+   }
   }
 
   // change from edit mode to view mode

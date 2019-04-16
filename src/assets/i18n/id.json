@@ -253,7 +253,8 @@
         },
         "tenure": {
             "errorRequired": "Tenure wajib diisi dengan angka",
-            "errorMin": "Tenure harus terdiri dari bilangan positif"
+            "errorMin": "Tenure harus terdiri dari bilangan positif",
+            "errorMaxDecimalLength": "Tenure hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (,) dan {{fractionDigitLength}} digit di belakang (,)"
         },
         "buttonText": {
             "save": "Simpan",

@@ -42,14 +42,19 @@
                           {{element['tnr_'+month+'m'] | percent : '1.0-4' : locale}}
                         </span>
                       </div>
-                      <div *ngIf="edit" [formGroupName]="rowIndex">
-                        <input type="number" [formControlName]="'tnr_'+month+'m'">
-                        <mat-error class="bottom-error" 
+                      <div *ngIf="edit" [formGroupName]="rowIndex" class="padding-top-5 padding-bottom-5">
+                        <app-masked-num-input 
+                          [formControlName]="'tnr_'+month+'m'" 
+                          [format]="comp.component.format?.toLowerCase() === 'percentage' ? inputMaskFormat.percentage : inputMaskFormat.currency">
+                        </app-masked-num-input>
+                        <mat-error class="bottom-error text-left" 
                           *ngIf="getAreaFormControl(rowIndex, 'tnr_'+month+'m').invalid && (getAreaFormControl(rowIndex, 'tnr_'+month+'m').dirty || getAreaFormControl(rowIndex, 'tnr_'+month+'m').touched)">
                           <span
                             *ngIf="getAreaFormControl(rowIndex, 'tnr_'+month+'m').errors.required">{{'forms.tenure.errorRequired' | translate}}</span>
                           <span
                             *ngIf="getAreaFormControl(rowIndex, 'tnr_'+month+'m').errors.min">{{'forms.tenure.errorMin' | translate}}</span>
+                          <span
+                            *ngIf="getAreaFormControl(rowIndex, 'tnr_'+month+'m').errors.maxdecimallength">{{'forms.tenure.errorMaxDecimalLength' | translate: maxDecimalLength}}</span>
                         </mat-error>
                       </div>
                     </td>

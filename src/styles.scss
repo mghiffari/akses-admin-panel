@@ -119,6 +119,7 @@ body {
 .mat-form-field-infix {
     border-top: none !important;
     padding: 0.25em 0 0.25em 0 !important;
+    width: 100% !important
 }
 
 .search
@@ -326,6 +327,10 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 
 .text-center-important{
     text-align: center !important;
+}
+
+.text-left{
+    text-align: left;
 }
 
 .text-center-important

@@ -253,7 +253,8 @@
         },
         "tenure": {
             "errorRequired": "Tenure must have numeric value",
-            "errorMin": "Min. value of Postal Code is {{minValue}}"
+            "errorMin": "Min. value of Postal Code is {{minValue}}",
+            "errorMaxDecimalLength": "Tenure can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
         },
         "buttonText": {
             "save": "Save",
