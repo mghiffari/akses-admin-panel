@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTabGroup, MatTab, MatTabHeader, MatSnackBar } from '@angular/material';
+import { MatTabGroup, MatTab, MatTabHeader, MatSnackBar, MatDialog } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { CreditSimulationService } from 'src/app/shared/services/credit-simulation.service';
 import { CSProduct } from 'src/app/shared/models/cs-product';
@@ -11,6 +11,7 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
 import { CSProductComp } from '../../models/cs-product-comp';
 import { CreditSimulation } from '../../models/credit-simulation';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-cs-product',
@@ -47,7 +48,8 @@ export class CSProductComponent implements OnInit {
     private route: ActivatedRoute,
     private translateService: TranslateService,
     private creditSimulationService: CreditSimulationService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private modalConfirmation: MatDialog
   ) { }
 
   ngOnInit() {
@@ -135,15 +137,27 @@ export class CSProductComponent implements OnInit {
   // method to intercept tab click event, to verify when editing
   interceptTabChange(tab: MatTab, tabHeader: MatTabHeader, idx: number) {
     console.log('CreditSimulationProductComponent | interceptTabChange');
-    let result = false;
-    if (this.edit) {
-      result = true;
-      //show modal here
+    if (this.edit && idx !== this.selectedIndex) {
+      let args = arguments;
+      const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+        width: '260px',
+        restoreFocus: false,
+        data: {
+          title: 'productCreditSimulationScreen.confirmationModal.title',
+          content: {
+            string: 'productCreditSimulationScreen.confirmationModal.content',
+            data: null
+          }
+        }
+      })
+      modalRef.afterClosed().subscribe((result) => {
+        if(result){
+          this.selectedIndex = idx
+        } 
+      })
     } else {
-      result = true;
+      MatTabGroup.prototype._handleClick.apply(this.tabs, arguments);
     }
-
-    return result && MatTabGroup.prototype._handleClick.apply(this.tabs, arguments);
   }
 
   // handle tabChange

@@ -479,7 +479,11 @@
         "title": "Credit Simulation",
         "getProductFailed": "failed to get product data",
         "getProdCompFailed": "failed to get product components",
-        "getCreditSimulationFailed": "failed to get credit simulation data"
+        "getCreditSimulationFailed": "failed to get credit simulation data",
+        "confirmationModal": {
+            "title": "Leave Page Confirmation",
+            "content": "Are you sure you want to leave this page? Changes will be discarded"
+        }
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",

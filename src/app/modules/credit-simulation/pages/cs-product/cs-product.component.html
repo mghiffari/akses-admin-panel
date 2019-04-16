@@ -6,7 +6,7 @@
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start start">
     <div fxFlex="100%">
-      <mat-tab-group (selectedIndexChange)="onChangeTabIndex($event)" [(selectedIndex)]="selectedIndex" #tabs>
+      <mat-tab-group animationDuration="500ms" (selectedIndexChange)="onChangeTabIndex($event)" [(selectedIndex)]="selectedIndex" #tabs>
         <mat-tab *ngFor="let comp of components" [label]="comp.component.name" [disabled]="loading">
           <ng-template matTabContent style="min-height: 100%">
             <form [formGroup]="csFormGroup">

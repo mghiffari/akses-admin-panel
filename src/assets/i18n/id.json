@@ -361,7 +361,7 @@
     "loading": "loading",
     "save": "simpan",
     "close": "tutup",
-    "yesContinue": "ya, lanjutkan!",
+    "yesContinue": "yakin",
     "reset": "reset",
     "cancel": "batal",
     "success": "berhasil",
@@ -479,7 +479,11 @@
         "title": "Simulasi Kredit",
         "getProductFailed": "gagal mendapatkan data produk",
         "getProdCompFailed": "gagal medapatkan komponen produk",
-        "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit"
+        "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit",
+        "confirmationModal": {
+            "title": "Konfirmasi Pindah Halaman",
+            "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
+        }
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",
