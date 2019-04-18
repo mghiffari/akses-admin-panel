@@ -15,9 +15,17 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
 import { PasswordToggleInputComponent } from './components/password-toggle-input/password-toggle-input.component';
 import { LovService } from './services/lov.service';
 import { CreditSimulationService } from './services/credit-simulation.service';
+import { MaskedNumInputComponent } from './components/masked-num-input/masked-num-input.component';
 
 @NgModule({
-  declarations: [ErrorModalComponent, ConfirmationModalComponent, SuccessSnackbarComponent, ErrorSnackbarComponent, PasswordToggleInputComponent],
+  declarations: [
+    ErrorModalComponent, 
+    ConfirmationModalComponent, 
+    SuccessSnackbarComponent, 
+    ErrorSnackbarComponent, 
+    PasswordToggleInputComponent, 
+    MaskedNumInputComponent
+  ],
   imports: [
     CommonModule,
     AngularMaterialModule,
@@ -32,7 +40,8 @@ import { CreditSimulationService } from './services/credit-simulation.service';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    PasswordToggleInputComponent
+    PasswordToggleInputComponent,
+    MaskedNumInputComponent
   ],
   providers:[
     AuthService,

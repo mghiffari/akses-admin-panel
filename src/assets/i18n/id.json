@@ -251,6 +251,11 @@
             "errorRequired": "Keterangan wajib diisi",
             "errorMaxLength": "Jumlah karakter maksimum untuk Keterangan adalah {{maxLength}}"
         },
+        "tenure": {
+            "errorRequired": "Tenure wajib diisi dengan angka",
+            "errorMin": "Tenure harus terdiri dari bilangan positif",
+            "errorMaxDecimalLength": "Tenure hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (,) dan {{fractionDigitLength}} digit di belakang (,)"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -357,8 +362,9 @@
     "loading": "loading",
     "save": "simpan",
     "close": "tutup",
-    "yesContinue": "ya, lanjutkan!",
-    "cancel": "batalkan",
+    "yesContinue": "yakin",
+    "reset": "reset",
+    "cancel": "batal",
     "success": "berhasil",
     "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
@@ -474,7 +480,11 @@
         "title": "Simulasi Kredit",
         "getProductFailed": "gagal mendapatkan data produk",
         "getProdCompFailed": "gagal medapatkan komponen produk",
-        "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit"
+        "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit",
+        "confirmationModal": {
+            "title": "Konfirmasi Pindah Halaman",
+            "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
+        }
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",

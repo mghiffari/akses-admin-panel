@@ -251,6 +251,11 @@
             "errorMinLength": "Min. length of Postal Code is {{minLength}}",
             "errorMaxLength": "Max. length of Postal Code is {{maxLength}}"
         },
+        "tenure": {
+            "errorRequired": "Tenure must have numeric value",
+            "errorMin": "Min. value of Postal Code is {{minValue}}",
+            "errorMaxDecimalLength": "Tenure can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -358,6 +363,7 @@
     "save": "save",
     "close": "close",
     "yesContinue": "yes, continue!",
+    "reset": "reset",
     "cancel": "cancel",
     "success": "success",
     "deleteConfirmation": "Delete Confirmation",
@@ -474,7 +480,11 @@
         "title": "Credit Simulation",
         "getProductFailed": "failed to get product data",
         "getProdCompFailed": "failed to get product components",
-        "getCreditSimulationFailed": "failed to get credit simulation data"
+        "getCreditSimulationFailed": "failed to get credit simulation data",
+        "confirmationModal": {
+            "title": "Leave Page Confirmation",
+            "content": "Are you sure you want to leave this page? Changes will be discarded"
+        }
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",
