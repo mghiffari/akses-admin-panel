@@ -484,7 +484,10 @@
         "confirmationModal": {
             "title": "Leave Page Confirmation",
             "content": "Are you sure you want to leave this page? Changes will be discarded"
-        }
+        },
+        "updateSuccess": "update credit simulation success",
+        "updateFailed": "failed to update credit simulation",
+        "updateResultInfo": "{{successCount}} / {{total}} records are updated"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",
@@ -593,6 +596,8 @@
         "01077": "failed to get data",
         "01078": "missing action parameter or value",
         "01079": "body parameter should be array object",
-        "01080": "fancy text is not supported"
+        "01080": "fancy text is not supported",
+        "01081": "something wrong, please try again",
+        "01082": "product id parameter and value is required"
     }
 }

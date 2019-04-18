@@ -14,6 +14,7 @@ import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { MaskedInputFormat } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
+import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 
 @Component({
   selector: 'app-cs-product',
@@ -40,6 +41,7 @@ export class CSProductComponent implements OnInit {
     currency: MaskedInputFormat.Currency
   };
   maxDecimalLength;
+  onSubmittingForm = false;
 
   private table: any;
   @ViewChild('areaTenureTable') set tabl(table: ElementRef) {
@@ -197,6 +199,7 @@ export class CSProductComponent implements OnInit {
     console.log('CreditSimulationProductComponent | onChangeTabIndex');
     this.selectedIndex = index;
     this.edit = false;
+    this.onSubmittingForm = false;
     this.csFormGroup = new FormGroup({
       areaForms: new FormArray([])
     });
@@ -265,13 +268,76 @@ export class CSProductComponent implements OnInit {
   onCloseEdit(){
     console.log('CreditSimulationProductComponent | onCloseEdit');
     this.edit = false;
-    this
   }
+
+  //call api to save updated value 
+  onSaveEdit(){
+    console.log('CreditSimulationProductComponent | onSaveEdit')
+    this.onSubmittingForm = true;
+    const dataParam = this.csFormGroup.get('areaForms').value
+    this.creditSimulationService.updateProdCompCS(dataParam).subscribe(
+      response => {
+        try {
+          console.table(response)
+          const transData = {
+            total: dataParam.length,
+            successCount: response.data.success_count
+          }
+          if(transData.total == transData.successCount){
+            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+              data: {
+                title: 'productCreditSimulationScreen.updateSuccess',
+                content: {
+                  text: 'productCreditSimulationScreen.updateResultInfo',
+                  data: transData
+                }
+              }
+            })
+          } else {
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'productCreditSimulationScreen.updateFailed',
+                content: {
+                  text: 'productCreditSimulationScreen.updateResultInfo',
+                  data: transData
+                }
+              }
+            })
+          }
+          if(transData.successCount > 0){
+            this.edit = false;
+            this.loadData()
+          }
+        } catch (error) {
+          console.table(error)
+        } finally {
+          this.onSubmittingForm = false;
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'productCreditSimulationScreen.updateFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        } finally {
+          this.onSubmittingForm = false;
+        }
+      }
+    )
+  }
+
   // call api to load table data base on product id and component id
   loadData() {
     console.log('CreditSimulationProductComponent | loadData')
     this.loading = true;
-
     if(this.selectedIndex >= 0){
       let component = this.components[this.selectedIndex]
       this.creditSimulationService.getProdCompCS(this.productId, component.component_id).subscribe(

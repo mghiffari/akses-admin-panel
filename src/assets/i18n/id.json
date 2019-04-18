@@ -484,7 +484,10 @@
         "confirmationModal": {
             "title": "Konfirmasi Pindah Halaman",
             "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
-        }
+        },
+        "updateSuccess": "berhasil mengubah data simulasi kredit",
+        "updateFailed": "gagal mengubah data simulasi kredit",
+        "updateResultInfo": "{{successCount}} / {{total}} data berhasil diubah"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",
@@ -593,6 +596,8 @@
         "01077": "gagal mengambil data",
         "01078": "action tidak boleh kosong",
         "01079": "parameter harus objek array",
-        "01080": "fancy text tidak disupport"
+        "01080": "fancy text tidak disupport",
+        "01081": "something wrong, please try again",
+        "01082": "product id parameter wajib diisi"
     }
 }
