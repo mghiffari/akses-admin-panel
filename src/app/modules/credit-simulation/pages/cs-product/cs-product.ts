@@ -248,6 +248,7 @@ export class CSProductComponent implements OnInit {
       let control = areaForms.controls[i];
       let cs = this.data[i];
       if (control instanceof FormGroup) {
+        control.get('id').setValue(this.data[i].id)
         for(let month of this.tenureMonths){
           const key = 'tnr_'+month+'m';
           control.get(key).setValue(Number(cs[key]))
