@@ -6,7 +6,8 @@
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start start">
     <div fxFlex="100%">
-      <mat-tab-group animationDuration="500ms" (selectedIndexChange)="onChangeTabIndex($event)" [(selectedIndex)]="selectedIndex" #tabs>
+      <mat-tab-group animationDuration="500ms" (selectedIndexChange)="onChangeTabIndex($event)"
+        [(selectedIndex)]="selectedIndex" #tabs>
         <mat-tab *ngFor="let comp of components" [label]="comp.component.name" [disabled]="loading">
           <ng-template matTabContent style="min-height: 100%">
             <form [formGroup]="csFormGroup">
@@ -15,10 +16,20 @@
                   <button mat-raised-button color="primary" (click)="onEdit()">{{'edit' | translate}}</button>
                 </div>
                 <div *ngIf="edit" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10px">
-                  <button mat-raised-button color="accent" (click)="onResetForm()">{{'reset' | translate}}</button>
-                  <button mat-raised-button color="accent" (click)="onCloseEdit()">{{'cancel' | translate}}</button>
-                  <button mat-raised-button color="primary" (click)="onEdit()"
-                    [disabled]="!csFormGroup?.valid">{{'save' | translate}}</button>
+                  <button mat-raised-button color="accent" (click)="onResetForm()"
+                    *ngIf="!onSubmittingForm">{{'reset' | translate}}</button>
+                  <button mat-raised-button color="accent" (click)="onCloseEdit()"
+                    *ngIf="!onSubmittingForm">{{'cancel' | translate}}</button>
+                  <button mat-raised-button color="primary" (click)="onSaveEdit()" [disabled]="!csFormGroup?.valid"
+                    *ngIf="!onSubmittingForm">{{'save' | translate}}</button>
+                  <button mat-raised-button color="primary" disabled *ngIf="onSubmittingForm">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <div>
+                        <mat-spinner diameter="16"></mat-spinner>
+                      </div>
+                      <div class="margin-left-5">{{'loading' | translate}}</div>
+                    </div>
+                  </button>
                 </div>
               </div>
               <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center"
@@ -43,11 +54,10 @@
                         </span>
                       </div>
                       <div *ngIf="edit" [formGroupName]="rowIndex" class="padding-top-5 padding-bottom-5">
-                        <app-masked-num-input 
-                          [formControlName]="'tnr_'+month+'m'" 
+                        <app-masked-num-input [formControlName]="'tnr_'+month+'m'"
                           [format]="comp.component.format?.toLowerCase() === 'percentage' ? inputMaskFormat.percentage : inputMaskFormat.currency">
                         </app-masked-num-input>
-                        <mat-error class="bottom-error text-left" 
+                        <mat-error class="bottom-error text-left"
                           *ngIf="getAreaFormControl(rowIndex, 'tnr_'+month+'m').invalid && (getAreaFormControl(rowIndex, 'tnr_'+month+'m').dirty || getAreaFormControl(rowIndex, 'tnr_'+month+'m').touched)">
                           <span
                             *ngIf="getAreaFormControl(rowIndex, 'tnr_'+month+'m').errors.required">{{'forms.tenure.errorRequired' | translate}}</span>
