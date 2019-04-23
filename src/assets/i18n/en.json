@@ -366,6 +366,7 @@
     "reset": "reset",
     "cancel": "cancel",
     "success": "success",
+    "fail": "fail",
     "deleteConfirmation": "Delete Confirmation",
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
@@ -486,8 +487,7 @@
             "content": "Are you sure you want to leave this page? Changes will be discarded"
         },
         "updateSuccess": "update credit simulation success",
-        "updateFailed": "failed to update credit simulation",
-        "updateResultInfo": "{{successCount}} / {{total}} records are updated"
+        "updateFailed": "failed to update credit simulation"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",

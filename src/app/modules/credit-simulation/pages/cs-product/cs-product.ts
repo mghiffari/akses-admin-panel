@@ -279,32 +279,32 @@ export class CSProductComponent implements OnInit {
       response => {
         try {
           console.table(response)
-          const transData = {
+          const result = {
             total: dataParam.length,
             successCount: response.data.success_count
           }
-          if(transData.total == transData.successCount){
+          if(result.total == result.successCount){
             this.snackBar.openFromComponent(SuccessSnackbarComponent, {
               data: {
-                title: 'productCreditSimulationScreen.updateSuccess',
+                title: 'success',
                 content: {
-                  text: 'productCreditSimulationScreen.updateResultInfo',
-                  data: transData
+                  text: 'productCreditSimulationScreen.updateSuccess',
+                  data: null
                 }
               }
             })
           } else {
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
-                title: 'productCreditSimulationScreen.updateFailed',
+                title: 'fail',
                 content: {
-                  text: 'productCreditSimulationScreen.updateResultInfo',
-                  data: transData
+                  text: 'productCreditSimulationScreen.updateFailed',
+                  data: null
                 }
               }
             })
           }
-          if(transData.successCount > 0){
+          if(result.successCount > 0){
             this.edit = false;
             this.loadData()
           }
