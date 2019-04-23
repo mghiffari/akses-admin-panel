@@ -272,7 +272,7 @@
         "forgotYourPassword": "Lupa Password?",
         "passwordSendToEmail": "password baru sudah dikirim ke email anda",
         "passwordSendFailed": "gagal reset password",
-        "passwordChanged": "password berhasil dirubah, login ulang dengan password baru"
+        "passwordChanged": "password berhasil diubah, login ulang dengan password baru"
     },
     "table": {
         "noRecordsFound": "Data Kosong",
@@ -314,7 +314,7 @@
             "requestDuration": "Umur Request",
             "oldPhoneNumber": "Nomor HP Lama",
             "newPhoneNumber": "Nomor HP Baru",
-            "lastUpdated": "Terakhir Dirubah & Oleh",
+            "lastUpdated": "Terakhir Diubah & Oleh",
             "actionsStatus": "Action / Status",
             "remark": "Keterangan"
         },
@@ -346,15 +346,15 @@
         "updateBannerTitle": "Ubah Home Banner",
         "seeBannerList": "Lihat Data Banner",
         "successCreateBanner": "Berhasil membuat banner baru",
-        "successUpdateBanner": "Berhasil merubah data banner",
-        "updateFailed": "Gagal merubah data banner",
+        "successUpdateBanner": "Berhasil mengubah data banner",
+        "updateFailed": "Gagal mengubah data banner",
         "createFailed": "Gagal membuat banner baru",
         "loadFailed": "Gagal mendapatkan data banner",
         "urlNotValid": "Masukkan URL yang valid"
     },
     "changePasswordScreen": {
         "title": "Ubah Password",
-        "passwordChanged": "password berhasil dirubah",
+        "passwordChanged": "password berhasil diubah",
         "seeMyProfile": "lihat profile saya",
         "failed": "gagal ubah password"
     },
@@ -400,7 +400,7 @@
         "succesCreated": "user baru berhasil ditambahkan",
         "succesUpdated": "data user berhasil diupdate",
         "emailNotChangeAble": "Email tidak dapat diganti",
-        "updateFailed": "gagal merubah data user",
+        "updateFailed": "gagal mengubah data user",
         "createFailed": "gagal membuat user baru"
     },
     "faqListScreen": {
@@ -420,8 +420,8 @@
         "createTitle": "Tambahkan FAQ Baru",
         "updateTitle": "Ubah FAQ",
         "succesCreated": "FAQ baru berhasil ditambahkan",
-        "succesUpdated": "data FAQ berhasil dirubah",
-        "updateFailed": "gagal merubah data FAQ",
+        "succesUpdated": "data FAQ berhasil diubah",
+        "updateFailed": "gagal mengubah data FAQ",
         "createFailed": "gagal menambahkan FAQ baru",
         "getFaqCategoriesFailed": "gagal mendapatkan Kategori FAQ"
     },
@@ -436,8 +436,8 @@
         "updateArticleTitle": "Ubah Artikel",
         "seeArticleList": "Lihat Data Artikel",
         "successCreateArticle": "Berhasil membuat artikel baru",
-        "successUpdateArticle": "Berhasil merubah data artikel",
-        "updateFailed": "Gagal merubah data artikel",
+        "successUpdateArticle": "Berhasil mengubah data artikel",
+        "updateFailed": "Gagal mengubah data artikel",
         "createFailed": "Gagal membuat artikel baru",
         "loadFailed": "Gagal mendapatkan data artikel",
         "urlNotValid": "Masukkan URL yang valid"
@@ -447,8 +447,8 @@
         "createTitle": "Tambahkan Lokasi Cabang",
         "updateTitle": "Ubah Lokasi Cabang",
         "succesCreated": "Lokasi Cabang baru berhasil ditambahkan",
-        "succesUpdated": "data Lokasi Cabang berhasil dirubah",
-        "updateFailed": "gagal merubah data Lokasi Cabang",
+        "succesUpdated": "data Lokasi Cabang berhasil diubah",
+        "updateFailed": "gagal mengubah data Lokasi Cabang",
         "createFailed": "gagal menambahkan Lokasi Cabang baru",
         "getBranchTypesFailed": "gagal mendapatkan list tipe branch",
         "getProvincesFailed": "gagal mendapatkan list provinsi",
@@ -486,8 +486,8 @@
             "title": "Konfirmasi Pindah Halaman",
             "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
         },
-        "updateSuccess": "berhasil merubah data simulasi kredit",
-        "updateFailed": "gagal merubah data simulasi kredit"
+        "updateSuccess": "berhasil mengubah data simulasi kredit",
+        "updateFailed": "gagal mengubah data simulasi kredit"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",
@@ -533,7 +533,7 @@
         "01014": "error mengambil akun admin",
         "01015": "password baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, satu angka, dengan minimal jumlah karakter 8",
         "01016": "password saat ini salah",
-        "01017": "password gagal dirubah",
+        "01017": "password gagal diubah",
         "01018": "account gagal diupdate",
         "01019": "gagal menambah artikel baru",
         "01020": "gagal menyimpan artikel",
@@ -584,7 +584,7 @@
         "01065": "gagal menyimpan FAQ",
         "01066": "gagal mendapatkan data FAQ, FAQ tidak ditemukan",
         "01067": "gagal mendapatkan data FAQ",
-        "01068": "gagal merubah data FAQ",
+        "01068": "gagal mengubah data FAQ",
         "01069": "gagal menghapus FAQ",
         "01070": "file tidak boleh kosong",
         "01071": "bookmark sudah mencapai batas maksimum",
@@ -592,7 +592,7 @@
         "01073": "unique tag sudah digunakan",
         "01074": "approval tidak boleh kosong",
         "01075": "data tidak ditemukan",
-        "01076": "gagal merubah data",
+        "01076": "gagal mengubah data",
         "01077": "gagal mengambil data",
         "01078": "action tidak boleh kosong",
         "01079": "parameter harus objek array",
