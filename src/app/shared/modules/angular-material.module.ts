@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +24,8 @@ import {
   MatRadioModule,
   MatProgressSpinnerModule,
   MatDialogModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatTabsModule
 } from '@angular/material';
 
 
@@ -57,7 +57,9 @@ import {
     MatRadioModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSortModule,
+    MatTabsModule
   ],
   exports: [
     FlexLayoutModule,
@@ -83,7 +85,9 @@ import {
     MatRadioModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSortModule,
+    MatTabsModule
   ]
 })
 export class AngularMaterialModule { }

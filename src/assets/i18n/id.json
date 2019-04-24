@@ -10,6 +10,10 @@
                 "branches": "Lokasi Cabang",
                 "changePhonenumberRequests": "Ubah Nomor Handphone"
             }
+        },
+        "creditSimulation": {
+            "title": "Simulasi Kredit",
+            "failedGetProducts": "gagal mendapatkan list produk simulasi kredit"
         }
     },
     "userAction": {
@@ -247,6 +251,11 @@
             "errorRequired": "Keterangan wajib diisi",
             "errorMaxLength": "Jumlah karakter maksimum untuk Keterangan adalah {{maxLength}}"
         },
+        "tenure": {
+            "errorRequired": "Tenure wajib diisi dengan angka",
+            "errorMin": "Tenure harus terdiri dari bilangan positif",
+            "errorMaxDecimalLength": "Tenure hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (,) dan {{fractionDigitLength}} digit di belakang (,)"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -308,6 +317,22 @@
             "lastUpdated": "Terakhir Diubah & Oleh",
             "actionsStatus": "Action / Status",
             "remark": "Keterangan"
+        },
+        "creditSimulationTable": {
+            "tenureMonth3": "3 Bln",
+            "tenureMonth6": "6 Bln",
+            "tenureMonth9": "9 Bln",
+            "tenureMonth12": "12 Bln",
+            "tenureMonth15": "15 Bln",
+            "tenureMonth18": "18 Bln",
+            "tenureMonth21": "21 Bln",
+            "tenureMonth24": "24 Bln",
+            "tenureMonth30": "30 Bln",
+            "tenureMonth36": "36 Bln",
+            "tenureMonth42": "42 Bln",
+            "tenureMonth48": "48 Bln",
+            "tenureMonth54": "54 Bln",
+            "tenureMonth60": "60 Bln"
         }
     },
     "bannerListScreen": {
@@ -333,13 +358,15 @@
         "seeMyProfile": "lihat profile saya",
         "failed": "gagal ubah password"
     },
-    "dateLocale": "id",
+    "angularLocale": "id",
     "loading": "loading",
     "save": "simpan",
     "close": "tutup",
-    "yesContinue": "ya, lanjutkan!",
-    "cancel": "batalkan",
+    "yesContinue": "yakin",
+    "reset": "reset",
+    "cancel": "batal",
     "success": "berhasil",
+    "fail": "gagal",
     "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
@@ -349,6 +376,7 @@
     "reject": "reject",
     "add": "tambah",
     "by": "by",
+    "edit": "edit",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -448,6 +476,18 @@
             "columnSequence": "Urutan kolom file upload harus sesuai dengan contoh file: nama cabang, tipe cabang, region, provinsi, kota / kabupaten, kecamatan, kelurahan, kode pos, alamat, latitude, longitude, kode cabang",
             "branchCode": "Kode Cabang harus terdiri 4 angka"
         }
+    },
+    "productCreditSimulationScreen": {
+        "title": "Simulasi Kredit",
+        "getProductFailed": "gagal mendapatkan data produk",
+        "getProdCompFailed": "gagal medapatkan komponen produk",
+        "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit",
+        "confirmationModal": {
+            "title": "Konfirmasi Pindah Halaman",
+            "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
+        },
+        "updateSuccess": "berhasil mengubah data simulasi kredit",
+        "updateFailed": "gagal mengubah data simulasi kredit"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Ubah Nomor Handphone",
@@ -556,6 +596,8 @@
         "01077": "gagal mengambil data",
         "01078": "action tidak boleh kosong",
         "01079": "parameter harus objek array",
-        "01080": "fancy text tidak disupport"
+        "01080": "fancy text tidak disupport",
+        "01081": "something wrong, please try again",
+        "01082": "product id parameter wajib diisi"
     }
 }

@@ -110,9 +110,16 @@ body {
     background-color: map-get($colors, white);
 }
 
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    border-radius: 4px 4px 0 0;
+    padding: 0.75em .75em 0.75em 0.75em !important;
+}
+
 .mat-form-field-appearance-fill 
 .mat-form-field-infix {
     border-top: none !important;
+    padding: 0.25em 0 0.25em 0 !important;
+    width: 100% !important
 }
 
 .search
@@ -124,6 +131,11 @@ body {
 .search
 .mat-form-field-prefix {
     position: absolute;
+}
+
+.custom .mat-form-field-suffix {
+    position: absolute !important;
+    right: 0.75em;
 }
 
 .mat-form-field{
@@ -179,8 +191,8 @@ body {
     background-color: map-get($colors, light-gray);
 }
 
-.cursor-pointer {
-    cursor: pointer;
+.cursor-default{
+    cursor: default;
 }
 
 .page-title{
@@ -315,6 +327,18 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 
 .text-center-important{
     text-align: center !important;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-center-important
+.mat-sort-header-container {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 }
 
 a.top-action-text {

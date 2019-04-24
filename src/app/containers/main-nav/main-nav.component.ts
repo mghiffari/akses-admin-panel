@@ -6,6 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { CreditSimulationService } from 'src/app/shared/services/credit-simulation.service';
+import { CSProduct } from 'src/app/shared/models/cs-product';
+import { MatSnackBar } from '@angular/material';
+import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 
 @Component({
   selector: 'app-main-nav',
@@ -16,6 +20,7 @@ export class MainNavComponent {
   userName = "Name";
   role = "Admin";
   dateLocale = 'id';
+  loading = false;
   versionNo = environment.version;
   versionDate = environment.versionDate;
 
@@ -54,41 +59,84 @@ export class MainNavComponent {
           link: '/change-phonenumber-requests'
         }
       ]
+    },
+    {
+      title: 'navMenus.creditSimulation.title',
+      link: '/credit-simulation',
+      children: []
     }
-  ];
+  ]
 
   //constructor
   constructor(
-    private breakpointObserver: BreakpointObserver, 
-    private authService: AuthService, 
+    private breakpointObserver: BreakpointObserver,
+    private authService: AuthService,
     private router: Router,
-    private translateService: TranslateService) {
-      console.log('MainNavComponent | constructor')
+    private translateService: TranslateService,
+    private creditSimulationService: CreditSimulationService,
+    private snackBar: MatSnackBar) {
+    console.log('MainNavComponent | constructor')
   }
 
-  //ngOnInit get logged in user name and date locale
-  ngOnInit(){
+  //ngOnInit get logged in user name, date locale, and credit simulation products
+  ngOnInit() {
     console.log('MainNavComponent | ngOnInit')
-    this.translateService.get('dateLocale').subscribe(res => {
+    this.translateService.get('angularLocale').subscribe(res => {
       this.dateLocale = res;
     });
-    if(this.authService.isUserLoggedIn()) {
+    if (this.authService.isUserLoggedIn()) {
       this.userName = JSON.parse(this.authService.getUserLogin()).firstname
     }
+    this.loading = true;
+    let creditSimulationProducts: CSProduct[] = [];
+    this.creditSimulationService.getProductList().subscribe(
+      response => {
+        try {
+          creditSimulationProducts = response.data;
+          const prodNavList = creditSimulationProducts.map(el => {
+            return {
+              title: el.name,
+              link: '/product/' + el.id
+            }
+          })
+          this.navList[1].children = prodNavList;
+        } catch (error) {
+          console.table(error)
+        } finally {
+          this.loading = false
+        }
+      }, error => {
+        try {
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'navMenus.creditSimulation.failedGetProducts',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })          
+        } catch (error) {
+          console.table(error)
+        } finally {
+          this.loading = false
+        }
+      }
+    )
   }
 
   //logout
-  logout(){
+  logout() {
     console.log('MainNavComponent | logout')
     this.authService.logout()
     this.router.navigate(['/login'])
   }
 
   //close navbar when clicking on nav menu
-  clickNav(drawer){
+  clickNav(drawer) {
     console.log('MainNavComponent | clickNav')
     this.isHandset$.subscribe(res => {
-      if(res === true){
+      if (res === true) {
         drawer.close()
       }
     })

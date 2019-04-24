@@ -25,6 +25,10 @@ const routes: Routes = [
       {
         path: 'account',
         loadChildren: './modules/account/account.module#AccountModule'
+      },
+      {
+        path: 'credit-simulation',
+        loadChildren: './modules/credit-simulation/cs.module#CSModule'
       }
     ]
   },

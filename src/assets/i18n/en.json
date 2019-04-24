@@ -10,6 +10,10 @@
                 "branches": "Branch Locations",
                 "changePhonenumberRequests": "Change Phonenumber Requests"
             }
+        },
+        "creditSimulation": {
+            "title": "Credit Simulation",
+            "failedGetProducts": "failed to get credit simulation products"
         }
     },
     "userAction": {
@@ -247,6 +251,11 @@
             "errorMinLength": "Min. length of Postal Code is {{minLength}}",
             "errorMaxLength": "Max. length of Postal Code is {{maxLength}}"
         },
+        "tenure": {
+            "errorRequired": "Tenure must have numeric value",
+            "errorMin": "Min. value of Postal Code is {{minValue}}",
+            "errorMaxDecimalLength": "Tenure can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -308,6 +317,22 @@
             "lastUpdated": "Last Updated Date & By",
             "actionsStatus": "Action / Status",
             "remark": "Remark"
+        },
+        "creditSimulationTable": {
+            "tenureMonth3": "3 Month",
+            "tenureMonth6": "6 Month",
+            "tenureMonth9": "9 Month",
+            "tenureMonth12": "12 Month",
+            "tenureMonth15": "15 Month",
+            "tenureMonth18": "18 Month",
+            "tenureMonth21": "21 Month",
+            "tenureMonth24": "24 Month",
+            "tenureMonth30": "30 Month",
+            "tenureMonth36": "36 Month",
+            "tenureMonth42": "42 Month",
+            "tenureMonth48": "48 Month",
+            "tenureMonth54": "54 Month",
+            "tenureMonth60": "60 Month"
         }
     },
     "bannerListScreen": {
@@ -333,13 +358,15 @@
         "seeMyProfile": "ee my profile",
         "failed": "change password failed"
     },
-    "dateLocale": "en-US",
+    "angularLocale": "en-US",
     "loading": "loading",
     "save": "save",
     "close": "close",
     "yesContinue": "yes, continue!",
+    "reset": "reset",
     "cancel": "cancel",
     "success": "success",
+    "fail": "fail",
     "deleteConfirmation": "Delete Confirmation",
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
@@ -349,6 +376,7 @@
     "reject": "reject",
     "add": "add",
     "by": "by",
+    "edit": "edit",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -448,6 +476,18 @@
             "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, latitude, longitude, branch code",
             "branchCode": "Each branch code should contain 4 numbers"
         }
+    },
+    "productCreditSimulationScreen": {
+        "title": "Credit Simulation",
+        "getProductFailed": "failed to get product data",
+        "getProdCompFailed": "failed to get product components",
+        "getCreditSimulationFailed": "failed to get credit simulation data",
+        "confirmationModal": {
+            "title": "Leave Page Confirmation",
+            "content": "Are you sure you want to leave this page? Changes will be discarded"
+        },
+        "updateSuccess": "update credit simulation success",
+        "updateFailed": "failed to update credit simulation"
     },
     "changePhonenumberRequestListScreen": {
         "title": "Change Handphone",
@@ -556,6 +596,8 @@
         "01077": "failed to get data",
         "01078": "missing action parameter or value",
         "01079": "body parameter should be array object",
-        "01080": "fancy text is not supported"
+        "01080": "fancy text is not supported",
+        "01081": "something wrong, please try again",
+        "01082": "product id parameter and value is required"
     }
 }

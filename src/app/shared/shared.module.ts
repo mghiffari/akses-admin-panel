@@ -12,9 +12,20 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
 import { SuccessSnackbarComponent } from './components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from './components/error-snackbar/error-snackbar.component';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
+import { PasswordToggleInputComponent } from './components/password-toggle-input/password-toggle-input.component';
+import { LovService } from './services/lov.service';
+import { CreditSimulationService } from './services/credit-simulation.service';
+import { MaskedNumInputComponent } from './components/masked-num-input/masked-num-input.component';
 
 @NgModule({
-  declarations: [ErrorModalComponent, ConfirmationModalComponent, SuccessSnackbarComponent, ErrorSnackbarComponent],
+  declarations: [
+    ErrorModalComponent, 
+    ConfirmationModalComponent, 
+    SuccessSnackbarComponent, 
+    ErrorSnackbarComponent, 
+    PasswordToggleInputComponent, 
+    MaskedNumInputComponent
+  ],
   imports: [
     CommonModule,
     AngularMaterialModule,
@@ -28,7 +39,9 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    PasswordToggleInputComponent,
+    MaskedNumInputComponent
   ],
   providers:[
     AuthService,
@@ -37,7 +50,9 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material';
       duration: 5000,
       panelClass: ['notif-snackbar'],
       verticalPosition: 'top',
-    }}
+    }},
+    LovService,
+    CreditSimulationService
   ],
   entryComponents: [
     ErrorModalComponent,
