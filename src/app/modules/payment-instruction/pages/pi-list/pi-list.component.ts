@@ -67,7 +67,7 @@ export class PIListComponent implements OnInit {
           this.loading = false;
           this.snackBar.openFromComponent(ErrorSnackbarComponent, {
             data: {
-              title: 'getTypeFailed',
+              title: 'paymentInstructionScreen.getTypeFailed',
               content: {
                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                 data: null
