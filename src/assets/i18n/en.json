@@ -14,6 +14,9 @@
         "creditSimulation": {
             "title": "Credit Simulation",
             "failedGetProducts": "failed to get credit simulation products"
+        },
+        "paymentInstruction": {
+            "title": "Payment Instruction"
         }
     },
     "userAction": {
@@ -290,6 +293,7 @@
         "title": "Title",
         "category": "Category",
         "order": "Order",
+        "lastUpdated": "Last Updated Date & By",
         "bannersTable": {
             "preview": "Preview",
             "startDate": "Start Date",
@@ -314,7 +318,6 @@
             "requestDuration": "Request Duration",
             "oldPhoneNumber": "Old Phonenumber",
             "newPhoneNumber": "New Phonenumber",
-            "lastUpdated": "Last Updated Date & By",
             "actionsStatus": "Action / Status",
             "remark": "Remark"
         },
@@ -478,7 +481,7 @@
         }
     },
     "productCreditSimulationScreen": {
-        "title": "Credit Simulation",
+        "title": "Credit Simulation",        
         "getProductFailed": "failed to get product data",
         "getProdCompFailed": "failed to get product components",
         "getCreditSimulationFailed": "failed to get credit simulation data",
@@ -513,6 +516,14 @@
         },
         "addRemarkSuccess": "remark successfuly added",
         "addRemarkFailed": "failed to add remark"
+    },
+    "paymentInstructionScreen": {
+        "title": "Payment Instructions",
+        "createInstruction": "create new instruction",
+        "deleteConfirmation": "Are you sure you want to delete {{grpTitle}} instruction?",
+        "getTypeFailed": "failed to get payment types",
+        "getInstructionListFailed": "failed to get instructions data",
+        "changeOrderFailed": "failed to change instruction order"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

@@ -16,6 +16,7 @@ export class LovService {
   indonesiaZoneCityApiUrl = this.indonesiaZoneApiUrl + '?province=';
   indonesiaZoneDistrictApiUrl = this.indonesiaZoneApiUrl + '?city=';
   indonesiaZoneSubDistrictApiUrl = this.indonesiaZoneApiUrl + '?district=';
+  paymentInstructionType = this.lovApiUrl + '?value=payment_instruction_type';
 
   constructor(private authService: AuthService) {
     console.log('LovService | constructor')
@@ -73,5 +74,11 @@ export class LovService {
     let url = this.indonesiaZoneSubDistrictApiUrl + districtId;
     console.log("LovService | getIndonesiaDistrictSubDistricts " + url);
     return this.authService.wrapTokenGetApi(url);
+  }
+
+  // get payment instruction type
+  getPaymentInstType(){
+    console.log("LovService | getPaymentInstType " + this.paymentInstructionType);
+    return this.authService.wrapTokenGetApi(this.paymentInstructionType);
   }
 }
