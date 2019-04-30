@@ -69,9 +69,9 @@ export class CSProductComponent implements OnInit {
         width: '260px',
         restoreFocus: false,
         data: {
-          title: 'productCreditSimulationScreen.confirmationModal.title',
+          title: 'movePageConfirmationModal.title',
           content: {
-            string: 'productCreditSimulationScreen.confirmationModal.content',
+            string: 'movePageConfirmationModal.content',
             data: null
           }
         }
@@ -177,9 +177,9 @@ export class CSProductComponent implements OnInit {
         width: '260px',
         restoreFocus: false,
         data: {
-          title: 'productCreditSimulationScreen.confirmationModal.title',
+          title: 'movePageConfirmationModal.title',
           content: {
-            string: 'productCreditSimulationScreen.confirmationModal.content',
+            string: 'movePageConfirmationModal.content',
             data: null
           }
         }

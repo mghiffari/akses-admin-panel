@@ -259,6 +259,29 @@
             "errorMin": "Tenure harus terdiri dari bilangan positif",
             "errorMaxDecimalLength": "Tenure hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (,) dan {{fractionDigitLength}} digit di belakang (,)"
         },
+        "icon": {
+            "fieldTitle": "Ikon",
+            "errorRequired": "Ikon wajib diisi",
+            "errorMaxResolution": "Ukuran Ikon melebihi 48 X 48 pixel",
+            "errorRatio": "Hanya rasio 1:1 yang dapat diupload",
+            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload",
+            "hint": "Ukuran maksimal 48 X 48 pixel. Rasio 1:1 ( tipe file: jpeg/ png )"
+        },
+        "instructions": {
+            "fieldTitle": "Instruksi",
+            "placeholder": "Instruksi",
+            "errorRequired": "Instruksi wajib diisi",
+            "errorMinTotal": "Harus diisi minimal satu instruksi",
+            "hint": {
+                "installment": "angsuran",
+                "boldBrackets": "Bold text dengan meletakkannya dalam kurung [ ]"
+            }
+        },
+        "paymentInstructionTitle": {
+            "fieldTitle": "Judul",
+            "placeholder": "Judul",
+            "errorRequired": "Judul wajib diisi"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -370,6 +393,7 @@
     "cancel": "batal",
     "success": "berhasil",
     "fail": "gagal",
+    "error": "eror",
     "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
@@ -380,6 +404,7 @@
     "add": "tambah",
     "by": "by",
     "edit": "edit",
+    "example": "contoh",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -390,6 +415,10 @@
         "title": "Unauthorized",
         "content": "Login ulang untuk mengakses halaman ini",
         "button": "OK"
+    },
+    "movePageConfirmationModal": {
+        "title": "Konfirmasi Pindah Halaman",
+        "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
     },
     "userListScreen": {
         "title": "Data User",
@@ -485,10 +514,6 @@
         "getProductFailed": "gagal mendapatkan data produk",
         "getProdCompFailed": "gagal medapatkan komponen produk",
         "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit",
-        "confirmationModal": {
-            "title": "Konfirmasi Pindah Halaman",
-            "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
-        },
         "updateSuccess": "berhasil mengubah data simulasi kredit",
         "updateFailed": "gagal mengubah data simulasi kredit"
     },
@@ -524,6 +549,16 @@
         "getTypeFailed": "gagal medapatkan list tipe pembayaran",
         "getInstructionListFailed": "gagal mendapatkan list instruksi",
         "changeOrderFailed": "gagal mengubah urutan instruksi"
+    },
+    "paymentInstructionDetailsScreen": {
+        "createTitle": "Tambah Instruksi Pembayaran",
+        "updateTitle": "Ubah Instruksi Pembayaran",
+        "typeNotFound": "Tipe Pembayaran {{type}} tidak ditemukan",
+        "succesCreated": "Instruksi Pembayaran berhasil ditambahkan",
+        "succesUpdated": "Instruksi Pembayaran berhasil diubah",
+        "updateFailed": "gagal mengubah data instruksi pembayaran",
+        "createFailed": "gagal menambahkan instruksi pembayaran baru",
+        "addNewStep": "tambahkan langkah baru"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

@@ -175,6 +175,10 @@ body {
     padding-top: 5px;
 }
 
+.inline-hint.mat-hint{
+    font-size: 75%;
+}
+
 .border-bottom-gray{
     border-bottom: 1px solid map-get($colors, gray);
 }

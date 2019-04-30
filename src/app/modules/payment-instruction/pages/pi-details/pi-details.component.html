@@ -1,0 +1,176 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      <span *ngIf="isCreate">{{'paymentInstructionDetailsScreen.createTitle' | translate}}</span>
+      <span *ngIf="!isCreate">{{'paymentInstructionDetailsScreen.updateTitle' | translate}}</span>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
+    <div fxFlex="100%">
+      <a class="top-action-text" routerLink="/payment-instructions" fxLayoutAlign="start center">
+        <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
+        <div>
+          {{'backToList' | translate}}
+        </div>
+      </a>
+    </div>
+  </div>
+  <form [formGroup]="instructionForm" *ngIf="!loading">
+    <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%">
+        {{'forms.icon.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="80%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+        <div fxFlex="40%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="start center">
+          <div fxFlex="40%" fxLayoutAlign="start center" #iconHandler>
+            <img *ngIf="(!icon.value || icon.value===''); else imgExist"
+              src="../../../../../assets/img/icon-placeholder.png" width="48px" height="48px">
+            <ng-template #imgExist>
+              <img [src]="icon.value" width="48px" height="48px">
+            </ng-template>
+          </div>
+          <div fxFlex="60%" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+            <mat-icon class="cursor-default" (click)="onDeleteIcon()">delete</mat-icon>
+            <mat-icon color="primary" class="cursor-default" (click)="iconInput.click()">cloud_upload</mat-icon>
+            <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeFile($event)">
+          </div>
+          <div fxFlex="100%">
+            <mat-error class="bottom-error"
+              *ngIf="icon.invalid && (icon.dirty || icon.touched) || iconFile.invalid && (iconFile.dirty || iconFile.touched)">
+              <span *ngIf="icon.errors?.required">{{'forms.icon.errorRequired' | translate}}</span>
+              <span
+                *ngIf="iconFile.errors?.ratio && !icon.errors?.required">{{'forms.icon.errorRatio' | translate}}</span>
+              <span
+                *ngIf="iconFile.errors?.maxresolution && !iconFile.errors?.ratio && !icon.errors?.required">{{'forms.icon.errorMaxResolution' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxFlex="40%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%">
+          <div [style.height]="iconHandler.offsetHeight + 'px'" fxLayout="row" fxLayoutAlign="start center">
+            <mat-hint class="inline-hint">
+              {{'forms.icon.hint' | translate}}
+            </mat-hint>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%">
+        {{'forms.paymentInstructionTitle.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="80%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+        <div fxFlex="50%" fxFlex.lt-lg="65%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
+          <div fxFlex="60%" fxFlex.lt-sm="100%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.paymentInstructionTitle.placeholder' | translate}}"
+                formControlName="grpTitle">
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="grpTitle.invalid && (grpTitle.dirty || grpTitle.touched)">
+              <span
+                *ngIf="grpTitle.errors.required">{{'forms.paymentInstructionTitle.errorRequired' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-left-16 padding-top-16 padding-bottom-16 border-bottom-gray" fxLayoutGap="10px"
+      formArrayName="instructions">
+      <div fxFlex="20%" fxFlex.lt-md="30%">
+        <div>{{'forms.instructions.fieldTitle' | translate}}</div>
+        <mat-hint class="bottom-hint">
+          <div>{{'forms.instructions.hint.boldBrackets' | translate}}</div>
+        </mat-hint>
+        <mat-hint class="bottom-hint">
+          <div>{{'example' | translate}}: </div>
+          <div>
+            [{{'forms.instructions.hint.installment' | translate}}] =
+            <b>{{'forms.instructions.hint.installment' | translate}}</b>
+          </div>
+        </mat-hint>
+      </div>
+      <div fxFlex="80%" fxFlex.lt-md="70%" fxLayout="row wrap">
+        <div *ngFor="let inst of instructions.controls; let i = index" fxFlex="100%" fxLayout="row wrap"
+          class="padding-bottom-16 padding-right-16 border-bottom-gray" [class.padding-top-16]="i !== 0"
+          [formGroupName]="i">
+          <div fxFlex="50%" fxFlex.lt-lg="65%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row wrap">
+            <div fxFlex="60%" fxFlex.lt-sm="100%">
+              <mat-form-field appearance="fill">
+                <textarea formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                  cdkAutosizeMaxRows="5" placeholder="{{'forms.instructions.placeholder' | translate}}"></textarea>
+              </mat-form-field>
+              <mat-error class="bottom-error"
+                *ngIf="getContent(i).invalid && (getContent(i).dirty || getContent(i).touched)">
+                <span *ngIf="getContent(i).errors?.required">{{'forms.instructions.errorRequired' | translate}}</span>
+              </mat-error>
+            </div>
+            <div fxFlex="40%" fxFlex.lt-sm="100%" fxLayout="row" fxLayoutGap="10px">
+              <div fxLayout="column">
+                <mat-icon class="cursor-default text-purple" (click)="onOrderUp(i)" *ngIf="i !== 0">
+                  keyboard_arrow_up
+                </mat-icon>
+                <mat-icon class="cursor-default text-medium-gray" *ngIf="i === 0">
+                  keyboard_arrow_up
+                </mat-icon>
+                <mat-icon class="cursor-default text-purple" (click)="onOrderDown(i)"
+                  *ngIf="i !== instructions.controls.length - 1">
+                  keyboard_arrow_down
+                </mat-icon>
+                <mat-icon class="cursor-default text-medium-gray" *ngIf="i === instructions.controls.length - 1">
+                  keyboard_arrow_down
+                </mat-icon>
+              </div>
+              <div style="height: 48px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-icon class="cursor-default" (click)="deleteStep(i)">delete</mat-icon>
+              </div>
+              <div style="height: 48px" fxLayout="column" fxLayoutAlign="center center">
+                <mat-icon class="cursor-default" (click)="toggleShowPreview(i)">
+                  {{getShowPreview(i).value ? 'visibility' : 'visibility_off'}}
+                </mat-icon>
+              </div>
+            </div>
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="35%" fxFlex.lt-md="100%" *ngIf="getShowPreview(i).value">
+            <div [innerHTML]="renderContent(getContent(i).value)"></div>
+          </div>
+        </div>
+        <div fxFlex="100%" class="padding-right-16" [class.padding-top-16]="instructions.controls.length > 0">
+          <div class="top-action-text cursor-default" fxLayoutAlign="start start" (click)="addNewStep()">
+            <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
+            <div>
+              {{'paymentInstructionDetailsScreen.addNewStep' | translate}}
+            </div>
+          </div>
+          <mat-error class="bottom-error" *ngIf="instructions.errors?.required">
+            <span>
+              {{'forms.instructions.errorMinTotal' | translate}}
+            </span>
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16" fxLayoutGap="10px">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%">
+      </div>
+      <div fxFlex="80%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutAlign="start center">
+        <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"
+          [disabled]="!instructionForm.valid">{{'save' | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+</div>
