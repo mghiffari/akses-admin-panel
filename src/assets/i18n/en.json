@@ -259,6 +259,29 @@
             "errorMin": "Min. value of Postal Code is {{minValue}}",
             "errorMaxDecimalLength": "Tenure can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
         },
+        "icon": {
+            "fieldTitle": "Icon",
+            "errorRequired": "Icon is required",
+            "errorMaxResolution": "Icon size is more than 48 X 48 pixel",
+            "errorRatio": "Only 1:1 ratio is supported",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "hint": "Ukuran maksimal 48 X 48 pixel. Rasio 1:1 ( tipe file: jpeg/ png )"
+        },
+        "instructions": {
+            "fieldTitle": "Instruction",
+            "placeholder": "Instruction",
+            "errorRequired": "Instruction is required",
+            "errorMinTotal": "There should be one or more instruction",
+            "hint": {
+                "installment": "installment",
+                "boldBrackets": "Put text inside square brackets [ ] to bold"
+            }
+        },
+        "paymentInstructionTitle": {
+            "fieldTitle": "Title",
+            "placeholder": "Title",
+            "iconRequied": "Title is required"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -370,6 +393,7 @@
     "cancel": "cancel",
     "success": "success",
     "fail": "fail",
+    "error": "error",
     "deleteConfirmation": "Delete Confirmation",
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
@@ -380,6 +404,7 @@
     "add": "add",
     "by": "by",
     "edit": "edit",
+    "example": "example",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -390,6 +415,10 @@
         "title": "You're unauthorized to access this page",
         "content": "Please re-login to access this page",
         "button": "OK"
+    },
+    "movePageConfirmationModal": {
+        "title": "Leave Page Confirmation",
+        "content": "Are you sure you want to leave this page? Changes will be discarded"
     },
     "userListScreen": {
         "title": "Users Data",
@@ -485,10 +514,6 @@
         "getProductFailed": "failed to get product data",
         "getProdCompFailed": "failed to get product components",
         "getCreditSimulationFailed": "failed to get credit simulation data",
-        "confirmationModal": {
-            "title": "Leave Page Confirmation",
-            "content": "Are you sure you want to leave this page? Changes will be discarded"
-        },
         "updateSuccess": "update credit simulation success",
         "updateFailed": "failed to update credit simulation"
     },
@@ -524,6 +549,16 @@
         "getTypeFailed": "failed to get payment types",
         "getInstructionListFailed": "failed to get instructions data",
         "changeOrderFailed": "failed to change instruction order"
+    },
+    "paymentInstructionDetailsScreen": {
+        "createTitle": "Create Payment Instruction",
+        "updateTitle": "Update Payment Instruction",
+        "typeNotFound": "payment type {{type}} not found",
+        "succesCreated": "Payment Instruction successfully created",
+        "succesUpdated": "Payment Instruction successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new instruction",
+        "addNewStep": "add new step"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
