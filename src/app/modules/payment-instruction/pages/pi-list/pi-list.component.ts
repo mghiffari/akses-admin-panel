@@ -78,10 +78,10 @@ export class PIListComponent implements OnInit {
     if (this.data[index] && this.data[index - 1]) {
       let data1 = new InstructionList();
       data1.id = this.data[index].id;
-      data1.grp_order = this.data[index].grp_order;
+      data1.grp_order = this.data[index - 1].grp_order;
       let data2 = new InstructionList();
       data2.id = this.data[index - 1].id;
-      data2.grp_order = this.data[index - 1].grp_order;
+      data2.grp_order = this.data[index].grp_order;
       this.swapOrder([data1, data2])
     }
   }
@@ -114,10 +114,10 @@ export class PIListComponent implements OnInit {
     if (this.data[index] && this.data[index + 1]) {
       let data1 = new InstructionList();
       data1.id = this.data[index].id;
-      data1.grp_order = this.data[index].grp_order;
+      data1.grp_order = this.data[index + 1].grp_order;
       let data2 = new InstructionList();
       data2.id = this.data[index + 1].id;
-      data2.grp_order = this.data[index + 1].grp_order;
+      data2.grp_order = this.data[index].grp_order;
       this.swapOrder([data1, data2])
     }
   }
