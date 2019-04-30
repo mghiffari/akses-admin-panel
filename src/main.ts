@@ -6,10 +6,10 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
-  // const methods = ['log', 'error', 'table', 'warn', 'info']
-  // methods.forEach(method => {
-  //   console[method] = () => {}
-  // })
+  const methods = ['log', 'error', 'table', 'warn', 'info']
+  methods.forEach(method => {
+    console[method] = () => {}
+  })
 }
 
 
