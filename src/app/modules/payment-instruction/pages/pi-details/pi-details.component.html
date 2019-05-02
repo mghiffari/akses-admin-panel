@@ -130,7 +130,7 @@
             </div>
           </div>
           <div fxFlex="50%" fxFlex.lt-lg="35%" fxFlex.lt-md="100%" *ngIf="getShowPreview(i).value">
-            <div [innerHTML]="renderContent(getContent(i).value)"></div>
+            <div innerHTML="{{getContent(i).value | boldRenderer}}"></div>
           </div>
         </div>
         <div fxFlex="100%" class="padding-right-16" [class.padding-top-16]="instructions.controls.length > 0">
