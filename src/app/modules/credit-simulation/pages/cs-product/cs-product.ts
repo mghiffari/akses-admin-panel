@@ -12,7 +12,7 @@ import { CSProductComp } from '../../models/cs-product-comp';
 import { CreditSimulation } from '../../models/credit-simulation';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
-import { MaskedInputFormat } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
+import { MaskedInputFormat, MaskedInputType } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 
@@ -36,9 +36,9 @@ export class CSProductComponent implements OnInit {
   edit = false;
   locale = 'id';
   csFormGroup: FormGroup;
-  inputMaskFormat = {
-    percentage: MaskedInputFormat.Percentage,
-    currency: MaskedInputFormat.Currency
+  inputMaskType = {
+    percentage: MaskedInputType.Percentage,
+    currency: MaskedInputType.Currency
   };
   maxDecimalLength;
   onSubmittingForm = false;
@@ -99,9 +99,9 @@ export class CSProductComponent implements OnInit {
         this.csFormGroup = new FormGroup({
           areaForms: new FormArray([])
         });
-        this.inputMaskFormat = {
-          percentage: MaskedInputFormat.Percentage,
-          currency: MaskedInputFormat.Currency
+        this.inputMaskType = {
+          percentage: MaskedInputType.Percentage,
+          currency: MaskedInputType.Currency
         };
         this.tenureMonths.forEach(month => {
           this.tableColumns.push('tnr' + month)
