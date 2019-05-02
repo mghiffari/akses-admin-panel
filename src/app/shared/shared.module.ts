@@ -16,6 +16,7 @@ import { PasswordToggleInputComponent } from './components/password-toggle-input
 import { LovService } from './services/lov.service';
 import { CreditSimulationService } from './services/credit-simulation.service';
 import { MaskedNumInputComponent } from './components/masked-num-input/masked-num-input.component';
+import { FileManagementService } from './services/file-management.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { MaskedNumInputComponent } from './components/masked-num-input/masked-nu
       verticalPosition: 'top',
     }},
     LovService,
-    CreditSimulationService
+    CreditSimulationService,
+    FileManagementService
   ],
   entryComponents: [
     ErrorModalComponent,

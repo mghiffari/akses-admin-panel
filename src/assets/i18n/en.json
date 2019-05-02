@@ -556,9 +556,15 @@
         "typeNotFound": "payment type {{type}} not found",
         "succesCreated": "Payment Instruction successfully created",
         "succesUpdated": "Payment Instruction successfully updated",
-        "updateFailed": "failed to update data",
         "createFailed": "failed to create new instruction",
-        "addNewStep": "add new step"
+        "addNewStep": "add new step",
+        "uploadIconFailed": "failed to upload icon",
+        "insertInstructionFailed": "failed to create instruction",
+        "insertStepsFailed": "failed to create instruction steps",
+        "getInstructionFailed": "failed to get instruction data",
+        "getStepsFailed": "failed to get instruction steps",
+        "updateFailed": "failed to update payment instructions",
+        "deleteIconFailed": "failed to delete icon"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

@@ -7,6 +7,11 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { Observable } from 'rxjs';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
+import { FileManagementService } from 'src/app/shared/services/file-management.service';
+import { InstructionList } from '../../models/instruction-list';
+import { PayInstService } from '../../services/pay-inst.service';
+import { InstructionDetails } from '../../models/instruction-details';
+import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 
 @Component({
   selector: 'app-pi-details',
@@ -18,13 +23,16 @@ export class PIDetailsComponent implements OnInit {
   loading = false;
   isCreate = true;
   instructionForm = new FormGroup({});
+  actionSuccess = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private lovService: LovService,
     private snackBar: MatSnackBar,
-    private modalConfirmation: MatDialog
+    private modalConfirmation: MatDialog,
+    private payInstService: PayInstService,
+    private fileMgtService: FileManagementService
   ) { }
 
   // show prompt when routing to another page in edit mode
@@ -46,6 +54,11 @@ export class PIDetailsComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  //  id formControl getter
+  get id() {
+    return this.instructionForm.get('id')
   }
 
   //  icon formControl getter
@@ -101,8 +114,9 @@ export class PIDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       try {
         this.instructionForm = new FormGroup({
+          id: new FormControl(''),
           icon: new FormControl('', Validators.required),
-          // validate file size, file type, and resolution
+          // validate file size, file type
           iconFile: new FormControl(null, [
             CustomValidation.type(['jpg', 'jpeg', 'png'])
           ]),
@@ -114,60 +128,12 @@ export class PIDetailsComponent implements OnInit {
         })
         if (this.router.url.includes('update')) {
           this.isCreate = false;
-
+          let id = params.id;
+          this.getInstructionById(id);
         } else {
           this.isCreate = true;
           let paymentType = params.paymentType;
-          this.lovService.getPaymentInstType().subscribe(
-            response => {
-              try {
-                this.loading = false;
-                console.table(response);
-                let paymentTypes = response.data;
-                let found = false;
-                for (let type of paymentTypes) {
-                  if (type.name.toLowerCase() === paymentType.toLowerCase()) {
-                    found = true;
-                    paymentType = type.name;
-                    break;
-                  }
-                }
-                if (found) {
-                  this.instructionForm.patchValue({ instructionType: paymentType })
-                } else {
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'eror',
-                      content: {
-                        text: 'paymentInstructionDetailsScreen.typeNotFound',
-                        data: {
-                          type: paymentType
-                        }
-                      }
-                    }
-                  })
-                  this.goToListScreen()
-                }
-              } catch (error) {
-                console.table(error)
-              }
-            }, error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'paymentInstructionDetailsScreen.getTypeFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.table(error)
-              }
-            })
+          this.checkPaymentType(paymentType)
         }
       } catch (error) {
         console.table(error)
@@ -175,6 +141,143 @@ export class PIDetailsComponent implements OnInit {
       }
 
     })
+  }
+
+  // call get payment types api to check payment type param
+  checkPaymentType(paymentType) {
+    console.log('PIDetailsComponent | checkPaymentType')
+    this.lovService.getPaymentInstType().subscribe(
+      response => {
+        try {
+          this.loading = false;
+          console.table(response);
+          let paymentTypes = response.data;
+          let found = false;
+          for (let type of paymentTypes) {
+            if (type.name.toLowerCase() === paymentType.toLowerCase()) {
+              found = true;
+              paymentType = type.name;
+              break;
+            }
+          }
+          if (found) {
+            this.instructionForm.patchValue({ instructionType: paymentType })
+          } else {
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'error',
+                content: {
+                  text: 'paymentInstructionDetailsScreen.typeNotFound',
+                  data: {
+                    type: paymentType
+                  }
+                }
+              }
+            })
+            this.goToListScreen()
+          }
+        } catch (error) {
+          console.table(error)
+        }
+      }, error => {
+        try {
+          console.table(error);
+          this.loading = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.getTypeFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      })
+  }
+
+  getInstructionById(id) {
+    console.log('PIDetailsComponent | getInstructionById')
+    this.payInstService.getListById(id).subscribe(
+      response => {
+        try {
+          console.table(response);
+          let data = response.data;
+          this.getInstructionSteps(data);
+        } catch (error) {
+          this.loading = false;
+          console.table(error)
+        }
+      }, error => {
+        try {
+          console.table(error);
+          this.loading = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.getInstructionFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+          this.goToListScreen()
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
+  }
+
+  // get instruction steps
+  getInstructionSteps(instruction) {
+    console.log('PIDetailsComponent | getInstructionSteps')
+    this.payInstService.getListDetails(instruction.id).subscribe(
+      response => {
+        try {
+          console.table(response)
+          this.loading = false;
+          let steps = this.instructions as FormArray;
+          for (let step of response.data) {
+            steps.push(
+              new FormGroup({
+                content: new FormControl(step.content, [Validators.required]),
+                showPreview: new FormControl(false)
+              })
+            )
+          }
+          this.instructionForm.patchValue({
+            id: instruction.id,
+            icon: instruction.icon,
+            oldIcon: instruction.icon,
+            grpTitle: instruction.grp_title,
+            order: instruction.order,
+            instructionType: instruction.instruction_type
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.loading = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.getStepsFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+          this.goToListScreen()
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
   }
 
   // handling delete icon event
@@ -226,12 +329,14 @@ export class PIDetailsComponent implements OnInit {
     instructions.push(step)
   }
 
+  // delete step from form array
   deleteStep(index) {
     let instructions = this.instructions as FormArray
     instructions.removeAt(index)
     this.instructions.markAsDirty();
   }
 
+  // toggle show preview flag
   toggleShowPreview(i) {
     this.getShowPreview(i).setValue(!this.getShowPreview(i).value)
   }
@@ -263,8 +368,263 @@ export class PIDetailsComponent implements OnInit {
   // save button click handler
   save() {
     console.log('PIDetailsComponent | save')
+    if (this.isCreate) {
+      this.onSubmittingForm = true;
+      let formData = new FormData()
+      formData.append("file", this.iconFile.value)
+      formData.append("component", "payment-instruction")
+      this.uploadIcon(formData);
+    } else {
+      if (this.oldIcon.value === this.icon.value) {
+        let instructionDetails = [];
+        let stepsForm = this.instructions.value;
+        let instObject = {
+          grp_title: this.grpTitle.value,
+          icon: this.icon.value
+        }
+        for (let i = 0; i < stepsForm.length; i++) {
+          let form = stepsForm[i]
+          let step = new InstructionDetails();
+          step.list_id = this.id.value;
+          step.content = form.content;
+          step.order = i + 1;
+          instructionDetails.push(Object.assign(step, instObject))
+        }
+        this.updateInstructionDetails(instructionDetails, false)
+      } else {
+        let formData = new FormData()
+        formData.append("file", this.iconFile.value)
+        formData.append("component", "payment-instruction")
+        this.uploadIcon(formData);
+      }
+    }
   }
 
+  // call upload icon
+  uploadIcon(iconFormData) {
+    console.log('PIDetailsComponent | uploadIcon')
+    this.fileMgtService.uploadFile(iconFormData).subscribe(
+      response => {
+        try {
+          console.table(response)
+          if (this.isCreate) {
+            let newInstructionList = new InstructionList();
+            newInstructionList.grp_title = this.grpTitle.value;
+            newInstructionList.icon = response.data.url;
+            newInstructionList.instruction_type = this.instructionType.value;
+            this.insertNewInstruction(newInstructionList)
+          } else {
+            let instructionDetails = [];
+            let stepsForm = this.instructions.value;
+            let instObject = {
+              grp_title: this.grpTitle.value,
+              icon: response.data.url
+            }
+            for (let i = 0; i < stepsForm.length; i++) {
+              let form = stepsForm[i]
+              let step = new InstructionDetails();
+              step.list_id = this.id.value;
+              step.content = form.content;
+              step.order = i + 1;
+              instructionDetails.push(Object.assign(step, instObject))
+            }
+            this.updateInstructionDetails(instructionDetails, true)
+          }
+        } catch (error) {
+          console.table(error)
+          this.onSubmittingForm = false;
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.uploadIconFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
+  }
+
+  // call upload icon
+  insertNewInstruction(newInstruction) {
+    console.log('PIDetailsComponent | uploadIcon')
+    this.payInstService.createList(newInstruction).subscribe(
+      response => {
+        try {
+          console.table(response)
+          newInstruction.id = response.data.id;
+          this.insertInstructionSteps(newInstruction)
+        } catch (error) {
+          this.onSubmittingForm = false;
+          console.table(error)
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.insertInstructionFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
+  }
+
+  // insert instruction steps
+  insertInstructionSteps(instructionList) {
+    console.log('PIDetailsComponent | insertInstructionSteps');
+    let stepsForm = this.instructions.value;
+    let steps = [];
+    for (let i = 0; i < stepsForm.length; i++) {
+      let form = stepsForm[i]
+      let step = new InstructionDetails();
+      step.list_id = instructionList.id;
+      step.content = form.content;
+      step.order = i + 1;
+      steps.push(step)
+    }
+    this.payInstService.createListDetails(steps).subscribe(
+      response => {
+        this.onSubmittingForm = false;
+        let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+          data: {
+            title: 'success',
+            content: {
+              text: 'paymentInstructionDetailsScreen.succesCreated',
+              data: null
+            }
+          }
+        })
+        snackbarSucess.afterDismissed().subscribe(() => {
+          this.goToListScreen();
+        })
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.insertStepsFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
+  }
+
+  updateInstructionDetails(instructionDetails, shouldDeleteIcon) {
+    console.log('PIDetailsComponent | updateInstructionDetails');
+    this.payInstService.updatePaymentInstructions(instructionDetails).subscribe(
+      response => {
+        console.table(response)
+        if (shouldDeleteIcon) {
+          this.deleteIcon(instructionDetails[0].icon)
+        } else {
+          this.onSubmittingForm = false;
+          let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+            data: {
+              title: 'success',
+              content: {
+                text: 'paymentInstructionDetailsScreen.succesUpdated',
+                data: null
+              }
+            }
+          })
+          snackbarSucess.afterDismissed().subscribe(() => {
+            this.goToListScreen();
+          })
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.updateFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
+  }
+
+  // call delete file api
+  deleteIcon(url) {
+    console.log('PIDetailsComponent | deleteIcon');
+    let split = url.split('/')
+    let name = url
+    if(split.length >= 2){
+      name = split.pop()
+      name = split.pop() + '/' + name;
+    }
+    let data = {
+      name: name
+    }
+    this.fileMgtService.deleteFile(data).subscribe(
+      response => {
+        console.table(response);
+        let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+          data: {
+            title: 'success',
+            content: {
+              text: 'paymentInstructionDetailsScreen.succesUpdated',
+              data: null
+            }
+          }
+        })
+        snackbarSucess.afterDismissed().subscribe(() => {
+          this.goToListScreen();
+        })
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.deleteIconFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
+  }
+
+  // render [] to bold
   renderContent(content: string) {
     console.log('PIDetailsComponent | renderContent')
     let openBracketStack = [];
@@ -313,6 +673,7 @@ export class PIDetailsComponent implements OnInit {
   //redirect to payment instructions list screen
   goToListScreen = () => {
     console.log('PIDetailsComponent | goToListScreen')
+    this.instructionForm.reset()
     this.router.navigate(['/payment-instructions'])
   }
 }

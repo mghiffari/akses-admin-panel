@@ -556,9 +556,14 @@
         "typeNotFound": "Tipe Pembayaran {{type}} tidak ditemukan",
         "succesCreated": "Instruksi Pembayaran berhasil ditambahkan",
         "succesUpdated": "Instruksi Pembayaran berhasil diubah",
+        "addNewStep": "tambahkan langkah baru",
+        "uploadIconFailed": "upload ikon gagal",
+        "insertInstructionFailed": "gagal menambahkan instruksi",
+        "insertStepsFailed": "gagal menambahkan langkah-langkah instruksi",
+        "getInstructionFailed": "gagal mendapatkan data instruksi",
+        "getStepsFailed": "gagal mendapatkan langkah-langkah instruksi",
         "updateFailed": "gagal mengubah data instruksi pembayaran",
-        "createFailed": "gagal menambahkan instruksi pembayaran baru",
-        "addNewStep": "tambahkan langkah baru"
+        "deleteIconFailed": "gagal menghapus ikon"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
