@@ -58,7 +58,7 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
   handleChange(event) {
     console.log('MaskedNumInputComponent | handleChange')
     let value = numeral(event.target.value).value()
-    if (this.type === MaskedInputType.Percentage) {
+    if (this.value && this.type === MaskedInputType.Percentage) {
       value = value / 100;
     }
     this.writeValue(value)
