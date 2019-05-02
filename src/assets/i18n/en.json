@@ -644,6 +644,13 @@
         "01079": "body parameter should be array object",
         "01080": "fancy text is not supported",
         "01081": "something wrong, please try again",
-        "01082": "product id parameter and value is required"
+        "01082": "product id parameter and value is required",
+        "01083": "unique tag parameter and value is required",
+        "01084": "instruction title parameter and value is required",
+        "01085": "failed to swap data order",
+        "01086": "instruction type parameter and value is required",
+        "01087": "icon parameter and value is required",
+        "01088": "failed to create data",
+        "01089": "data to swap order length should be 2, consist of from and destination"
     }
 }

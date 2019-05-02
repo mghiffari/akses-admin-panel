@@ -4,6 +4,9 @@ import { ConfirmationModalComponent } from 'src/app/shared/components/confirmati
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { LovService } from 'src/app/shared/services/lov.service';
+import { PayInstService } from '../../services/pay-inst.service';
+import { InstructionList } from '../../models/instruction-list';
+import { LovData } from 'src/app/shared/models/lov';
 
 @Component({
   selector: 'app-pi-list',
@@ -11,27 +14,8 @@ import { LovService } from 'src/app/shared/services/lov.service';
   styleUrls: []
 })
 export class PIListComponent implements OnInit {
-  paymentTypes = [];
-  data = [
-    {
-      id: 'id1',
-      grp_title: 'ATM Danamon',
-      modified_dt: new Date(),
-      modified_by: 'test@mail.com'
-    },
-    {
-      id: 'id2',
-      grp_title: 'D-Mobile',
-      modified_dt: new Date(2019, 1, 2),
-      modified_by: 'natashajanicetambunan@mail.com'
-    },
-    {
-      id: 'id3',
-      grp_title: 'ATM Bank Lain',
-      modified_dt: new Date(2019, 3, 2),
-      modified_by: 'natashajanicetambunan@mail.com'
-    }
-  ];
+  paymentTypes: LovData[] = [];
+  data: InstructionList[] = [];
   selectedIndex = -1;
   tableColumns = ['orderButton', 'order', 'title', 'lastUpdated', 'action']
   loading = false;
@@ -44,7 +28,8 @@ export class PIListComponent implements OnInit {
   constructor(
     private lovService: LovService,
     private snackBar: MatSnackBar,
-    private modalConfirmation: MatDialog) { }
+    private modalConfirmation: MatDialog,
+    private payInstService: PayInstService) { }
 
   ngOnInit() {
     console.log("PIListComponent | ngOnInit");
@@ -55,7 +40,7 @@ export class PIListComponent implements OnInit {
           this.loading = false;
           console.table(response);
           this.paymentTypes = response.data;
-          if(this.paymentTypes.length > 0){
+          if (this.paymentTypes.length > 0) {
             this.selectedIndex = 0;
           }
         } catch (error) {
@@ -83,7 +68,7 @@ export class PIListComponent implements OnInit {
   onChangeTabIndex(index) {
     console.log("PIListComponent | onChangeTabIndex");
     this.selectedIndex = index;
-    this.loadData
+    this.loadData()
   }
 
   // handling click arrow up event
@@ -91,14 +76,35 @@ export class PIListComponent implements OnInit {
     console.log("PIListComponent | onOrderUp");
     this.loading = true;
     if (this.data[index] && this.data[index - 1]) {
-      // call swap api
-      // if success load data
-      let selectedData = this.data[index];
-      this.data[index] = this.data[index - 1];
-      this.data[index - 1] = selectedData;
-      this.loading = false;
-      this.loadData();
+      let selectedData = new InstructionList();
+      selectedData.id = this.data[index].id;
+      selectedData.grp_order = this.data[index - 1].grp_order;
+      let toBeSwappedOrderData = new InstructionList();
+      toBeSwappedOrderData.id = this.data[index - 1].id;
+      toBeSwappedOrderData.grp_order = this.data[index].grp_order;
+      this.swapOrder([selectedData, toBeSwappedOrderData])
     }
+  }
+
+  // call swap order api
+  swapOrder(data) {
+    console.log("PIListComponent | swapOrder");
+    this.payInstService.swapListOrder(data).subscribe(
+      response => {
+        this.loadData()
+      }, error => {
+        this.loading = false;
+        this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+          data: {
+            title: 'paymentInstructionScreen.changeOrderFailed',
+            content: {
+              text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+              data: null
+            }
+          }
+        })
+      }
+    )
   }
 
   // handling click arrow down event
@@ -106,13 +112,13 @@ export class PIListComponent implements OnInit {
     console.log("PIListComponent | onOrderDown");
     this.loading = true;
     if (this.data[index] && this.data[index + 1]) {
-      // call swap api
-      // if success load data
-      let selectedData = this.data[index];
-      this.data[index] = this.data[index + 1];
-      this.data[index + 1] = selectedData;
-      this.loading = false;
-      this.loadData();
+      let selectedData = new InstructionList();
+      selectedData.id = this.data[index].id;
+      selectedData.grp_order = this.data[index + 1].grp_order;
+      let toBeSwappedOrderData = new InstructionList();
+      toBeSwappedOrderData.id = this.data[index + 1].id;
+      toBeSwappedOrderData.grp_order = this.data[index].grp_order;
+      this.swapOrder([selectedData, toBeSwappedOrderData])
     }
   }
 
@@ -134,44 +140,49 @@ export class PIListComponent implements OnInit {
     modalRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = true;
-        let delInst = Object.assign({}, instructionList);
+        let delInst = new InstructionList();
+        delInst.id = instructionList.id
+        delInst.grp_order = instructionList.grp_order
+        delInst.grp_title = instructionList.grp_title
+        delInst.instruction_type = instructionList.instruction_type
+        delInst.icon = instructionList.icon
         delInst.is_deleted = true;
-        // this.payInstService.updateInstList(delInst).subscribe(
-        //   (response: any) => {
-        //     try {
-        //       console.table(response);
-        //       this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-        //         data: {
-        //           title: 'success',
-        //           content: {
-        //             text: 'dataDeleted',
-        //             data: null
-        //           }
-        //         }
-        //       })
-        this.loadData()
-        //     } catch (error) {
-        //       console.table(error)
-        //     }
-        //   },
-        //   error => {
-        //     try {
-        //       console.table(error);
-        //       this.loading = false;
-        //       let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-        //         data: {
-        //           title: 'failedToDelete',
-        //           content: {
-        //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-        //             data: null
-        //           }
-        //         }
-        //       })
-        //     } catch (error) {
-        //       console.table(error)
-        //     }
-        //   }
-        // )
+        this.payInstService.updateList(delInst).subscribe(
+          (response: any) => {
+            try {
+              console.table(response);
+              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                data: {
+                  title: 'success',
+                  content: {
+                    text: 'dataDeleted',
+                    data: null
+                  }
+                }
+              })
+              this.loadData()
+            } catch (error) {
+              console.table(error)
+            }
+          },
+          error => {
+            try {
+              console.table(error);
+              this.loading = false;
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'failedToDelete',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          }
+        )
       }
     })
   }
@@ -180,8 +191,34 @@ export class PIListComponent implements OnInit {
   loadData() {
     console.log("PIListComponent | loadData");
     this.loading = true;
-    this.table.renderRows();
-    this.loading = false;
+    this.payInstService.getListByType(this.paymentTypes[this.selectedIndex].name).subscribe(
+      response => {
+        try {
+          console.table(response)
+          this.loading = false;
+          this.data = response.data;
+          this.table.renderRows();
+        } catch (error) {
+          console.table(error)
+        }
+      }, error => {
+        try {
+          console.table(error);
+          this.loading = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionScreen.getInstructionListFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
   }
 
 }
