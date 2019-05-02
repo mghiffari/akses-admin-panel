@@ -76,13 +76,13 @@ export class PIListComponent implements OnInit {
     console.log("PIListComponent | onOrderUp");
     this.loading = true;
     if (this.data[index] && this.data[index - 1]) {
-      let data1 = new InstructionList();
-      data1.id = this.data[index].id;
-      data1.grp_order = this.data[index - 1].grp_order;
-      let data2 = new InstructionList();
-      data2.id = this.data[index - 1].id;
-      data2.grp_order = this.data[index].grp_order;
-      this.swapOrder([data1, data2])
+      let selectedData = new InstructionList();
+      selectedData.id = this.data[index].id;
+      selectedData.grp_order = this.data[index - 1].grp_order;
+      let toBeSwappedOrderData = new InstructionList();
+      toBeSwappedOrderData.id = this.data[index - 1].id;
+      toBeSwappedOrderData.grp_order = this.data[index].grp_order;
+      this.swapOrder([selectedData, toBeSwappedOrderData])
     }
   }
 
@@ -112,13 +112,13 @@ export class PIListComponent implements OnInit {
     console.log("PIListComponent | onOrderDown");
     this.loading = true;
     if (this.data[index] && this.data[index + 1]) {
-      let data1 = new InstructionList();
-      data1.id = this.data[index].id;
-      data1.grp_order = this.data[index + 1].grp_order;
-      let data2 = new InstructionList();
-      data2.id = this.data[index + 1].id;
-      data2.grp_order = this.data[index].grp_order;
-      this.swapOrder([data1, data2])
+      let selectedData = new InstructionList();
+      selectedData.id = this.data[index].id;
+      selectedData.grp_order = this.data[index + 1].grp_order;
+      let toBeSwappedOrderData = new InstructionList();
+      toBeSwappedOrderData.id = this.data[index + 1].id;
+      toBeSwappedOrderData.grp_order = this.data[index].grp_order;
+      this.swapOrder([selectedData, toBeSwappedOrderData])
     }
   }
 
