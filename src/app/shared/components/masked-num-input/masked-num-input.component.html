@@ -6,6 +6,8 @@
   (keyup)="handleChange($event)" 
   (change)="handleChange($event)" 
   (blur)="handleChange($event)">
+  <div matSuffix *ngIf="suffix">{{suffix}}</div>
+  <div matPrefix *ngIf="prefix">{{prefix}}</div>
   <input matInput 
   [hidden]="true"
   [value]="value">
