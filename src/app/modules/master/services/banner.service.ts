@@ -24,13 +24,6 @@ export class BannerService {
     return this.authService.wrapTokenPostApi(url, datatableObject)
   }
 
-  //upload image
-  uploadImage(vFormDataImageUpload: FormData) {
-    let url = this.uploadApiUrl;
-    console.log("Banner Service | uploadImage " + url);
-    return this.authService.wrapTokenPutApi(this.uploadApiUrl, vFormDataImageUpload);
-  }
-
   //get banner data by id
   loadBannerById(id: string) {
     let url = this.bannerApiUrl + id;

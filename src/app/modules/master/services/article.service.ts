@@ -21,13 +21,6 @@ export class ArticleService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  //upload image
-  uploadImage(vFormDataImageUpload: FormData) {
-    let url = this.uploadApiUrl;
-    console.log("ArticleService | uploadImage " + url);
-    return this.authService.wrapTokenPutApi(url, vFormDataImageUpload);
-  }
-
   //load article
   loadArticleById(id: string) {
     let url = this.articleApiUrl+id;

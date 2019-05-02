@@ -227,31 +227,71 @@ export class AuthService {
   }
 
   //wraping the delete API with access token or not inside header
-  wrapTokenDeleteApi(url, accessToken = null) {
+  wrapTokenDeleteApi(url, accessToken = null, body=null) {
     console.log('AuthService | wrapTokenDeleteApi ', url);
-    return this.http
-      .delete<HttpResponse<Object>>(url, {
+    if(body){
+      return this.wrapTokenRequestApi('delete', url, body, accessToken)
+    } else {
+      return this.http
+        .delete<HttpResponse<Object>>(url, {
+          observe: 'response',
+          headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        })
+        .pipe(
+          tap((resp: any) => {
+            this.getTokenInResponse(resp) 
+          }),
+          catchError(err => {
+            if (err.status === 401) {
+              this.logout();
+              this.showLoggedOutDialog()
+            } else {
+              let token = err.headers.get('access-token')
+              if (this.getAccessToken() && token) {
+                this.setAccessToken(token)
+              }
+              return throwError(err)
+            }
+          }),
+          map((resp: any) => resp.body),
+        )
+    }
+  }
+
+  //wraping the request API with access token or not inside header
+  wrapTokenRequestApi(method, url, body = null, accessToken = null){
+    let options = {}
+    if(body){
+      options = {
+        observe: 'response',
+        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken),
+        body: body
+      }
+    } else {
+      options = {
         observe: 'response',
         headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
-      })
-      .pipe(
-        tap((resp: any) => {
-          this.getTokenInResponse(resp) 
-        }),
-        catchError(err => {
-          if (err.status === 401) {
-            this.logout();
-            this.showLoggedOutDialog()
-          } else {
-            let token = err.headers.get('access-token')
-            if (this.getAccessToken() && token) {
-              this.setAccessToken(token)
-            }
-            return throwError(err)
+      }
+    }
+    return this.http.request<HttpResponse<Object>>(method, url, options)
+    .pipe(
+      tap((resp: any) => {
+        this.getTokenInResponse(resp) 
+      }),
+      catchError(err => {
+        if (err.status === 401) {
+          this.logout();
+          this.showLoggedOutDialog()
+        } else {
+          let token = err.headers.get('access-token')
+          if (this.getAccessToken() && token) {
+            this.setAccessToken(token)
           }
-        }),
-        map((resp: any) => resp.body),
-      )
+          return throwError(err)
+        }
+      }),
+      map((resp: any) => resp.body),
+    )
   }
 
   //get token inside response when hit API
