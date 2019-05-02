@@ -17,6 +17,7 @@ import { LovService } from './services/lov.service';
 import { CreditSimulationService } from './services/credit-simulation.service';
 import { MaskedNumInputComponent } from './components/masked-num-input/masked-num-input.component';
 import { FileManagementService } from './services/file-management.service';
+import { BoldRendererPipe } from './pipes/bold-renderer.pipe';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { FileManagementService } from './services/file-management.service';
     SuccessSnackbarComponent, 
     ErrorSnackbarComponent, 
     PasswordToggleInputComponent, 
-    MaskedNumInputComponent
+    MaskedNumInputComponent, 
+    BoldRendererPipe
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { FileManagementService } from './services/file-management.service';
     ReactiveFormsModule,
     TranslateModule,
     PasswordToggleInputComponent,
-    MaskedNumInputComponent
+    MaskedNumInputComponent,
+    BoldRendererPipe
   ],
   providers:[
     AuthService,

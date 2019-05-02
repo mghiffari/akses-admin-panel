@@ -624,52 +624,6 @@ export class PIDetailsComponent implements OnInit {
     )
   }
 
-  // render [] to bold
-  renderContent(content: string) {
-    console.log('PIDetailsComponent | renderContent')
-    let openBracketStack = [];
-    let boldText = '';
-    let text = '';
-    let i = 0;
-    while (i < content.length) {
-      let char = content[i];
-      if (char === '[') {
-        openBracketStack.push(char)
-        let j = i + 1;
-        let lastCloseBracketIndex = -1;
-        while (j < content.length) {
-          let charJ = content[j]
-          if (charJ === ']') {
-            lastCloseBracketIndex = j;
-            if (openBracketStack.length > 0) {
-              openBracketStack.pop();
-            }
-          } else if (charJ === '[') {
-            if (lastCloseBracketIndex === -1) {
-              openBracketStack.push(charJ);
-            } else if (openBracketStack.length === 0) {
-              break;
-            }
-          }
-          j += 1;
-        }
-        if (lastCloseBracketIndex > -1) {
-          openBracketStack = [];
-          text += '<b>' + content.substring(i + 1, lastCloseBracketIndex) + '</b>'
-          i = lastCloseBracketIndex + 1;
-        } else {
-          text += '[' + content.substring(i + 1, content.length)
-          openBracketStack = [];
-          i = content.length;
-        }
-      } else {
-        text += char;
-        i += 1;
-      }
-    }
-    return text;
-  }
-
   //redirect to payment instructions list screen
   goToListScreen = () => {
     console.log('PIDetailsComponent | goToListScreen')
