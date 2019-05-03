@@ -24,6 +24,7 @@ export class PIDetailsComponent implements OnInit {
   isCreate = true;
   instructionForm = new FormGroup({});
   actionSuccess = false;
+  instructionValidation = CustomValidation.instructionSteps;
 
   constructor(
     private route: ActivatedRoute,
@@ -122,7 +123,9 @@ export class PIDetailsComponent implements OnInit {
           ]),
           oldIcon: new FormControl(''),
           grpTitle: new FormControl('', Validators.required),
-          instructions: new FormArray([], Validators.required),
+          instructions: new FormArray([], [
+            Validators.required, 
+            Validators.maxLength(this.instructionValidation.maxLength)]),
           order: new FormControl(null),
           instructionType: new FormControl(null)
         })

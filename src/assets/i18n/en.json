@@ -272,6 +272,7 @@
             "placeholder": "Instruction",
             "errorRequired": "Instruction is required",
             "errorMinTotal": "There should be one or more instruction",
+            "errorMaxTotal": "Maximum number of instructions is {{maxLength}}",
             "hint": {
                 "installment": "installment",
                 "boldBrackets": "Put text inside square brackets [ ] to bold"
