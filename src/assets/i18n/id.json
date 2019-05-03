@@ -272,6 +272,7 @@
             "placeholder": "Instruksi",
             "errorRequired": "Instruksi wajib diisi",
             "errorMinTotal": "Harus diisi minimal satu instruksi",
+            "errorMaxTotal": "Jumlah instruksi maksimum {{maxLength}}",
             "hint": {
                 "installment": "angsuran",
                 "boldBrackets": "Bold text dengan meletakkannya dalam kurung [ ]"

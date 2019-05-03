@@ -133,17 +133,19 @@
             <div innerHTML="{{getContent(i).value | boldRenderer}}"></div>
           </div>
         </div>
-        <div fxFlex="100%" class="padding-right-16" [class.padding-top-16]="instructions.controls.length > 0">
-          <div class="top-action-text cursor-default" fxLayoutAlign="start start" (click)="addNewStep()">
+        <div fxFlex="100%" class="padding-right-16" [class.padding-top-16]="instructions.controls.length > 0 && instructions.controls.length < instructionValidation.maxLength">
+          <div *ngIf="instructions.controls.length < instructionValidation.maxLength"
+            class="top-action-text cursor-default" fxLayoutAlign="start start" (click)="addNewStep()">
             <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
             <div>
               {{'paymentInstructionDetailsScreen.addNewStep' | translate}}
             </div>
           </div>
           <mat-error class="bottom-error" *ngIf="instructions.errors?.required">
-            <span>
-              {{'forms.instructions.errorMinTotal' | translate}}
-            </span>
+            {{'forms.instructions.errorMinTotal' | translate}}
+          </mat-error>
+          <mat-error class="bottom-error" *ngIf="instructions.errors?.maxlength">
+            {{'forms.instructions.errorMaxTotal' | translate : instructionValidation}}
           </mat-error>
         </div>
       </div>
