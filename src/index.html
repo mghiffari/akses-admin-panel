@@ -11,7 +11,6 @@
   <script>
     localStorage.clear()
     const sessionStorageTransfer = function (event) {
-      console.log('index.html | sessionStorageTransfer')
       if (!event) { event = window.event; } // for ie
       if (!event.newValue) return;          // do nothing if no value to work with
       const storageKey = {
@@ -26,7 +25,6 @@
         const data = JSON.parse(event.newValue);
         for (let key in data) {
           if (data.hasOwnProperty(key)) {
-            console.log(key)
             sessionStorage.setItem(key, data[key]);
           }
         }
