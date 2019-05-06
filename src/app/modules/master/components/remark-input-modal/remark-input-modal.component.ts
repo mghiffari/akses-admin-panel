@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ChangePhonenumberRequestService } from '../../services/change-phonenumber-request.service';
+import { ChangePhoneService } from '../../services/change-phone.service';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
-import { ChangePhoneNumberRequest } from '../../models/change-phone-number-request';
+import { ChangePhone } from '../../models/change-phone';
 
 @Component({
   selector: 'app-remark-input-modal',
@@ -20,7 +20,7 @@ export class RemarkInputModalComponent implements OnInit {
 
   //constructor
   constructor(public dialogRef: MatDialogRef<RemarkInputModalComponent>,
-    private requestService: ChangePhonenumberRequestService,
+    private requestService: ChangePhoneService,
     private snackbar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log('RemarkInputModalComponent | constructor')
@@ -47,7 +47,7 @@ export class RemarkInputModalComponent implements OnInit {
   save() {
     console.log('RemarkInputModalComponent | save')
     this.onSubmittingForm = true;
-    let request = new ChangePhoneNumberRequest();
+    let request = new ChangePhone();
     request.id = this.request.id
     request.remarks = this.remarks.value;
     this.requestService.bulkUpdateRequest(request).subscribe(

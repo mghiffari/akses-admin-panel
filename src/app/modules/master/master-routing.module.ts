@@ -10,7 +10,7 @@ import { FAQListComponent } from './pages/faq-list/faq-list.component';
 import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
-import { ChangePhonenumberRequestListComponent } from './pages/change-phonenumber-request-list/change-phonenumber-request-list.component';
+import { ChangePhoneListComponent } from './pages/change-phone-list/change-phone-list.component';
 
 const routes: Routes = [
   {
@@ -120,7 +120,7 @@ const routes: Routes = [
   },
   {
     path: 'change-phonenumber-requests',
-    component: ChangePhonenumberRequestListComponent,
+    component: ChangePhoneListComponent,
     data: {
       title: 'Change Phonenumber Requests'
     }
