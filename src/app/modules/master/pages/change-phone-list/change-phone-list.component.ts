@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ChangePhonenumberRequestService } from '../../services/change-phonenumber-request.service';
+import { ChangePhoneService } from '../../services/change-phone.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
@@ -8,14 +8,14 @@ import { catchError, map } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { RemarkInputModalComponent } from '../../components/remark-input-modal/remark-input-modal.component';
-import { ChangePhoneNumberRequest } from '../../models/change-phone-number-request';
+import { ChangePhone } from '../../models/change-phone';
 
 @Component({
-  selector: 'app-change-phonenumber-request-list',
-  templateUrl: './change-phonenumber-request-list.component.html',
-  styleUrls: ['./change-phonenumber-request-list.component.scss']
+  selector: 'app-change-phone-list',
+  templateUrl: './change-phone-list.component.html',
+  styleUrls: ['./change-phone-list.component.scss']
 })
-export class ChangePhonenumberRequestListComponent implements OnInit {
+export class ChangePhoneListComponent implements OnInit {
   paginatorProps = {
     pageSizeOptions: [10, 25, 50, 100],
     pageSize: 10,
@@ -43,7 +43,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
     'remark'
   ]
 
-  requests: ChangePhoneNumberRequest[] = [];
+  requests: ChangePhone[] = [];
   search = '';
   closeText = '';
   loading = false;
@@ -63,27 +63,27 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
   }
 
   constructor(
-    private requestService: ChangePhonenumberRequestService,
+    private requestService: ChangePhoneService,
     private snackBar: MatSnackBar,
     private modal: MatDialog
   ) { }
 
   ngOnInit() {
-    console.log('ChangePhonenumberRequestListComponent | ngOnInit');
+    console.log('ChangePhoneListComponent | ngOnInit');
     this.lazyLoadData()
     this.now = new Date();
   }
 
   // event handling paginator value changed (page index and page size)
   onPaginatorChange(e) {
-    console.log('ChangePhonenumberRequestListComponent | onPaginatorChange');
+    console.log('ChangePhoneListComponent | onPaginatorChange');
     this.paginatorProps = Object.assign(this.paginatorProps, e)
     this.lazyLoadData()
   }
 
   // event handling when user is typing on search input
   onSearch() {
-    console.log('ChangePhonenumberRequestListComponent | onSearch');
+    console.log('ChangePhoneListComponent | onSearch');
     if (this.paginatorProps.pageIndex !== 0) {
       //this will call paginator change
       this.paginatorProps.pageIndex = 0;
@@ -94,7 +94,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   // handle checkbox change for each row to select or deselect request
   onChangeSelect(e, request) {
-    console.log('ChangePhonenumberRequestListComponent | onChangeSelect');
+    console.log('ChangePhoneListComponent | onChangeSelect');
     if (e.checked) {
       request.isSelected = true;
       this.selectedRequests.push(request);
@@ -112,7 +112,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   // handle checkbox change for to select all or deselect all requests
   onChangeSelectAll(e) {
-    console.log('ChangePhonenumberRequestListComponent | onChangeSelectAll');
+    console.log('ChangePhoneListComponent | onChangeSelectAll');
     if (e.checked) {
       for (let i = 0; i < this.requests.length; i++) {
         let req: any = this.requests[i]
@@ -144,7 +144,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   // reject one request
   rejectRequest(request) {
-    console.log('ChangePhonenumberRequestListComponent | rejectRequest');
+    console.log('ChangePhoneListComponent | rejectRequest');
     const modalRef = this.modal.open(ConfirmationModalComponent, {
       width: '260px',
       data: {
@@ -158,7 +158,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
     modalRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = true;
-        let rejectedRequest = new ChangePhoneNumberRequest();
+        let rejectedRequest = new ChangePhone();
         rejectedRequest.id = request.id
         rejectedRequest.status = this.status.closed;
         rejectedRequest.action = this.action.rejected;
@@ -198,7 +198,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   // approve one request
   approveRequest(request) {
-    console.log('ChangePhonenumberRequestListComponent | approveRequest');
+    console.log('ChangePhoneListComponent | approveRequest');
     const modalRef = this.modal.open(ConfirmationModalComponent, {
       width: '260px',
       data: {
@@ -212,7 +212,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
     modalRef.afterClosed().subscribe(result => {
       if (result) {
         this.loading = true;
-        let approvedRequest = new ChangePhoneNumberRequest();
+        let approvedRequest = new ChangePhone();
         approvedRequest.id = request.id
         approvedRequest.status = this.status.closed;
         approvedRequest.action = this.action.approved;
@@ -252,7 +252,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   //reject selected requests,
   bulkRejectRequest() {
-    console.log('ChangePhonenumberRequestListComponent | bulkRejectRequest');
+    console.log('ChangePhoneListComponent | bulkRejectRequest');
     const modalRef = this.modal.open(ConfirmationModalComponent, {
       width: '260px',
       data: {
@@ -267,7 +267,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
       if (result) {
         this.loading = true;
         let rejectedRequests = this.selectedRequests.map(el => {
-          let req = new ChangePhoneNumberRequest()
+          let req = new ChangePhone()
           req.id = el.id;
           req.status = this.status.closed;
           req.action = this.action.rejected;
@@ -313,7 +313,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   //approve selected requests
   bulkApproveRequest() {
-    console.log('ChangePhonenumberRequestListComponent | bulkApproveRequest');
+    console.log('ChangePhoneListComponent | bulkApproveRequest');
     const modalRef = this.modal.open(ConfirmationModalComponent, {
       width: '260px',
       data: {
@@ -328,7 +328,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
       if (result) {
         this.loading = true;
         let approvedRequests = this.selectedRequests.map(el => {
-          let req = new ChangePhoneNumberRequest()
+          let req = new ChangePhone()
           req.id = el.id;
           req.status = this.status.closed;
           req.action = this.action.approved;
@@ -374,7 +374,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   // count number of request that not yet approved or rejected
   countSelectableRequest() {
-    console.log('ChangePhonenumberRequestListComponent | countSelectableRequest');
+    console.log('ChangePhoneListComponent | countSelectableRequest');
     this.selectableRequestCount = 0;
     this.requests = this.requests.map(el => {
       let request = el;
@@ -388,7 +388,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   // show modal to edit remark for rejected request
   editRemark(request) {
-    console.log('ChangePhonenumberRequestListComponent | editRemark');
+    console.log('ChangePhoneListComponent | editRemark');
     const modalRef = this.modal.open(RemarkInputModalComponent, {
       data: {
         request: request
@@ -403,8 +403,8 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
   }
 
 // count duration from now to request request date
-  getDurationText(request: ChangePhoneNumberRequest) {
-    console.log('ChangePhonenumberRequestListComponent | getDuration');
+  getDurationText(request: ChangePhone) {
+    console.log('ChangePhoneListComponent | getDuration');
     let duration = { 
       day: request.request_age_days, 
       hour: request.request_age_hours, 
@@ -430,7 +430,7 @@ export class ChangePhonenumberRequestListComponent implements OnInit {
 
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
-    console.log('ChangePhonenumberRequestListComponent | lazyLoadData');
+    console.log('ChangePhoneListComponent | lazyLoadData');
     let isFocusedInput = this.isFocusedInput;
     this.loading = true;
     this.requestService.getRequestList(

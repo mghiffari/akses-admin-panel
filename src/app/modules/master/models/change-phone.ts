@@ -1,4 +1,4 @@
-export class ChangePhoneNumberRequest {
+export class ChangePhone {
     id: string;
     requested_dt: Date;
     cust_name: string;

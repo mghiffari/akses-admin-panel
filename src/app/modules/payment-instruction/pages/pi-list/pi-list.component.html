@@ -28,24 +28,24 @@
                   <td mat-cell *matCellDef="let element; let i = index" align="center">
                     <div>
                       <span *ngIf="i === 0">
-                        <mat-icon class="cursor-default text-medium-gray">
+                        <mat-icon class="cursor-pointer text-medium-gray">
                           keyboard_arrow_up
                         </mat-icon>
                       </span>
                       <span *ngIf="i !== 0">
-                        <mat-icon class="cursor-default text-purple" (click)="onOrderUp(i)">
+                        <mat-icon class="cursor-pointer text-purple" (click)="onOrderUp(i)">
                           keyboard_arrow_up
                         </mat-icon>
                       </span>
                     </div>
                     <div>
                       <span *ngIf="i === (data.length-1)">
-                        <mat-icon class="cursor-default text-medium-gray">
+                        <mat-icon class="cursor-pointer text-medium-gray">
                           keyboard_arrow_down
                         </mat-icon>
                       </span>
                       <span *ngIf="i !== (data.length-1)">
-                        <mat-icon class="cursor-default text-purple" (click)="onOrderDown(i)">
+                        <mat-icon class="cursor-pointer text-purple" (click)="onOrderDown(i)">
                           keyboard_arrow_down
                         </mat-icon>
                       </span>
@@ -82,8 +82,8 @@
                     {{'table.actions' | translate}}
                   </th>
                   <td mat-cell *matCellDef="let element" align="center">
-                    <mat-icon class="cursor-default" (click)="onDelete(element)">delete</mat-icon>
-                    <mat-icon color="primary" class="cursor-default"
+                    <mat-icon class="cursor-pointer" (click)="onDelete(element)">delete</mat-icon>
+                    <mat-icon color="primary" class="cursor-pointer"
                       [routerLink]="['/payment-instructions/update', element.id]">
                       edit
                     </mat-icon>

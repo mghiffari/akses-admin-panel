@@ -265,14 +265,14 @@
             "errorMaxResolution": "Icon size is more than 48 X 48 pixel",
             "errorRatio": "Only 1:1 ratio is supported",
             "errorType": "Only .jpg, .jpeg and .png format are supported",
-            "hint": "Ukuran maksimal 48 X 48 pixel. Rasio 1:1 ( tipe file: jpeg/ png )"
+            "hint": "Maximum size 48 X 48 pixel, ratio 1:1 (file type: .jpeg / .png )"
         },
         "instructions": {
             "fieldTitle": "Instruction",
             "placeholder": "Instruction",
             "errorRequired": "Instruction is required",
             "errorMinTotal": "There should be one or more instruction",
-            "errorMaxTotal": "Maximum number of instructions is {{maxLength}}",
+            "errorMaxTotal": "Maximum number of instruction steps is {{maxLength}}",
             "hint": {
                 "installment": "installment",
                 "boldBrackets": "Put text inside square brackets [ ] to bold"
@@ -649,7 +649,7 @@
         "01077": "failed to get data",
         "01078": "missing action parameter or value",
         "01079": "body parameter should be array object",
-        "01080": "fancy text is not supported",
+        "01080": "text format is not supported",
         "01081": "something wrong, please try again",
         "01082": "product id parameter and value is required",
         "01083": "unique tag parameter and value is required",

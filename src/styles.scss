@@ -195,8 +195,8 @@ body {
     background-color: map-get($colors, light-gray);
 }
 
-.cursor-default{
-    cursor: default;
+.cursor-pointer{
+    cursor: pointer;
 }
 
 .page-title{
@@ -348,7 +348,7 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
 .text-center-important
 .mat-sort-header-container {
     display: flex;
-    cursor: default;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
 }

@@ -19,8 +19,8 @@ import { BranchDetailsComponent } from './pages/branch-details/branch-details.co
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
 import { BranchService } from './services/branch.service';
 import { BranchUploadModalComponent } from './components/branch-upload-modal/branch-upload-modal.component';
-import { ChangePhonenumberRequestListComponent } from './pages/change-phonenumber-request-list/change-phonenumber-request-list.component';
-import { ChangePhonenumberRequestService } from './services/change-phonenumber-request.service';
+import { ChangePhoneListComponent } from './pages/change-phone-list/change-phone-list.component';
+import { ChangePhoneService } from './services/change-phone.service';
 import { RemarkInputModalComponent } from './components/remark-input-modal/remark-input-modal.component';
 
 @NgModule({
@@ -37,7 +37,7 @@ import { RemarkInputModalComponent } from './components/remark-input-modal/remar
     BranchDetailsComponent,
     BranchListComponent,
     BranchUploadModalComponent,
-    ChangePhonenumberRequestListComponent,
+    ChangePhoneListComponent,
     RemarkInputModalComponent
   ],
   imports: [
@@ -52,7 +52,7 @@ import { RemarkInputModalComponent } from './components/remark-input-modal/remar
     ArticleService,
     FAQService,
     BranchService,
-    ChangePhonenumberRequestService
+    ChangePhoneService
   ],
   entryComponents: [
     BranchUploadModalComponent,
