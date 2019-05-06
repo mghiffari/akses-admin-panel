@@ -265,17 +265,17 @@
             "errorMaxResolution": "Ukuran Ikon melebihi 48 X 48 pixel",
             "errorRatio": "Hanya rasio 1:1 yang dapat diupload",
             "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload",
-            "hint": "Ukuran maksimal 48 X 48 pixel. Rasio 1:1 ( tipe file: jpeg/ png )"
+            "hint": "Ukuran maksimal 48 X 48 pixel, rasio 1:1 (tipe file: .jpeg / .png)"
         },
         "instructions": {
             "fieldTitle": "Instruksi",
             "placeholder": "Instruksi",
             "errorRequired": "Instruksi wajib diisi",
             "errorMinTotal": "Harus diisi minimal satu instruksi",
-            "errorMaxTotal": "Jumlah instruksi maksimum {{maxLength}}",
+            "errorMaxTotal": "Maksimum jumlah langkah instruksi adalah {{maxLength}} langkah",
             "hint": {
                 "installment": "angsuran",
-                "boldBrackets": "Bold text dengan meletakkannya dalam kurung [ ]"
+                "boldBrackets": "Gunakan kurung siku [ ] pada bagian kalimat untuk menjadikannya bold."
             }
         },
         "paymentInstructionTitle": {
@@ -545,18 +545,18 @@
     },
     "paymentInstructionScreen": {
         "title": "Instruksi Pembayaran",
-        "createInstruction": "buat instruksi baru",
+        "createInstruction": "tambahkan instruksi baru",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus instruksi {{grpTitle}}?",
         "getTypeFailed": "gagal medapatkan list tipe pembayaran",
         "getInstructionListFailed": "gagal mendapatkan list instruksi",
         "changeOrderFailed": "gagal mengubah urutan instruksi"
     },
     "paymentInstructionDetailsScreen": {
-        "createTitle": "Tambah Instruksi Pembayaran",
+        "createTitle": "Tambahkan Instruksi Pembayaran",
         "updateTitle": "Ubah Instruksi Pembayaran",
         "typeNotFound": "Tipe Pembayaran {{type}} tidak ditemukan",
-        "succesCreated": "Instruksi Pembayaran berhasil ditambahkan",
-        "succesUpdated": "Instruksi Pembayaran berhasil diubah",
+        "succesCreated": "instruksi pembayaran berhasil ditambahkan",
+        "succesUpdated": "instruksi pembayaran berhasil diubah",
         "addNewStep": "tambahkan langkah baru",
         "uploadIconFailed": "upload ikon gagal",
         "insertInstructionFailed": "gagal menambahkan instruksi",
@@ -648,7 +648,7 @@
         "01077": "gagal mengambil data",
         "01078": "action tidak boleh kosong",
         "01079": "parameter harus objek array",
-        "01080": "fancy text tidak disupport",
+        "01080": "format text tidak disupport",
         "01081": "something wrong, please try again",
         "01082": "product id parameter wajib diisi",
         "01083": "unique tag wajib diisi",

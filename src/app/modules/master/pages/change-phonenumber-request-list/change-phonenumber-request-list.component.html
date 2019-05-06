@@ -105,7 +105,7 @@
           {{'table.changePhonenumberRequestTable.remark' | translate}} </th>
         <td mat-cell *matCellDef="let element" align="center">
           <div *ngIf="element.action?.toLowerCase() === 'rejected'">
-            <mat-icon *ngIf="(!element.remarks || element.remarks === '')" class="cursor-default"
+            <mat-icon *ngIf="(!element.remarks || element.remarks === '')" class="cursor-pointer"
               (click)="editRemark(element)">edit</mat-icon>
             <span *ngIf="element.remarks && element.remarks !== ''">{{element.remarks}}</span>
           </div>
@@ -133,7 +133,7 @@
     class="padding-16 padding-top-10 padding-bottom-10 border-top-gray bottom-sticky-toolbar">
     <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="start center" class="font-gotham-bold font-sub-content">
       <div flexAlign="center" fxLayout="column" fxLayoutAlign="center center">
-        <mat-icon class="cursor-default" (click)="deselectAll()">clear</mat-icon>
+        <mat-icon class="cursor-pointer" (click)="deselectAll()">clear</mat-icon>
       </div>
       <div flexAlign="center" class="margin-left-10">
         {{'changePhonenumberRequestListScreen.totalRequestSelected' | translate: {totalRequest: this.selectedRequests.length} }}

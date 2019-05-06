@@ -37,11 +37,11 @@
         <td mat-cell *matCellDef="let element">
           <mat-icon *ngIf="element.bookmark" 
             color="primary" 
-            class="cursor-default"
+            class="cursor-pointer"
             matTooltip="{{'faqListScreen.removeBookmark' | translate}}" 
             (click)="onToggleBookmark(element)">star</mat-icon>
           <mat-icon *ngIf="!element.bookmark" 
-            class="cursor-default"
+            class="cursor-pointer"
             matTooltip="{{'faqListScreen.addBookmark' | translate}}"
             (click)="onToggleBookmark(element)">star_border</mat-icon>
         </td>
@@ -77,8 +77,8 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important"> {{'table.actions' | translate}} </th>
         <td mat-cell *matCellDef="let element" align="center">
-          <mat-icon class="cursor-default" (click)="onDelete(element)">delete</mat-icon>
-          <mat-icon color="primary" class="cursor-default" [routerLink]="['/master/faqs/update', element.id]">edit</mat-icon>
+          <mat-icon class="cursor-pointer" (click)="onDelete(element)">delete</mat-icon>
+          <mat-icon color="primary" class="cursor-pointer" [routerLink]="['/master/faqs/update', element.id]">edit</mat-icon>
         </td>
       </ng-container>
       <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="faqColumns; sticky: true"></tr>

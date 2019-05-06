@@ -91,7 +91,7 @@ export class CustomValidation {
   //used to validate number of digit before and after
   static maxDecimalLength(integerDigitMaxLength: number, fractionDigitMaxLength: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } => {
-      console.log('CustomValidation | decimalLength');
+      console.log('CustomValidation | maxDecimalLength');
       const value = <string>control.value;
       if (value) {
         const arr = String(value).split('.');

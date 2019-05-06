@@ -30,8 +30,8 @@
             </ng-template>
           </div>
           <div fxFlex="60%" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
-            <mat-icon class="cursor-default" (click)="onDeleteIcon()">delete</mat-icon>
-            <mat-icon color="primary" class="cursor-default" (click)="iconInput.click()">cloud_upload</mat-icon>
+            <mat-icon class="cursor-pointer" (click)="onDeleteIcon()">delete</mat-icon>
+            <mat-icon color="primary" class="cursor-pointer" (click)="iconInput.click()">cloud_upload</mat-icon>
             <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeFile($event)">
           </div>
           <div fxFlex="100%">
@@ -79,12 +79,15 @@
         <div>{{'forms.instructions.fieldTitle' | translate}}</div>
         <mat-hint class="bottom-hint">
           <div>{{'forms.instructions.hint.boldBrackets' | translate}}</div>
-        </mat-hint>
-        <mat-hint class="bottom-hint">
           <div>{{'example' | translate}}: </div>
           <div>
             [{{'forms.instructions.hint.installment' | translate}}] =
             <b>{{'forms.instructions.hint.installment' | translate}}</b>
+          </div>
+        </mat-hint>
+        <mat-hint class="bottom-hint">
+          <div>
+            {{'forms.instructions.errorMaxTotal' | translate : instructionValidation}}
           </div>
         </mat-hint>
       </div>
@@ -105,25 +108,25 @@
             </div>
             <div fxFlex="40%" fxFlex.lt-sm="100%" fxLayout="row" fxLayoutGap="10px">
               <div fxLayout="column">
-                <mat-icon class="cursor-default text-purple" (click)="onOrderUp(i)" *ngIf="i !== 0">
+                <mat-icon class="cursor-pointer text-purple" (click)="onOrderUp(i)" *ngIf="i !== 0">
                   keyboard_arrow_up
                 </mat-icon>
-                <mat-icon class="cursor-default text-medium-gray" *ngIf="i === 0">
+                <mat-icon class="cursor-pointer text-medium-gray" *ngIf="i === 0">
                   keyboard_arrow_up
                 </mat-icon>
-                <mat-icon class="cursor-default text-purple" (click)="onOrderDown(i)"
+                <mat-icon class="cursor-pointer text-purple" (click)="onOrderDown(i)"
                   *ngIf="i !== instructions.controls.length - 1">
                   keyboard_arrow_down
                 </mat-icon>
-                <mat-icon class="cursor-default text-medium-gray" *ngIf="i === instructions.controls.length - 1">
+                <mat-icon class="cursor-pointer text-medium-gray" *ngIf="i === instructions.controls.length - 1">
                   keyboard_arrow_down
                 </mat-icon>
               </div>
               <div style="height: 48px" fxLayout="column" fxLayoutAlign="center center">
-                <mat-icon class="cursor-default" (click)="deleteStep(i)">delete</mat-icon>
+                <mat-icon class="cursor-pointer" (click)="deleteStep(i)">delete</mat-icon>
               </div>
               <div style="height: 48px" fxLayout="column" fxLayoutAlign="center center">
-                <mat-icon class="cursor-default" (click)="toggleShowPreview(i)">
+                <mat-icon class="cursor-pointer" (click)="toggleShowPreview(i)">
                   {{getShowPreview(i).value ? 'visibility' : 'visibility_off'}}
                 </mat-icon>
               </div>
@@ -133,9 +136,10 @@
             <div innerHTML="{{getContent(i).value | boldRenderer}}"></div>
           </div>
         </div>
-        <div fxFlex="100%" class="padding-right-16" [class.padding-top-16]="instructions.controls.length > 0 && instructions.controls.length < instructionValidation.maxLength">
+        <div fxFlex="100%" class="padding-right-16"
+          [class.padding-top-16]="instructions.controls.length > 0 && instructions.controls.length < instructionValidation.maxLength">
           <div *ngIf="instructions.controls.length < instructionValidation.maxLength"
-            class="top-action-text cursor-default" fxLayoutAlign="start start" (click)="addNewStep()">
+            class="top-action-text cursor-pointer" fxLayoutAlign="start start" (click)="addNewStep()">
             <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
             <div>
               {{'paymentInstructionDetailsScreen.addNewStep' | translate}}
