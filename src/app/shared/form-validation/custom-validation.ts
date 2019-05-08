@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors, FormArray } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
 export class CustomValidation {
@@ -36,8 +36,12 @@ export class CustomValidation {
     fractionDigitLength: 6
   }
 
+  static instructionSteps = {
+    maxLength: 15
+  }
+
   static adiraEmailPattern = environment.enableAdiraEmailValidation ? /@adira.co.id$/ : /^/;
-  static intenationalNamePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+[ ][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+|[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u;
+  static internationalNamePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+[ ][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+|[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u;
 
   //used to check password valid or not
   static matchPassword: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
@@ -81,17 +85,17 @@ export class CustomValidation {
   static internationalName(control: AbstractControl): { [key: string]: any } {
     console.log('CustomValidation | internationalName');
     var value = control.value ? <string>control.value : '';
-    return value.match(CustomValidation.intenationalNamePattern) ? null : { 'internationalname': { value } };
+    return value.match(CustomValidation.internationalNamePattern) ? null : { 'internationalname': { value } };
   }
 
   //used to validate number of digit before and after
   static maxDecimalLength(integerDigitMaxLength: number, fractionDigitMaxLength: number): ValidatorFn {
-    console.log('CustomValidation | decimalLength');
     return (control: AbstractControl): { [key: string]: any } => {
+      console.log('CustomValidation | maxDecimalLength');
       const value = <string>control.value;
       if (value) {
         const arr = String(value).split('.');
-        let integerDigitCount= 0;
+        let integerDigitCount = 0;
         let fractionalDigitCount = 0;
         let valid = true;
 
@@ -137,5 +141,84 @@ export class CustomValidation {
     }, {
         validators: CustomValidation.matchPassword
       })
+  }
+
+  //used to validate file type
+  static type(types: string | Array<string>): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } => {
+      console.log('CustomValidation | type');
+      const file = <File>control.value;
+      if (file) {
+        let splits = file.name.split('.');
+        if (splits.length > 1) {
+          let ext = splits[splits.length - 1].trim();
+          if (types instanceof Array) {
+            if (types.includes(ext)) {
+              return null;
+            }
+          } else if (types === ext) {
+            return null
+          }
+        }
+        return { 'type': { file } }
+      }
+      return null;
+    }
+  }
+
+
+  //used to validate image ratio
+  static imageRatio(control: AbstractControl, widthRatio: number, heightRatio: number) {
+    console.log('CustomValidation | imageRatio');
+    const file = <File>control.value;
+    control.setErrors(null)
+    if (file) {
+      let reader = new FileReader()
+      reader.readAsDataURL(file);
+      reader.onload = function (e) {
+
+        //Initiate the JavaScript Image object.
+        let image = new Image();
+
+        //Set the Base64 string return from FileReader as source.
+        image.src = e.target['result'];
+
+        //Validate the File Height and Width.
+        image.onload = function () {
+          const height = image.height;
+          const width = image.width;
+          if (width / height !== widthRatio / heightRatio) {
+            control.setErrors({ ratio: true })
+          }
+        };
+      }
+    }
+  }
+  //used to validate image ratio
+  static imageMaxResolution(control: AbstractControl, maxWidth: number, maxHeight: number) {
+    console.log('CustomValidation | imageMaxResolution');
+    const file = <File>control.value;
+    control.setErrors(null)
+    if (file) {
+      let reader = new FileReader()
+      reader.readAsDataURL(file);
+      reader.onload = function (e) {
+
+        //Initiate the JavaScript Image object.
+        let image = new Image();
+
+        //Set the Base64 string return from FileReader as source.
+        image.src = e.target['result'];
+
+        //Validate the File Height and Width.
+        image.onload = function () {
+          const height = image.height;
+          const width = image.width;
+          if (height > maxHeight || width > maxWidth) {
+            control.setErrors({ maxresolution: true })
+          }
+        };
+      }
+    }
   }
 }

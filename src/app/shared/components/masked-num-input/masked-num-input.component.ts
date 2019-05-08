@@ -2,10 +2,14 @@ import { Component, Input, forwardRef, OnInit, ElementRef, ViewChild } from '@an
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as numeral from 'numeral';
 
-export enum MaskedInputFormat{
+export enum MaskedInputFormat {
   Decimal = '0,0[.][000000]',
-  Percentage = '0,0[.][000000]%',
-  Currency = '$0,0[.][000000]',
+}
+
+export enum MaskedInputType {
+  Decimal,
+  Percentage,
+  Currency
 }
 
 @Component({
@@ -23,27 +27,61 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
   @Input() appearance?: string = 'fill';
   @Input() value?: number = 0;
   @Input() format?: MaskedInputFormat = MaskedInputFormat.Decimal;
+  @Input() type?: MaskedInputType = MaskedInputType.Decimal;
   @Input() currencySymbol?: string = null;
   @Input() locale?: string = 'id';
+  @Input() prefix?: string = null;
+  @Input() suffix?: string = null;
+  @ViewChild('textInput') textInput: ElementRef;
   maskedValue = '';
 
   ngOnInit(): void {
     console.log('MaskedNumInputComponent | ngOnInit');
     numeral.locale(this.locale)
+    if (!this.prefix && this.type === MaskedInputType.Currency) {
+      this.prefix = 'Rp'
+    }
+    if (!this.suffix && this.type === MaskedInputType.Percentage) {
+      this.suffix = '%'
+    }
   }
 
   //constructor
-  constructor() { 
+  constructor() {
     console.log('MaskedNumInputComponent | constructor')
   }
 
-  onChange: Function = () => {};
-  onTouch: Function = () => {};
+  onChange: Function = () => { };
+  onTouch: Function = () => { };
   disabled: boolean = false;
 
-  handleChange(event){
+  handleChange(event) {
     console.log('MaskedNumInputComponent | handleChange')
-    this.writeValue(numeral(event.target.value).value())
+    let value = null;
+    if (event.target.value && event.target.value.toString().trim() !== '') {
+      value = numeral(event.target.value).value()
+      // not using value / 100 to avoid floating points where 199.8 become 1.998000001
+      if (this.type === MaskedInputType.Percentage) {
+        let numString = value.toString();
+        let arrayNum = numString.split('.')
+        let integerDigit = (Number(arrayNum[0])/100)
+        if(integerDigit !== 0){
+          if(arrayNum.length > 1){
+            value = Number(integerDigit + arrayNum[1])
+          } else {
+            value = integerDigit;
+          }
+        } else {
+          if(arrayNum.length > 1){
+            let sign = ((value > 0) ?  '' :  '-')
+            value = Number(sign + integerDigit + '.00' + arrayNum[1])
+          } else {
+            value = integerDigit;
+          }
+        }
+      }
+    }
+    this.writeValue(value)
   }
 
   // Allow Angular to set the value on the component
@@ -51,8 +89,32 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
     console.log('MaskedNumInputComponent | writeValue')
     this.onChange(value);
     this.value = value;
-    if(this.value !== null){
-      this.maskedValue = numeral(this.value).format(this.format, Math.floor)      
+    if (this.value !== null) {
+      let maskedValue = '';
+      if (this.type === MaskedInputType.Percentage) {
+        let numString = this.value.toString();
+        let arrayNum = numString.split('.')
+        let result = '';
+        if(arrayNum.length > 1){
+          let integerDigit = arrayNum[0];
+          let floatingDigit = arrayNum[1];
+          if(floatingDigit.length <= 2){
+            let trailingZeros = '00'
+            result = arrayNum[0] + floatingDigit + trailingZeros.slice(0, 2-floatingDigit.length)
+          } else {
+            result = arrayNum[0] + floatingDigit.substring(0, 2) + '.' 
+              + floatingDigit.substring(2, floatingDigit.length)
+          }
+        } else {
+          result = numString + '00';
+        }
+        maskedValue = numeral(Number(result)).format(this.format, Math.floor);
+      } else {
+        maskedValue = numeral(this.value).format(this.format, Math.floor);
+      }
+      this.maskedValue = maskedValue;
+    } else {
+      this.maskedValue = null;
     }
   }
 
@@ -67,7 +129,7 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
   // the Angular form control
   registerOnTouched(fn: Function): void {
     console.log('MaskedNumInputComponent | registerOnTouched')
-    this.onTouch = fn;    
+    this.onTouch = fn;
   }
 
   // Allow the Angular form control to disable this input

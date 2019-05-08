@@ -14,6 +14,9 @@
         "creditSimulation": {
             "title": "Simulasi Kredit",
             "failedGetProducts": "gagal mendapatkan list produk simulasi kredit"
+        },
+        "paymentInstruction": {
+            "title": "Instruksi Pembayaran"
         }
     },
     "userAction": {
@@ -256,6 +259,30 @@
             "errorMin": "Tenure harus terdiri dari bilangan positif",
             "errorMaxDecimalLength": "Tenure hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (,) dan {{fractionDigitLength}} digit di belakang (,)"
         },
+        "icon": {
+            "fieldTitle": "Ikon",
+            "errorRequired": "Ikon wajib diisi",
+            "errorMaxResolution": "Ukuran Ikon melebihi 48 X 48 pixel",
+            "errorRatio": "Hanya rasio 1:1 yang dapat diupload",
+            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload",
+            "hint": "Ukuran maksimal 48 X 48 pixel, rasio 1:1 (tipe file: .jpeg / .png)"
+        },
+        "instructions": {
+            "fieldTitle": "Instruksi",
+            "placeholder": "Instruksi",
+            "errorRequired": "Instruksi wajib diisi",
+            "errorMinTotal": "Harus diisi minimal satu instruksi",
+            "errorMaxTotal": "Maksimum jumlah langkah instruksi adalah {{maxLength}} langkah",
+            "hint": {
+                "installment": "angsuran",
+                "boldBrackets": "Gunakan kurung siku [ ] pada bagian kalimat untuk menjadikannya bold."
+            }
+        },
+        "paymentInstructionTitle": {
+            "fieldTitle": "Judul",
+            "placeholder": "Judul",
+            "errorRequired": "Judul wajib diisi"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -290,6 +317,7 @@
         "title": "Judul",
         "category": "Kategori",
         "order": "Urutan",
+        "lastUpdated": "Terakhir Diubah & Oleh",
         "bannersTable": {
             "preview": "Preview",
             "startDate": "Tanggal Mulai",
@@ -314,7 +342,6 @@
             "requestDuration": "Umur Request",
             "oldPhoneNumber": "Nomor HP Lama",
             "newPhoneNumber": "Nomor HP Baru",
-            "lastUpdated": "Terakhir Diubah & Oleh",
             "actionsStatus": "Action / Status",
             "remark": "Keterangan"
         },
@@ -367,6 +394,7 @@
     "cancel": "batal",
     "success": "berhasil",
     "fail": "gagal",
+    "error": "eror",
     "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
@@ -377,6 +405,7 @@
     "add": "tambah",
     "by": "by",
     "edit": "edit",
+    "example": "contoh",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -387,6 +416,10 @@
         "title": "Unauthorized",
         "content": "Login ulang untuk mengakses halaman ini",
         "button": "OK"
+    },
+    "movePageConfirmationModal": {
+        "title": "Konfirmasi Pindah Halaman",
+        "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
     },
     "userListScreen": {
         "title": "Data User",
@@ -482,10 +515,6 @@
         "getProductFailed": "gagal mendapatkan data produk",
         "getProdCompFailed": "gagal medapatkan komponen produk",
         "getCreditSimulationFailed": "gagal mendapatkan data simulasi kredit",
-        "confirmationModal": {
-            "title": "Konfirmasi Pindah Halaman",
-            "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
-        },
         "updateSuccess": "berhasil mengubah data simulasi kredit",
         "updateFailed": "gagal mengubah data simulasi kredit"
     },
@@ -513,6 +542,29 @@
         },
         "addRemarkSuccess": "berhasil menambahkan keterangan",
         "addRemarkFailed": "gagal menambahkan keterangan"
+    },
+    "paymentInstructionScreen": {
+        "title": "Instruksi Pembayaran",
+        "createInstruction": "tambahkan instruksi baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus instruksi {{grpTitle}}?",
+        "getTypeFailed": "gagal medapatkan list tipe pembayaran",
+        "getInstructionListFailed": "gagal mendapatkan list instruksi",
+        "changeOrderFailed": "gagal mengubah urutan instruksi"
+    },
+    "paymentInstructionDetailsScreen": {
+        "createTitle": "Tambahkan Instruksi Pembayaran",
+        "updateTitle": "Ubah Instruksi Pembayaran",
+        "typeNotFound": "Tipe Pembayaran {{type}} tidak ditemukan",
+        "succesCreated": "instruksi pembayaran berhasil ditambahkan",
+        "succesUpdated": "instruksi pembayaran berhasil diubah",
+        "addNewStep": "tambahkan langkah baru",
+        "uploadIconFailed": "upload ikon gagal",
+        "insertInstructionFailed": "gagal menambahkan instruksi",
+        "insertStepsFailed": "gagal menambahkan langkah-langkah instruksi",
+        "getInstructionFailed": "gagal mendapatkan data instruksi",
+        "getStepsFailed": "gagal mendapatkan langkah-langkah instruksi",
+        "updateFailed": "gagal mengubah data instruksi pembayaran",
+        "deleteIconFailed": "gagal menghapus ikon"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
@@ -596,8 +648,15 @@
         "01077": "gagal mengambil data",
         "01078": "action tidak boleh kosong",
         "01079": "parameter harus objek array",
-        "01080": "fancy text tidak disupport",
+        "01080": "format text tidak disupport",
         "01081": "something wrong, please try again",
-        "01082": "product id parameter wajib diisi"
+        "01082": "product id parameter wajib diisi",
+        "01083": "unique tag wajib diisi",
+        "01084": "judul instruksi wajib diisi",
+        "01085": "gagal menukar urutan instruksi",
+        "01086": "tipe instruksi wajib diisi",
+        "01087": "ikon wajib diisi",
+        "01088": "gagal membuat data baru",
+        "01089": "data untuk menukar instruksi harus terdiri dari 2 instruksi"
     }
 }

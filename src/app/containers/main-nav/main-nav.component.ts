@@ -64,6 +64,10 @@ export class MainNavComponent {
       title: 'navMenus.creditSimulation.title',
       link: '/credit-simulation',
       children: []
+    },
+    {
+      title: 'navMenus.paymentInstruction.title',
+      link: '/payment-instructions'
     }
   ]
 

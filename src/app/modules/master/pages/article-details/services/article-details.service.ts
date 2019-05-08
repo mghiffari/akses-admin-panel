@@ -10,6 +10,7 @@ import { LovService } from 'src/app/shared/services/lov.service';
 import { ArticleService } from 'src/app/modules/master/services/article.service';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { FileManagementService } from 'src/app/shared/services/file-management.service';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,8 @@ export class ArticleDetailsService {
     private _snackBarService: MatSnackBar,
     private _routerService: Router,
     private _lovService: LovService,
-    private _articleService: ArticleService
+    private _articleService: ArticleService, 
+    private _fileMgtService: FileManagementService
   ) { }
 
   //get title for page (create or update)
@@ -435,7 +437,7 @@ export class ArticleDetailsService {
       vFormDataImageUpload.append('url', vImageUpload.url);
     }
     let promise = new Promise((resolve, reject) => {
-      this._articleService.uploadImage(vFormDataImageUpload)
+      this._fileMgtService.uploadFile(vFormDataImageUpload)
       .subscribe(
         (data: any) => {
           console.table(data);

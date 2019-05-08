@@ -11,7 +11,7 @@
     </div>
     <mat-nav-list class="margin-bottom-32" *ngIf="!loading">
       <ng-container *ngFor="let nav of navList">
-        <mat-expansion-panel class="nav-panel">
+        <mat-expansion-panel class="nav-panel" *ngIf="nav.children">
           <mat-expansion-panel-header collapsedHeight="50px" expandedHeight="50px">
             <mat-panel-title>
               {{nav.title | translate}}
@@ -27,6 +27,9 @@
             </ng-container>
           </mat-nav-list>
         </mat-expansion-panel>
+        <a mat-list-item class="parent-nav" *ngIf="!nav.children" [routerLink]="nav.link" routerLinkActive="active-nav"
+          (click)="clickNav(drawer)"> {{nav.title | translate}}
+        </a>
         <mat-divider></mat-divider>
       </ng-container>
     </mat-nav-list>

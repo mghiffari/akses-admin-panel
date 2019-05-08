@@ -14,6 +14,9 @@
         "creditSimulation": {
             "title": "Credit Simulation",
             "failedGetProducts": "failed to get credit simulation products"
+        },
+        "paymentInstruction": {
+            "title": "Payment Instruction"
         }
     },
     "userAction": {
@@ -256,6 +259,30 @@
             "errorMin": "Min. value of Postal Code is {{minValue}}",
             "errorMaxDecimalLength": "Tenure can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
         },
+        "icon": {
+            "fieldTitle": "Icon",
+            "errorRequired": "Icon is required",
+            "errorMaxResolution": "Icon size is more than 48 X 48 pixel",
+            "errorRatio": "Only 1:1 ratio is supported",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "hint": "Maximum size 48 X 48 pixel, ratio 1:1 (file type: .jpeg / .png )"
+        },
+        "instructions": {
+            "fieldTitle": "Instruction",
+            "placeholder": "Instruction",
+            "errorRequired": "Instruction is required",
+            "errorMinTotal": "There should be one or more instruction",
+            "errorMaxTotal": "Maximum number of instruction steps is {{maxLength}}",
+            "hint": {
+                "installment": "installment",
+                "boldBrackets": "Put text inside square brackets [ ] to bold"
+            }
+        },
+        "paymentInstructionTitle": {
+            "fieldTitle": "Title",
+            "placeholder": "Title",
+            "iconRequied": "Title is required"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -290,6 +317,7 @@
         "title": "Title",
         "category": "Category",
         "order": "Order",
+        "lastUpdated": "Last Updated Date & By",
         "bannersTable": {
             "preview": "Preview",
             "startDate": "Start Date",
@@ -314,7 +342,6 @@
             "requestDuration": "Request Duration",
             "oldPhoneNumber": "Old Phonenumber",
             "newPhoneNumber": "New Phonenumber",
-            "lastUpdated": "Last Updated Date & By",
             "actionsStatus": "Action / Status",
             "remark": "Remark"
         },
@@ -367,6 +394,7 @@
     "cancel": "cancel",
     "success": "success",
     "fail": "fail",
+    "error": "error",
     "deleteConfirmation": "Delete Confirmation",
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
@@ -377,6 +405,7 @@
     "add": "add",
     "by": "by",
     "edit": "edit",
+    "example": "example",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -387,6 +416,10 @@
         "title": "You're unauthorized to access this page",
         "content": "Please re-login to access this page",
         "button": "OK"
+    },
+    "movePageConfirmationModal": {
+        "title": "Leave Page Confirmation",
+        "content": "Are you sure you want to leave this page? Changes will be discarded"
     },
     "userListScreen": {
         "title": "Users Data",
@@ -478,14 +511,10 @@
         }
     },
     "productCreditSimulationScreen": {
-        "title": "Credit Simulation",
+        "title": "Credit Simulation",        
         "getProductFailed": "failed to get product data",
         "getProdCompFailed": "failed to get product components",
         "getCreditSimulationFailed": "failed to get credit simulation data",
-        "confirmationModal": {
-            "title": "Leave Page Confirmation",
-            "content": "Are you sure you want to leave this page? Changes will be discarded"
-        },
         "updateSuccess": "update credit simulation success",
         "updateFailed": "failed to update credit simulation"
     },
@@ -513,6 +542,30 @@
         },
         "addRemarkSuccess": "remark successfuly added",
         "addRemarkFailed": "failed to add remark"
+    },
+    "paymentInstructionScreen": {
+        "title": "Payment Instructions",
+        "createInstruction": "create new instruction",
+        "deleteConfirmation": "Are you sure you want to delete {{grpTitle}} instruction?",
+        "getTypeFailed": "failed to get payment types",
+        "getInstructionListFailed": "failed to get instructions data",
+        "changeOrderFailed": "failed to change instruction order"
+    },
+    "paymentInstructionDetailsScreen": {
+        "createTitle": "Create Payment Instruction",
+        "updateTitle": "Update Payment Instruction",
+        "typeNotFound": "payment type {{type}} not found",
+        "succesCreated": "Payment Instruction successfully created",
+        "succesUpdated": "Payment Instruction successfully updated",
+        "createFailed": "failed to create new instruction",
+        "addNewStep": "add new step",
+        "uploadIconFailed": "failed to upload icon",
+        "insertInstructionFailed": "failed to create instruction",
+        "insertStepsFailed": "failed to create instruction steps",
+        "getInstructionFailed": "failed to get instruction data",
+        "getStepsFailed": "failed to get instruction steps",
+        "updateFailed": "failed to update payment instructions",
+        "deleteIconFailed": "failed to delete icon"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -596,8 +649,15 @@
         "01077": "failed to get data",
         "01078": "missing action parameter or value",
         "01079": "body parameter should be array object",
-        "01080": "fancy text is not supported",
+        "01080": "text format is not supported",
         "01081": "something wrong, please try again",
-        "01082": "product id parameter and value is required"
+        "01082": "product id parameter and value is required",
+        "01083": "unique tag parameter and value is required",
+        "01084": "instruction title parameter and value is required",
+        "01085": "failed to swap data order",
+        "01086": "instruction type parameter and value is required",
+        "01087": "icon parameter and value is required",
+        "01088": "failed to create data",
+        "01089": "data to swap order length should be 2, consist of from and destination"
     }
 }

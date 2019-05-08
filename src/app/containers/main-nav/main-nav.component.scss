@@ -94,6 +94,22 @@ mat-nav-list {
   color: $yellow !important;
 }
 
+::ng-deep .parent-nav.mat-list-item {
+  height: 50px !important;
+}
+
+::ng-deep .parent-nav .mat-list-item-content {
+  color: $white;
+  @extend .font-gotham-light;
+  letter-spacing: 0.15px;
+  font-size: 15px;
+  padding: 0 24px !important;
+}
+
+::ng-deep .parent-nav.mat-list-item:hover {
+  background-color: rgba(160, 160, 160, 0.4) !important;
+}
+
 .spacer {
   flex: 1 1 auto;
 }

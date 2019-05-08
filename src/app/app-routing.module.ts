@@ -29,6 +29,10 @@ const routes: Routes = [
       {
         path: 'credit-simulation',
         loadChildren: './modules/credit-simulation/cs.module#CSModule'
+      },
+      {
+        path: 'payment-instructions',
+        loadChildren: './modules/payment-instruction/pay-inst.module#PayInstModule'
       }
     ]
   },

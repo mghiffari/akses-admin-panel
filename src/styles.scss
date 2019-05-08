@@ -175,6 +175,10 @@ body {
     padding-top: 5px;
 }
 
+.inline-hint.mat-hint{
+    font-size: 75%;
+}
+
 .border-bottom-gray{
     border-bottom: 1px solid map-get($colors, gray);
 }
@@ -191,8 +195,8 @@ body {
     background-color: map-get($colors, light-gray);
 }
 
-.cursor-default{
-    cursor: default;
+.cursor-pointer{
+    cursor: pointer;
 }
 
 .page-title{
@@ -205,7 +209,7 @@ body {
 }
 
 .font-th{
-    @extend .font-roboto-bold;
+    @extend .font-gotham-bold;
     @extend .font-description;
     font-style: normal;
     line-height: 23px;
@@ -213,10 +217,18 @@ body {
     color: #333333;
 }
 
+.text-purple{
+    color: map-get($colors, purple);
+}
+
+.text-medium-gray{
+    color: map-get($colors, medium-gray);
+}
+
 .link-purple{
     @extend .font-roboto;
     @extend .font-tag;
-    color: map-get($colors, purple);
+    @extend .text-purple;
     font-style: normal;
     font-weight: normal;
     line-height: normal;
@@ -252,7 +264,7 @@ button[block-button]{
     width: 100%
 }
 
-.title-add-icon {
+.font-description-icon {
     font-size: map-get($font-sizes, 'description') !important;
     width: 16px !important; 
     height: 16px !important;

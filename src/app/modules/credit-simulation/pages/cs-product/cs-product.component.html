@@ -55,7 +55,7 @@
                       </div>
                       <div *ngIf="edit" [formGroupName]="rowIndex" class="padding-top-5 padding-bottom-5">
                         <app-masked-num-input [formControlName]="'tnr_'+month+'m'"
-                          [format]="comp.component.format?.toLowerCase() === 'percentage' ? inputMaskFormat.percentage : inputMaskFormat.currency">
+                          [type]="comp.component.format?.toLowerCase() === 'percentage' ? inputMaskType.percentage : inputMaskType.currency">
                         </app-masked-num-input>
                         <mat-error class="bottom-error text-left"
                           *ngIf="getAreaFormControl(rowIndex, 'tnr_'+month+'m').invalid && (getAreaFormControl(rowIndex, 'tnr_'+month+'m').dirty || getAreaFormControl(rowIndex, 'tnr_'+month+'m').touched)">
