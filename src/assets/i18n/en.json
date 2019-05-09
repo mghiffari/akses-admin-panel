@@ -17,6 +17,9 @@
         },
         "paymentInstruction": {
             "title": "Payment Instruction"
+        }, 
+        "notification": {
+            "title": "Notification"
         }
     },
     "userAction": {
@@ -360,6 +363,12 @@
             "tenureMonth48": "48 Month",
             "tenureMonth54": "54 Month",
             "tenureMonth60": "60 Month"
+        },
+        "notificationTable": {
+            "schedule": "Schedule",
+            "sent": "Total Recipient",
+            "clicked": "Clicked",
+            "time": "Time"
         }
     },
     "bannerListScreen": {
@@ -566,6 +575,12 @@
         "getStepsFailed": "failed to get instruction steps",
         "updateFailed": "failed to update payment instructions",
         "deleteIconFailed": "failed to delete icon"
+    },
+    "notificationListScreen": {
+        "title": "Notifications Data",
+        "createNotification": "create notification",
+        "deleteConfirmation": "Are you sure you want to delete notification {{title}}?",
+        "loadFailed": "failed to get list of notifications"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
