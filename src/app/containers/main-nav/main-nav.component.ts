@@ -68,6 +68,10 @@ export class MainNavComponent {
     {
       title: 'navMenus.paymentInstruction.title',
       link: '/payment-instructions'
+    },
+    {
+      title: 'navMenus.notification.title',
+      link: '/notifications'
     }
   ]
 

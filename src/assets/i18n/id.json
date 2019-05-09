@@ -17,6 +17,9 @@
         },
         "paymentInstruction": {
             "title": "Instruksi Pembayaran"
+        },
+        "notification": {
+            "title": "Notifikasi"
         }
     },
     "userAction": {
@@ -360,6 +363,12 @@
             "tenureMonth48": "48 Bln",
             "tenureMonth54": "54 Bln",
             "tenureMonth60": "60 Bln"
+        },
+        "notificationTable": {
+            "schedule": "Jadwal",
+            "sent": "Jumlah Penerima",
+            "clicked": "Clicked",
+            "time": "Waktu"
         }
     },
     "bannerListScreen": {
@@ -565,6 +574,12 @@
         "getStepsFailed": "gagal mendapatkan langkah-langkah instruksi",
         "updateFailed": "gagal mengubah data instruksi pembayaran",
         "deleteIconFailed": "gagal menghapus ikon"
+    },
+    "notificationListScreen": {
+        "title": "Data Notifikasi",
+        "createNotification": "tambahkan notifikasi baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus notifikasi {{title}}?",
+        "loadFailed": "gagal mendapatkan list notifikasi"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

@@ -33,6 +33,10 @@ const routes: Routes = [
       {
         path: 'payment-instructions',
         loadChildren: './modules/payment-instruction/pay-inst.module#PayInstModule'
+      },
+      {
+        path: 'notifications',
+        loadChildren: './modules/notification/notification.module#NotificationModule'
       }
     ]
   },
