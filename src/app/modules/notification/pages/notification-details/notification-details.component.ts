@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { NotifConfirmModalComponent } from '../../components/notif-confirm-modal/notif-confirm-modal.component';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-notification-details',
@@ -18,13 +20,25 @@ export class NotificationDetailsComponent implements OnInit {
   id;
   isCreate = true;
   loading = true;
-  articles = [];
-  
+  selectedArticleTitle = '';
+  articles = [
+    {
+      id: 'id1',
+      title: 'article 1'
+    },
+    {
+      id: 'id2',
+      title: 'article 2'
+    }
+  ];
+
   constructor(
     // private notifService: NotificationService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modal: MatDialog,
+    private overlay: Overlay
   ) { }
 
   //component on init
@@ -37,8 +51,8 @@ export class NotificationDetailsComponent implements OnInit {
           recipient: new FormControl('all', Validators.required),
           title: new FormControl('', Validators.required),
           content: new FormControl('', Validators.required),
-          articleCategory: new FormControl({value: 'Promo', disabled: true}, Validators.required),
-          articleId: new FormControl('', Validators.required),
+          articleCategory: new FormControl({ value: 'Promo', disabled: true }, Validators.required),
+          articleId: new FormControl('id1', Validators.required),
           scheduledFlag: new FormControl(false, Validators.required),
           scheduleDate: new FormControl(new Date(), Validators.required),
           scheduleTime: new FormControl('', Validators.required)
@@ -103,44 +117,44 @@ export class NotificationDetailsComponent implements OnInit {
     )
   }
 
-  get recipient(){
+  get recipient() {
     return this.notifForm.get('recipient')
   }
 
-  get title(){
+  get title() {
     return this.notifForm.get('title')
   }
 
-  get content(){
+  get content() {
     return this.notifForm.get('content')
   }
 
-  get articleCategory(){
+  get articleCategory() {
     return this.notifForm.get('articleCategory')
   }
 
-  get articleId(){
+  get articleId() {
     return this.notifForm.get('articleId')
   }
 
-  get scheduledFlag(){
+  get scheduledFlag() {
     return this.notifForm.get('scheduledFlag')
   }
 
-  get scheduleDate(){
+  get scheduleDate() {
     return this.notifForm.get('recipient')
   }
-  
-  get scheduleTime(){
+
+  get scheduleTime() {
     return this.notifForm.get('recipient')
   }
 
   //save button click event handler
   save() {
-    console.log('NotificationDetailsComponent | save')    
+    console.log('NotificationDetailsComponent | save')
     let formValue = this.notifForm.value
     let scheduleDate = new Date();
-    if(formValue.scheduledFlag){
+    if (formValue.scheduledFlag) {
       scheduleDate = formValue.scheduleDate;
       let scheduleTime = formValue.scheduleTime.split(':')
       scheduleDate.setHours(Number(scheduleTime[0]))
@@ -153,6 +167,15 @@ export class NotificationDetailsComponent implements OnInit {
       scheduled_flg: formValue.scheduledFlag,
       schedule_sending: scheduleDate
     }
+    const modalRef = this.modal.open(NotifConfirmModalComponent, {
+      width: '80%',
+      maxHeight: '100%',
+      maxWidth: '500px',
+      scrollStrategy: this.overlay.scrollStrategies.reposition(),
+      data: {
+        notification: Object.assign({articleTitle: this.selectedArticleTitle}, this.notifForm.getRawValue())
+      }
+    })
     if (this.isCreate) {
       // this.onSubmittingForm = true;
       // this.notifService.createNotif(notification)
@@ -240,7 +263,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   }
 
-  now(){
+  now() {
     return new Date();
   }
 

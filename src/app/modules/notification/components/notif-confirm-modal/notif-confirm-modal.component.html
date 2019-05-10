@@ -1,0 +1,78 @@
+<div fxLayout="column" style="height: 100%">
+  <div mat-dialog-title class="font-gotham-bold font-sub-content">
+    {{'notificationDetailsScreen.notifSaveConfirm' | translate}}
+  </div>
+  <div mat-dialog-content fxFlex="grow" class="border-bottom-gray border-top-gray">
+    <div fxFlex="grow" style="height: 100%; width: 100%" class="padding-top-16 padding-bottom-16 text-dark-gray" 
+    fxFlexLayout="column" fxLayoutGap="24px grid">
+      <div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+            {{'forms.recipient.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+            {{data.notification.recipient}}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+            {{'forms.title.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+            {{data.notification.title}}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+            {{'forms.content.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+            {{data.notification.content}}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+            {{'forms.articleCategory.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+            {{data.notification.articleCategory}}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+            {{'forms.notifArticle.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+            {{data.notification.articleTitle}}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+            {{'forms.schedule.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+            {{data.notification.scheduleDate | date: 'dd MMMM yyyy'}} ; {{data.notification.scheduleTime}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions fxLayout="row wrap" fxLayoutGap="10px grid" fxLayoutAlign="end center">
+    <div>
+      <button mat-raised-button color="accent" [mat-dialog-close]="false" block-button>{{'cancel' | translate}}</button>
+    </div>
+    <div>
+      <button mat-raised-button color="primary" block-button [mat-dialog-close]="true">{{'save' | translate}}</button>
+    </div>
+  </div>
+</div>

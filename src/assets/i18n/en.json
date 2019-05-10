@@ -623,7 +623,8 @@
         "succesCreated": "new notification successfully created",
         "succesUpdated": "notification data successfully updated",
         "updateFailed": "failed to update data",
-        "createFailed": "failed to create new notification"
+        "createFailed": "failed to create new notification",
+        "notifSaveConfirm": "Save Notification Confirmation"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

@@ -5,16 +5,20 @@ import { NotificationRoutingModule } from './notification-routing.module';
 import { NotificationListComponent } from './pages/notification-list/notification-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NotificationDetailsComponent } from './pages/notification-details/notification-details.component';
+import { NotifConfirmModalComponent } from './components/notif-confirm-modal/notif-confirm-modal.component';
 
 @NgModule({
   declarations: [
     NotificationListComponent, 
-    NotificationDetailsComponent
+    NotificationDetailsComponent, NotifConfirmModalComponent
   ],
   imports: [
     CommonModule,
     NotificationRoutingModule,
     SharedModule
+  ],
+  entryComponents: [
+    NotifConfirmModalComponent
   ]
 })
 export class NotificationModule { }

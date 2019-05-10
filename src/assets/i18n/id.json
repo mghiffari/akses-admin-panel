@@ -622,7 +622,8 @@
         "succesCreated": "notifikasi berhasil ditambahkan",
         "succesUpdated": "notifikasi berhasil diubah",
         "updateFailed": "gagal mengubah data",
-        "createFailed": "gagal menambahkan notifikasi baru"
+        "createFailed": "gagal menambahkan notifikasi baru",
+        "notifSaveConfirm": "Konfirmasi Simpan Notifikasi"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

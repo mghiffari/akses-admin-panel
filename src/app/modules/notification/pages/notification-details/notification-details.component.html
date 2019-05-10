@@ -110,8 +110,8 @@
             <div fxFlex="80%" fxFlex.lt-md="100%">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="articleId">
-                  <mat-option value="">{{'forms.notifArticle.placeholder' | translate}}</mat-option>
-                  <mat-option *ngFor="let article of articles" [value]="article.id">{{article.title}}</mat-option>
+                  <mat-option value="" (click)="selectedArticleTitle=''">{{'forms.notifArticle.placeholder' | translate}}</mat-option>
+                  <mat-option *ngFor="let article of articles" [value]="article.id" (click)="selectedArticleTitle=article.title">{{article.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-error class="bottom-error" *ngIf="articleId.invalid && (articleId.dirty || articleId.touched)">
@@ -137,13 +137,13 @@
                 {{'forms.schedule.options.certainTime' | translate}}
               </mat-radio-button>
             </mat-radio-group>
-            <mat-form-field appearance="fill">
+            <mat-form-field appearance="fill" *ngIf="scheduledFlag.value">
               <input matInput [min]="now()" [matDatepicker]="datepicker"
                 placeholder="{{'forms.schedule.datePlaceholder' | translate}}" formControlName="scheduleDate">
               <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
               <mat-datepicker #datepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
-            <div fxLayout="row">
+            <div fxLayout="row" *ngIf="scheduledFlag.value">
               <div fxFlex="100px">
                 <mat-form-field appearance="fill">
                   <input matInput type="time" formControlName="scheduleTime">

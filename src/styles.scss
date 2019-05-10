@@ -243,6 +243,10 @@ body {
     color: map-get($colors, success-green)
 }
 
+.text-dark-gray{
+    color: map-get($colors, dark-gray)
+}
+
 .top-action-text{
     @extend .font-gotham-bold;
     @extend .font-sub-description;
