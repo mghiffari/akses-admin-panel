@@ -7,7 +7,7 @@ import { LovData } from 'src/app/shared/models/lov';
 import { ArticleData } from 'src/app/modules/master/models/articles';
 import { ImageUpload } from 'src/app/shared/models/image-upload';
 import { LovService } from 'src/app/shared/services/lov.service';
-import { ArticleService } from 'src/app/modules/master/services/article.service';
+import { ArticleService } from 'src/app/shared/services/article.service';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';

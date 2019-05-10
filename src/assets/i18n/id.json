@@ -281,10 +281,43 @@
                 "boldBrackets": "Gunakan kurung siku [ ] pada bagian kalimat untuk menjadikannya bold."
             }
         },
-        "paymentInstructionTitle": {
+        "title": {
             "fieldTitle": "Judul",
             "placeholder": "Judul",
             "errorRequired": "Judul wajib diisi"
+        },
+        "recipient": {
+            "fieldTitle": "Penerima",
+            "placeholder": "Penerima",
+            "errorRequired": "Penerima wajib diisi",
+            "options": {
+                "all": "Semua"
+            }
+        },
+        "content": {
+            "fieldTitle": "Pesan",
+            "placeholder": "Pesan",
+            "errorRequired": "Pesan wajib diisi"
+        },
+        "articleCategory": {
+            "fieldTitle": "Kategori Artikel",
+            "placeholder": "Kategori artikel",
+            "errorRequired": "Kategori Artikel wajib diisi"
+        },
+        "notifArticle": {
+            "fieldTitle": "Artikel",
+            "placeholder": "Pilih Artikel",
+            "errorRequired": "Artikel wajib diisi"
+        },
+        "schedule": {
+            "fieldTitle": "Jadwal",
+            "errorRequired": "Jadwal wajib diisi",
+            "errorMin": "Jadwal paling cepat harus 1 jam dari sekarang",
+            "options": {
+                "immediate": "Langsung",
+                "certainTime": "Nanti"
+            },
+            "datePlaceholder": "Tanggal"
         },
         "buttonText": {
             "save": "Simpan",
@@ -580,6 +613,16 @@
         "createNotification": "tambahkan notifikasi baru",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus notifikasi {{title}}?",
         "loadFailed": "gagal mendapatkan list notifikasi"
+    },
+    "notificationDetailsScreen": {
+        "getNotificationFailed": "gagal mendapatkan data notifikasi",
+        "getArticleListFailed": "gagal mendapatkan list artikel",
+        "createTitle": "Tambahkan Notifikasi Baru",
+        "updateTitle": "Ubah Notifikasi",
+        "succesCreated": "notifikasi berhasil ditambahkan",
+        "succesUpdated": "notifikasi berhasil diubah",
+        "updateFailed": "gagal mengubah data",
+        "createFailed": "gagal menambahkan notifikasi baru"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

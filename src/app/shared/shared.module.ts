@@ -18,6 +18,7 @@ import { CreditSimulationService } from './services/credit-simulation.service';
 import { MaskedNumInputComponent } from './components/masked-num-input/masked-num-input.component';
 import { FileManagementService } from './services/file-management.service';
 import { BoldRendererPipe } from './pipes/bold-renderer.pipe';
+import { ArticleService } from './services/article.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { BoldRendererPipe } from './pipes/bold-renderer.pipe';
     }},
     LovService,
     CreditSimulationService,
-    FileManagementService
+    FileManagementService,
+    ArticleService
   ],
   entryComponents: [
     ErrorModalComponent,
