@@ -17,6 +17,13 @@ const routes: Routes = [
     data: {
       title: 'Create Notification'
     }
+  },
+  {  
+    path: 'update/:id',
+    component: NotificationDetailsComponent,
+    data: {
+      title: 'Update Notification'
+    }
   }
 ];
 

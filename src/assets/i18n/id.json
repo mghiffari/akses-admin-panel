@@ -437,7 +437,7 @@
     "cancel": "batal",
     "success": "berhasil",
     "fail": "gagal",
-    "error": "eror",
+    "error": "error",
     "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
@@ -614,7 +614,9 @@
         "title": "Data Notifikasi",
         "createNotification": "tambahkan notifikasi baru",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus notifikasi {{title}}?",
-        "loadFailed": "gagal mendapatkan list notifikasi"
+        "loadFailed": "gagal mendapatkan list notifikasi",
+        "immediate": "Langsung",
+        "scheduled": "Terjadwal"
     },
     "notificationDetailsScreen": {
         "getNotificationFailed": "gagal mendapatkan data notifikasi",

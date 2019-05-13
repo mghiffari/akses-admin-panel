@@ -615,7 +615,9 @@
         "title": "Notifications Data",
         "createNotification": "create new notification",
         "deleteConfirmation": "Are you sure you want to delete notification {{title}}?",
-        "loadFailed": "failed to get list of notifications"
+        "loadFailed": "failed to get list of notifications",
+        "immediate": "Immediate",
+        "scheduled": "Scheduled"
     },
     "notificationDetailsScreen": {
         "getNotificationFailed": "failed to get notification data",
