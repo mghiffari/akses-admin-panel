@@ -23,10 +23,10 @@ export class NotificationListComponent implements OnInit {
     'number',
     'title',
     'schedule',
-    'time',
     'lastEdited',
     'sent',
     'clicked',
+    'type',
     'action'
   ]
 

@@ -128,8 +128,8 @@
           {{'forms.schedule.fieldTitle' | translate}}
         </div>
         <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-          <div fxFlex="80%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutGap="10px">
-            <mat-radio-group formControlName="scheduledFlag" fxLayout="column" fxLayoutGap="10px">
+          <div fxFlex="80%" fxFlex.lt-md="100%" fxLayout="column" >
+            <mat-radio-group formControlName="scheduledFlag" fxLayout="column" fxLayoutGap="10px" class="margin-bottom-10">
               <mat-radio-button [value]="false" color="primary">
                 {{'forms.schedule.options.immediate' | translate}}
               </mat-radio-button>
@@ -137,7 +137,7 @@
                 {{'forms.schedule.options.certainTime' | translate}}
               </mat-radio-button>
             </mat-radio-group>
-            <mat-form-field appearance="fill" *ngIf="scheduledFlag.value">
+            <mat-form-field appearance="fill" *ngIf="scheduledFlag.value" class="margin-bottom-10">
               <input matInput [min]="now()" [matDatepicker]="datepicker"
                 placeholder="{{'forms.schedule.datePlaceholder' | translate}}" formControlName="scheduleDate">
               <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
@@ -150,10 +150,15 @@
                 </mat-form-field>
               </div>
             </div>
-            <!-- <mat-error class="bottom-error"
-              *ngIf="articleCategory.invalid && (articleCategory.dirty || articleCategory.touched)">
-              <span *ngIf="articleCategory.errors.required">{{'forms.articleCategory.errorRequired' | translate}}</span>
-            </mat-error> -->
+            <mat-error class="bottom-error"
+              *ngIf="
+              scheduledFlag.invalid || scheduleDate.dirty || scheduleDate.touched ||
+              scheduleTime.dirty || scheduleTime.touched || notifForm.errors
+              ">
+              <span *ngIf="scheduledFlag.errors?.required">{{'forms.schedule.errorTypeRequired' | translate}}</span>
+              <span *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleRequired">{{'forms.schedule.errorRequired' | translate}}</span>
+              <span *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleMin">{{'forms.schedule.errorMin' | translate}}</span>
+            </mat-error>
           </div>
         </div>
       </div>
@@ -163,8 +168,9 @@
         <div fxFlexAlign="center" fxFlex="40%" fxFlex.lt-md="30%">
         </div>
         <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-          <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"
-            [disabled]="!notifForm.valid">{{'save' | translate}}</button>
+          <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()">
+            {{'save' | translate}}
+          </button>
           <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
             <div fxLayout="row" fxLayoutAlign="center center">
               <div>

@@ -310,14 +310,15 @@
             "errorRequired": "Article is required"
         },
         "schedule": {
-            "fieldTitle": "Jadwal",
-            "errorRequired": "Schedule is required",
-            "errorMin": "Schedule should be min. 1 hour from now",
+            "fieldTitle": "Schedule",
+            "errorTypeRequired": "Schedule type is required",
+            "errorRequired": "Schedule must have date and time format value",
+            "errorMin": "Schedule should be more than 1 hr from now",
             "options": {
                 "immediate": "Immediate",
                 "certainTime": "Certain Time"
             },
-            "datePlaceholder": "Date"
+            "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
             "save": "Save",
@@ -448,6 +449,7 @@
     "by": "by",
     "edit": "edit",
     "example": "example",
+    "invalidForm": "invalid form",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -624,7 +626,11 @@
         "succesUpdated": "notification data successfully updated",
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new notification",
-        "notifSaveConfirm": "Save Notification Confirmation"
+        "notifSaveConfirm": "Save Notification Confirmation",
+        "cantUpdate": {
+            "immediate": "can't update immediately sent notification",
+            "minDuration": "can't update notification which schedule is less than one hour"
+        }
     },
     "apiErrors": {
         "noInternet": "no internet connection",
