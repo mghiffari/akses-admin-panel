@@ -25,7 +25,8 @@ import {
   MatProgressSpinnerModule,
   MatDialogModule,
   MatTooltipModule,
-  MatTabsModule
+  MatTabsModule,
+  MatCardModule
 } from '@angular/material';
 
 
@@ -59,7 +60,8 @@ import {
     MatDialogModule,
     MatTooltipModule,
     MatSortModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule
   ],
   exports: [
     FlexLayoutModule,
@@ -87,7 +89,8 @@ import {
     MatDialogModule,
     MatTooltipModule,
     MatSortModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule
   ]
 })
 export class AngularMaterialModule { }

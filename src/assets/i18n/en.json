@@ -281,10 +281,44 @@
                 "boldBrackets": "Put text inside square brackets [ ] to bold"
             }
         },
-        "paymentInstructionTitle": {
+        "title": {
             "fieldTitle": "Title",
             "placeholder": "Title",
             "iconRequied": "Title is required"
+        },
+        "recipient": {
+            "fieldTitle": "Recipient",
+            "placeholder": "Recipient",
+            "errorRequired": "Recipient is required",
+            "options": {
+                "all": "All"
+            }
+        },
+        "content": {
+            "fieldTitle": "Content",
+            "placeholder": "Content",
+            "errorRequired": "Content is required"
+        },
+        "articleCategory": {
+            "fieldTitle": "Article Category",
+            "placeholder": "Article category",
+            "errorRequired": "Article Category is required"
+        },
+        "notifArticle": {
+            "fieldTitle": "Article",
+            "placeholder": "Select an Article",
+            "errorRequired": "Article is required"
+        },
+        "schedule": {
+            "fieldTitle": "Schedule",
+            "errorTypeRequired": "Schedule type is required",
+            "errorRequired": "Schedule must have date and time format value",
+            "errorMin": "Schedule should be more than 1 hr from now",
+            "options": {
+                "immediate": "Immediate",
+                "certainTime": "Certain Time"
+            },
+            "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
             "save": "Save",
@@ -415,6 +449,7 @@
     "by": "by",
     "edit": "edit",
     "example": "example",
+    "invalidForm": "invalid form",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -578,9 +613,26 @@
     },
     "notificationListScreen": {
         "title": "Notifications Data",
-        "createNotification": "create notification",
+        "createNotification": "create new notification",
         "deleteConfirmation": "Are you sure you want to delete notification {{title}}?",
-        "loadFailed": "failed to get list of notifications"
+        "loadFailed": "failed to get list of notifications",
+        "immediate": "Immediate",
+        "scheduled": "Scheduled"
+    },
+    "notificationDetailsScreen": {
+        "getNotificationFailed": "failed to get notification data",
+        "getArticleListFailed": "failed to get article list",
+        "createTitle": "Create New Notification",
+        "updateTitle": "Update Notification",
+        "succesCreated": "new notification successfully created",
+        "succesUpdated": "notification data successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new notification",
+        "notifSaveConfirm": "Save Notification Confirmation",
+        "cantUpdate": {
+            "immediate": "can't update immediately sent notification",
+            "minDuration": "can't update notification which schedule is less than one hour"
+        }
     },
     "apiErrors": {
         "noInternet": "no internet connection",

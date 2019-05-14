@@ -3,6 +3,8 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification-list',
@@ -23,33 +25,35 @@ export class NotificationListComponent implements OnInit {
     'number',
     'title',
     'schedule',
-    'time',
     'lastEdited',
     'sent',
     'clicked',
+    'type',
     'action'
   ]
 
   notifications = [
     {
+      id: 'id0',
       title: "Harcilnas",
-      schedule: "Langsung",
-      time: new Date(2019, 4, 9, 12, 15, 0, 0),
+      scheduled_flg: false,
+      schedule_sending: "2019-05-09T12:15:23.609Z",
       modified_by: 'user@mail.com',
       modified_dt: new Date(2019, 4, 9, 10, 24, 0, 0),
       created_by: 'user@mail.com',
       created_dt: new Date(2019, 4, 2, 15, 42, 0, 0),
-      sent: 1723
+      total_users: 1723
     },
     {
+      id: 'id1',
       title: "Promo Natal",
-      schedule: "Terjadwal",
-      time: new Date(2019, 11, 24, 13, 30, 0, 0),
+      scheduled_flg: true,
+      schedule_sending: "2019-07-13T08:16:00.609Z",
       modified_by: '',
       modified_dt: null,
       created_by: 'user@mail.com',
       created_dt: new Date(2019, 4, 8, 7, 55, 0, 0),
-      sent: 0
+      total_users: 0
     }
   ];
   search = '';
@@ -71,6 +75,7 @@ export class NotificationListComponent implements OnInit {
     // private notifService: NotificationService,
     private snackBar: MatSnackBar,
     private modal: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -81,61 +86,90 @@ export class NotificationListComponent implements OnInit {
   //delete
   onDelete(notif) {
     console.log("NotificationListComponent | onDelete")
-    const modalRef = this.modal.open(ConfirmationModalComponent, {
-      width: '260px',
-      data: {
-        title: 'deleteConfirmation',
-        content: {
-          string: 'notificationListScreen.deleteConfirmation',
-          data: {
-            title: notif.title
+    if(this.isEditableNotif(notif)){
+      const modalRef = this.modal.open(ConfirmationModalComponent, {
+        width: '260px',
+        data: {
+          title: 'deleteConfirmation',
+          content: {
+            string: 'notificationListScreen.deleteConfirmation',
+            data: {
+              title: notif.title
+            }
           }
+        }
+      })
+      // modalRef.afterClosed().subscribe(result => {
+      //   if (result) {
+      //     this.loading = true;
+      //     let delNotif = Object.assign({}, notif);
+      //     delNotif.is_deleted = true;
+      //     this.notifService.updateNotif(delNotif).subscribe(
+      //       (data: any) => {
+      //         try {
+      //           console.table(data);
+      //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+      //             data: {
+      //               title: 'success',
+      //               content: {
+      //                 text: 'dataDeleted',
+      //                 data: null
+      //               }
+      //             }
+      //           })
+      //           this.lazyLoadData()
+      //         } catch (error) {
+      //           console.table(error)
+      //         }
+      //       },
+      //       error => {
+      //         try {
+      //           console.table(error);
+      //           this.loading = false;
+      //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+      //             data: {
+      //               title: 'failedToDelete',
+      //               content: {
+      //                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+      //                 data: null
+      //               }
+      //             }
+      //           })
+      //         } catch (error) {
+      //           console.table(error)
+      //         }
+      //       }
+      //     )
+      //   }
+      // })
+    } else {
+      this.table.renderRows()
+    }
+  }
+
+  // edit button handler
+  onEdit(notif){
+    console.log('NotificationListComponent | onEdit')
+    if(this.isEditableNotif(notif)){
+      this.router.navigate(['/notifications/update', notif.id])
+    } else {
+      this.table.renderRows();
+      this.editNotifError();
+    }
+  }
+
+  // show error if to be edited notification data is not valid eq: immediate notif & notif <= 1 hr
+  editNotifError(){
+    console.log('NotificationListComponent | editNotifError')
+    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+      data: {
+        title: 'error',
+        content: {
+          text: 'notificationDetailsScreen.cantUpdate.minDuration',
+          data: null
         }
       }
     })
-    // modalRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.loading = true;
-    //     let delNotif = Object.assign({}, notif);
-    //     delNotif.is_deleted = true;
-    //     this.notifService.updateNotif(delNotif).subscribe(
-    //       (data: any) => {
-    //         try {
-    //           console.table(data);
-    //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //             data: {
-    //               title: 'success',
-    //               content: {
-    //                 text: 'dataDeleted',
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //           this.lazyLoadData()
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       },
-    //       error => {
-    //         try {
-    //           console.table(error);
-    //           this.loading = false;
-    //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //             data: {
-    //               title: 'failedToDelete',
-    //               content: {
-    //                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       }
-    //     )
-    //   }
-    // })
   }
 
   // event handling paginator value changed (page index and page size)
@@ -153,6 +187,16 @@ export class NotificationListComponent implements OnInit {
       this.paginatorProps.pageIndex = 0;
     } else {
       this.lazyLoadData();
+    }
+  }
+
+  //check whether notifcation is editable
+  isEditableNotif(notif){
+    console.log('NotificationListComponent | onSearch');
+    if(notif.scheduled_flg){
+      return CustomValidation.durationFromNowValidation(new Date(notif.schedule_sending))
+    } else {
+      return false;
     }
   }
 

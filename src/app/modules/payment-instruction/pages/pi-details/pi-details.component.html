@@ -56,18 +56,18 @@
     </div>
     <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
       <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%">
-        {{'forms.paymentInstructionTitle.fieldTitle' | translate}}
+        {{'forms.title.fieldTitle' | translate}}
       </div>
       <div fxFlex="80%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
         <div fxFlex="50%" fxFlex.lt-lg="65%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
           <div fxFlex="60%" fxFlex.lt-sm="100%">
             <mat-form-field appearance="fill">
-              <input matInput placeholder="{{'forms.paymentInstructionTitle.placeholder' | translate}}"
+              <input matInput placeholder="{{'forms.title.placeholder' | translate}}"
                 formControlName="grpTitle">
             </mat-form-field>
             <mat-error class="bottom-error" *ngIf="grpTitle.invalid && (grpTitle.dirty || grpTitle.touched)">
               <span
-                *ngIf="grpTitle.errors.required">{{'forms.paymentInstructionTitle.errorRequired' | translate}}</span>
+                *ngIf="grpTitle.errors.required">{{'forms.title.errorRequired' | translate}}</span>
             </mat-error>
           </div>
         </div>

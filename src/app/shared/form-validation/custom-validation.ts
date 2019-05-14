@@ -40,6 +40,8 @@ export class CustomValidation {
     maxLength: 15
   }
 
+  static scheduleMinDuration = 3600000
+
   static adiraEmailPattern = environment.enableAdiraEmailValidation ? /@adira.co.id$/ : /^/;
   static internationalNamePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+[ ][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+|[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u;
 
@@ -219,6 +221,45 @@ export class CustomValidation {
           }
         };
       }
+    }
+  }
+
+  //used to check password valid or not
+  static notifSchedule: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+    console.log('CustomValidation | matchPassword');
+    let scheduleFlag = formGroup.get('scheduledFlag').value;
+    if (scheduleFlag) {
+      let scheduleDate: Date = formGroup.get('scheduleDate').value;
+      let scheduleTime = formGroup.get('scheduleTime').value;
+      if (scheduleDate && scheduleTime && scheduleTime !== '') {
+        let scheduleSplit = scheduleTime.split(':');
+        let scheduleHrs = Number(scheduleSplit[0]);
+        let scheduleMin = Number(scheduleSplit[1]);
+        scheduleDate.setHours(scheduleHrs, scheduleMin, 0, 0);
+        if (CustomValidation.durationFromNowValidation(scheduleDate)) {
+          return null;
+        } else {
+          return { 'scheduleMin': true }
+        }
+      } else {
+        return { 'scheduleRequired': true }
+      }
+    } else {
+      return null;
+    }
+  };
+
+  // use to check wheteher datetime is at least one hour from now
+  static durationFromNowValidation(date) {
+    console.log('CustomValidation | durationFromNowValidation');
+    date.setSeconds(0, 0);
+    let now = new Date();
+    now.setSeconds(0, 0);
+    let diff = date.getTime() - now.getTime();
+    if (diff > CustomValidation.scheduleMinDuration) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

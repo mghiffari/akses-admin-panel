@@ -41,4 +41,11 @@ export class ArticleService {
     console.log("ArticleService | updateArticle " + url);
     return this.authService.wrapTokenPutApi(url, data);
   }
+
+  //get article list by category
+  getArticlesByCategory(category){
+    let url = this.articleApiUrl + 1 + '/' + 10 + '/';
+    console.log("ArticleService | getArticlesByCategory ", url);
+    return this.authService.wrapTokenGetApi(url)
+  }
 }
