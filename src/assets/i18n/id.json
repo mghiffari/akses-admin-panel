@@ -284,7 +284,8 @@
         "title": {
             "fieldTitle": "Judul",
             "placeholder": "Judul",
-            "errorRequired": "Judul wajib diisi"
+            "errorRequired": "Judul wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Judul adalah {{maxLength}}"
         },
         "recipient": {
             "fieldTitle": "Penerima",
@@ -297,7 +298,8 @@
         "content": {
             "fieldTitle": "Pesan",
             "placeholder": "Pesan",
-            "errorRequired": "Pesan wajib diisi"
+            "errorRequired": "Pesan wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Pesan adalah {{maxLength}}"
         },
         "articleCategory": {
             "fieldTitle": "Kategori Artikel",
@@ -401,8 +403,8 @@
         "notificationTable": {
             "schedule": "Jadwal",
             "sent": "Jumlah Penerima",
-            "clicked": "Clicked",
-            "time": "Waktu"
+            "clicked": "Telah Diklik",
+            "scheduleType": "Tipe"
         }
     },
     "bannerListScreen": {
@@ -723,7 +725,11 @@
         "01085": "gagal menukar urutan instruksi",
         "01086": "tipe instruksi wajib diisi",
         "01087": "ikon wajib diisi",
-        "01088": "gagal membuat data baru",
-        "01089": "data untuk menukar instruksi harus terdiri dari 2 instruksi"
+        "01088": "gagal menambahkan data baru",
+        "01089": "data untuk menukar instruksi harus terdiri dari 2 instruksi",
+        "01090": "gagal menambahkan notifikasi baru",
+        "01091": "notifikasi tidak ditemukan",
+        "01092": "notifikasi sudah terkirim atau sudah dihapus di one signal",
+        "01093": "gagal menghapus notifikasi"
     }
 }

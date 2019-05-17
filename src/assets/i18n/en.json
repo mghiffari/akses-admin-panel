@@ -17,7 +17,7 @@
         },
         "paymentInstruction": {
             "title": "Payment Instruction"
-        }, 
+        },
         "notification": {
             "title": "Notification"
         }
@@ -284,7 +284,8 @@
         "title": {
             "fieldTitle": "Title",
             "placeholder": "Title",
-            "iconRequied": "Title is required"
+            "iconRequied": "Title is required",
+            "errorMaxLength": "Max. length of Title is {{maxLength}}"
         },
         "recipient": {
             "fieldTitle": "Recipient",
@@ -297,7 +298,8 @@
         "content": {
             "fieldTitle": "Content",
             "placeholder": "Content",
-            "errorRequired": "Content is required"
+            "errorRequired": "Content is required",
+            "errorMaxLength": "Max. length of Content is {{maxLength}}"
         },
         "articleCategory": {
             "fieldTitle": "Article Category",
@@ -402,7 +404,7 @@
             "schedule": "Schedule",
             "sent": "Total Recipient",
             "clicked": "Clicked",
-            "time": "Time"
+            "scheduleType": "Type"
         }
     },
     "bannerListScreen": {
@@ -546,7 +548,7 @@
         "fileExample": "Example File",
         "uploadFailed": "Upload Failed",
         "uploadSuccess": "Upload Success",
-        "instructions":{
+        "instructions": {
             "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
             "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
             "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the nearest branch location on the app",
@@ -555,7 +557,7 @@
         }
     },
     "productCreditSimulationScreen": {
-        "title": "Credit Simulation",        
+        "title": "Credit Simulation",
         "getProductFailed": "failed to get product data",
         "getProdCompFailed": "failed to get product components",
         "getCreditSimulationFailed": "failed to get credit simulation data",
@@ -574,7 +576,7 @@
         "bulkApproveFailed": "failed to approve {{totalRequest}} requests",
         "bulkApproveSuccess": "{{totalRequest}} requests are approved",
         "totalRequestSelected": "{{totalRequest}} requests are selected",
-        "confirmationModal":{
+        "confirmationModal": {
             "reject": {
                 "title": "Rejecting Confirmation",
                 "content": "Are you sure you want to reject change phonenumber request?"
@@ -725,6 +727,10 @@
         "01086": "instruction type parameter and value is required",
         "01087": "icon parameter and value is required",
         "01088": "failed to create data",
-        "01089": "data to swap order length should be 2, consist of from and destination"
+        "01089": "data to swap order length should be 2, consist of from and destination",
+        "01090": "failed to create new notification",
+        "01091": "notification not found",
+        "01092": "notification have been sent or deleted in one signal",
+        "01093": "failed to delete notification"
     }
 }

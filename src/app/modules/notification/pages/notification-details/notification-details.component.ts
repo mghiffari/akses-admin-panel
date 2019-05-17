@@ -9,6 +9,9 @@ import { NotifConfirmModalComponent } from '../../components/notif-confirm-modal
 import { Overlay } from '@angular/cdk/overlay';
 import { ArticleService } from 'src/app/shared/services/article.service';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
+import { Notification } from '../../models/notification';
+import { NotificationService } from '../../services/notification.service';
+import { ArticleData } from 'src/app/modules/master/models/articles';
 
 @Component({
   selector: 'app-notification-details',
@@ -17,25 +20,18 @@ import { CustomValidation } from 'src/app/shared/form-validation/custom-validati
 })
 export class NotificationDetailsComponent implements OnInit {
   notifForm: FormGroup;
-  editedNotification;
+  editedNotification: Notification;
   onSubmittingForm = false;
   id;
   isCreate = true;
   loading = true;
   selectedArticleTitle = '';
-  articles = [
-    {
-      id: 'id1',
-      title: 'article 1'
-    },
-    {
-      id: 'id2',
-      title: 'article 2'
-    }
-  ];
+  articles = [];
+  notifTitle = CustomValidation.notifTitle;
+  notifContent = CustomValidation.notifContent;
 
   constructor(
-    // private notifService: NotificationService,
+    private notifService: NotificationService,
     private router: Router,
     private snackBar: MatSnackBar,
     private route: ActivatedRoute,
@@ -52,8 +48,8 @@ export class NotificationDetailsComponent implements OnInit {
         this.loading = true;
         this.notifForm = new FormGroup({
           recipient: new FormControl('all', Validators.required),
-          title: new FormControl('', Validators.required),
-          content: new FormControl('', Validators.required),
+          title: new FormControl('', [Validators.required, Validators.maxLength(this.notifTitle.maxLength)]),
+          content: new FormControl('', [Validators.required, Validators.maxLength(this.notifContent.maxLength)]),
           articleCategory: new FormControl({ value: 'Promo', disabled: true }, Validators.required),
           articleId: new FormControl('', Validators.required),
           scheduledFlag: new FormControl(false, Validators.required),
@@ -62,97 +58,98 @@ export class NotificationDetailsComponent implements OnInit {
         }, {
             validators: CustomValidation.notifSchedule
           })
-        if (this.router.url.includes('update')) {
-          // try {
-          //   this.isCreate = false;
-          //   this.id = params.id;
-          //   this.notifService.getNotifById(this.id).subscribe(
-          //     response => {
-          //       try {
-          //         console.table(response)
-          //         this.editedNotification = response.data;
-          //         let editedNotif = this.editedNotification;
-          //         if(!editedNotif.scheduled_flg){
-          //           this.editNotifError('notificationDetailsScreen.cantUpdate.immediate')
-          //         } else if(!CustomValidation.durationFromNowValidation(new Date(editedNotif.schedule_sending))){
-          //           this.editNotifError('notificationDetailsScreen.cantUpdate.minDuration')
-          //         } else {
-          //           this.articleService.getArticlesByCategory(this.articleCategory.value).subscribe(
-          //             response => {
-          //               console.log(response)
-          //               let scheduleDate = null;
-          //               let scheduleTime = ''
-          //               if(editedNotif.schedule_sending && editedNotif.schedule_sending !== ''){
-          //                 scheduleDate = new Date(editedNotif.schedule_sending)
-          //                 let scheduleHours = scheduleDate.getHours();
-          //                 let scheduleMin = scheduleDate.getMinutes();
-          //                 scheduleTime = (scheduleHours > 9 ? '' : '0') + scheduleHours + ':' 
-          //                   + (scheduleMin > 9 ? '' : '0') + scheduleMin
-          //               }
-          //               let selectedArticle = response.data.find((el) => {
-          //                 return el.id === editedNotif.aks_adm_article_id;
-          //               })
-          //               this.selectedArticleTitle = selectedArticle ? selectedArticle.title : '';
-          //               this.notifForm.patchValue({
-          //                 title: editedNotif.title,
-          //                 content: editedNotif.content,
-          //                 articleId: selectedArticle ? selectedArticle.id : '',
-          //                 scheduledFlag: editedNotif.scheduled_flg,
-          //                 scheduleDate: scheduleDate,
-          //                 scheduleTime: scheduleTime
-          //               })
-          //             }, error => {
-          //               try {            
-          //                 console.table(error);
-          //                 let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-          //                   data: {
-          //                     title: 'articleListScreen.loadFailed',
-          //                     content: {
-          //                       text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-          //                       data: null
-          //                     }
-          //                   }
-          //                 })
-          //                 errorSnackbar.afterDismissed().subscribe(() => {
-          //                   this.goToListScreen()
-          //                 })
-          //               } catch (error) {
-          //                 console.log(error)
-          //               }
-          //             }
-          //           )
-          //         }
-          //       } catch (error) {
-          //         console.log(error)
-          //       }
-          //     }, error => {
-          //       try {            
-          //         console.table(error);
-          //         let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-          //           data: {
-          //             title: 'notificationDetailsScreen.getNotificationFailed',
-          //             content: {
-          //               text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-          //               data: null
-          //             }
-          //           }
-          //         })
-          //         errorSnackbar.afterDismissed().subscribe(() => {
-          //           this.goToListScreen()
-          //         })
-          //       } catch (error) {
-          //         console.log(error)
-          //       }
-          //     }).add(() => {
-          //       this.loading = false;
-          //     })
-          // } catch (error) {
-          //   console.table(error)
-          // }
-        } else {
-          this.isCreate = true;
-          this.loading = false;
-        }
+        this.articleService.getArticlesByCategory(this.articleCategory.value).subscribe(
+          response => {
+            console.log(response)
+            try {
+              this.articles = response.data;
+              if (this.router.url.includes('update')) {
+                this.isCreate = false;
+                this.id = params.id;
+                this.notifService.getNotifById(this.id).subscribe(
+                  response => {
+                    try {
+                      console.table(response)
+                      this.editedNotification = response.data;
+                      let editedNotif = this.editedNotification;
+                      if (!editedNotif.scheduled_flg) {
+                        this.editNotifError('notificationDetailsScreen.cantUpdate.immediate')
+                      } else if (!CustomValidation.durationFromNowValidation(new Date(editedNotif.schedule_sending))) {
+                        this.editNotifError('notificationDetailsScreen.cantUpdate.minDuration')
+                      } else {
+                        let scheduleDate = null;
+                        let scheduleTime = ''
+                        if (editedNotif.schedule_sending) {
+                          scheduleDate = new Date(editedNotif.schedule_sending)
+                          let scheduleHours = scheduleDate.getHours();
+                          let scheduleMin = scheduleDate.getMinutes();
+                          scheduleTime = (scheduleHours > 9 ? '' : '0') + scheduleHours + ':'
+                            + (scheduleMin > 9 ? '' : '0') + scheduleMin
+                        }
+                        let selectedArticle = this.articles.find((el) => {
+                          return el.id === editedNotif.aks_adm_article_id;
+                        })
+                        this.selectedArticleTitle = selectedArticle ? selectedArticle.title : '';
+                        this.notifForm.patchValue({
+                          title: editedNotif.title,
+                          content: editedNotif.content,
+                          articleId: selectedArticle ? selectedArticle.id : '',
+                          scheduledFlag: editedNotif.scheduled_flg,
+                          scheduleDate: scheduleDate,
+                          scheduleTime: scheduleTime
+                        })
+                      }
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  }, error => {
+                    try {
+                      console.table(error);
+                      let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                        data: {
+                          title: 'notificationDetailsScreen.getNotificationFailed',
+                          content: {
+                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                            data: null
+                          }
+                        }
+                      })
+                      errorSnackbar.afterDismissed().subscribe(() => {
+                        this.goToListScreen()
+                      })
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  }).add(() => {
+                    this.loading = false;
+                  })
+
+              } else {
+                this.isCreate = true;
+                this.loading = false;
+              }
+            } catch (error) {
+              console.table(error)
+            }
+          }, error => {
+            try {
+              console.table(error);
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'articleListScreen.loadFailed',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+              errorSnackbar.afterDismissed().subscribe(() => {
+                this.goToListScreen()
+              })
+            } catch (error) {
+              console.log(error)
+            }
+          })
       }
     )
   }
@@ -204,13 +201,13 @@ export class NotificationDetailsComponent implements OnInit {
         scheduleDate.setHours(Number(scheduleTime[0]))
         scheduleDate.setMinutes(Number(scheduleTime[1]))
       }
-      let notification = {
-        title: formValue.title,
-        content: formValue.content,
-        aks_adm_article_id: formValue.articleId,
-        scheduled_flg: formValue.scheduledFlag,
-        schedule_sending: scheduleDate
-      }
+      let notification = new Notification()
+      notification.title = formValue.title;
+      notification.content = formValue.content;
+      notification.aks_adm_article_id = formValue.articleId;
+      notification.scheduled_flg = formValue.scheduledFlag;
+      notification.schedule_sending = scheduleDate;
+
       const modalRef = this.modal.open(NotifConfirmModalComponent, {
         width: '80%',
         maxHeight: '100%',
@@ -221,93 +218,94 @@ export class NotificationDetailsComponent implements OnInit {
         }
       })
       modalRef.afterClosed().subscribe((result) => {
-        if(result){
+        if (result) {
           this.notifForm.updateValueAndValidity();
-          if(this.notifForm.valid){
+          if (this.notifForm.valid) {
             if (this.isCreate) {
-              // this.onSubmittingForm = true;
-              // this.notifService.createNotif(notification)
-              //   .subscribe(
-              //     (data: any) => {
-              //       try {            
-              //         console.table(data);
-              //         this.onSubmittingForm = false;
-              //         let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              //           data: {
-              //             title: 'success',
-              //             content: {
-              //               text: 'notificationDetailsScreen.succesCreated',
-              //               data: null
-              //             }
-              //           }
-              //         })
-              //         snackbarSucess.afterDismissed().subscribe(() => {
-              //           this.goToListScreen();
-              //         })
-              //       } catch (error) {
-              //         console.log(error)
-              //       }
-              //     },
-              //     error => {
-              //       try {            
-              //         console.table(error);
-              //         this.onSubmittingForm = false;
-              //         this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              //           data: {
-              //             title: 'notificationDetailsScreen.createFailed',
-              //             content: {
-              //               text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-              //               data: null
-              //             }
-              //           }
-              //         })
-              //       } catch (error) {
-              //         console.log(error)
-              //       }
-              //     }
-              //   )
+              this.onSubmittingForm = true;
+              this.notifService.createNotif(notification)
+                .subscribe(
+                  (data: any) => {
+                    try {
+                      console.table(data);
+                      this.onSubmittingForm = false;
+                      let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                        data: {
+                          title: 'success',
+                          content: {
+                            text: 'notificationDetailsScreen.succesCreated',
+                            data: null
+                          }
+                        }
+                      })
+                      snackbarSucess.afterDismissed().subscribe(() => {
+                        this.goToListScreen();
+                      })
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  },
+                  error => {
+                    try {
+                      console.table(error);
+                      this.onSubmittingForm = false;
+                      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                        data: {
+                          title: 'notificationDetailsScreen.createFailed',
+                          content: {
+                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                            data: null
+                          }
+                        }
+                      })
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  }
+                )
             } else {
-              if(CustomValidation.durationFromNowValidation(new Date(this.editedNotification.schedule_sending))){
-                // this.onSubmittingForm = true;
-                // this.notifService.updateUser(notification).subscribe(
-                //   (data: any) => {
-                //     try {            
-                //       console.table(data);
-                //       this.onSubmittingForm = false;
-                //       let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                //         data: {
-                //           title: 'success',
-                //           content: {
-                //             text: 'notificationDetailsScreen.succesUpdated',
-                //             data: null
-                //           }
-                //         }
-                //       })
-                //       snackbarSucess.afterDismissed().subscribe(() => {
-                //         this.goToListScreen();
-                //       })
-                //     } catch (error) {
-                //       console.log(error)
-                //     }
-                //   },
-                //   error => {
-                //     try {            
-                //       console.table(error);
-                //       this.onSubmittingForm = false;
-                //       this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                //         data: {
-                //           title: 'notificationDetailsScreen.updateFailed',
-                //           content: {
-                //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                //             data: null
-                //           }
-                //         }
-                //       })
-                //     } catch (error) {
-                //       console.log(error)
-                //     }
-                //   }
-                // )
+              if (CustomValidation.durationFromNowValidation(new Date(this.editedNotification.schedule_sending))) {
+                this.onSubmittingForm = true;
+                notification.id = this.editedNotification.id;
+                this.notifService.updateNotif(notification).subscribe(
+                  (data: any) => {
+                    try {            
+                      console.table(data);
+                      this.onSubmittingForm = false;
+                      let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                        data: {
+                          title: 'success',
+                          content: {
+                            text: 'notificationDetailsScreen.succesUpdated',
+                            data: null
+                          }
+                        }
+                      })
+                      snackbarSucess.afterDismissed().subscribe(() => {
+                        this.goToListScreen();
+                      })
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  },
+                  error => {
+                    try {            
+                      console.table(error);
+                      this.onSubmittingForm = false;
+                      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                        data: {
+                          title: 'notificationDetailsScreen.updateFailed',
+                          content: {
+                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                            data: null
+                          }
+                        }
+                      })
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  }
+                )
               } else {
                 this.editNotifError('notificationDetailsScreen.cantUpdate.minDuration')
               }
@@ -322,51 +320,58 @@ export class NotificationDetailsComponent implements OnInit {
   }
 
   //show form invalid error snackbar
-  showFormError(){
+  showFormError() {
     console.log('NotificationDetailsComponent | showFormError')
     let errorText = '';
-      if(this.recipient.invalid){
-        if(this.recipient.errors.required){
-          errorText = 'forms.recipient.errorRequired';
-        } 
-      } else if(this.title.invalid){
-        if(this.title.errors.required){
-          errorText = 'forms.title.errorRequired';
-        } 
-      } else if(this.content.invalid){
-        if(this.content.errors.required){
-          errorText = 'forms.content.errorRequired';
-        } 
-      } else if(this.articleCategory.invalid){
-        if(this.articleCategory.errors.required){
-          errorText = 'forms.articleCategory.errorRequired';
-        } 
-      } else if(this.articleId.invalid){
-        if(this.articleId.errors.required){
-          errorText = 'forms.notifArticle.errorRequired';
-        } 
-      } else if(this.scheduledFlag.invalid){
-        if(this.scheduledFlag.errors.required){
-          errorText = 'forms.schedule.errorTypeRequired';
-        } 
-      } else if(this.notifForm.errors.scheduleRequired){
-        errorText = 'forms.schedule.errorRequired';
-      } else if(this.notifForm.errors.scheduleMin){
-        errorText = 'forms.schedule.errorMin';
+    let data = null;
+    if (this.recipient.invalid) {
+      if (this.recipient.errors.required) {
+        errorText = 'forms.recipient.errorRequired';
       }
-      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-        data: {
-          title: 'invalidForm',
-          content: {
-            text: errorText,
-            data: null
-          }
+    } else if (this.title.invalid) {
+      if (this.title.errors.required) {
+        errorText = 'forms.title.errorRequired';
+      } else if(this.title.errors.maxlength){
+        errorText = 'forms.title.errorMaxLength';
+        data = this.notifTitle
+      }
+    } else if (this.content.invalid) {
+      if (this.content.errors.required) {
+        errorText = 'forms.content.errorRequired';
+      } else if(this.content.errors.maxlength){
+        errorText = 'forms.content.errorMaxLength';
+        data = this.notifContent
+      }
+    } else if (this.articleCategory.invalid) {
+      if (this.articleCategory.errors.required) {
+        errorText = 'forms.articleCategory.errorRequired';
+      }
+    } else if (this.articleId.invalid) {
+      if (this.articleId.errors.required) {
+        errorText = 'forms.notifArticle.errorRequired';
+      }
+    } else if (this.scheduledFlag.invalid) {
+      if (this.scheduledFlag.errors.required) {
+        errorText = 'forms.schedule.errorTypeRequired';
+      }
+    } else if (this.notifForm.errors.scheduleRequired) {
+      errorText = 'forms.schedule.errorRequired';
+    } else if (this.notifForm.errors.scheduleMin) {
+      errorText = 'forms.schedule.errorMin';
+    }
+    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+      data: {
+        title: 'invalidForm',
+        content: {
+          text: errorText,
+          data: data
         }
-      })
+      }
+    })
   }
 
   // show error if to be edited notification data is not valid eq: immediate notif & notif <= 1 hr
-  editNotifError(errorText){
+  editNotifError(errorText) {
     console.log('NotificationDetailsComponent | editNotifError')
     let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       data: {
