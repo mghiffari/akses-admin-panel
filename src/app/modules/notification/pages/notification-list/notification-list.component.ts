@@ -5,6 +5,8 @@ import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snac
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
+import { Notification } from '../../models/notification';
 
 @Component({
   selector: 'app-notification-list',
@@ -32,30 +34,7 @@ export class NotificationListComponent implements OnInit {
     'action'
   ]
 
-  notifications = [
-    {
-      id: 'id0',
-      title: "Harcilnas",
-      scheduled_flg: false,
-      schedule_sending: "2019-05-09T12:15:23.609Z",
-      modified_by: 'user@mail.com',
-      modified_dt: new Date(2019, 4, 9, 10, 24, 0, 0),
-      created_by: 'user@mail.com',
-      created_dt: new Date(2019, 4, 2, 15, 42, 0, 0),
-      total_users: 1723
-    },
-    {
-      id: 'id1',
-      title: "Promo Natal",
-      scheduled_flg: true,
-      schedule_sending: "2019-07-13T08:16:00.609Z",
-      modified_by: '',
-      modified_dt: null,
-      created_by: 'user@mail.com',
-      created_dt: new Date(2019, 4, 8, 7, 55, 0, 0),
-      total_users: 0
-    }
-  ];
+  notifications: Notification[] = [];
   search = '';
   closeText = '';
   loading = false;
@@ -72,7 +51,7 @@ export class NotificationListComponent implements OnInit {
   }
 
   constructor(
-    // private notifService: NotificationService,
+    private notifService: NotificationService,
     private snackBar: MatSnackBar,
     private modal: MatDialog,
     private router: Router
@@ -80,7 +59,7 @@ export class NotificationListComponent implements OnInit {
 
   ngOnInit() {
     console.log('NotificationListComponent | ngOnInit');
-    // this.lazyLoadData()
+    this.lazyLoadData()
   }
 
   //delete
@@ -99,49 +78,47 @@ export class NotificationListComponent implements OnInit {
           }
         }
       })
-      // modalRef.afterClosed().subscribe(result => {
-      //   if (result) {
-      //     this.loading = true;
-      //     let delNotif = Object.assign({}, notif);
-      //     delNotif.is_deleted = true;
-      //     this.notifService.updateNotif(delNotif).subscribe(
-      //       (data: any) => {
-      //         try {
-      //           console.table(data);
-      //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      //             data: {
-      //               title: 'success',
-      //               content: {
-      //                 text: 'dataDeleted',
-      //                 data: null
-      //               }
-      //             }
-      //           })
-      //           this.lazyLoadData()
-      //         } catch (error) {
-      //           console.table(error)
-      //         }
-      //       },
-      //       error => {
-      //         try {
-      //           console.table(error);
-      //           this.loading = false;
-      //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      //             data: {
-      //               title: 'failedToDelete',
-      //               content: {
-      //                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-      //                 data: null
-      //               }
-      //             }
-      //           })
-      //         } catch (error) {
-      //           console.table(error)
-      //         }
-      //       }
-      //     )
-      //   }
-      // })
+      modalRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.loading = true;
+          this.notifService.deleteNotif(notif.id).subscribe(
+            (data: any) => {
+              try {
+                console.table(data);
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'dataDeleted',
+                      data: null
+                    }
+                  }
+                })
+                this.lazyLoadData()
+              } catch (error) {
+                console.table(error)
+              }
+            },
+            error => {
+              try {
+                console.table(error);
+                this.loading = false;
+                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'failedToDelete',
+                    content: {
+                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
+                  }
+                })
+              } catch (error) {
+                console.table(error)
+              }
+            }
+          )
+        }
+      })
     } else {
       this.table.renderRows()
     }
@@ -203,50 +180,50 @@ export class NotificationListComponent implements OnInit {
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
     console.log('NotificationListComponent | lazyLoadData');
-    // let isFocusedInput = this.isFocusedInput;
-    // this.loading = true;
-    // this.notifService.getNotifList(
-    //   this.paginatorProps.pageIndex + 1,
-    //   this.paginatorProps.pageSize,
-    //   this.search).subscribe(
-    //     (data: any) => {
-    //       try {
-    //         console.table(data);
-    //         this.notifications = data.data;
-    //         this.paginatorProps.length = data.count;
-    //         this.now = new Date()
-    //         if (this.table) {
-    //           this.table.renderRows();
-    //         }
-    //       } catch (error) {
-    //         console.table(error);
-    //       }
-    //     },
-    //     error => {
-    //       try {
-    //         console.table(error);
-    //         this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //           data: {
-    //             title: 'notificationListScreen.loadFailed',
-    //             content: {
-    //               text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //               data: null
-    //             }
-    //           }
-    //         })
-    //       } catch (error) {
-    //         console.log(error)
-    //       }
-    //     }
-    //   ).add(
-    //     () => {
-    //       this.loading = false;
-    //       if (this.searchInput && isFocusedInput) {
-    //         setTimeout(() => {
-    //           this.searchInput.nativeElement.focus();
-    //         });
-    //       }
-    //     }
-    //   )
+    let isFocusedInput = this.isFocusedInput;
+    this.loading = true;
+    this.notifService.getNotifList(
+      this.paginatorProps.pageIndex + 1,
+      this.paginatorProps.pageSize,
+      this.search).subscribe(
+        (data: any) => {
+          try {
+            console.table(data);
+            this.notifications = data.data;
+            this.paginatorProps.length = data.count;
+            this.now = new Date()
+            if (this.table) {
+              this.table.renderRows();
+            }
+          } catch (error) {
+            console.table(error);
+          }
+        },
+        error => {
+          try {
+            console.table(error);
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'notificationListScreen.loadFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      ).add(
+        () => {
+          this.loading = false;
+          if (this.searchInput && isFocusedInput) {
+            setTimeout(() => {
+              this.searchInput.nativeElement.focus();
+            });
+          }
+        }
+      )
   }
 }

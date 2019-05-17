@@ -46,8 +46,14 @@
               <mat-form-field appearance="fill">
                 <input matInput placeholder="{{'forms.title.placeholder' | translate}}" formControlName="title">
               </mat-form-field>
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <mat-hint class="bottom-hint">
+                  {{title.value ? title.value.length : 0}}/{{notifTitle.maxLength}}
+                </mat-hint>
+              </div>
               <mat-error class="bottom-error" *ngIf="title.invalid && (title.dirty || title.touched)">
                 <span *ngIf="title.errors.required">{{'forms.title.errorRequired' | translate}}</span>
+                <span *ngIf="title.errors.maxlength">{{'forms.title.errorMaxLength' | translate: notifTitle}}</span>
               </mat-error>
             </div>
           </div>
@@ -62,8 +68,14 @@
                 <textarea formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
                   cdkAutosizeMaxRows="5" placeholder="{{'forms.content.placeholder' | translate}}"></textarea>
               </mat-form-field>
+              <div fxLayout="row" fxLayoutAlign="end center">
+                <mat-hint class="bottom-hint">
+                  {{content.value ? content.value.length : 0}}/{{notifContent.maxLength}}
+                </mat-hint>
+              </div>
               <mat-error class="bottom-error" *ngIf="content.invalid && (content.dirty || content.touched)">
                 <span *ngIf="content.errors.required">{{'forms.content.errorRequired' | translate}}</span>
+                <span *ngIf="content.errors.maxlength">{{'forms.content.errorMaxLength' | translate: notifContent}}</span>
               </mat-error>
             </div>
           </div>
@@ -110,8 +122,10 @@
             <div fxFlex="80%" fxFlex.lt-md="100%">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="articleId">
-                  <mat-option value="" (click)="selectedArticleTitle=''">{{'forms.notifArticle.placeholder' | translate}}</mat-option>
-                  <mat-option *ngFor="let article of articles" [value]="article.id" (click)="selectedArticleTitle=article.title">{{article.title}}</mat-option>
+                  <mat-option value="" (click)="selectedArticleTitle=''">
+                    {{'forms.notifArticle.placeholder' | translate}}</mat-option>
+                  <mat-option *ngFor="let article of articles" [value]="article.id"
+                    (click)="selectedArticleTitle=article.title">{{article.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-error class="bottom-error" *ngIf="articleId.invalid && (articleId.dirty || articleId.touched)">
@@ -128,8 +142,9 @@
           {{'forms.schedule.fieldTitle' | translate}}
         </div>
         <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-          <div fxFlex="80%" fxFlex.lt-md="100%" fxLayout="column" >
-            <mat-radio-group formControlName="scheduledFlag" fxLayout="column" fxLayoutGap="10px" class="margin-bottom-10">
+          <div fxFlex="80%" fxFlex.lt-md="100%" fxLayout="column">
+            <mat-radio-group formControlName="scheduledFlag" fxLayout="column" fxLayoutGap="10px"
+              class="margin-bottom-10">
               <mat-radio-button [value]="false" color="primary">
                 {{'forms.schedule.options.immediate' | translate}}
               </mat-radio-button>
@@ -150,14 +165,15 @@
                 </mat-form-field>
               </div>
             </div>
-            <mat-error class="bottom-error"
-              *ngIf="
+            <mat-error class="bottom-error" *ngIf="
               scheduledFlag.invalid || scheduleDate.dirty || scheduleDate.touched ||
               scheduleTime.dirty || scheduleTime.touched || notifForm.errors
               ">
               <span *ngIf="scheduledFlag.errors?.required">{{'forms.schedule.errorTypeRequired' | translate}}</span>
-              <span *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleRequired">{{'forms.schedule.errorRequired' | translate}}</span>
-              <span *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleMin">{{'forms.schedule.errorMin' | translate}}</span>
+              <span
+                *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleRequired">{{'forms.schedule.errorRequired' | translate}}</span>
+              <span
+                *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleMin">{{'forms.schedule.errorMin' | translate}}</span>
             </mat-error>
           </div>
         </div>

@@ -11,7 +11,9 @@
             {{'forms.recipient.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
-            {{data.notification.recipient}}
+            <span *ngIf="data.notification.recipient ===  'all'">
+              {{'forms.recipient.options.all' | translate}}
+            </span>
           </div>
         </div>
       </div>
@@ -61,7 +63,12 @@
             {{'forms.schedule.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
-            {{data.notification.scheduleDate | date: 'dd MMMM yyyy'}} ; {{data.notification.scheduleTime}}
+            <span *ngIf="data.notification.scheduledFlag">
+              {{data.notification.scheduleDate | date: 'dd MMMM yyyy'}} ; {{data.notification.scheduleTime}}
+            </span>
+            <span *ngIf="!data.notification.scheduledFlag">
+              {{'forms.schedule.options.immediate' | translate}}
+            </span>
           </div>
         </div>
       </div>
