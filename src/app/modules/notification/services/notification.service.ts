@@ -44,7 +44,7 @@ export class NotificationService {
   deleteNotif(id) {
     let url = this.notificationApiUrl + id;
     console.log("NotificationService | deleteNotif ", url);
-    return this.authService.wrapTokenGetApi(url)
+    return this.authService.wrapTokenDeleteApi(url)
   }
   
 }
