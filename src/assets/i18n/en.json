@@ -318,7 +318,7 @@
             "errorMin": "Schedule should be more than 1 hr from now",
             "options": {
                 "immediate": "Immediate",
-                "certainTime": "Certain Time"
+                "certainTime": "Scheduled"
             },
             "datePlaceholder": "MM/dd/yyyy"
         },
