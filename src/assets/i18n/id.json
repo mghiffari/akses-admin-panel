@@ -318,7 +318,7 @@
             "errorMin": "Jadwal harus lebih dari 1 jam sejak saat ini",
             "options": {
                 "immediate": "Langsung",
-                "certainTime": "Nanti"
+                "certainTime": "Terjadwal"
             },
             "datePlaceholder": "MM/dd/yyyy"
         },
