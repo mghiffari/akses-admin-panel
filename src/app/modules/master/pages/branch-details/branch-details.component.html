@@ -267,7 +267,7 @@
         </div>
         <div fxLayout="row" fxFlexAlign="center" fxFlex="70%" fxLayoutAlign="start center">
           <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"
-            >{{'save' | translate}}</button>
+            [disabled]="!branchForm.valid || onCheckCode">{{'save' | translate}}</button>
           <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
             <div fxLayout="row" fxLayoutAlign="center center">
               <div>
