@@ -6,6 +6,7 @@
                 "banners": "Home Banner",
                 "users": "User",
                 "articles": "Artikel",
+                "specialOffers": "Special Offer",
                 "faqs": "FAQ",
                 "branches": "Lokasi Cabang",
                 "changePhonenumberRequests": "Ubah Nomor Handphone"
@@ -634,6 +635,14 @@
             "immediate": "tidak dapat mengubah notifikasi yang langsung dikirim",
             "minDuration": "tidak dapat mengubah notifikasi dengan jadwal kurang dari 1 jam sejak saat ini"
         }
+    },
+    "specialOfferListScreen": {
+        "title": "Data Special Offer",
+        "createOffer": "tambahkan special offer baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus special offer {{title}}?",
+        "loadFailed": "fgagal mendapatkan list special offer",
+        "immediate": "Langsung",
+        "scheduled": "Terjadwal"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

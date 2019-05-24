@@ -47,6 +47,10 @@ export class MainNavComponent {
           link: '/articles'
         },
         {
+          title: 'navMenus.master.children.specialOffers',
+          link: '/special-offers'
+        },
+        {
           title: 'navMenus.master.children.faqs',
           link: '/faqs'
         },
