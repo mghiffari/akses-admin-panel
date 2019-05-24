@@ -10,7 +10,6 @@ import { BannerDetailsService } from './pages/banner-details/services/banner-det
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { BannerService } from './services/banner.service';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
-import { ArticleService } from './services/article.service';
 import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
 import { FAQListComponent } from './pages/faq-list/faq-list.component';
 import { FAQService } from './services/faq.service';
@@ -49,7 +48,6 @@ import { RemarkInputModalComponent } from './components/remark-input-modal/remar
   providers: [
     BannerDetailsService,
     BannerService,
-    ArticleService,
     FAQService,
     BranchService,
     ChangePhoneService

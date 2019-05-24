@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class ArticleService {
   uploadApiUrl = environment.apiurl + 'upload/';
   articleApiUrl = environment.apiurl + 'article/';
+  articleCategoryApiUrl = this.articleApiUrl + 'category/';
 
   //constructor
   constructor(private authService: AuthService) { 
@@ -40,5 +41,12 @@ export class ArticleService {
     let url = this.articleApiUrl;
     console.log("ArticleService | updateArticle " + url);
     return this.authService.wrapTokenPutApi(url, data);
+  }
+
+  //get article list by category
+  getArticlesByCategory(category){
+    let url = this.articleCategoryApiUrl + category;
+    console.log("ArticleService | getArticlesByCategory ", url);
+    return this.authService.wrapTokenGetApi(url)
   }
 }

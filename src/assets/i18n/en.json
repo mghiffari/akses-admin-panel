@@ -17,6 +17,9 @@
         },
         "paymentInstruction": {
             "title": "Payment Instruction"
+        },
+        "notification": {
+            "title": "Notification"
         }
     },
     "userAction": {
@@ -278,10 +281,46 @@
                 "boldBrackets": "Put text inside square brackets [ ] to bold"
             }
         },
-        "paymentInstructionTitle": {
+        "title": {
             "fieldTitle": "Title",
             "placeholder": "Title",
-            "iconRequied": "Title is required"
+            "iconRequied": "Title is required",
+            "errorMaxLength": "Max. length of Title is {{maxLength}}"
+        },
+        "recipient": {
+            "fieldTitle": "Recipient",
+            "placeholder": "Recipient",
+            "errorRequired": "Recipient is required",
+            "options": {
+                "all": "All"
+            }
+        },
+        "content": {
+            "fieldTitle": "Content",
+            "placeholder": "Content",
+            "errorRequired": "Content is required",
+            "errorMaxLength": "Max. length of Content is {{maxLength}}"
+        },
+        "articleCategory": {
+            "fieldTitle": "Article Category",
+            "placeholder": "Article category",
+            "errorRequired": "Article Category is required"
+        },
+        "notifArticle": {
+            "fieldTitle": "Article",
+            "placeholder": "Select an Article",
+            "errorRequired": "Article is required"
+        },
+        "schedule": {
+            "fieldTitle": "Schedule",
+            "errorTypeRequired": "Schedule type is required",
+            "errorRequired": "Schedule must have date and time format value",
+            "errorMin": "Schedule should be more than 1 hr from now",
+            "options": {
+                "immediate": "Immediate",
+                "certainTime": "Scheduled"
+            },
+            "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
             "save": "Save",
@@ -360,6 +399,12 @@
             "tenureMonth48": "48 Month",
             "tenureMonth54": "54 Month",
             "tenureMonth60": "60 Month"
+        },
+        "notificationTable": {
+            "schedule": "Schedule",
+            "sent": "Total Recipient",
+            "clicked": "Clicked",
+            "scheduleType": "Type"
         }
     },
     "bannerListScreen": {
@@ -406,6 +451,7 @@
     "by": "by",
     "edit": "edit",
     "example": "example",
+    "invalidForm": "invalid form",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -502,7 +548,7 @@
         "fileExample": "Example File",
         "uploadFailed": "Upload Failed",
         "uploadSuccess": "Upload Success",
-        "instructions":{
+        "instructions": {
             "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
             "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
             "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the nearest branch location on the app",
@@ -511,7 +557,7 @@
         }
     },
     "productCreditSimulationScreen": {
-        "title": "Credit Simulation",        
+        "title": "Credit Simulation",
         "getProductFailed": "failed to get product data",
         "getProdCompFailed": "failed to get product components",
         "getCreditSimulationFailed": "failed to get credit simulation data",
@@ -530,7 +576,7 @@
         "bulkApproveFailed": "failed to approve {{totalRequest}} requests",
         "bulkApproveSuccess": "{{totalRequest}} requests are approved",
         "totalRequestSelected": "{{totalRequest}} requests are selected",
-        "confirmationModal":{
+        "confirmationModal": {
             "reject": {
                 "title": "Rejecting Confirmation",
                 "content": "Are you sure you want to reject change phonenumber request?"
@@ -566,6 +612,29 @@
         "getStepsFailed": "failed to get instruction steps",
         "updateFailed": "failed to update payment instructions",
         "deleteIconFailed": "failed to delete icon"
+    },
+    "notificationListScreen": {
+        "title": "Notifications Data",
+        "createNotification": "create new notification",
+        "deleteConfirmation": "Are you sure you want to delete notification {{title}}?",
+        "loadFailed": "failed to get list of notifications",
+        "immediate": "Immediate",
+        "scheduled": "Scheduled"
+    },
+    "notificationDetailsScreen": {
+        "getNotificationFailed": "failed to get notification data",
+        "getArticleListFailed": "failed to get article list",
+        "createTitle": "Create New Notification",
+        "updateTitle": "Update Notification",
+        "succesCreated": "new notification successfully created",
+        "succesUpdated": "notification data successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new notification",
+        "notifSaveConfirm": "Save Notification Confirmation",
+        "cantUpdate": {
+            "immediate": "can't update immediately sent notification",
+            "minDuration": "can't update notification which schedule is less than one hour"
+        }
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -658,6 +727,10 @@
         "01086": "instruction type parameter and value is required",
         "01087": "icon parameter and value is required",
         "01088": "failed to create data",
-        "01089": "data to swap order length should be 2, consist of from and destination"
+        "01089": "data to swap order length should be 2, consist of from and destination",
+        "01090": "failed to create new notification",
+        "01091": "notification not found",
+        "01092": "notification have been sent or deleted in one signal",
+        "01093": "failed to delete notification"
     }
 }

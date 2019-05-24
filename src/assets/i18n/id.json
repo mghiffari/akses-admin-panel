@@ -17,6 +17,9 @@
         },
         "paymentInstruction": {
             "title": "Instruksi Pembayaran"
+        },
+        "notification": {
+            "title": "Notifikasi"
         }
     },
     "userAction": {
@@ -278,10 +281,46 @@
                 "boldBrackets": "Gunakan kurung siku [ ] pada bagian kalimat untuk menjadikannya bold."
             }
         },
-        "paymentInstructionTitle": {
+        "title": {
             "fieldTitle": "Judul",
             "placeholder": "Judul",
-            "errorRequired": "Judul wajib diisi"
+            "errorRequired": "Judul wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Judul adalah {{maxLength}}"
+        },
+        "recipient": {
+            "fieldTitle": "Penerima",
+            "placeholder": "Penerima",
+            "errorRequired": "Penerima wajib diisi",
+            "options": {
+                "all": "Semua"
+            }
+        },
+        "content": {
+            "fieldTitle": "Pesan",
+            "placeholder": "Pesan",
+            "errorRequired": "Pesan wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Pesan adalah {{maxLength}}"
+        },
+        "articleCategory": {
+            "fieldTitle": "Kategori Artikel",
+            "placeholder": "Kategori artikel",
+            "errorRequired": "Kategori Artikel wajib diisi"
+        },
+        "notifArticle": {
+            "fieldTitle": "Artikel",
+            "placeholder": "Pilih Artikel",
+            "errorRequired": "Artikel wajib diisi"
+        },
+        "schedule": {
+            "fieldTitle": "Jadwal",
+            "errorRequired": "Jadwal wajib diisi dengan format tanggal dan waktu yang valid",
+            "errorTypeRequired": "Tipe Jadwal wajib diisi",
+            "errorMin": "Jadwal harus lebih dari 1 jam sejak saat ini",
+            "options": {
+                "immediate": "Langsung",
+                "certainTime": "Terjadwal"
+            },
+            "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
             "save": "Simpan",
@@ -360,6 +399,12 @@
             "tenureMonth48": "48 Bln",
             "tenureMonth54": "54 Bln",
             "tenureMonth60": "60 Bln"
+        },
+        "notificationTable": {
+            "schedule": "Jadwal",
+            "sent": "Jumlah Penerima",
+            "clicked": "Telah Diklik",
+            "scheduleType": "Tipe"
         }
     },
     "bannerListScreen": {
@@ -394,7 +439,7 @@
     "cancel": "batal",
     "success": "berhasil",
     "fail": "gagal",
-    "error": "eror",
+    "error": "error",
     "upload": "upload",
     "deleteConfirmation": "Konfirmasi Hapus",
     "dataDeleted": "data berhasil dihapus",
@@ -406,6 +451,7 @@
     "by": "by",
     "edit": "edit",
     "example": "contoh",
+    "invalidForm": "form tidak valid",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -566,6 +612,29 @@
         "updateFailed": "gagal mengubah data instruksi pembayaran",
         "deleteIconFailed": "gagal menghapus ikon"
     },
+    "notificationListScreen": {
+        "title": "Data Notifikasi",
+        "createNotification": "tambahkan notifikasi baru",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus notifikasi {{title}}?",
+        "loadFailed": "gagal mendapatkan list notifikasi",
+        "immediate": "Langsung",
+        "scheduled": "Terjadwal"
+    },
+    "notificationDetailsScreen": {
+        "getNotificationFailed": "gagal mendapatkan data notifikasi",
+        "getArticleListFailed": "gagal mendapatkan list artikel",
+        "createTitle": "Tambahkan Notifikasi Baru",
+        "updateTitle": "Ubah Notifikasi",
+        "succesCreated": "notifikasi berhasil ditambahkan",
+        "succesUpdated": "notifikasi berhasil diubah",
+        "updateFailed": "gagal mengubah data",
+        "createFailed": "gagal menambahkan notifikasi baru",
+        "notifSaveConfirm": "Konfirmasi Simpan Notifikasi",
+        "cantUpdate": {
+            "immediate": "tidak dapat mengubah notifikasi yang langsung dikirim",
+            "minDuration": "tidak dapat mengubah notifikasi dengan jadwal kurang dari 1 jam sejak saat ini"
+        }
+    },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
         "01000": "internal server error",
@@ -656,7 +725,11 @@
         "01085": "gagal menukar urutan instruksi",
         "01086": "tipe instruksi wajib diisi",
         "01087": "ikon wajib diisi",
-        "01088": "gagal membuat data baru",
-        "01089": "data untuk menukar instruksi harus terdiri dari 2 instruksi"
+        "01088": "gagal menambahkan data baru",
+        "01089": "data untuk menukar instruksi harus terdiri dari 2 instruksi",
+        "01090": "gagal menambahkan notifikasi baru",
+        "01091": "notifikasi tidak ditemukan",
+        "01092": "notifikasi sudah terkirim atau sudah dihapus di one signal",
+        "01093": "gagal menghapus notifikasi"
     }
 }
