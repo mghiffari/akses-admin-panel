@@ -527,9 +527,9 @@ export class BranchDetailsComponent implements OnInit {
         try {
           console.table(response)
           this.onCheckCode = false;
-          this.branchCode.setErrors({ 'duplicatecode': true })
           this.duplicateBranchId = response.data.id;
           if(this.onSubmittingForm){
+            this.onSubmittingForm = false;
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'branchDetailsScreen.createFailed',
@@ -539,6 +539,9 @@ export class BranchDetailsComponent implements OnInit {
                 }
               }
             })
+            this.branchCode.setErrors({ 'duplicatecode': true })
+          } else {
+            this.branchCode.setErrors({ 'duplicatecode': true })
           }
         } catch (error) {
           console.table(error)
