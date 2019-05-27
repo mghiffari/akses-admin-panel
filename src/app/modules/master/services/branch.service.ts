@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class BranchService {
 
   branchApiUrl = environment.apiurl + 'branch/';
+  getBranchByCodeApiUrl = this.branchApiUrl + 'q?code='
   uploadCSVApiUrl = this.branchApiUrl + 'csv';
 
   //constructor
@@ -47,5 +48,12 @@ export class BranchService {
     let data = new FormData();
     data.append('csv', file);
     return this.authService.wrapTokenPostApi(this.uploadCSVApiUrl, data);
+  }
+
+  //get branch by code
+  getBranchByCode(code){
+    let url = this.getBranchByCodeApiUrl + code;
+    console.log("BranchService | getBranchByCode ", url);
+    return this.authService.wrapTokenGetApi(url);
   }
 }

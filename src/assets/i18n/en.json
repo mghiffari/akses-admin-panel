@@ -186,7 +186,12 @@
             "placeholder": "Branch code",
             "errorRequired": "Branch Code is required",
             "errorFormat": "Branch Code should only contain numbers",
-            "errorLength": "Branch Code should contain {{minLength}} numbers"
+            "errorLength": "Branch Code should contain {{minLength}} numbers",
+            "errorDuplicate": {
+                "preText": "Branch Code already exist, click ", 
+                "here": "here",
+                "endText": " to see the branch"
+            }
         },
         "branchType": {
             "fieldTitle": "Branch Type",
@@ -536,7 +541,8 @@
         "getProvincesFailed": "failed to get province list",
         "getCitiesFailed": "failed to get city list",
         "getDistrictsFailed": "failed to get district list",
-        "getSubDistrictsFailed": "failed to get sub-district list"
+        "getSubDistrictsFailed": "failed to get sub-district list", 
+        "duplicateBranchCode": "Branch Code already exist"
     },
     "branchListScreen": {
         "title": "Branch Locations Data",

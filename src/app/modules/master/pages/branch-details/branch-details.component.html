@@ -23,14 +23,23 @@
           {{'forms.branchCode.fieldTitle' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
-          <mat-form-field appearance="fill">
+          <mat-form-field appearance="fill" class="custom">
             <input matInput placeholder="{{'forms.branchCode.placeholder' | translate}}" formControlName="branchCode">
+            <div matSuffix *ngIf="onCheckCode">
+              <mat-spinner diameter="24"></mat-spinner>
+            </div>
+            <mat-icon matSuffix class="text-success" *ngIf="!onCheckCode && branchCode.valid && isCreate">check_circle</mat-icon>
           </mat-form-field>
           <mat-error class="bottom-error" *ngIf="branchCode.invalid && (branchCode.dirty || branchCode.touched)">
             <span *ngIf="branchCode.errors.required">{{'forms.branchCode.errorRequired' | translate}}</span>
             <span *ngIf="branchCode.errors.pattern">{{'forms.branchCode.errorFormat' | translate}}</span>
             <span *ngIf="!branchCode.errors.pattern && (branchCode.errors.minlength || branchCode.errors.maxlength)">
               {{'forms.branchCode.errorLength' | translate: branchCodeLength}}
+            </span>
+            <span *ngIf="branchCode.errors.duplicatecode">
+              {{'forms.branchCode.errorDuplicate.preText' | translate}}
+              <a class="text-blue" [routerLink]="['/master/branches/update', duplicateBranchId]" target="_blank">
+                {{'forms.branchCode.errorDuplicate.here' | translate}}</a>{{'forms.branchCode.errorDuplicate.endText' | translate}}
             </span>
           </mat-error>
         </div>
@@ -258,7 +267,7 @@
         </div>
         <div fxLayout="row" fxFlexAlign="center" fxFlex="70%" fxLayoutAlign="start center">
           <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"
-            [disabled]="!branchForm.valid">{{'save' | translate}}</button>
+            [disabled]="!branchForm.valid || onCheckCode">{{'save' | translate}}</button>
           <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
             <div fxLayout="row" fxLayoutAlign="center center">
               <div>

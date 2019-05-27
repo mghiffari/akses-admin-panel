@@ -256,6 +256,10 @@ body {
     color: map-get($colors, pale-orange)
 }
 
+.text-blue{
+    color: map-get($colors, blue)
+}
+
 .top-action-text{
     @extend .font-gotham-bold;
     @extend .font-sub-description;

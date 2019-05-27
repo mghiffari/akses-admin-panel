@@ -186,7 +186,12 @@
             "placeholder": "Kode cabang",
             "errorRequired": "Kode Cabang wajib diisi",
             "errorFormat": "Kode Cabang hanya harus dalam angka",
-            "errorLength": "Kode Cabang harus terdiri {{minLength}} angka"
+            "errorLength": "Kode Cabang harus terdiri {{minLength}} angka",
+            "errorDuplicate": {
+                "preText": "Kode Cabang telah digunakan, klik ", 
+                "here": "disini",
+                "endText": " untuk melihat kode cabang tersebut"
+            }
         },
         "branchType": {
             "fieldTitle": "Tipe Cabang",
@@ -536,7 +541,8 @@
         "getProvincesFailed": "gagal mendapatkan list provinsi",
         "getCitiesFailed": "gagal mendapatkan list kota / kabupaten",
         "getDistrictsFailed": "gagal mendapatkan list kecamatan",
-        "getSubDistrictsFailed": "gagal mendapatkan list kelurahan"
+        "getSubDistrictsFailed": "gagal mendapatkan list kelurahan",
+        "duplicateBranchCode": "Kode Cabang sudah tersedia"
     },
     "branchListScreen": {
         "title": "Data Lokasi Cabang",
