@@ -42,7 +42,7 @@ export class SpecialOfferListComponent implements OnInit {
       schedule_sending: "2019-05-22T02:48:39.000Z",
       scheduled_flg: false,
       title: "Gak Pake DP",
-      total_users: 8, 
+      total_users: 8,
       preview: "https://mitrapay.mitracomm.com/adirabox_//uploaded/banner/harcilnas_34_thumb.jpg",
       end_date: new Date(2019, 4, 25),
       exp_flg: true,
@@ -113,74 +113,70 @@ export class SpecialOfferListComponent implements OnInit {
   //delete
   onDelete(offer) {
     console.log("SpecialOfferListComponent | onDelete")
-    // if (this.isEditableOffer(offer)) {
-      const modalRef = this.modal.open(ConfirmationModalComponent, {
-        width: '260px',
-        data: {
-          title: 'deleteConfirmation',
-          content: {
-            string: 'specialOfferListScreen.deleteConfirmation',
-            data: {
-              title: offer.title
-            }
+    const modalRef = this.modal.open(ConfirmationModalComponent, {
+      width: '260px',
+      data: {
+        title: 'deleteConfirmation',
+        content: {
+          string: 'specialOfferListScreen.deleteConfirmation',
+          data: {
+            title: offer.title
           }
         }
-      })
-      // modalRef.afterClosed().subscribe(result => {
-      //   if (result) {
-      //     this.loading = true;
-      //     this.offerService.deleteOffer(offer.id).subscribe(
-      //       (data: any) => {
-      //         try {
-      //           console.table(data);
-      //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-      //             data: {
-      //               title: 'success',
-      //               content: {
-      //                 text: 'dataDeleted',
-      //                 data: null
-      //               }
-      //             }
-      //           })
-      //           this.lazyLoadData()
-      //         } catch (error) {
-      //           console.table(error)
-      //         }
-      //       },
-      //       error => {
-      //         try {
-      //           console.table(error);
-      //           this.loading = false;
-      //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      //             data: {
-      //               title: 'failedToDelete',
-      //               content: {
-      //                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-      //                 data: null
-      //               }
-      //             }
-      //           })
-      //         } catch (error) {
-      //           console.table(error)
-      //         }
-      //       }
-      //     )
-      //   }
-      // })
-    // } else {
-    //   this.table.renderRows()
-    // }
+      }
+    })
+    // modalRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.loading = true;
+    //     this.offerService.deleteOffer(offer.id).subscribe(
+    //       (data: any) => {
+    //         try {
+    //           console.table(data);
+    //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+    //             data: {
+    //               title: 'success',
+    //               content: {
+    //                 text: 'dataDeleted',
+    //                 data: null
+    //               }
+    //             }
+    //           })
+    //           this.lazyLoadData()
+    //         } catch (error) {
+    //           console.table(error)
+    //         }
+    //       },
+    //       error => {
+    //         try {
+    //           console.table(error);
+    //           this.loading = false;
+    //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+    //             data: {
+    //               title: 'failedToDelete',
+    //               content: {
+    //                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+    //                 data: null
+    //               }
+    //             }
+    //           })
+    //         } catch (error) {
+    //           console.table(error)
+    //         }
+    //       }
+    //     )
+    //   }
+    // })
   }
 
   // edit button handler
   onEdit(offer) {
     console.log('SpecialOfferListComponent | onEdit')
-    // if (this.isEditableOffer(offer)) {
-      this.router.navigate(['/special-offers/update', offer.id])
-    // } else {
-    //   this.table.renderRows();
-    //   this.editOfferError();
-    // }
+    if (this.isEditableOffer(offer)) {
+      this.router.navigate(['/master/special-offers/update', offer.id])
+    } else {
+      this.table.renderRows();
+      this.editOfferError();
+    }
   }
 
   // show error if to be edited offer data is not valid eq: immediate notif & notif <= 1 hr
@@ -218,11 +214,7 @@ export class SpecialOfferListComponent implements OnInit {
   //check whether offer is editable
   isEditableOffer(offer) {
     console.log('SpecialOfferListComponent | isEditableOffer');
-    if (offer.scheduled_flg) {
-      return CustomValidation.durationFromNowValidation(new Date(offer.schedule_sending))
-    } else {
-      return false;
-    }
+    return CustomValidation.durationFromNowValidation(new Date(offer.end_date))
   }
 
   // call api to get data based on table page, page size, and search keyword
