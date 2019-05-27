@@ -26,11 +26,7 @@ export class SpecialOfferListComponent implements OnInit {
     'title',
     'preview',
     'endDate',
-    'schedule',
     'lastEdited',
-    'sent',
-    'clicked',
-    'type',
     'action'
   ]
 
@@ -117,7 +113,7 @@ export class SpecialOfferListComponent implements OnInit {
   //delete
   onDelete(offer) {
     console.log("SpecialOfferListComponent | onDelete")
-    if (this.isEditableOffer(offer)) {
+    // if (this.isEditableOffer(offer)) {
       const modalRef = this.modal.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -171,20 +167,20 @@ export class SpecialOfferListComponent implements OnInit {
       //     )
       //   }
       // })
-    } else {
-      this.table.renderRows()
-    }
+    // } else {
+    //   this.table.renderRows()
+    // }
   }
 
   // edit button handler
   onEdit(offer) {
     console.log('SpecialOfferListComponent | onEdit')
-    if (this.isEditableOffer(offer)) {
+    // if (this.isEditableOffer(offer)) {
       this.router.navigate(['/special-offers/update', offer.id])
-    } else {
-      this.table.renderRows();
-      this.editOfferError();
-    }
+    // } else {
+    //   this.table.renderRows();
+    //   this.editOfferError();
+    // }
   }
 
   // show error if to be edited offer data is not valid eq: immediate notif & notif <= 1 hr
