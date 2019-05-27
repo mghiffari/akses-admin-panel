@@ -5,12 +5,11 @@ import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snac
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationService } from 'src/app/modules/notification/services/notification.service';
 
 @Component({
   selector: 'app-special-offer-list',
   templateUrl: './special-offer-list.component.html',
-  styleUrls: ['./special-offer-list.component.scss']
+  styleUrls: []
 })
 export class SpecialOfferListComponent implements OnInit {
   now = new Date();
@@ -35,7 +34,59 @@ export class SpecialOfferListComponent implements OnInit {
     'action'
   ]
 
-  offers = [];
+  offers = [
+    {
+      aks_adm_article_id: "573d160a-9fc4-44a0-9bde-f839647e1066",
+      content: "abc",
+      edited_by: "natashajanicetambunan@gmail.com",
+      edited_date: "2019-05-22T02:48:39.000Z",
+      id: "933ab6d9-7226-4272-a62c-da3e6adb6b35",
+      is_deleted: 0,
+      is_editable: false,
+      schedule_sending: "2019-05-22T02:48:39.000Z",
+      scheduled_flg: false,
+      title: "Gak Pake DP",
+      total_users: 8, 
+      preview: "https://mitrapay.mitracomm.com/adirabox_//uploaded/banner/harcilnas_34_thumb.jpg",
+      end_date: new Date(2019, 4, 25),
+      exp_flg: true,
+      sent_flg: true
+    },
+    {
+      aks_adm_article_id: "573d160a-9fc4-44a0-9bde-f839647e1066",
+      content: "def",
+      edited_by: "natashajanicetambunan@gmail.com",
+      edited_date: "2019-05-22T02:48:39.000Z",
+      id: "933ab6d9-7226-4272-a62c-da3e6adb6b35",
+      is_deleted: 0,
+      is_editable: false,
+      schedule_sending: (new Date()).setHours(new Date().getHours() + 1),
+      scheduled_flg: true,
+      title: "Promo 2",
+      total_users: 8,
+      preview: "https://mitrapay.mitracomm.com/adirabox_//uploaded/banner/harcilnas_34_thumb.jpg",
+      end_date: new Date(2019, 5, 10),
+      exp_flg: false,
+      sent_flg: false
+    },
+    {
+      aks_adm_article_id: "573d160a-9fc4-44a0-9bde-f839647e1066",
+      content: "hij",
+      edited_by: "natashajanicetambunan@gmail.com",
+      edited_date: "2019-05-22T02:48:39.000Z",
+      id: "933ab6d9-7226-4272-a62c-da3e6adb6b35",
+      is_deleted: 0,
+      is_editable: false,
+      schedule_sending: new Date(2019, 5, 1, 23, 0, 0, 0),
+      scheduled_flg: true,
+      title: "Promo 3",
+      total_users: 8,
+      preview: "https://mitrapay.mitracomm.com/adirabox_//uploaded/banner/harcilnas_34_thumb.jpg",
+      end_date: new Date(2019, 6, 1),
+      exp_flg: false,
+      sent_flg: false
+    }
+  ];
   search = '';
   closeText = '';
   loading = false;
@@ -66,7 +117,7 @@ export class SpecialOfferListComponent implements OnInit {
   //delete
   onDelete(offer) {
     console.log("SpecialOfferListComponent | onDelete")
-    if(this.isEditableOffer(offer)){
+    if (this.isEditableOffer(offer)) {
       const modalRef = this.modal.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -126,9 +177,9 @@ export class SpecialOfferListComponent implements OnInit {
   }
 
   // edit button handler
-  onEdit(offer){
+  onEdit(offer) {
     console.log('SpecialOfferListComponent | onEdit')
-    if(this.isEditableOffer(offer)){
+    if (this.isEditableOffer(offer)) {
       this.router.navigate(['/special-offers/update', offer.id])
     } else {
       this.table.renderRows();
@@ -137,7 +188,7 @@ export class SpecialOfferListComponent implements OnInit {
   }
 
   // show error if to be edited offer data is not valid eq: immediate notif & notif <= 1 hr
-  editOfferError(){
+  editOfferError() {
     console.log('SpecialOfferListComponent | editOfferError')
     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       data: {
@@ -168,10 +219,10 @@ export class SpecialOfferListComponent implements OnInit {
     }
   }
 
-  //check whether notifcation is editable
-  isEditableOffer(offer){
+  //check whether offer is editable
+  isEditableOffer(offer) {
     console.log('SpecialOfferListComponent | isEditableOffer');
-    if(offer.scheduled_flg){
+    if (offer.scheduled_flg) {
       return CustomValidation.durationFromNowValidation(new Date(offer.schedule_sending))
     } else {
       return false;

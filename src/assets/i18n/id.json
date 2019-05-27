@@ -351,7 +351,9 @@
             "active": "Aktif",
             "inactive": "Non-aktif",
             "approved": "Approved",
-            "rejected": "Rejected"
+            "rejected": "Rejected",
+            "delivered": "Terkirim",
+            "pending": "Pending"
         },
         "uniqueTag": "Unique Tag",
         "title": "Judul",
