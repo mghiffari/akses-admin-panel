@@ -252,6 +252,10 @@ body {
     color: map-get($colors, dark-gray)
 }
 
+.text-warning{
+    color: map-get($colors, pale-orange)
+}
+
 .text-blue{
     color: map-get($colors, blue)
 }
@@ -281,6 +285,10 @@ button[block-button]{
     font-size: map-get($font-sizes, 'description') !important;
     width: 16px !important; 
     height: 16px !important;
+}
+
+.th-min-width-150 {
+    min-width: 150px;
 }
 
 .th-min-width {

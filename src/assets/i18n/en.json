@@ -6,6 +6,7 @@
                 "banners": "Home Banners",
                 "users": "Users",
                 "articles": "Articles",
+                "specialOffers": "Special Offers",
                 "faqs": "FAQs",
                 "branches": "Branch Locations",
                 "changePhonenumberRequests": "Change Phonenumber Requests"
@@ -355,7 +356,9 @@
             "active": "Active",
             "inactive": "Inactive",
             "approved": "Approved",
-            "rejected": "Rejected"
+            "rejected": "Rejected",
+            "delivered": "Delivered",
+            "pending": "Pending"
         },
         "uniqueTag": "Unique Tag",
         "title": "Title",
@@ -641,6 +644,14 @@
             "immediate": "can't update immediately sent notification",
             "minDuration": "can't update notification which schedule is less than one hour"
         }
+    },
+    "specialOfferListScreen": {
+        "title": "Special Offers Data",
+        "createOffer": "create new special offer",
+        "deleteConfirmation": "Are you sure you want to delete special offer {{title}}?",
+        "loadFailed": "failed to get list of special offers",
+        "immediate": "Immediate",
+        "scheduled": "Scheduled"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

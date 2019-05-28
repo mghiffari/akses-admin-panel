@@ -11,6 +11,7 @@ import { FAQDetailsComponent } from './pages/faq-details/faq-details.component';
 import { BranchDetailsComponent } from './pages/branch-details/branch-details.component';
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
 import { ChangePhoneListComponent } from './pages/change-phone-list/change-phone-list.component';
+import { SpecialOfferListComponent } from './pages/special-offer-list/special-offer-list.component';
 
 const routes: Routes = [
   {
@@ -123,6 +124,13 @@ const routes: Routes = [
     component: ChangePhoneListComponent,
     data: {
       title: 'Change Phonenumber Requests'
+    }
+  },
+  {
+    path: 'special-offers',
+    component: SpecialOfferListComponent,
+    data: {
+      title: 'Special Offers'
     }
   }
 ];

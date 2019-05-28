@@ -21,6 +21,7 @@ import { BranchUploadModalComponent } from './components/branch-upload-modal/bra
 import { ChangePhoneListComponent } from './pages/change-phone-list/change-phone-list.component';
 import { ChangePhoneService } from './services/change-phone.service';
 import { RemarkInputModalComponent } from './components/remark-input-modal/remark-input-modal.component';
+import { SpecialOfferListComponent } from './pages/special-offer-list/special-offer-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RemarkInputModalComponent } from './components/remark-input-modal/remar
     BranchListComponent,
     BranchUploadModalComponent,
     ChangePhoneListComponent,
-    RemarkInputModalComponent
+    RemarkInputModalComponent,
+    SpecialOfferListComponent
   ],
   imports: [
     CommonModule,
