@@ -508,6 +508,10 @@
         "title": "Konfirmasi Pindah Halaman",
         "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
     },
+    "dataConfirmationModal": {
+        "title": "Konfirmasi Data",
+        "content": "Apakah Anda yakin bahwa semua data dan konten yang terisi sudah benar?"
+    },
     "userListScreen": {
         "title": "Data User",
         "createUser": "tambahkan user baru",

@@ -508,6 +508,10 @@
         "title": "Leave Page Confirmation",
         "content": "Are you sure you want to leave this page? Changes will be discarded"
     },
+    "dataConfirmationModal": {
+        "title": "Data Confirmation",
+        "content": "Are you sure that all the data and content are correct?"
+    },
     "userListScreen": {
         "title": "Users Data",
         "createUser": "create user",

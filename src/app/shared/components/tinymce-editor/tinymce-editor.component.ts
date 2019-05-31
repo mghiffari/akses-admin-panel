@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, Output, OnDestroy, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, Output, OnDestroy, forwardRef, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { EventEmitter } from 'events';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -20,9 +20,12 @@ export class TinymceEditorComponent implements AfterViewInit, OnDestroy, Control
   value = '';
   editor;
   disabled: boolean = false;
-  onChange: Function = () => {};
+  onChange: Function = (x) => {};
   onTouch: Function = () => {};
 
+  constructor(
+    private zone: NgZone
+  ){}
   // generate random id
   makeid(length) {
     console.log('TinymceEditorComponent | makeid')
@@ -74,30 +77,22 @@ export class TinymceEditorComponent implements AfterViewInit, OnDestroy, Control
     tinymce.init({
       readonly: this.disabled,
       selector: '#' + this.id,
-      inline: false,
-      statusbar: false,
-      browser_spellcheck: true,
-      height: 320,
-      plugins: ["lists", "table"],
-      toolbar:
-        "undo redo | formatselect | fontsizeselect | bold italic | forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table",
-      menu: {
-        file: { title: 'File', items: 'newdocument' },
-        edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall' },
-        insert: { title: 'Insert', items: 'inserttable' },
-        view: { title: 'View', items: 'visualaid' },
-        format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | formats blockformats fontsize align | removeformat' },
-        table: { title: 'Table', items: 'inserttable tableprops deletetable row column cell' }
-      },
+      ...environment.tinyMceSettings,
       init_instance_callback: (editor) => {
         this.editor = editor;
         editor.setContent(this.value)
       },
       setup: (editor) => {
-        this.editor = editor;
-        editor.on('Keyup Change', (e) => {
-          const content = editor.getContent();
-          this.writeValue(content)
+        editor.on('blur', (e) => { this.zone.run(() => { return this.onTouch() }); });
+        editor.on('setcontent', (e) => {
+            let content = e.content, format = e.format;
+            if(format === 'html' && content ) {
+              this.zone.run(() => { return this.onChange(content) });
+            }
+        });
+        editor.on('change keyup undo redo', (e) => { 
+          this.value = editor.getContent()
+          this.zone.run(() => { return this.onChange(editor.getContent()) });
         });
       }
     });

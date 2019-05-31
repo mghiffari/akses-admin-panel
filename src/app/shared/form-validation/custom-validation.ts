@@ -206,7 +206,6 @@ export class CustomValidation {
         image.onload = function () {
           const height = image.height;
           const width = image.width;
-          console.log(height, width, widthRatio, heightRatio)
           if (width / widthRatio !== height / heightRatio) {
             control.setErrors({ ratio: true })
           }

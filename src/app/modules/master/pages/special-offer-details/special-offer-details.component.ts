@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import * as papa from 'papaparse';
@@ -9,7 +9,8 @@ import { FileManagementService } from 'src/app/shared/services/file-management.s
 import { Ng2ImgToolsService } from 'ng2-img-tools';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { environment } from 'src/environments/environment';
-import * as tinymce from 'tinymce';
+import { Observable } from 'rxjs';
+import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-special-offer-details',
@@ -35,10 +36,34 @@ export class SpecialOfferDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     // private offerService: SpecialOfferService,
+    private modalConfirmation: MatDialog,
     private snackBar: MatSnackBar,
     private fileService: FileManagementService,
     private ng2ImgToolsService: Ng2ImgToolsService
   ) { }
+
+  // show prompt when routing to another page in edit mode
+  canDeactivate(): Observable<boolean> | boolean {
+    console.log('SpecialOfferDetailsComponent | canDeactivate');
+    if ((this.isCreate && this.offerForm.dirty) ||
+       (!this.isCreate && !this.onSubmittingForm && CustomValidation.durationFromNowValidation(this.oldEndDate.value))) {
+      const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+        width: '260px',
+        restoreFocus: false,
+        data: {
+          title: 'movePageConfirmationModal.title',
+          content: {
+            string: 'movePageConfirmationModal.content',
+            data: null
+          }
+        }
+      })
+      return modalRef.afterClosed();
+    } else {
+      this.onSubmittingForm = false;
+      return true;
+    }
+  }
 
   // id form control getter
   get id() {
@@ -288,7 +313,6 @@ export class SpecialOfferDetailsComponent implements OnInit {
           this.imageRatio.width,
           this.imageRatio.height
         )
-        console.log(this.offerForm)
       } else {
         this.image.setValue('')
       }
@@ -297,48 +321,62 @@ export class SpecialOfferDetailsComponent implements OnInit {
 
   save() {
     console.log('SpecialOfferDetailsComponent | save')
-    this.onSubmittingForm = true;
-    if (this.isCreate) {
-      if (CustomValidation.durationFromNowValidation(this.endDate.value)) {
-        this.uploadImage();
-      } else {
-        this.onSubmittingForm = false;
-        this.showFormError()
-        this.offerForm.updateValueAndValidity()
+    const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+      width: '260px',
+      restoreFocus: false,
+      data: {
+        title: 'dataConfirmationModal.title',
+        content: {
+          string: 'dataConfirmationModal.content',
+          data: null
+        }
       }
-    } else {
-      if (CustomValidation.durationFromNowValidation(this.oldEndDate.value)) {
-        if (CustomValidation.durationFromNowValidation(this.endDate.value)) {
-          if (this.oldImage.value === this.image.value) {
-            let formValue = this.offerForm.value;
-            let endDate = new Date(formValue.endDate);
-            let timeSplit = formValue.endTime.split(':')
-            let hrs = Number(timeSplit[0])
-            let min = Number(timeSplit[1])
-            endDate.setHours(hrs, min, 0, 0)
-            let offer = {
-              id: formValue.id,
-              image: formValue.image,
-              title: formValue.title,
-              description: formValue.description,
-              tnc: formValue.termsAndConds,
-              instructions: formValue.instructions,
-              endDate: endDate,
-            }
-            this.updateOffer(offer)
+    })
+    modalRef.afterClosed().subscribe(result => {
+      if(result){
+        this.onSubmittingForm = true;
+        if (this.isCreate) {
+          if (CustomValidation.durationFromNowValidation(this.endDate.value)) {
+            this.uploadImage();
           } else {
-            this.uploadImage()
+            this.onSubmittingForm = false;
+            this.showFormError()
+            this.offerForm.updateValueAndValidity()
           }
         } else {
-          this.onSubmittingForm = false;
-          this.showFormError()
-          this.offerForm.updateValueAndValidity()
+          if (CustomValidation.durationFromNowValidation(this.oldEndDate.value)) {
+            if (CustomValidation.durationFromNowValidation(this.endDate.value)) {
+              if (this.oldImage.value === this.image.value) {
+                let formValue = this.offerForm.value;
+                let endDate = new Date(formValue.endDate);
+                let timeSplit = formValue.endTime.split(':')
+                let hrs = Number(timeSplit[0])
+                let min = Number(timeSplit[1])
+                endDate.setHours(hrs, min, 0, 0)
+                let offer = {
+                  id: formValue.id,
+                  image: formValue.image,
+                  title: formValue.title,
+                  description: formValue.description,
+                  tnc: formValue.termsAndConds,
+                  instructions: formValue.instructions,
+                  endDate: endDate,
+                }
+                this.updateOffer(offer)
+              } else {
+                this.uploadImage()
+              }
+            } else {
+              this.onSubmittingForm = false;
+              this.showFormError()
+              this.offerForm.updateValueAndValidity()
+            }
+          } else {
+            this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration');
+          }
         }
-      } else {
-        this.onSubmittingForm = false;
-        this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration');
       }
-    }
+    })
   }
 
   // compress image & call upload image api

@@ -28,7 +28,7 @@
                 [disabled]="!isCreate">{{'uploadCSV' | translate}}</button>
               <input hidden #csvInput type="file" accept=".csv" (change)="onChangeCSVFile($event)">
             </div>
-            <div fxLayout="row" fxLayoutAlign="start center" s*ngIf="csvFile.valid && recipient.valid && isCreate"> 
+            <div fxLayout="row" fxLayoutAlign="start center" *ngIf="csvFile.valid && recipient.valid && isCreate">
               <mat-icon class="text-success">check_circle</mat-icon>
             </div>
           </div>
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <div fxLayout="row wrap" fxLayoutAlign="start center" class="border-bottom-gray padding-16">
+    <div fxLayout="row wrap" class="border-bottom-gray padding-16">
       <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutGap="16px">
         <div fxLayout="row wrap">
           <div fxFlex="30%">
@@ -128,7 +128,6 @@
           </div>
           <div fxFlex="70%">
             <app-tinymce-editor formControlName="termsAndConds"></app-tinymce-editor>
-            <!-- <editor [init]="tinyMceSettings" formControlName="termsAndConds" plugins="link" height="500px"></editor> -->
             <mat-error class="bottom-error"
               *ngIf="termsAndConds.invalid && (termsAndConds.dirty || termsAndConds.touched)">
               <span
@@ -142,7 +141,6 @@
           </div>
           <div fxFlex="70%">
             <app-tinymce-editor formControlName="instructions"></app-tinymce-editor>
-            <!-- <editor [init]="tinyMceSettings" formControlName="instructions" plugins="link" height="500px"></editor> -->
             <mat-error class="bottom-error"
               *ngIf="instructions.invalid && (instructions.dirty || instructions.touched)">
               <span
@@ -151,8 +149,35 @@
           </div>
         </div>
       </div>
-      <div fxFlex="40%">
-        
+      <div fxFlex="40%" fxFlex.lt-lg="30%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row"
+        fxLayoutAlign="center start" ngClass.lt-md="margin-top-10">
+        <div fxFlex="80%">
+          <mat-card style="width: 100%">
+            <div mat-card-image>
+              <div class="bg-medium-gray" style="width: 100%"
+                [style.height]="previewImgContainer.offsetWidth * (imageRatioPercentage) + 'px'" #previewImgContainer>
+                <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
+                  *ngIf="(!image.value || image.value===''); else previewImgExist">
+                  <mat-icon class="icon-42">collections</mat-icon>
+                </div>
+                <ng-template #previewImgExist>
+                  <img width="100%" height="100%" [src]="image.value">
+                </ng-template>
+              </div>
+            </div>
+            <mat-card-content>
+              <div class="font-gotham-bold">{{title.value}}</div>
+              <div class="margin-top-8 margin-bottom-16">{{description.value}}</div>
+            </mat-card-content>
+            <div mat-card-image>
+              <mat-divider></mat-divider>
+            </div>
+            <mat-card-content>
+              <div class="font-gotham-bold padding-top-16">{{'forms.termsAndConditions.fieldTitle' | translate}}</div>
+              <div class="margin-top-8" [innerHTML]="termsAndConds.value"></div>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="border-bottom-gray padding-16">
