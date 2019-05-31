@@ -19,6 +19,7 @@ import { MaskedNumInputComponent } from './components/masked-num-input/masked-nu
 import { FileManagementService } from './services/file-management.service';
 import { BoldRendererPipe } from './pipes/bold-renderer.pipe';
 import { ArticleService } from './services/article.service';
+import { SpecialOfferService } from './services/special-offer.service';
 import { TinymceEditorComponent } from './components/tinymce-editor/tinymce-editor.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 
@@ -65,7 +66,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     LovService,
     CreditSimulationService,
     FileManagementService,
-    ArticleService
+    ArticleService,
+    SpecialOfferService
   ],
   entryComponents: [
     ErrorModalComponent,

@@ -188,7 +188,7 @@
             "errorFormat": "Branch Code should only contain numbers",
             "errorLength": "Branch Code should contain {{minLength}} numbers",
             "errorDuplicate": {
-                "preText": "Branch Code already exist, click ", 
+                "preText": "Branch Code already exist, click ",
                 "here": "here",
                 "endText": " to see the branch"
             }
@@ -492,6 +492,7 @@
     "edit": "edit",
     "example": "example",
     "invalidForm": "invalid form",
+    "imageNotExist": "image not exist",
     "uploadCSV": "upload csv",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
@@ -578,7 +579,7 @@
         "getProvincesFailed": "failed to get province list",
         "getCitiesFailed": "failed to get city list",
         "getDistrictsFailed": "failed to get district list",
-        "getSubDistrictsFailed": "failed to get sub-district list", 
+        "getSubDistrictsFailed": "failed to get sub-district list",
         "duplicateBranchCode": "Branch Code already exist"
     },
     "branchListScreen": {
@@ -797,6 +798,21 @@
         "01090": "failed to create new notification",
         "01091": "notification not found",
         "01092": "notification have been sent or deleted in one signal",
-        "01093": "failed to delete notification"
+        "01093": "failed to delete notification",
+        "01094": "missing required notification title parameter",
+        "01095": "missing required notification message parameter",
+        "01096": "missing required notification article parameter",
+        "01097": "missing required update notification id parameter",
+        "01098": "missing required update notification title parameter",
+        "01099": "missing required update notification message param",
+        "01100": "missing required update notification articleid param",
+        "01101": "missing required delete notification notifid param",
+        "01102": "text param must not contain fancytext",
+        "01103": "recipient is required and should be array",
+        "01104": "missing required terms and conditions parameter",
+        "01105": "missing required image parameter",
+        "01106": "missing required end date parameter",
+        "01107": "missing required instructions parameter",
+        "01108": "branch code already exist"
     }
 }

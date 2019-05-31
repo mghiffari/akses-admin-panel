@@ -49,7 +49,7 @@
         <th mat-header-cell *matHeaderCellDef class="font-th th-min-width text-center-important">
           {{'table.bannersTable.preview' | translate}} </th>
         <td mat-cell *matCellDef="let element" align="center">
-          <img src="{{element.preview}}" width="80px">
+          <img src="{{element.sp_offer_image}}" width="80px" alt="{{'imageNotExist' | translate}}">
         </td>
       </ng-container>
       <ng-container matColumnDef="endDate">
@@ -57,17 +57,20 @@
           {{'table.bannersTable.endDate' | translate}} </th>
         <td mat-cell *matCellDef="let element">
           <div>{{element.end_date | date: 'dd-MM-yyyy hh:mm'}}</div>
-          <div *ngIf="element.exp_flg" class="text-warning">{{'table.status.inactive' | translate}}</div>
-          <div *ngIf="!element.exp_flg" class="text-success">{{'table.status.active' | translate}}</div>
+          <div *ngIf="!element.status" class="text-warning">{{'table.status.inactive' | translate}}</div>
+          <div *ngIf="element.status" class="text-success">{{'table.status.active' | translate}}</div>
         </td>
       </ng-container>
       <ng-container matColumnDef="lastEdited">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-150">
           {{'table.lastUpdated' | translate}} </th>
         <td mat-cell *matCellDef="let element">
-          <span *ngIf="element.edited_date && element.edited_by">
-            {{element.edited_date | date : 'dd/MM/yyyy HH:mm'}} {{'by' | translate}} {{element.edited_by}}
+          <span *ngIf="element.modified_dt && element.modified_by; else created">
+            {{element.modified_dt | date : 'dd/MM/yyyy HH:mm'}} {{'by' | translate}} {{element.modified_by}}
           </span>
+          <ng-template #created>
+            {{element.created_dt | date : 'dd/MM/yyyy HH:mm'}} {{'by' | translate}} {{element.created_by}}
+          </ng-template>
         </td>
       </ng-container>
       <ng-container matColumnDef="action">
