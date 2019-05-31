@@ -40,6 +40,17 @@ export class CustomValidation {
     maxLength: 15
   }
 
+  static specialOfferImg = {
+    ratio: {
+      height: 10,
+      width: 16
+    }
+  }
+
+  static offerTitle = {
+    maxLength: 80
+  }
+
   static scheduleMinDuration = 3600000
   static notifTitle = {
     maxLength: 100
@@ -195,13 +206,14 @@ export class CustomValidation {
         image.onload = function () {
           const height = image.height;
           const width = image.width;
-          if (width / height !== widthRatio / heightRatio) {
+          if (width / widthRatio !== height / heightRatio) {
             control.setErrors({ ratio: true })
           }
         };
       }
     }
   }
+  
   //used to validate image ratio
   static imageMaxResolution(control: AbstractControl, maxWidth: number, maxHeight: number) {
     console.log('CustomValidation | imageMaxResolution');
@@ -230,9 +242,9 @@ export class CustomValidation {
     }
   }
 
-  //used to check password valid or not
+  //used to check notif schedule valid or not
   static notifSchedule: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
-    console.log('CustomValidation | matchPassword');
+    console.log('CustomValidation | notifSchedule');
     let scheduleFlag = formGroup.get('scheduledFlag').value;
     if (scheduleFlag) {
       let scheduleDate: Date = formGroup.get('scheduleDate').value;
@@ -255,7 +267,27 @@ export class CustomValidation {
     }
   };
 
-  // use to check wheteher datetime is at least one hour from now
+  //used to check offer end Date valid or not
+  static offerEndDate: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+    console.log('CustomValidation | offerEndDate')
+      let endDate: Date = formGroup.get('endDate').value;
+      let endTime = formGroup.get('endTime').value;
+      if (endDate && endTime && endTime !== '') {
+        let timeSplit = endTime.split(':');
+        let timeHrs = Number(timeSplit[0]);
+        let timeMin = Number(timeSplit[1]);
+        endDate.setHours(timeHrs, timeMin, 0, 0);
+        if (CustomValidation.durationFromNowValidation(endDate)) {
+          return null;
+        } else {
+          return { 'endDateMin': true }
+        }
+      } else {
+        return { 'endDateRequired': true }
+      }
+  };
+
+  // use to check wheteher datetime is more than one hour from now
   static durationFromNowValidation(date) {
     console.log('CustomValidation | durationFromNowValidation');
     date.setSeconds(0, 0);

@@ -7,7 +7,13 @@ import { environment } from 'src/environments/environment';
 })
 export class FileManagementService {
   uploadApiUrl = environment.apiurl + 'upload/';
-  deleteApiUrl = this.uploadApiUrl + 'delete/'
+  deleteApiUrl = this.uploadApiUrl + 'delete/';
+  articleComponent = 'article';
+  bannerComponent = 'component';
+  footerComponent = 'footer';
+  paymentInstComponent = 'payment-instruction';
+  specialOfferComponent = 'special-offer';
+  compressImageSizeInMB = 0.2;
 
   constructor(
     private authService: AuthService

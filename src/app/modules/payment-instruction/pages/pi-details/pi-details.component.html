@@ -23,14 +23,16 @@
       <div fxFlex="80%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
         <div fxFlex="40%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="start center">
           <div fxFlex="40%" fxLayoutAlign="start center" #iconHandler>
-            <img *ngIf="(!icon.value || icon.value===''); else imgExist"
-              src="../../../../../assets/img/icon-placeholder.png" width="48px" height="48px">
+            <div class="dashed-border-medium-gray" *ngIf="(!icon.value || icon.value===''); else imgExist">
+              <mat-icon class="margin-12">collections</mat-icon>
+            </div>
             <ng-template #imgExist>
               <img [src]="icon.value" width="48px" height="48px">
             </ng-template>
           </div>
           <div fxFlex="60%" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
-            <mat-icon class="cursor-pointer" (click)="onDeleteIcon()">delete</mat-icon>
+            <mat-icon class="cursor-pointer" (click)="onDeleteIcon()" *ngIf="(icon.value && icon.value!=='')">delete</mat-icon>
+            <mat-icon class="text-medium-gray cursor-not-allowed" *ngIf="(!icon.value || icon.value==='')">delete</mat-icon>
             <mat-icon color="primary" class="cursor-pointer" (click)="iconInput.click()">cloud_upload</mat-icon>
             <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeFile($event)">
           </div>
