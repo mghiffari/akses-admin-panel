@@ -19,6 +19,7 @@ import { MaskedNumInputComponent } from './components/masked-num-input/masked-nu
 import { FileManagementService } from './services/file-management.service';
 import { BoldRendererPipe } from './pipes/bold-renderer.pipe';
 import { ArticleService } from './services/article.service';
+import { SpecialOfferService } from './services/special-offer.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ArticleService } from './services/article.service';
     LovService,
     CreditSimulationService,
     FileManagementService,
-    ArticleService
+    ArticleService,
+    SpecialOfferService
   ],
   entryComponents: [
     ErrorModalComponent,

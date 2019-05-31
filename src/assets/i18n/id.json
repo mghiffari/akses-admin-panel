@@ -460,6 +460,7 @@
     "edit": "edit",
     "example": "contoh",
     "invalidForm": "form tidak valid",
+    "imageNotExist": "gambar tidak tersedia",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -648,7 +649,7 @@
         "title": "Data Special Offer",
         "createOffer": "tambahkan special offer baru",
         "deleteConfirmation": "Apakah anda yakin untuk menghapus special offer {{title}}?",
-        "loadFailed": "fgagal mendapatkan list special offer",
+        "loadFailed": "gagal mendapatkan list special offer",
         "immediate": "Langsung",
         "scheduled": "Terjadwal"
     },
@@ -747,6 +748,21 @@
         "01090": "gagal menambahkan notifikasi baru",
         "01091": "notifikasi tidak ditemukan",
         "01092": "notifikasi sudah terkirim atau sudah dihapus di one signal",
-        "01093": "gagal menghapus notifikasi"
+        "01093": "gagal menghapus notifikasi",
+        "01094": "judul notifikasi wajib diisi",
+        "01095": "pesan notifikasi wajib diisi",
+        "01096": "artikel notifikasi wajib diisi",
+        "01097": "id notifikasi wajib diisi",
+        "01098": "judul notifikasi wajib diisi",
+        "01099": "pesan notifikasi wajib diisi",
+        "01100": "artikel notifikasi wajib diisi",
+        "01101": "id notifikasi wajib diisi",
+        "01102": "format teks tidak disupport",
+        "01103": "penerima wajib diisi dan harus dalam array",
+        "01104": "syarat dan ketentuan wajib diisi",
+        "01105": "gambar wajib diisi",
+        "01106": "tanggal selesai wajib diisi",
+        "01107": "langkah penukaran voucher wajib diisi",
+        "01108": "kode cabang sudah tersedia"
     }
 }

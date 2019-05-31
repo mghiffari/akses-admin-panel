@@ -5,6 +5,8 @@ import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snac
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
+import { SpecialOffer } from 'src/app/shared/models/special-offer';
 
 @Component({
   selector: 'app-special-offer-list',
@@ -30,59 +32,7 @@ export class SpecialOfferListComponent implements OnInit {
     'action'
   ]
 
-  offers = [
-    {
-      aks_adm_article_id: "573d160a-9fc4-44a0-9bde-f839647e1066",
-      content: "abc",
-      edited_by: "natashajanicetambunan@gmail.com",
-      edited_date: "2019-05-22T02:48:39.000Z",
-      id: "933ab6d9-7226-4272-a62c-da3e6adb6b35",
-      is_deleted: 0,
-      is_editable: false,
-      schedule_sending: "2019-05-22T02:48:39.000Z",
-      scheduled_flg: false,
-      title: "Gak Pake DP",
-      total_users: 8,
-      preview: "https://mitrapay.mitracomm.com/adirabox_//uploaded/banner/harcilnas_34_thumb.jpg",
-      end_date: new Date(2019, 4, 25),
-      exp_flg: true,
-      sent_flg: true
-    },
-    {
-      aks_adm_article_id: "573d160a-9fc4-44a0-9bde-f839647e1066",
-      content: "def",
-      edited_by: "natashajanicetambunan@gmail.com",
-      edited_date: "2019-05-22T02:48:39.000Z",
-      id: "933ab6d9-7226-4272-a62c-da3e6adb6b35",
-      is_deleted: 0,
-      is_editable: false,
-      schedule_sending: (new Date()).setHours(new Date().getHours() + 1),
-      scheduled_flg: true,
-      title: "Promo 2",
-      total_users: 8,
-      preview: "https://mitrapay.mitracomm.com/adirabox_//uploaded/banner/harcilnas_34_thumb.jpg",
-      end_date: new Date(2019, 5, 10),
-      exp_flg: false,
-      sent_flg: false
-    },
-    {
-      aks_adm_article_id: "573d160a-9fc4-44a0-9bde-f839647e1066",
-      content: "hij",
-      edited_by: "natashajanicetambunan@gmail.com",
-      edited_date: "2019-05-22T02:48:39.000Z",
-      id: "933ab6d9-7226-4272-a62c-da3e6adb6b35",
-      is_deleted: 0,
-      is_editable: false,
-      schedule_sending: new Date(2019, 5, 1, 23, 0, 0, 0),
-      scheduled_flg: true,
-      title: "Promo 3",
-      total_users: 8,
-      preview: "https://mitrapay.mitracomm.com/adirabox_//uploaded/banner/harcilnas_34_thumb.jpg",
-      end_date: new Date(2019, 6, 1),
-      exp_flg: false,
-      sent_flg: false
-    }
-  ];
+  offers = [];
   search = '';
   closeText = '';
   loading = false;
@@ -99,7 +49,7 @@ export class SpecialOfferListComponent implements OnInit {
   }
 
   constructor(
-    // private offerService: SpecialOfferService,
+    private offerService: SpecialOfferService,
     private snackBar: MatSnackBar,
     private modal: MatDialog,
     private router: Router
@@ -125,47 +75,49 @@ export class SpecialOfferListComponent implements OnInit {
         }
       }
     })
-    // modalRef.afterClosed().subscribe(result => {
-    //   if (result) {
-    //     this.loading = true;
-    //     this.offerService.deleteOffer(offer.id).subscribe(
-    //       (data: any) => {
-    //         try {
-    //           console.table(data);
-    //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //             data: {
-    //               title: 'success',
-    //               content: {
-    //                 text: 'dataDeleted',
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //           this.lazyLoadData()
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       },
-    //       error => {
-    //         try {
-    //           console.table(error);
-    //           this.loading = false;
-    //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //             data: {
-    //               title: 'failedToDelete',
-    //               content: {
-    //                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       }
-    //     )
-    //   }
-    // })
+    modalRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loading = true;
+        let updatedOffer: SpecialOffer = Object.assign(new SpecialOffer(), offer)
+        updatedOffer.is_deleted = true;
+        this.offerService.updateOffer(updatedOffer).subscribe(
+          (data: any) => {
+            try {
+              console.table(data);
+              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                data: {
+                  title: 'success',
+                  content: {
+                    text: 'dataDeleted',
+                    data: null
+                  }
+                }
+              })
+              this.lazyLoadData()
+            } catch (error) {
+              console.table(error)
+            }
+          },
+          error => {
+            try {
+              console.table(error);
+              this.loading = false;
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'failedToDelete',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          }
+        )
+      }
+    })
   }
 
   // edit button handler
@@ -220,51 +172,51 @@ export class SpecialOfferListComponent implements OnInit {
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
     console.log('SpecialOfferListComponent | lazyLoadData');
-    // let isFocusedInput = this.isFocusedInput;
-    // this.loading = true;
-    // this.offerService.getOfferList(
-    //   this.paginatorProps.pageIndex + 1,
-    //   this.paginatorProps.pageSize,
-    //   this.search).subscribe(
-    //     (response: any) => {
-    //       try {
-    //         console.table(response);
-    //         this.offers = response.data;
-    //         this.paginatorProps.length = response.count;
-    //         this.now = new Date()
-    //         if (this.table) {
-    //           this.table.renderRows();
-    //         }
-    //       } catch (error) {
-    //         console.table(error);
-    //       }
-    //     },
-    //     error => {
-    //       try {
-    //         console.table(error);
-    //         this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //           data: {
-    //             title: 'specialOfferListScreen.loadFailed',
-    //             content: {
-    //               text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //               data: null
-    //             }
-    //           }
-    //         })
-    //       } catch (error) {
-    //         console.log(error)
-    //       }
-    //     }
-    //   ).add(
-    //     () => {
-    //       this.loading = false;
-    //       if (this.searchInput && isFocusedInput) {
-    //         setTimeout(() => {
-    //           this.searchInput.nativeElement.focus();
-    //         });
-    //       }
-    //     }
-    //   )
+    let isFocusedInput = this.isFocusedInput;
+    this.loading = true;
+    this.offerService.getOfferList(
+      this.paginatorProps.pageIndex + 1,
+      this.paginatorProps.pageSize,
+      this.search).subscribe(
+        (response: any) => {
+          try {
+            console.table(response);
+            this.offers = response.data;
+            this.paginatorProps.length = response.count;
+            this.now = new Date()
+            if (this.table) {
+              this.table.renderRows();
+            }
+          } catch (error) {
+            console.table(error);
+          }
+        },
+        error => {
+          try {
+            console.table(error);
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'specialOfferListScreen.loadFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      ).add(
+        () => {
+          this.loading = false;
+          if (this.searchInput && isFocusedInput) {
+            setTimeout(() => {
+              this.searchInput.nativeElement.focus();
+            });
+          }
+        }
+      )
   }
 
 }

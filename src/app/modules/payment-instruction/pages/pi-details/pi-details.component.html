@@ -24,9 +24,10 @@
         <div fxFlex="40%" fxFlex.lt-md="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="start center">
           <div fxFlex="40%" fxLayoutAlign="start center" #iconHandler>
             <img *ngIf="(!icon.value || icon.value===''); else imgExist"
-              src="../../../../../assets/img/icon-placeholder.png" width="48px" height="48px">
+              src="../../../../../assets/img/icon-placeholder.png" width="48px" height="48px"
+              alt="{{'imageNotExist' | translate}}">
             <ng-template #imgExist>
-              <img [src]="icon.value" width="48px" height="48px">
+              <img [src]="icon.value" width="48px" height="48px" alt="{{'imageNotExist' | translate}}">
             </ng-template>
           </div>
           <div fxFlex="60%" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
@@ -62,12 +63,10 @@
         <div fxFlex="50%" fxFlex.lt-lg="65%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
           <div fxFlex="60%" fxFlex.lt-sm="100%">
             <mat-form-field appearance="fill">
-              <input matInput placeholder="{{'forms.title.placeholder' | translate}}"
-                formControlName="grpTitle">
+              <input matInput placeholder="{{'forms.title.placeholder' | translate}}" formControlName="grpTitle">
             </mat-form-field>
             <mat-error class="bottom-error" *ngIf="grpTitle.invalid && (grpTitle.dirty || grpTitle.touched)">
-              <span
-                *ngIf="grpTitle.errors.required">{{'forms.title.errorRequired' | translate}}</span>
+              <span *ngIf="grpTitle.errors.required">{{'forms.title.errorRequired' | translate}}</span>
             </mat-error>
           </div>
         </div>
