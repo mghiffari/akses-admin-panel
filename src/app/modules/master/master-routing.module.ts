@@ -12,6 +12,7 @@ import { BranchDetailsComponent } from './pages/branch-details/branch-details.co
 import { BranchListComponent } from './pages/branch-list/branch-list.component';
 import { ChangePhoneListComponent } from './pages/change-phone-list/change-phone-list.component';
 import { SpecialOfferListComponent } from './pages/special-offer-list/special-offer-list.component';
+import { SpecialOfferDetailsComponent } from './pages/special-offer-details/special-offer-details.component';
 
 const routes: Routes = [
   {
@@ -131,6 +132,20 @@ const routes: Routes = [
     component: SpecialOfferListComponent,
     data: {
       title: 'Special Offers'
+    }
+  },
+  {
+    path: 'special-offers/create',
+    component: SpecialOfferDetailsComponent,
+    data: {
+      title: 'Create Special Offer'
+    }
+  },
+  {
+    path: 'special-offers/update/:id',
+    component: SpecialOfferDetailsComponent,
+    data: {
+      title: 'Update Special Offer'
     }
   }
 ];

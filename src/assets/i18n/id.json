@@ -297,6 +297,9 @@
             "fieldTitle": "Penerima",
             "placeholder": "Penerima",
             "errorRequired": "Penerima wajib diisi",
+            "errorDataEmpty": "File kosong",
+            "errorDataFormat": "Data O-ID hanya terdiri dari angka",
+            "errorFileType": "Hanya format .csv yang dapat diupload",
             "options": {
                 "all": "Semua"
             }
@@ -326,6 +329,35 @@
                 "immediate": "Langsung",
                 "certainTime": "Terjadwal"
             },
+            "datePlaceholder": "MM/dd/yyyy"
+        },
+        "offerImage": {
+            "fieldTitle": "Gambar",
+            "errorRequired": "Gambar wajib diisi",
+            "errorRatio": "Hanya rasio {{width}}:{{height}} yang dapat diupload",
+            "errorType": "Hanya format .jpg, .jpeg and .png format yang dapat diupload",
+            "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )"
+        },
+        "description": {
+            "fieldTitle": "Deskripsi",
+            "placeholder": "Deskripsi",
+            "errorRequired": "Deskripsi wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Deskripsi adalah {{maxLength}}"
+        },
+        "termsAndConditions": {
+            "fieldTitle": "Syarat dan Ketentuan",
+            "errorRequired": "Syarat dan Ketentuan wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Syarat dan Ketentuan adalah {{maxLength}}"
+        },
+        "redeemVoucherInstructions": {
+            "fieldTitle": "Instruksi Penukaran Voucher",
+            "errorRequired": "Instruksi Penukaran Voucher wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Instruksi Penukaran Voucher adalah {{maxLength}}"
+        },
+        "endDatetime": {
+            "fieldTitle": "Tanggal Selesai",
+            "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid",
+            "errorMin": "Tanggal Selesai harus lebih dari 1 jam sejak saat ini",
             "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
@@ -460,6 +492,7 @@
     "edit": "edit",
     "example": "contoh",
     "invalidForm": "form tidak valid",
+    "uploadCSV": "upload csv",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -651,6 +684,20 @@
         "loadFailed": "fgagal mendapatkan list special offer",
         "immediate": "Langsung",
         "scheduled": "Terjadwal"
+    },
+    "specialOfferDetailsScreen": {
+        "getOfferFailed": "gagal mendapatkan data Special Offer",
+        "createTitle": "Tambahkan Special Offer Baru",
+        "updateTitle": "Ubah Special Offer",
+        "succesCreated": "Special Offer berhasil ditambahkan",
+        "succesUpdated": "Special Offer berhasil diubah",
+        "updateFailed": "gagal mengubah data",
+        "createFailed": "gagal menambahkan Special Offer baru",
+        "cantUpdate": {
+            "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini"
+        },
+        "uploadImageFailed": "upload gambar gagal",
+        "deleteImageFailed": "gagal menghapus gambar"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

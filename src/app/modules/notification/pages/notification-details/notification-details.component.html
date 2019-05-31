@@ -159,7 +159,7 @@
               <mat-datepicker #datepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
             <div fxLayout="row" *ngIf="scheduledFlag.value">
-              <div fxFlex="100px">
+              <div fxFlex="50%" fxFlex.lt-md="70%">
                 <mat-form-field appearance="fill">
                   <input matInput type="time" formControlName="scheduleTime">
                 </mat-form-field>

@@ -297,6 +297,9 @@
             "fieldTitle": "Recipient",
             "placeholder": "Recipient",
             "errorRequired": "Recipient is required",
+            "errorDataEmpty": "Uploaded file is empty",
+            "errorDataFormat": "Uploaded data format should only contain numbers",
+            "errorFileType": "Only .csv format is supported",
             "options": {
                 "all": "All"
             }
@@ -326,6 +329,35 @@
                 "immediate": "Immediate",
                 "certainTime": "Scheduled"
             },
+            "datePlaceholder": "MM/dd/yyyy"
+        },
+        "offerImage": {
+            "fieldTitle": "Image",
+            "errorRequired": "Image is required",
+            "errorRatio": "Only {{width}}:{{height}} ratio is supported",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
+        },
+        "description": {
+            "fieldTitle": "Description",
+            "placeholder": "Description",
+            "errorRequired": "Description is required",
+            "errorMaxLength": "Max. length of Description is {{maxLength}}"
+        },
+        "termsAndConditions": {
+            "fieldTitle": "Terms and Conditions",
+            "errorRequired": "Terms and Conditions is required",
+            "errorMaxLength": "Max. length of Terms and Conditions is {{maxLength}}"
+        },
+        "redeemVoucherInstructions": {
+            "fieldTitle": "Redeem Voucher Instructions",
+            "errorRequired": "Redeem Voucher Instructions is required",
+            "errorMaxLength": "Max. length of Redeem Voucher Instructions is {{maxLength}}"
+        },
+        "endDatetime": {
+            "fieldTitle": "End Date",
+            "errorRequired": "End Date must have date and time format value",
+            "errorMin": "End Date should be more than 1 hr from now",
             "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
@@ -460,6 +492,7 @@
     "edit": "edit",
     "example": "example",
     "invalidForm": "invalid form",
+    "uploadCSV": "upload csv",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -649,9 +682,21 @@
         "title": "Special Offers Data",
         "createOffer": "create new special offer",
         "deleteConfirmation": "Are you sure you want to delete special offer {{title}}?",
-        "loadFailed": "failed to get list of special offers",
-        "immediate": "Immediate",
-        "scheduled": "Scheduled"
+        "loadFailed": "failed to get list of special offers"
+    },
+    "specialOfferDetailsScreen": {
+        "getOfferFailed": "failed to get Special Offer data",
+        "createTitle": "Create New Special Offer",
+        "updateTitle": "Update Special Offer",
+        "succesCreated": "new Special Offer successfully created",
+        "succesUpdated": "Special Offer successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new Special Offer",
+        "cantUpdate": {
+            "minDuration": "can't update special offer which expiry date is less than one hour"
+        }, 
+        "uploadImageFailed": "failed to upload image",
+        "deleteImageFailed": "failed to delete image"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
