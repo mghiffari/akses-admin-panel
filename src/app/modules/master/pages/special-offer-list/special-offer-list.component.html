@@ -56,7 +56,7 @@
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width text-center-important">
           {{'table.bannersTable.endDate' | translate}} </th>
         <td mat-cell *matCellDef="let element">
-          <div>{{element.end_date | date: 'dd-MM-yyyy hh:mm'}}</div>
+          <div>{{element.end_date | date: 'dd/MM/yyyy HH:mm'}}</div>
           <div *ngIf="!element.status" class="text-warning">{{'table.status.inactive' | translate}}</div>
           <div *ngIf="element.status" class="text-success">{{'table.status.active' | translate}}</div>
         </td>
