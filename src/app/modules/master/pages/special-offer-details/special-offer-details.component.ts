@@ -11,6 +11,8 @@ import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snac
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
+import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
+import { SpecialOffer } from 'src/app/shared/models/special-offer';
 
 @Component({
   selector: 'app-special-offer-details',
@@ -20,7 +22,7 @@ import { ConfirmationModalComponent } from 'src/app/shared/components/confirmati
 export class SpecialOfferDetailsComponent implements OnInit {
   loading = false;
   onSubmittingForm = false;
-  onProcessingCSV = false;
+  activateRouting = false;
   isCreate = true;
   offerForm: FormGroup;
   tinyMceSettings = environment.tinyMceSettings
@@ -35,7 +37,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    // private offerService: SpecialOfferService,
+    private offerService: SpecialOfferService,
     private modalConfirmation: MatDialog,
     private snackBar: MatSnackBar,
     private fileService: FileManagementService,
@@ -45,8 +47,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   // show prompt when routing to another page in edit mode
   canDeactivate(): Observable<boolean> | boolean {
     console.log('SpecialOfferDetailsComponent | canDeactivate');
-    if ((this.isCreate && this.offerForm.dirty) ||
-       (!this.isCreate && !this.onSubmittingForm && CustomValidation.durationFromNowValidation(this.oldEndDate.value))) {
+    if (this.offerForm.dirty && !this.activateRouting) {
       const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
         width: '260px',
         restoreFocus: false,
@@ -136,7 +137,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.loading = false;
       this.onSubmittingForm = false;
-      this.onProcessingCSV = false;
+      this.activateRouting = false;
       this.offerForm = new FormGroup({
         id: new FormControl(''),
         csvFile: new FormControl(null, CustomValidation.type('csv')),
@@ -154,66 +155,68 @@ export class SpecialOfferDetailsComponent implements OnInit {
         endTime: new FormControl('', Validators.required),
         oldEndDate: new FormControl(null)
       }, {
-        validators: CustomValidation.offerEndDate
-      })
+          validators: CustomValidation.offerEndDate
+        })
       if (this.router.url.includes('update')) {
         try {
           this.isCreate = false;
           this.loading = true;
           this.recipient.setValidators([]);
           const id = params.id
-          // this.offerService.getOfferById(id).subscribe(
-          //   response => {
-          //     try {
-          //       console.table(response)
-          //       let editedOffer: SpecialOffer = response.data;
-          //       if (!CustomValidation.durationFromNowValidation(editedOffer.end_date)) {
-          //         this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
-          //       } else {
-          //         let date = new Date(editedOffer.endDate)
-          //         let hour = date.getHours();
-          //         let minute = date.getMinutes();
-          //         let time = (hour > 9 ? '' : '0') + hour + ':'
-          //           + (minute > 9 ? '' : '0') + minute
-          //         this.offerForm.patchValue({
-          //           id: id,
-          //           image: editedOffer.image,
-          //           imageFile: null,
-          //           oldImage: editedOffer.image,
-          //           title: editedOffer.title,
-          //           description: editedOffer.description
-          //           termsAndConds: editedOffer.termsAndConds,
-          //           instructions: editedOffer.instructions
-          //           endDate: date,
-          //           endTime: time,
-          //           oldEndDate: date
-          //         })
-          //       }
-          //     } catch (error) {
-          //       console.table(error)
-          //     }
-          //   }, error => {
-          //     try {
-          //       console.table(error);
-          //       let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-          //         data: {
-          //           title: 'specialOfferDetailsScreen.getOfferFailed',
-          //           content: {
-          //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-          //             data: null
-          //           }
-          //         }
-          //       })
-          //       errorSnackbar.afterDismissed().subscribe(() => {
-          //         this.goToListScreen()
-          //       })
-          //     } catch (error) {
-          //       console.log(error)
-          //     }
-          //   }
-          // ).add(() => {
-          //   this.loading = false;
-          // })
+          this.offerService.getOfferById(id).subscribe(
+            response => {
+              try {
+                console.table(response)
+                let editedOffer: SpecialOffer = Object.assign(new SpecialOffer(), response.data);
+                let oldEndDate = new Date(editedOffer.end_date);
+                let date = new Date(editedOffer.end_date)
+                if (!CustomValidation.durationFromNowValidation(date)) {
+                  this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
+                } else {
+                  let hour = date.getHours();
+                  let minute = date.getMinutes();
+                  let time = (hour > 9 ? '' : '0') + hour + ':'
+                    + (minute > 9 ? '' : '0') + minute
+                  this.offerForm.patchValue({
+                    id: id,
+                    image: editedOffer.sp_offer_image,
+                    imageFile: null,
+                    oldImage: editedOffer.sp_offer_image,
+                    title: editedOffer.title,
+                    description: editedOffer.description,
+                    termsAndConds: editedOffer.terms_and_conditions,
+                    instructions: editedOffer.instructions,
+                    endDate: date,
+                    endTime: time,
+                    oldEndDate: oldEndDate
+                  })
+                  console.log(this.offerForm)
+                }
+              } catch (error) {
+                console.table(error)
+              }
+            }, error => {
+              try {
+                console.table(error);
+                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'specialOfferDetailsScreen.getOfferFailed',
+                    content: {
+                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
+                  }
+                })
+                errorSnackbar.afterDismissed().subscribe(() => {
+                  this.goToListScreen()
+                })
+              } catch (error) {
+                console.log(error)
+              }
+            }
+          ).add(() => {
+            this.loading = false;
+          })
         } catch (error) {
           console.table(error)
         }
@@ -228,7 +231,6 @@ export class SpecialOfferDetailsComponent implements OnInit {
     console.log('SpecialOfferDetailsComponent | onChangeCSVFile')
     const file = event.target.files[0];
     if (file) {
-      this.onProcessingCSV = true;
       this.csvFile.setValue(file);
       this.csvFile.markAsDirty()
       this.recipient.reset()
@@ -264,11 +266,9 @@ export class SpecialOfferDetailsComponent implements OnInit {
               }
               this.recipient.markAsDirty();
               this.recipient.markAsTouched();
-              this.onProcessingCSV = false;
-              console.log(this.recipient)
+              this.csvFile.reset();
             } catch (error) {
               console.table(error)
-              this.onProcessingCSV = false;
             }
           }
         })
@@ -333,7 +333,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
       }
     })
     modalRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.onSubmittingForm = true;
         if (this.isCreate) {
           if (CustomValidation.durationFromNowValidation(this.endDate.value)) {
@@ -353,15 +353,15 @@ export class SpecialOfferDetailsComponent implements OnInit {
                 let hrs = Number(timeSplit[0])
                 let min = Number(timeSplit[1])
                 endDate.setHours(hrs, min, 0, 0)
-                let offer = {
-                  id: formValue.id,
-                  image: formValue.image,
-                  title: formValue.title,
-                  description: formValue.description,
-                  tnc: formValue.termsAndConds,
-                  instructions: formValue.instructions,
-                  endDate: endDate,
-                }
+                let offer = new SpecialOffer();
+                offer.id = formValue.id;
+                offer.sp_offer_image = formValue.image;
+                offer.title = formValue.title;
+                offer.description = formValue.description;
+                offer.terms_and_conditions = formValue.termsAndConds;
+                offer.instructions = formValue.instructions;
+                offer.end_date = endDate;
+                offer.category = 'one click'
                 this.updateOffer(offer)
               } else {
                 this.uploadImage()
@@ -385,59 +385,59 @@ export class SpecialOfferDetailsComponent implements OnInit {
     this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
       compressedImg => {
         console.log(compressedImg)
-        // let formData = new FormData()
-        // formData.append("file", compressedImg)
-        // formData.append("component", this.fileService.specialOfferComponent)
-        // this.fileService.uploadFile(formData).subscribe(
-        //   response => {
-        //     let formValue = this.offerForm.value;
-        //     let endDate = new Date(formValue.endDate);
-        //     let timeSplit = formValue.endTime.split(':')
-        //     let hrs = Number(timeSplit[0])
-        //     let min = Number(timeSplit[1])
-        //     endDate.setHours(hrs, min, 0, 0)
-        //     let url = response.data.url
-        //     if (this.isCreate) {
-        //       let offer = {
-        //         recipient: formValue.recipient,
-        //         image: url,
-        //         title: formValue.title,
-        //         description: formValue.description,
-        //         tnc: formValue.termsAndConds,
-        //         instructions: formValue.instructions,
-        //         endDate: endDate,
-        //       }
-        //       this.insertOffer(offer);
-        //     } else {
-        //       let offer = {
-        //         id: formValue.id,
-        //         image: url,
-        //         title: formValue.title,
-        //         description: formValue.description,
-        //         tnc: formValue.termsAndConds,
-        //         instructions: formValue.instructions,
-        //         endDate: endDate,
-        //       }
-        //       this.updateOffer(offer, true)
-        //     }
-        //   }, error => {
-        //     try {
-        //       console.table(error)
-        //       this.onSubmittingForm = false;
-        //       this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-        //         data: {
-        //           title: 'specialOfferDetailsScreen.uploadIconFailed',
-        //           content: {
-        //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-        //             data: null
-        //           }
-        //         }
-        //       })
-        //     } catch (error) {
-        //       console.table(error)
-        //     }
-        //   }
-        // )
+        let formData = new FormData()
+        formData.append("file", compressedImg)
+        formData.append("component", this.fileService.specialOfferComponent)
+        this.fileService.uploadFile(formData).subscribe(
+          response => {
+            let formValue = this.offerForm.value;
+            let endDate = new Date(formValue.endDate);
+            let timeSplit = formValue.endTime.split(':')
+            let hrs = Number(timeSplit[0])
+            let min = Number(timeSplit[1])
+            endDate.setHours(hrs, min, 0, 0)
+            let url = response.data.url
+            if (this.isCreate) {
+              let offer = new SpecialOffer();
+              offer.target_users = formValue.recipient;
+              offer.sp_offer_image = url;
+              offer.title = formValue.title;
+              offer.description = formValue.description;
+              offer.terms_and_conditions = formValue.termsAndConds;
+              offer.instructions = formValue.instructions;
+              offer.end_date = endDate;
+              offer.category = 'one click'
+              this.insertOffer(offer);
+            } else {
+              let offer = new SpecialOffer();
+              offer.id = formValue.id;
+              offer.sp_offer_image = url;
+              offer.title = formValue.title;
+              offer.description = formValue.description;
+              offer.terms_and_conditions = formValue.termsAndConds;
+              offer.instructions = formValue.instructions;
+              offer.end_date = endDate;
+              offer.category = 'one click'
+              this.updateOffer(offer, true)
+            }
+          }, error => {
+            try {
+              console.table(error)
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'specialOfferDetailsScreen.uploadIconFailed',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          }
+        )
       }, error => {
         console.table(error);
         this.onSubmittingForm = false;
@@ -448,81 +448,81 @@ export class SpecialOfferDetailsComponent implements OnInit {
   // call insert offer api
   insertOffer(data) {
     console.log('SpecialOfferDetailsComponent | insertOffer')
-    // this.offerService.createOffer(data).subscribe(
-    //   response => {
-    //     this.onSubmittingForm = false;
-    //     let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //       data: {
-    //         title: 'success',
-    //         content: {
-    //           text: 'specialOfferDetailsScreen.succesCreated',
-    //           data: null
-    //         }
-    //       }
-    //     })
-    //     successSnackbar.afterDismissed().subscribe(() => {
-    //       this.goToListScreen()
-    //     })
-    //   }, error => {
-    //     try {
-    //       console.table(error)
-    //       this.onSubmittingForm = false;
-    //       this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //         data: {
-    //           title: 'specialOfferDetailsScreen.createFailed',
-    //           content: {
-    //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //             data: null
-    //           }
-    //         }
-    //       })
-    //     } catch (error) {
-    //       console.table(error)
-    //     }
-    //   }
-    // )
+    this.offerService.createOffer(data).subscribe(
+      response => {
+        this.onSubmittingForm = false;
+        let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+          data: {
+            title: 'success',
+            content: {
+              text: 'specialOfferDetailsScreen.succesCreated',
+              data: null
+            }
+          }
+        })
+        successSnackbar.afterDismissed().subscribe(() => {
+          this.goToListScreen()
+        })
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'specialOfferDetailsScreen.createFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
   }
 
   // call update offer api
   updateOffer(data, shouldDeleteImage = false) {
     console.log('SpecialOfferDetailsComponent | updateOffer')
-    // this.offerService.updateOffer(data).subscribe(
-    //   response => {
-    //     if(shouldDeleteImage){
-    //       this.deleteImage(data.image)
-    //     } else {
-    //       this.onSubmittingForm = false;
-    //       let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //         data: {
-    //           title: 'success',
-    //           content: {
-    //             text: 'specialOfferDetailsScreen.succesUpdated',
-    //             data: null
-    //           }
-    //         }
-    //       })
-    //       successSnackbar.afterDismissed().subscribe(() => {
-    //         this.goToListScreen()
-    //       })
-    //     }
-    //   }, error => {
-    //     try {
-    //       console.table(error)
-    //       this.onSubmittingForm = false;
-    //       this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //         data: {
-    //           title: 'specialOfferDetailsScreen.createFailed',
-    //           content: {
-    //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //             data: null
-    //           }
-    //         }
-    //       })
-    //     } catch (error) {
-    //       console.table(error)
-    //     }
-    //   }
-    // )
+    this.offerService.updateOffer(data).subscribe(
+      response => {
+        if (shouldDeleteImage) {
+          this.deleteImage(this.oldImage.value)
+        } else {
+          this.onSubmittingForm = false;
+          let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+            data: {
+              title: 'success',
+              content: {
+                text: 'specialOfferDetailsScreen.succesUpdated',
+                data: null
+              }
+            }
+          })
+          successSnackbar.afterDismissed().subscribe(() => {
+            this.goToListScreen()
+          })
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'specialOfferDetailsScreen.createFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    )
   }
 
   // call delete image api
@@ -621,6 +621,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   //redirect to special offer list screen
   goToListScreen = () => {
     console.log('SpecialOfferDetailsComponent | gotoListScreen')
+    this.activateRouting = true;
     this.router.navigate(['/master/special-offers'])
   }
 

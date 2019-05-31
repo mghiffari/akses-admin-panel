@@ -1,6 +1,5 @@
-import { Component, OnInit, Input, AfterViewInit, Output, OnDestroy, forwardRef, NgZone } from '@angular/core';
+import { Component, Input, AfterViewInit, OnDestroy, forwardRef, NgZone } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { EventEmitter } from 'events';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 declare var tinymce: any;

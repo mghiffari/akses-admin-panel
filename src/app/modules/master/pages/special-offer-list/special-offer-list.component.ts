@@ -126,7 +126,7 @@ export class SpecialOfferListComponent implements OnInit {
     if (this.isEditableOffer(offer)) {
       this.router.navigate(['/master/special-offers/update', offer.id])
     } else {
-      this.table.renderRows();
+      this.lazyLoadData()
       this.editOfferError();
     }
   }

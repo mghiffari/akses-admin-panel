@@ -25,4 +25,18 @@ export class SpecialOfferService {
     console.log("SpecialOfferService | updateOffer ", url);
     return this.authService.wrapTokenPutApi(url, data)
   }
+
+  //get offer by id
+  getOfferById(id: string) {
+    let url = this.specialOfferApiUrl + id;
+    console.log("SpecialOfferService | getOfferById " + url);
+    return this.authService.wrapTokenGetApi(url);
+  }
+
+  //create offer
+  createOffer(data) {
+    let url = this.specialOfferApiUrl;
+    console.log("SpecialOfferService | createOffer " + url);
+    return this.authService.wrapTokenPostApi(url, data);
+  }
 }
