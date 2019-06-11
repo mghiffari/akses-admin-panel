@@ -702,6 +702,7 @@
             "minDuration": "can't update special offer which expiry date is less than one hour"
         }, 
         "uploadImageFailed": "failed to upload image",
+        "uploadCSVFailed": "failed to upload csv file",
         "deleteImageFailed": "failed to delete image"
     },
     "apiErrors": {

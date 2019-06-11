@@ -14,4 +14,5 @@ export class SpecialOffer {
     is_deleted: boolean;
     category: string;
     target_users: [];
+    target_users_file: string;
 }
