@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
 import { SpecialOffer } from 'src/app/shared/models/special-offer';
+import { LovService } from 'src/app/shared/services/lov.service';
 
 @Component({
   selector: 'app-special-offer-details',
@@ -25,6 +26,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   activateRouting = false;
   isCreate = true;
   offerForm: FormGroup;
+  categories = [];
   tinyMceSettings = environment.tinyMceSettings
   offerTitle = CustomValidation.offerTitle;
   imageRatio = CustomValidation.specialOfferImg.ratio;
@@ -41,7 +43,8 @@ export class SpecialOfferDetailsComponent implements OnInit {
     private modalConfirmation: MatDialog,
     private snackBar: MatSnackBar,
     private fileService: FileManagementService,
-    private ng2ImgToolsService: Ng2ImgToolsService
+    private ng2ImgToolsService: Ng2ImgToolsService,
+    private lovService: LovService
   ) { }
 
   // show prompt when routing to another page in edit mode
@@ -79,6 +82,11 @@ export class SpecialOfferDetailsComponent implements OnInit {
   // csvFile form control getter
   get csvFile() {
     return this.offerForm.get('csvFile');
+  }
+
+  // category form control getter
+  get category() {
+    return this.offerForm.get('category');
   }
 
   // image form control getter
@@ -142,6 +150,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
         id: new FormControl(''),
         csvFile: new FormControl(null, CustomValidation.type('csv')),
         recipient: new FormControl(null, Validators.required),
+        category: new FormControl('', Validators.required),
         image: new FormControl(null, Validators.required),
         imageFile: new FormControl(null, [
           CustomValidation.type(['jpg', 'jpeg', 'png'])
@@ -157,72 +166,100 @@ export class SpecialOfferDetailsComponent implements OnInit {
       }, {
           validators: CustomValidation.offerEndDate
         })
-      if (this.router.url.includes('update')) {
-        try {
-          this.isCreate = false;
-          this.loading = true;
-          this.recipient.setValidators([]);
-          const id = params.id
-          this.offerService.getOfferById(id).subscribe(
-            response => {
+      this.lovService.getSpecialOfferCategory().subscribe(
+        response => {
+          try {
+            console.table(response)
+            this.categories = response.data[0].aks_adm_lovs;
+            if (this.router.url.includes('update')) {
               try {
-                console.table(response)
-                let editedOffer: SpecialOffer = Object.assign(new SpecialOffer(), response.data);
-                let oldEndDate = new Date(editedOffer.end_date);
-                let date = new Date(editedOffer.end_date)
-                if (!CustomValidation.durationFromNowValidation(date)) {
-                  this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
-                } else {
-                  let hour = date.getHours();
-                  let minute = date.getMinutes();
-                  let time = (hour > 9 ? '' : '0') + hour + ':'
-                    + (minute > 9 ? '' : '0') + minute
-                  this.offerForm.patchValue({
-                    id: id,
-                    image: editedOffer.sp_offer_image,
-                    imageFile: null,
-                    oldImage: editedOffer.sp_offer_image,
-                    title: editedOffer.title,
-                    description: editedOffer.description,
-                    termsAndConds: editedOffer.terms_and_conditions,
-                    instructions: editedOffer.instructions,
-                    endDate: date,
-                    endTime: time,
-                    oldEndDate: oldEndDate
-                  })
-                  console.log(this.offerForm)
-                }
+                this.isCreate = false;
+                this.loading = true;
+                this.recipient.setValidators([]);
+                const id = params.id
+                this.offerService.getOfferById(id).subscribe(
+                  response => {
+                    try {
+                      console.table(response)
+                      let editedOffer: SpecialOffer = Object.assign(new SpecialOffer(), response.data);
+                      let oldEndDate = new Date(editedOffer.end_date);
+                      let date = new Date(editedOffer.end_date)
+                      if (!CustomValidation.durationFromNowValidation(date)) {
+                        this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
+                      } else {
+                        let hour = date.getHours();
+                        let minute = date.getMinutes();
+                        let time = (hour > 9 ? '' : '0') + hour + ':'
+                          + (minute > 9 ? '' : '0') + minute
+                        this.offerForm.patchValue({
+                          id: id,
+                          image: editedOffer.sp_offer_image,
+                          imageFile: null,
+                          oldImage: editedOffer.sp_offer_image,
+                          title: editedOffer.title,
+                          description: editedOffer.description,
+                          termsAndConds: editedOffer.terms_and_conditions,
+                          instructions: editedOffer.instructions,
+                          endDate: date,
+                          endTime: time,
+                          oldEndDate: oldEndDate
+                        })
+                        console.log(this.offerForm)
+                      }
+                    } catch (error) {
+                      console.table(error)
+                    }
+                  }, error => {
+                    try {
+                      console.table(error);
+                      let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                        data: {
+                          title: 'specialOfferDetailsScreen.getOfferFailed',
+                          content: {
+                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                            data: null
+                          }
+                        }
+                      })
+                      errorSnackbar.afterDismissed().subscribe(() => {
+                        this.goToListScreen()
+                      })
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  }
+                ).add(() => {
+                  this.loading = false;
+                })
               } catch (error) {
                 console.table(error)
               }
-            }, error => {
-              try {
-                console.table(error);
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.getOfferFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-                errorSnackbar.afterDismissed().subscribe(() => {
-                  this.goToListScreen()
-                })
-              } catch (error) {
-                console.log(error)
-              }
+            } else {
+              this.isCreate = true;
             }
-          ).add(() => {
-            this.loading = false;
-          })
-        } catch (error) {
-          console.table(error)
+          } catch (error) {
+            console.table(error)
+          }
+        }, error => {
+          try {
+            console.table(error);
+            let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'specialOfferDetailsScreen.getCategoryFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+            errorSnackbar.afterDismissed().subscribe(() => {
+              this.goToListScreen()
+            })
+          } catch (error) {
+            console.log(error)
+          }
         }
-      } else {
-        this.isCreate = true;
-      }
+      )
     })
   }
 
@@ -361,7 +398,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                 offer.terms_and_conditions = formValue.termsAndConds;
                 offer.instructions = formValue.instructions;
                 offer.end_date = endDate;
-                offer.category = 'one click'
+                offer.category = formValue.category;
                 this.updateOffer(offer)
               } else {
                 this.uploadImage()
@@ -406,7 +443,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
               offer.terms_and_conditions = formValue.termsAndConds;
               offer.instructions = formValue.instructions;
               offer.end_date = endDate;
-              offer.category = 'one click'
+              offer.category = formValue.category
               this.insertOffer(offer);
             } else {
               let offer = new SpecialOffer();
@@ -417,7 +454,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
               offer.terms_and_conditions = formValue.termsAndConds;
               offer.instructions = formValue.instructions;
               offer.end_date = endDate;
-              offer.category = 'one click'
+              offer.category = formValue.category
               this.updateOffer(offer, true)
             }
           }, error => {

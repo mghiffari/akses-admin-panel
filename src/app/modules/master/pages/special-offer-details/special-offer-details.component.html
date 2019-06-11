@@ -46,6 +46,26 @@
     <div fxLayout="row wrap" class="border-bottom-gray padding-16">
       <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutGap="16px">
         <div fxLayout="row wrap">
+          <div fxFlex="30%" fxFlexAlign="center">
+            {{'forms.category.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+            <mat-form-field appearance="fill">
+              <mat-select formControlName="category">
+                <mat-option value="">
+                  {{'forms.category.placeholder' | translate}}
+                </mat-option>
+                <mat-option *ngFor="let cat of categories" [value]="cat.value">
+                  {{cat.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">
+              <span *ngIf="category.errors.required">{{'forms.category.errorRequired' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
           <div fxFlex="30%">
             {{'forms.offerImage.fieldTitle' | translate}}
           </div>

@@ -692,6 +692,7 @@
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "gagal mendapatkan data Special Offer",
+        "getCategoryFailed": "gagal mendapatkan kategori Special Offer",
         "createTitle": "Tambahkan Special Offer Baru",
         "updateTitle": "Ubah Special Offer",
         "succesCreated": "Special Offer berhasil ditambahkan",

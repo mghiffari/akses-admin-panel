@@ -11,6 +11,7 @@ export class LovService {
   getModulsApiUrl = this.lovTypeApiUrl + 'internal_navigation';
   getArticleCatApiUrl = this.lovTypeApiUrl + 'article_category';
   getFAQCatApiUrl = this.lovTypeApiUrl + 'faq_category';
+  getSpecialOfferCatApiUrl = this.lovTypeApiUrl + 'special_offer_type';
   indonesiaZoneApiUrl = this.lovApiUrl + 'indonesia-zone';
   branchTypeApiUrl = this.lovTypeApiUrl + 'branch_type';
   indonesiaZoneCityApiUrl = this.indonesiaZoneApiUrl + '?province=';
@@ -80,5 +81,11 @@ export class LovService {
   getPaymentInstType(){
     console.log("LovService | getPaymentInstType " + this.paymentInstructionType);
     return this.authService.wrapTokenGetApi(this.paymentInstructionType);
+  }
+
+  // get special offer type
+  getSpecialOfferCategory(){
+    console.log("LovService | getSpecialOfferCategory " + this.getSpecialOfferCatApiUrl);
+    return this.authService.wrapTokenGetApi(this.getSpecialOfferCatApiUrl);
   }
 }
