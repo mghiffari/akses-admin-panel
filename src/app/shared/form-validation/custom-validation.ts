@@ -52,11 +52,26 @@ export class CustomValidation {
   }
 
   static scheduleMinDuration = 3600000
+
+  static notifImage = {
+    resolution: {
+      width: 1440,
+      height: 720
+    }
+  }
+
+  static notifLargeIcon = {
+    resolution: {
+      width: 256,
+      height: 256
+    }
+  }
+
   static notifTitle = {
-    maxLength: 100
+    maxLength: 50
   }
   static notifContent = {
-    maxLength: 200
+    maxLength: 300
   }
 
   static adiraEmailPattern = environment.enableAdiraEmailValidation ? /@adira.co.id$/ : /^/;
@@ -214,7 +229,7 @@ export class CustomValidation {
     }
   }
   
-  //used to validate image ratio
+  //used to validate image max resolution
   static imageMaxResolution(control: AbstractControl, maxWidth: number, maxHeight: number) {
     console.log('CustomValidation | imageMaxResolution');
     const file = <File>control.value;
@@ -236,6 +251,34 @@ export class CustomValidation {
           const width = image.width;
           if (height > maxHeight || width > maxWidth) {
             control.setErrors({ maxresolution: true })
+          }
+        };
+      }
+    }
+  }
+
+  //used to validate image resolution
+  static imageResolution(control: AbstractControl, width: number, height: number) {
+    console.log('CustomValidation | imageMaxResolution');
+    const file = <File>control.value;
+    control.setErrors(null)
+    if (file) {
+      let reader = new FileReader()
+      reader.readAsDataURL(file);
+      reader.onload = function (e) {
+
+        //Initiate the JavaScript Image object.
+        let image = new Image();
+
+        //Set the Base64 string return from FileReader as source.
+        image.src = e.target['result'];
+
+        //Validate the File Height and Width.
+        image.onload = function () {
+          const height = image.height;
+          const width = image.width;
+          if (height === height || width === width) {
+            control.setErrors({ resolution: true })
           }
         };
       }

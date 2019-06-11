@@ -300,8 +300,10 @@
             "errorDataEmpty": "File kosong",
             "errorDataFormat": "Data O-ID hanya terdiri dari angka",
             "errorFileType": "Hanya format .csv yang dapat diupload",
+            "errorCSVRequired": "File csv wajib diisi",
             "options": {
-                "all": "Semua"
+                "all": "Semua",
+                "selectedUsers": "Sebagian"
             }
         },
         "content": {
@@ -309,6 +311,31 @@
             "placeholder": "Pesan",
             "errorRequired": "Pesan wajib diisi",
             "errorMaxLength": "Jumlah karakter maksimum untuk Pesan adalah {{maxLength}}"
+        },
+        "notifLargeIcon": {
+            "fieldTitle": "Ikon Besar",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
+            "errorResolution": "Hanya ukuran {{width}} X {{height}} pixel yang dapat diupload",
+            "hint": "Ukuran {{width}} X {{height}} pixel (tipe file: .jpeg / .png)"
+        },
+        "notifImage": {
+            "fieldTitle": "Gambar",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
+            "errorResolution": "Hanya ukuran {{width}} X {{height}} pixel yang dapat diupload",
+            "hint": "Ukuran {{width}} X {{height}} pixel (tipe file: .jpeg / .png)"
+        },
+        "notifLinkType": {
+            "fieldTitle": "Tipe",
+            "errorRequired": "Tipe wajib diisi",
+            "options": {
+                "article": "Artikel",
+                "specialOffer": "Special Offer"
+            }
+        },
+        "notifSpecialOffer": {
+            "fieldTitle": "Special Offer",
+            "placeholder": "Pilih Special Offer",
+            "errorRequired": "Special Offer wajib diisi"
         },
         "articleCategory": {
             "fieldTitle": "Kategori Artikel",
@@ -335,7 +362,7 @@
             "fieldTitle": "Gambar",
             "errorRequired": "Gambar wajib diisi",
             "errorRatio": "Hanya rasio {{width}}:{{height}} yang dapat diupload",
-            "errorType": "Hanya format .jpg, .jpeg and .png format yang dapat diupload",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
             "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )"
         },
         "description": {

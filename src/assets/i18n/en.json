@@ -300,8 +300,10 @@
             "errorDataEmpty": "Uploaded file is empty",
             "errorDataFormat": "Uploaded data format should only contain numbers",
             "errorFileType": "Only .csv format is supported",
+            "errorCSVRequired": "csv file is required",
             "options": {
-                "all": "All"
+                "all": "All",
+                "selectedUsers": "Selected Users"
             }
         },
         "content": {
@@ -309,6 +311,31 @@
             "placeholder": "Content",
             "errorRequired": "Content is required",
             "errorMaxLength": "Max. length of Content is {{maxLength}}"
+        },
+        "notifLargeIcon": {
+            "fieldTitle": "Large Icon",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "errorResolution": "Only {{width}} X {{height}} pixel is supported",
+            "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
+        },
+        "notifImage": {
+            "fieldTitle": "Image",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "errorResolution": "Only {{width}} X {{height}} pixel is supported",
+            "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
+        },
+        "notifLinkType": {
+            "fieldTitle": "Type",
+            "errorRequired": "Type is required",
+            "options": {
+                "article": "Article",
+                "specialOffer": "Special Offer"
+            }
+        },
+        "notifSpecialOffer": {
+            "fieldTitle": "Special Offer",
+            "placeholder": "Select a Special Offer",
+            "errorRequired": "Special Offer is required"
         },
         "articleCategory": {
             "fieldTitle": "Article Category",

@@ -53,10 +53,10 @@
             <div fxLayout="row wrap" fxLayoutGap="10px">
               <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%"
                 class="padding-5 dashed-border-medium-gray">
-                <div class="bg-medium-gray" style="width: 100%;"
+                <div style="width: 100%;"
                   [style.height]="imgContainer.offsetWidth * (imageRatioPercentage) + 'px'" #imgContainer>
                   <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
-                    *ngIf="(!image.value || image.value===''); else imgExist">
+                    *ngIf="(!image.value || image.value===''); else imgExist" class="bg-medium-gray">
                     <mat-icon class="icon-42">collections</mat-icon>
                   </div>
                   <ng-template #imgExist>
