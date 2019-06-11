@@ -297,8 +297,6 @@
             "fieldTitle": "Recipient",
             "placeholder": "Recipient",
             "errorRequired": "Recipient is required",
-            "errorDataEmpty": "Uploaded file is empty",
-            "errorDataFormat": "Uploaded data format should only contain numbers",
             "errorFileType": "Only .csv format is supported",
             "options": {
                 "all": "All"

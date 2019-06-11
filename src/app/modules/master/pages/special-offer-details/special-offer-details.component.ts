@@ -150,8 +150,8 @@ export class SpecialOfferDetailsComponent implements OnInit {
       this.activateRouting = false;
       this.offerForm = new FormGroup({
         id: new FormControl(''),
-        csvFile: new FormControl(null, CustomValidation.type('csv')),
-        recipient: new FormControl(null, Validators.required),
+        csvFile: new FormControl(null, [Validators.required, CustomValidation.type('csv')]),
+        recipient: new FormControl(null),
         category: new FormControl('', Validators.required),
         image: new FormControl(null, Validators.required),
         imageFile: new FormControl(null, [
@@ -177,7 +177,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
               try {
                 this.isCreate = false;
                 this.loading = true;
-                this.recipient.setValidators([]);
+                this.csvFile.setValidators([CustomValidation.type('csv')]);
                 const id = params.id
                 this.offerService.getOfferById(id).subscribe(
                   response => {
@@ -274,43 +274,45 @@ export class SpecialOfferDetailsComponent implements OnInit {
       this.csvFile.markAsDirty()
       this.recipient.reset()
       if (this.csvFile.valid || !this.csvFile.errors.type) {
-        papa.parse(file, {
-          complete: (results, file) => {
-            console.table(results)
-            event.target.files = null
-            let arr = [];
-            try {
-              let oids = results.data;
-              let wrongFormat = false;
-              for (let i = 0; i < oids.length; i++) {
-                let oid = oids[i][0].trim();
-                if (oid !== '') {
-                  if (/^[0-9]+$/.test(oid)) {
-                    arr.push(oid)
-                  } else {
-                    wrongFormat = true;
-                    break;
-                  }
-                }
-              }
-              if (arr.length > 0) {
-                if (wrongFormat) {
-                  this.recipient.setErrors({ format: true })
-                } else {
-                  this.recipient.setValue(arr)
-                  this.recipient.setErrors(null)
-                }
-              } else if (wrongFormat) {
-                this.recipient.setErrors({ format: true })
-              }
-              this.recipient.markAsDirty();
-              this.recipient.markAsTouched();
-              this.csvFile.reset();
-            } catch (error) {
-              console.table(error)
-            }
-          }
-        })
+        this.recipient.markAsDirty();
+        this.recipient.markAsTouched();
+        // papa.parse(file, {
+        //   complete: (results, file) => {
+        //     console.table(results)
+        //     event.target.files = null
+        //     let arr = [];
+        //     try {
+        //       let oids = results.data;
+        //       let wrongFormat = false;
+        //       for (let i = 0; i < oids.length; i++) {
+        //         let oid = oids[i][0].trim();
+        //         if (oid !== '') {
+        //           if (/^[0-9]+$/.test(oid)) {
+        //             arr.push(oid)
+        //           } else {
+        //             wrongFormat = true;
+        //             break;
+        //           }
+        //         }
+        //       }
+        //       if (arr.length > 0) {
+        //         if (wrongFormat) {
+        //           this.recipient.setErrors({ format: true })
+        //         } else {
+        //           this.recipient.setValue(arr)
+        //           this.recipient.setErrors(null)
+        //         }
+        //       } else if (wrongFormat) {
+        //         this.recipient.setErrors({ format: true })
+        //       }
+        //       this.recipient.markAsDirty();
+        //       this.recipient.markAsTouched();
+        //       this.csvFile.reset();
+        //     } catch (error) {
+        //       console.table(error)
+        //     }
+        //   }
+        // })
       } else {
         event.target.files = null
       }

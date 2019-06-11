@@ -297,8 +297,6 @@
             "fieldTitle": "Penerima",
             "placeholder": "Penerima",
             "errorRequired": "Penerima wajib diisi",
-            "errorDataEmpty": "File kosong",
-            "errorDataFormat": "Data O-ID hanya terdiri dari angka",
             "errorFileType": "Hanya format .csv yang dapat diupload",
             "options": {
                 "all": "Semua"

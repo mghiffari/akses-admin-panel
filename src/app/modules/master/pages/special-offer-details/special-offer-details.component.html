@@ -24,7 +24,7 @@
         <div fxFlex="70%">
           <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
             <div>
-              <button mat-raised-button color="accent" (click)="csvInput.click()"
+              <button mat-raised-button color="accent" (click)="csvInput.click(); csvFile.markAsTouched()"
                 [disabled]="!isCreate">{{'uploadCSV' | translate}}</button>
               <input hidden #csvInput type="file" accept=".csv" (change)="onChangeCSVFile($event)">
             </div>
@@ -33,12 +33,9 @@
             </div>
           </div>
           <mat-error class="bottom-error"
-            *ngIf="csvFile.invalid && (csvFile.dirty || csvFile.touched) || recipient.invalid && (recipient.dirty || recipient.touched)">
+            *ngIf="csvFile.invalid && (csvFile.dirty || csvFile.touched)">
+            <span *ngIf="csvFile.errors?.required">{{'forms.recipient.errorRequired' | translate}}</span>
             <span *ngIf="csvFile.errors?.type">{{'forms.recipient.errorFileType' | translate}}</span>
-            <span *ngIf="!csvFile.errors?.type">
-              <span *ngIf="recipient.errors?.required">{{'forms.recipient.errorDataEmpty' | translate}}</span>
-              <span *ngIf="recipient.errors?.format">{{'forms.recipient.errorDataFormat' | translate}}</span>
-            </span>
           </mat-error>
         </div>
       </div>
