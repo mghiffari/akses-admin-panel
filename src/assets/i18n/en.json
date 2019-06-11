@@ -691,6 +691,7 @@
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "failed to get Special Offer data",
+        "getCategoryFailed": "failed to get Special Offer categories",
         "createTitle": "Create New Special Offer",
         "updateTitle": "Update Special Offer",
         "succesCreated": "new Special Offer successfully created",
