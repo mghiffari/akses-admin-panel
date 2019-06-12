@@ -277,7 +277,7 @@ export class CustomValidation {
         image.onload = function () {
           const height = image.height;
           const width = image.width;
-          if (height === height || width === width) {
+          if (height !== height || width !== width) {
             control.setErrors({ resolution: true })
           }
         };

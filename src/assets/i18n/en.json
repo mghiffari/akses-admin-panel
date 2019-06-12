@@ -705,6 +705,12 @@
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new notification",
         "notifSaveConfirm": "Save Notification Confirmation",
+        "deleteCSVFailed": "failed to delete csv file",
+        "deleteImageFailed": "failed to delete image",
+        "deleteIconFailed": "failed to delete icon",
+        "uploadCSVFailed": "failed to upload csv file",
+        "uploadImageFailed": "failed to upload image",
+        "uploadIconFailed": "failed to upload icon",
         "cantUpdate": {
             "immediate": "can't update immediately sent notification",
             "minDuration": "can't update notification which schedule is less than one hour"
