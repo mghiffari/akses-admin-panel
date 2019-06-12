@@ -808,7 +808,7 @@
         "01100": "missing required update notification articleid param",
         "01101": "missing required delete notification notifid param",
         "01102": "text param must not contain fancytext",
-        "01103": "recipient is required and should be array",
+        "01103": "recipient is required",
         "01104": "missing required terms and conditions parameter",
         "01105": "missing required image parameter",
         "01106": "missing required end date parameter",

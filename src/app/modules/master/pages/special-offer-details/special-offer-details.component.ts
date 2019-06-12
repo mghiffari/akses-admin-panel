@@ -204,9 +204,9 @@ export class SpecialOfferDetailsComponent implements OnInit {
                           instructions: editedOffer.instructions,
                           endDate: date,
                           endTime: time,
-                          oldEndDate: oldEndDate
+                          oldEndDate: oldEndDate,
+                          category: editedOffer.category
                         })
-                        console.log(this.offerForm)
                       }
                     } catch (error) {
                       console.table(error)
@@ -276,43 +276,6 @@ export class SpecialOfferDetailsComponent implements OnInit {
       if (this.csvFile.valid || !this.csvFile.errors.type) {
         this.recipient.markAsDirty();
         this.recipient.markAsTouched();
-        // papa.parse(file, {
-        //   complete: (results, file) => {
-        //     console.table(results)
-        //     event.target.files = null
-        //     let arr = [];
-        //     try {
-        //       let oids = results.data;
-        //       let wrongFormat = false;
-        //       for (let i = 0; i < oids.length; i++) {
-        //         let oid = oids[i][0].trim();
-        //         if (oid !== '') {
-        //           if (/^[0-9]+$/.test(oid)) {
-        //             arr.push(oid)
-        //           } else {
-        //             wrongFormat = true;
-        //             break;
-        //           }
-        //         }
-        //       }
-        //       if (arr.length > 0) {
-        //         if (wrongFormat) {
-        //           this.recipient.setErrors({ format: true })
-        //         } else {
-        //           this.recipient.setValue(arr)
-        //           this.recipient.setErrors(null)
-        //         }
-        //       } else if (wrongFormat) {
-        //         this.recipient.setErrors({ format: true })
-        //       }
-        //       this.recipient.markAsDirty();
-        //       this.recipient.markAsTouched();
-        //       this.csvFile.reset();
-        //     } catch (error) {
-        //       console.table(error)
-        //     }
-        //   }
-        // })
       } else {
         event.target.files = null
       }
@@ -473,7 +436,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                   }
                 })
               } else {
-                offer.target_users_file = csvResponse.data.url;
+                offer.url = csvResponse.data.url;
                 offer.sp_offer_image = imageResponse.data.url;
                 offer.title = formValue.title;
                 offer.description = formValue.description;
@@ -628,6 +591,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
     this.fileService.deleteFile(data).subscribe(
       response => {
         console.table(response);
+        this.onSubmittingForm = false;
         let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
           data: {
             title: 'success',
