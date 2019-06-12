@@ -297,8 +297,6 @@
             "fieldTitle": "Recipient",
             "placeholder": "Recipient",
             "errorRequired": "Recipient is required",
-            "errorDataEmpty": "Uploaded file is empty",
-            "errorDataFormat": "Uploaded data format should only contain numbers",
             "errorFileType": "Only .csv format is supported",
             "options": {
                 "all": "All"
@@ -702,6 +700,7 @@
             "minDuration": "can't update special offer which expiry date is less than one hour"
         }, 
         "uploadImageFailed": "failed to upload image",
+        "uploadCSVFailed": "failed to upload csv file",
         "deleteImageFailed": "failed to delete image"
     },
     "apiErrors": {
@@ -809,7 +808,7 @@
         "01100": "missing required update notification articleid param",
         "01101": "missing required delete notification notifid param",
         "01102": "text param must not contain fancytext",
-        "01103": "recipient is required and should be array",
+        "01103": "recipient is required",
         "01104": "missing required terms and conditions parameter",
         "01105": "missing required image parameter",
         "01106": "missing required end date parameter",

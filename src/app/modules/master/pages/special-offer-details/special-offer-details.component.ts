@@ -9,11 +9,13 @@ import { FileManagementService } from 'src/app/shared/services/file-management.s
 import { Ng2ImgToolsService } from 'ng2-img-tools';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
 import { SpecialOffer } from 'src/app/shared/models/special-offer';
 import { LovService } from 'src/app/shared/services/lov.service';
+import { catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-special-offer-details',
@@ -148,8 +150,8 @@ export class SpecialOfferDetailsComponent implements OnInit {
       this.activateRouting = false;
       this.offerForm = new FormGroup({
         id: new FormControl(''),
-        csvFile: new FormControl(null, CustomValidation.type('csv')),
-        recipient: new FormControl(null, Validators.required),
+        csvFile: new FormControl(null, [Validators.required, CustomValidation.type('csv')]),
+        recipient: new FormControl(null),
         category: new FormControl('', Validators.required),
         image: new FormControl(null, Validators.required),
         imageFile: new FormControl(null, [
@@ -175,7 +177,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
               try {
                 this.isCreate = false;
                 this.loading = true;
-                this.recipient.setValidators([]);
+                this.csvFile.setValidators([CustomValidation.type('csv')]);
                 const id = params.id
                 this.offerService.getOfferById(id).subscribe(
                   response => {
@@ -202,9 +204,9 @@ export class SpecialOfferDetailsComponent implements OnInit {
                           instructions: editedOffer.instructions,
                           endDate: date,
                           endTime: time,
-                          oldEndDate: oldEndDate
+                          oldEndDate: oldEndDate,
+                          category: editedOffer.category
                         })
-                        console.log(this.offerForm)
                       }
                     } catch (error) {
                       console.table(error)
@@ -272,43 +274,8 @@ export class SpecialOfferDetailsComponent implements OnInit {
       this.csvFile.markAsDirty()
       this.recipient.reset()
       if (this.csvFile.valid || !this.csvFile.errors.type) {
-        papa.parse(file, {
-          complete: (results, file) => {
-            console.table(results)
-            event.target.files = null
-            let arr = [];
-            try {
-              let oids = results.data;
-              let wrongFormat = false;
-              for (let i = 0; i < oids.length; i++) {
-                let oid = oids[i][0].trim();
-                if (oid !== '') {
-                  if (/^[0-9]+$/.test(oid)) {
-                    arr.push(oid)
-                  } else {
-                    wrongFormat = true;
-                    break;
-                  }
-                }
-              }
-              if (arr.length > 0) {
-                if (wrongFormat) {
-                  this.recipient.setErrors({ format: true })
-                } else {
-                  this.recipient.setValue(arr)
-                  this.recipient.setErrors(null)
-                }
-              } else if (wrongFormat) {
-                this.recipient.setErrors({ format: true })
-              }
-              this.recipient.markAsDirty();
-              this.recipient.markAsTouched();
-              this.csvFile.reset();
-            } catch (error) {
-              console.table(error)
-            }
-          }
-        })
+        this.recipient.markAsDirty();
+        this.recipient.markAsTouched();
       } else {
         event.target.files = null
       }
@@ -374,7 +341,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
         this.onSubmittingForm = true;
         if (this.isCreate) {
           if (CustomValidation.durationFromNowValidation(this.endDate.value)) {
-            this.uploadImage();
+            this.uploadFiles();
           } else {
             this.onSubmittingForm = false;
             this.showFormError()
@@ -401,7 +368,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                 offer.category = formValue.category;
                 this.updateOffer(offer)
               } else {
-                this.uploadImage()
+                this.uploadFiles()
               }
             } else {
               this.onSubmittingForm = false;
@@ -416,65 +383,112 @@ export class SpecialOfferDetailsComponent implements OnInit {
     })
   }
 
-  // compress image & call upload image api
-  uploadImage() {
-    console.log('SpecialOfferDetailsComponent | uploadImage')
+  // upload csv and image
+  uploadFiles() {
+    console.log('SpecialOfferDetailsComponent | uploadFiles')
     this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
       compressedImg => {
         console.log(compressedImg)
-        let formData = new FormData()
-        formData.append("file", compressedImg)
-        formData.append("component", this.fileService.specialOfferComponent)
-        this.fileService.uploadFile(formData).subscribe(
-          response => {
-            let formValue = this.offerForm.value;
-            let endDate = new Date(formValue.endDate);
-            let timeSplit = formValue.endTime.split(':')
-            let hrs = Number(timeSplit[0])
-            let min = Number(timeSplit[1])
-            endDate.setHours(hrs, min, 0, 0)
-            let url = response.data.url
-            if (this.isCreate) {
-              let offer = new SpecialOffer();
-              offer.target_users = formValue.recipient;
-              offer.sp_offer_image = url;
-              offer.title = formValue.title;
-              offer.description = formValue.description;
-              offer.terms_and_conditions = formValue.termsAndConds;
-              offer.instructions = formValue.instructions;
-              offer.end_date = endDate;
-              offer.category = formValue.category
-              this.insertOffer(offer);
-            } else {
-              let offer = new SpecialOffer();
-              offer.id = formValue.id;
-              offer.sp_offer_image = url;
-              offer.title = formValue.title;
-              offer.description = formValue.description;
-              offer.terms_and_conditions = formValue.termsAndConds;
-              offer.instructions = formValue.instructions;
-              offer.end_date = endDate;
-              offer.category = formValue.category
-              this.updateOffer(offer, true)
-            }
-          }, error => {
+        let imageFormData = new FormData()
+        imageFormData.append("file", compressedImg)
+        imageFormData.append("component", this.fileService.specialOfferComponent)
+        let offer = new SpecialOffer();
+        let formValue = this.offerForm.value;
+        let endDate = new Date(formValue.endDate);
+        let timeSplit = formValue.endTime.split(':')
+        let hrs = Number(timeSplit[0])
+        let min = Number(timeSplit[1])
+        endDate.setHours(hrs, min, 0, 0)
+        if (this.isCreate) {
+          let csvFormData = new FormData();
+          csvFormData.append("file", formValue.csvFile)
+          csvFormData.append("component", this.fileService.specialOfferRecipientComp)
+          let tasks = [
+            this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))),
+            this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e)))
+          ]
+          forkJoin(tasks).subscribe((responses: Array<any>) => {
+            let imageResponse = responses[0];
+            let csvResponse = responses[1];
             try {
-              console.table(error)
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'specialOfferDetailsScreen.uploadIconFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+              console.table(imageResponse)
+              console.table(csvResponse)
+              if (imageResponse instanceof HttpErrorResponse) {
+                this.onSubmittingForm = false;
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'specialOfferDetailsScreen.uploadIconFailed',
+                    content: {
+                      text: 'apiErrors.' + (imageResponse.status ? imageResponse.error.err_code : 'noInternet'),
+                      data: null
+                    }
                   }
-                }
-              })
+                })
+              } else if (csvResponse instanceof HttpErrorResponse) {
+                this.onSubmittingForm = false;
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'specialOfferDetailsScreen.uploadCSVFailed',
+                    content: {
+                      text: 'apiErrors.' + (csvResponse.status ? csvResponse.error.err_code : 'noInternet'),
+                      data: null
+                    }
+                  }
+                })
+              } else {
+                offer.url = csvResponse.data.url;
+                offer.sp_offer_image = imageResponse.data.url;
+                offer.title = formValue.title;
+                offer.description = formValue.description;
+                offer.terms_and_conditions = formValue.termsAndConds;
+                offer.instructions = formValue.instructions;
+                offer.end_date = endDate;
+                offer.category = formValue.category
+                this.insertOffer(offer);
+              }
             } catch (error) {
               console.table(error)
+              this.onSubmittingForm = false;
             }
-          }
-        )
+          })
+        } else {
+          this.fileService.uploadFile(imageFormData).subscribe(
+            response => {
+              try {
+                console.table(response)
+                offer.id = formValue.id;
+                offer.sp_offer_image = response.data.url;
+                offer.title = formValue.title;
+                offer.description = formValue.description;
+                offer.terms_and_conditions = formValue.termsAndConds;
+                offer.instructions = formValue.instructions;
+                offer.end_date = endDate;
+                offer.category = formValue.category
+                this.updateOffer(offer, true)
+              } catch (error) {
+                console.table(error)
+                this.onSubmittingForm = false;
+              }
+            }, error => {
+              try {
+                console.table(error)
+                this.onSubmittingForm = false;
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'specialOfferDetailsScreen.uploadIconFailed',
+                    content: {
+                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
+                  }
+                })
+              } catch (error) {
+                console.table(error)
+                this.onSubmittingForm = false;
+              }
+            }
+          )
+        }
       }, error => {
         console.table(error);
         this.onSubmittingForm = false;
@@ -577,6 +591,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
     this.fileService.deleteFile(data).subscribe(
       response => {
         console.table(response);
+        this.onSubmittingForm = false;
         let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
           data: {
             title: 'success',

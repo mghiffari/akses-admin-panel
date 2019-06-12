@@ -13,5 +13,5 @@ export class SpecialOffer {
     status: boolean;
     is_deleted: boolean;
     category: string;
-    target_users: [];
+    url: string;
 }

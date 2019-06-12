@@ -13,6 +13,7 @@ export class FileManagementService {
   footerComponent = 'footer';
   paymentInstComponent = 'payment-instruction';
   specialOfferComponent = 'special-offer';
+  specialOfferRecipientComp = 'special-offer-recipient';
   compressImageSizeInMB = 0.2;
 
   constructor(
