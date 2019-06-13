@@ -297,8 +297,6 @@
             "fieldTitle": "Penerima",
             "placeholder": "Penerima",
             "errorRequired": "Penerima wajib diisi",
-            "errorDataEmpty": "File kosong",
-            "errorDataFormat": "Data O-ID hanya terdiri dari angka",
             "errorFileType": "Hanya format .csv yang dapat diupload",
             "errorCSVRequired": "File csv wajib diisi",
             "options": {
@@ -725,6 +723,7 @@
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "gagal mendapatkan data Special Offer",
+        "getCategoryFailed": "gagal mendapatkan kategori Special Offer",
         "createTitle": "Tambahkan Special Offer Baru",
         "updateTitle": "Ubah Special Offer",
         "succesCreated": "Special Offer berhasil ditambahkan",
@@ -735,6 +734,7 @@
             "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini"
         },
         "uploadImageFailed": "upload gambar gagal",
+        "uploadCSVFailed": "upload file csv gagal",
         "deleteImageFailed": "gagal menghapus gambar"
     },
     "apiErrors": {
@@ -842,7 +842,7 @@
         "01100": "artikel notifikasi wajib diisi",
         "01101": "id notifikasi wajib diisi",
         "01102": "format teks tidak disupport",
-        "01103": "penerima wajib diisi dan harus dalam array",
+        "01103": "penerima wajib diisi",
         "01104": "syarat dan ketentuan wajib diisi",
         "01105": "gambar wajib diisi",
         "01106": "tanggal selesai wajib diisi",

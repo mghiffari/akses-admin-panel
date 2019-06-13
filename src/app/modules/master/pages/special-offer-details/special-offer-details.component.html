@@ -24,7 +24,7 @@
         <div fxFlex="70%">
           <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
             <div>
-              <button mat-raised-button color="accent" (click)="csvInput.click()"
+              <button mat-raised-button color="accent" (click)="csvInput.click(); csvFile.markAsTouched()"
                 [disabled]="!isCreate">{{'uploadCSV' | translate}}</button>
               <input hidden #csvInput type="file" accept=".csv" (change)="onChangeCSVFile($event)">
             </div>
@@ -32,13 +32,9 @@
               <mat-icon class="text-success">check_circle</mat-icon>
             </div>
           </div>
-          <mat-error class="bottom-error"
-            *ngIf="csvFile.invalid && (csvFile.dirty || csvFile.touched) || recipient.invalid && (recipient.dirty || recipient.touched)">
+          <mat-error class="bottom-error" *ngIf="csvFile.invalid && (csvFile.dirty || csvFile.touched)">
+            <span *ngIf="csvFile.errors?.required">{{'forms.recipient.errorRequired' | translate}}</span>
             <span *ngIf="csvFile.errors?.type">{{'forms.recipient.errorFileType' | translate}}</span>
-            <span *ngIf="!csvFile.errors?.type">
-              <span *ngIf="recipient.errors?.required">{{'forms.recipient.errorDataEmpty' | translate}}</span>
-              <span *ngIf="recipient.errors?.format">{{'forms.recipient.errorDataFormat' | translate}}</span>
-            </span>
           </mat-error>
         </div>
       </div>
@@ -53,8 +49,8 @@
             <div fxLayout="row wrap" fxLayoutGap="10px">
               <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%"
                 class="padding-5 dashed-border-medium-gray">
-                <div style="width: 100%;"
-                  [style.height]="imgContainer.offsetWidth * (imageRatioPercentage) + 'px'" #imgContainer>
+                <div style="width: 100%;" [style.height]="imgContainer.offsetWidth * (imageRatioPercentage) + 'px'"
+                  #imgContainer>
                   <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
                     *ngIf="(!image.value || image.value===''); else imgExist" class="bg-medium-gray">
                     <mat-icon class="icon-42">collections</mat-icon>
@@ -73,6 +69,9 @@
                 <input hidden #imageInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeImageFile($event)">
               </div>
             </div>
+            <mat-hint class="bottom-hint">
+              {{'forms.offerImage.hint' | translate : imageRatio}}
+            </mat-hint>
             <mat-error class="bottom-error"
               *ngIf="image.invalid && (image.dirty || image.touched) || imageFile.invalid && (imageFile.dirty || imageFile.touched)">
               <span
@@ -82,6 +81,26 @@
                 <span
                   *ngIf="!imageFile.errors?.type && imageFile.errors?.ratio">{{'forms.offerImage.errorRatio' | translate : imageRatio}}</span>
               </span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="30%" fxFlexAlign="center">
+            {{'forms.category.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+            <mat-form-field appearance="fill">
+              <mat-select formControlName="category">
+                <mat-option value="">
+                  {{'forms.category.placeholder' | translate}}
+                </mat-option>
+                <mat-option *ngFor="let cat of categories" [value]="cat.value">
+                  {{cat.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">
+              <span *ngIf="category.errors.required">{{'forms.category.errorRequired' | translate}}</span>
             </mat-error>
           </div>
         </div>
@@ -154,10 +173,10 @@
         <div fxFlex="65%" fxFlex.lt-lg="80%" fxFlex-lt.md="100%">
           <mat-card style="width: 100%">
             <div mat-card-image>
-              <div class="bg-medium-gray" style="width: 100%"
-                [style.height]="previewImgContainer.offsetWidth * (imageRatioPercentage) + 'px'" #previewImgContainer>
+              <div style="width: 100%" [style.height]="previewImgContainer.offsetWidth * (imageRatioPercentage) + 'px'"
+                #previewImgContainer>
                 <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
-                  *ngIf="(!image.value || image.value===''); else previewImgExist">
+                  *ngIf="(!image.value || image.value===''); else previewImgExist" class="bg-medium-gray">
                   <mat-icon class="icon-42">collections</mat-icon>
                 </div>
                 <ng-template #previewImgExist>
