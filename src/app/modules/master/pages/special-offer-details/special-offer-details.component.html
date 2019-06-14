@@ -176,7 +176,7 @@
               <div style="width: 100%" [style.height]="previewImgContainer.offsetWidth * (imageRatioPercentage) + 'px'"
                 #previewImgContainer>
                 <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
-                  *ngIf="(!image.value || image.value===''); else previewImgExist"> class="bg-medium-gray"
+                  *ngIf="(!image.value || image.value===''); else previewImgExist" class="bg-medium-gray">
                   <mat-icon class="icon-42">collections</mat-icon>
                 </div>
                 <ng-template #previewImgExist>

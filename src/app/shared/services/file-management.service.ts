@@ -13,6 +13,9 @@ export class FileManagementService {
   footerComponent = 'footer';
   paymentInstComponent = 'payment-instruction';
   specialOfferComponent = 'special-offer';
+  notificationComponent = 'notification';
+  notificationIkonComponent = 'notification-icon';
+  notificationRecipientComp = 'notification-recipient';
   specialOfferRecipientComp = 'special-offer-recipient';
   compressImageSizeInMB = 0.2;
 

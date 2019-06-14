@@ -12,6 +12,12 @@ export class SpecialOfferService {
     private authService: AuthService
   ) { }
 
+  // get list of active special offers
+  getActiveOfferList(){
+    console.log("SpecialOfferService | getActiveOfferList ", this.specialOfferApiUrl);
+    return this.authService.wrapTokenGetApi(this.specialOfferApiUrl)
+  }
+
   //used to hit get special offer list API
   getOfferList(page, pageSize, search){
     let url = this.specialOfferApiUrl+ page + '/' + pageSize + '/' + search; 

@@ -298,8 +298,10 @@
             "placeholder": "Penerima",
             "errorRequired": "Penerima wajib diisi",
             "errorFileType": "Hanya format .csv yang dapat diupload",
+            "errorCSVRequired": "File csv wajib diisi",
             "options": {
-                "all": "Semua"
+                "all": "Semua",
+                "selectedUsers": "Sebagian"
             }
         },
         "content": {
@@ -307,6 +309,31 @@
             "placeholder": "Pesan",
             "errorRequired": "Pesan wajib diisi",
             "errorMaxLength": "Jumlah karakter maksimum untuk Pesan adalah {{maxLength}}"
+        },
+        "notifLargeIcon": {
+            "fieldTitle": "Ikon",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
+            "errorResolution": "Hanya ukuran {{width}} X {{height}} pixel yang dapat diupload",
+            "hint": "Ukuran {{width}} X {{height}} pixel (tipe file: .jpeg / .png)"
+        },
+        "notifImage": {
+            "fieldTitle": "Gambar",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
+            "errorResolution": "Hanya ukuran {{width}} X {{height}} pixel yang dapat diupload",
+            "hint": "Ukuran {{width}} X {{height}} pixel (tipe file: .jpeg / .png)"
+        },
+        "notifLinkType": {
+            "fieldTitle": "Tipe",
+            "errorRequired": "Tipe wajib diisi",
+            "options": {
+                "article": "Artikel",
+                "specialOffer": "Special Offer"
+            }
+        },
+        "notifSpecialOffer": {
+            "fieldTitle": "Special Offer",
+            "placeholder": "Pilih Special Offer",
+            "errorRequired": "Special Offer wajib diisi"
         },
         "articleCategory": {
             "fieldTitle": "Kategori Artikel",
@@ -333,7 +360,7 @@
             "fieldTitle": "Gambar",
             "errorRequired": "Gambar wajib diisi",
             "errorRatio": "Hanya rasio {{width}}:{{height}} yang dapat diupload",
-            "errorType": "Hanya format .jpg, .jpeg and .png format yang dapat diupload",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
             "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )"
         },
         "description": {
@@ -675,6 +702,12 @@
         "updateFailed": "gagal mengubah data",
         "createFailed": "gagal menambahkan notifikasi baru",
         "notifSaveConfirm": "Konfirmasi Simpan Notifikasi",
+        "deleteCSVFailed": "gagal menghapus file csv",
+        "deleteImageFailed": "gagal menghapus gambar",
+        "deleteIconFailed": "gagal menghapus ikon",
+        "uploadCSVFailed": "upload file csv gagal",
+        "uploadImageFailed": "upload gambar gagal",
+        "uploadIconFailed": "upload ikon gagal",
         "cantUpdate": {
             "immediate": "tidak dapat mengubah notifikasi yang langsung dikirim",
             "minDuration": "tidak dapat mengubah notifikasi dengan jadwal kurang dari 1 jam sejak saat ini"

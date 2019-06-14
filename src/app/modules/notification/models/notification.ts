@@ -1,7 +1,8 @@
 export class Notification {
     id: string;
     is_deleted: boolean;
-    aks_adm_article_id: string;
+    link_type: boolean;
+    link_id: string;
     title: string;
     schedule_sending: Date;
     edited_date: Date;
@@ -10,4 +11,6 @@ export class Notification {
     content: string;
     scheduled_flg: boolean;
     is_editable: boolean;
+    large_icon: string;
+    large_image: string;
 }
