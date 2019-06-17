@@ -19,6 +19,7 @@ import { catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
+import { constants } from 'src/app/shared/constants/constants';
 
 @Component({
   selector: 'app-notification-details',
@@ -41,6 +42,7 @@ export class NotificationDetailsComponent implements OnInit {
   notifImageRes = CustomValidation.notifImage.resolution;
   notifImageRatioPercentage = this.notifImageRes.height / this.notifImageRes.width;
   notifIconRes = CustomValidation.notifLargeIcon.resolution;
+  notificationLinkType = constants.notificationLinkType;
   private imageInput: ElementRef;
   @ViewChild('imageInput') set imgInput(imageInput: ElementRef) {
     this.imageInput = imageInput;
@@ -71,8 +73,8 @@ export class NotificationDetailsComponent implements OnInit {
         this.loading = true;
         this.notifForm = new FormGroup({
           id: new FormControl(null),
-          recipientType: new FormControl(false, Validators.required),
-          oldRecipientType: new FormControl(false),
+          recipientAllFlag: new FormControl(true, Validators.required),
+          oldRecipientAllFlag: new FormControl(true),
           recipient: new FormControl(null),
           oldRecipient: new FormControl(null),
           csvFile: new FormControl(null, CustomValidation.type('csv')),
@@ -84,8 +86,8 @@ export class NotificationDetailsComponent implements OnInit {
           imageFile: new FormControl(null, CustomValidation.type(['jpg', 'jpeg', 'png'])),
           title: new FormControl('', [Validators.required, Validators.maxLength(this.notifTitle.maxLength)]),
           content: new FormControl('', [Validators.required, Validators.maxLength(this.notifContent.maxLength)]),
-          linkType: new FormControl(false, Validators.required),
-          linkCategory: new FormControl({ value: 'Promo', disabled: true }, Validators.required),
+          linkType: new FormControl(this.notificationLinkType.article, Validators.required),
+          linkCategory: new FormControl({ value: constants.articleTypePromo, disabled: true }, Validators.required),
           linkId: new FormControl('', Validators.required),
           scheduledFlag: new FormControl(false, Validators.required),
           scheduleDate: new FormControl(new Date()),
@@ -111,7 +113,7 @@ export class NotificationDetailsComponent implements OnInit {
                         response => {
                           try {
                             console.table(response)
-                            let editedNotif = response.data;
+                            let editedNotif: Notification = response.data;
                             if (!editedNotif.scheduled_flg) {
                               this.editNotifError('notificationDetailsScreen.cantUpdate.immediate')
                             } else if (!CustomValidation.durationFromNowValidation(new Date(editedNotif.schedule_sending))) {
@@ -127,7 +129,7 @@ export class NotificationDetailsComponent implements OnInit {
                                   + (scheduleMin > 9 ? '' : '0') + scheduleMin
                               }
                               let selectedLink = null;
-                              if (editedNotif.link_type) {
+                              if (editedNotif.link_type === this.notificationLinkType.specialOffer) {
                                 selectedLink = this.specialOffers.find(el => {
                                   return el.id === editedNotif.link_id;
                                 })
@@ -139,10 +141,10 @@ export class NotificationDetailsComponent implements OnInit {
                               this.selectedLinkTitle = selectedLink ? selectedLink.title : '';
                               this.notifForm.patchValue({
                                 id: editedNotif.id,
-                                // recipientType: editedNotif.recipient_type,
-                                // oldRecipientType: editedNotif.recipient_type
-                                // recipient: editedNotif.recipient,
-                                // oldRecipient: editedNotif.recipient
+                                recipientAllFlag: editedNotif.recipient_all_flg,
+                                oldRecipientAllFlag: editedNotif.recipient_all_flg,
+                                recipient: editedNotif.recipient_list,
+                                oldRecipient: editedNotif.recipient_list,
                                 title: editedNotif.title,
                                 content: editedNotif.content,
                                 icon: editedNotif.large_icon,
@@ -157,7 +159,7 @@ export class NotificationDetailsComponent implements OnInit {
                                 oldScheduleSending: new Date(editedNotif.schedule_sending)
                               })
                               this.handleLinkTypeChange()
-                              this.handleRecipientTypeChange()
+                              this.handleRecipientAllFlagChange()
                             }
                           } catch (error) {
                             console.log(error)
@@ -188,7 +190,7 @@ export class NotificationDetailsComponent implements OnInit {
                       this.isCreate = true;
                       this.loading = false;
                       this.handleLinkTypeChange()
-                      this.handleRecipientTypeChange()
+                      this.handleRecipientAllFlagChange()
                     }
 
                   } catch (error) {
@@ -246,22 +248,26 @@ export class NotificationDetailsComponent implements OnInit {
     this.linkType.valueChanges.subscribe(val => {
       // link type is special offer
       this.linkId.setValue('')
-      if (val) {
-        this.recipientType.setValue(true)
+      console.log('link type ', val)
+      if (val === this.notificationLinkType.specialOffer) {
+        this.recipientAllFlag.setValue(false)
       }
     })
   }
 
-  handleRecipientTypeChange() {
-    this.recipientType.valueChanges.subscribe(val => {
+  handleRecipientAllFlagChange() {
+    this.recipientAllFlag.valueChanges.subscribe(val => {
       // recipient target is selected users
-      this.recipient.setValue(null)
-      if (val) {
-        this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')])
+      if (!val) {
+        if(this.recipient.value !== this.oldRecipient.value || this.oldRecipientAllFlag.value){
+          this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')])
+        }
       } else {
         // recipient target is all users
         this.csvFile.setValue(null);
         this.csvFile.clearValidators();
+        this.csvFile.setValidators(CustomValidation.type('csv'))
+        this.recipient.setValue(null)
       }
       this.csvFile.updateValueAndValidity()
       this.csvFile.markAsDirty()
@@ -270,15 +276,15 @@ export class NotificationDetailsComponent implements OnInit {
   }
 
   isLinkTypeSpecialOffer() {
-    return this.linkType.value === true;
+    return this.linkType.value === this.notificationLinkType.specialOffer;
   }
 
-  get recipientType() {
-    return this.notifForm.get('recipientType')
+  get recipientAllFlag() {
+    return this.notifForm.get('recipientAllFlag')
   }
 
-  get oldRecipientType() {
-    return this.notifForm.get('oldRecipientType')
+  get oldRecipientAllFlag() {
+    return this.notifForm.get('oldRecipientAllFlag')
   }
 
   get recipient() {
@@ -357,6 +363,7 @@ export class NotificationDetailsComponent implements OnInit {
     console.log('NotificationDetailsComponent | onChangeCSVFile')
     const file = event.target.files[0];
     if (file) {
+      this.csvFile.setValidators(CustomValidation.type('csv'))
       this.csvFile.setValue(file);
       this.csvFile.markAsDirty()
       this.recipient.reset()
@@ -441,8 +448,8 @@ export class NotificationDetailsComponent implements OnInit {
       if (result) {
         this.onSubmittingForm = true;
         if (this.isCreate) {
-          if (CustomValidation.durationFromNowValidation(this.scheduleDate.value)) {
-            // upload files => insert data
+          if (!this.scheduledFlag.value || CustomValidation.durationFromNowValidation(this.scheduleDate.value)) {
+            this.uploadFiles()
           } else {
             this.onSubmittingForm = false;
             this.showFormError()
@@ -450,7 +457,7 @@ export class NotificationDetailsComponent implements OnInit {
           }
         } else {
           if (CustomValidation.durationFromNowValidation(this.oldScheduleSending.value)) {
-            if (CustomValidation.durationFromNowValidation(this.scheduleDate.value)) {
+            if (!this.scheduledFlag.value || CustomValidation.durationFromNowValidation(this.scheduleDate.value)) {
               this.uploadFiles()
             } else {
               this.onSubmittingForm = false;
@@ -469,399 +476,240 @@ export class NotificationDetailsComponent implements OnInit {
 
   // check and upload csv and images
   uploadFiles() {
-    // console.log('NotificationDetailsComponent | showFormError')
-    // let formValue = this.notifForm.value
-    // let scheduleDate = new Date();
-    // if (formValue.scheduledFlag) {
-    //   scheduleDate = formValue.scheduleDate;
-    //   let scheduleTime = formValue.scheduleTime.split(':')
-    //   scheduleDate.setHours(Number(scheduleTime[0]))
-    //   scheduleDate.setMinutes(Number(scheduleTime[1]))
-    // }
-    // let notification = new Notification()
-    // notification.recipient_type = formValue.recipientType
-    // notification.title = formValue.title;
-    // notification.content = formValue.content;
-    // notification.link_type = formValue.linkType;
-    // notification.link_id = formValue.linkId;
-    // notification.scheduled_flg = formValue.scheduledFlag;
-    // notification.schedule_sending = scheduleDate;
-    // if (this.isCreate) {
-    //   let task = [];
-    //   let fileType = [];
-    //   if (this.recipientType.value) {
-    //     let csvFormData = new FormData();
-    //     csvFormData.append('file', this.csvFile.value)
-    //     csvFormData.append('component', this.fileService.notificationRecipientComp)
-    //     task.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
-    //     fileType.push('csv')
-    //   }
-    //   if (this.iconFile.value) {
-    //     let iconFormData = new FormData();
-    //     iconFormData.append('file', this.iconFile.value)
-    //     iconFormData.append('component', this.fileService.notificationIkonComponent)
-    //     task.push(this.fileService.uploadFile(iconFormData).pipe(catchError(e => of(e))))
-    //     fileType.push('icon')
-    //   }
-    //   if (this.imageFile.value) {
-    //     this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
-    //       compressedImg => {
-    //         console.log(compressedImg)
-    //         let imageFormData = new FormData()
-    //         imageFormData.append("file", compressedImg)
-    //         imageFormData.append("component", this.fileService.notificationComponent)
-    //         task.push(this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))))
-    //         fileType.push('image')
-    //         forkJoin(task).subscribe((responses: Array<any>) => {
-    //           let error = false;
-    //           responses.forEach((response, index) => {
-    //             console.table(response)
-    //             switch (fileType[index]) {
-    //               case 'csv':
-    //                 if (response instanceof HttpErrorResponse) {
-    //                   error = true;
-    //                   this.onSubmittingForm = false;
-    //                   try {
-    //                     this.onSubmittingForm = false;
-    //                     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                       data: {
-    //                         title: 'notificationDetailsScreen.uploadCSVFailed',
-    //                         content: {
-    //                           text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                           data: null
-    //                         }
-    //                       }
-    //                     })
-    //                   } catch (error) {
-    //                     console.table(error)
-    //                   }
-    //                 } else {
-    //                   notification.target_user_file = response.data.url
-    //                 }
-    //                 break;
-    //               case 'icon':
-    //                 if (response instanceof HttpErrorResponse) {
-    //                   error = true;
-    //                   this.onSubmittingForm = false;
-    //                   try {
-    //                     this.onSubmittingForm = false;
-    //                     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                       data: {
-    //                         title: 'notificationDetailsScreen.uploadIconFailed',
-    //                         content: {
-    //                           text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                           data: null
-    //                         }
-    //                       }
-    //                     })
-    //                   } catch (error) {
-    //                     console.table(error)
-    //                   }
-    //                 } else {
-    //                   notification.large_icon = response.data.url
-    //                 }
-    //                 break;
-    //               case 'image':
-    //                 if (response instanceof HttpErrorResponse) {
-    //                   error = true;
-    //                   this.onSubmittingForm = false;
-    //                   try {
-    //                     this.onSubmittingForm = false;
-    //                     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                       data: {
-    //                         title: 'notificationDetailsScreen.uploadImageFailed',
-    //                         content: {
-    //                           text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                           data: null
-    //                         }
-    //                       }
-    //                     })
-    //                   } catch (error) {
-    //                     console.table(error)
-    //                   }
-    //                 } else {
-    //                   notification.large_image = response.data.url
-    //                 }
-    //                 break;
-    //               default:
-    //                 break;
-    //             }
-    //           })
-    //           if (!error) {
-    //             this.createNotification(notification)
-    //           }
-    //         })
-    //       }, error => {
-    //         console.log(error)
-    //         this.onSubmittingForm = false;
-    //       }
-    //     )
-    //   } else {
-    //     if (task.length > 0) {
-    //       forkJoin(task).subscribe((responses: Array<any>) => {
-    //         let error = false;
-    //         responses.forEach((response, index) => {
-    //           switch (fileType[index]) {
-    //             case 'csv':
-    //               if (response instanceof HttpErrorResponse) {
-    //                 error = true;
-    //                 this.onSubmittingForm = false;
-    //                 try {
-    //                   console.table(response)
-    //                   this.onSubmittingForm = false;
-    //                   this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                     data: {
-    //                       title: 'notificationDetailsScreen.uploadCSVFailed',
-    //                       content: {
-    //                         text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                         data: null
-    //                       }
-    //                     }
-    //                   })
-    //                 } catch (error) {
-    //                   console.table(error)
-    //                 }
-    //               } else {
-    //                 notification.target_user_file = response.data.url
-    //               }
-    //               break;
-    //             case 'icon':
-    //               if (response instanceof HttpErrorResponse) {
-    //                 error = true;
-    //                 this.onSubmittingForm = false;
-    //                 try {
-    //                   console.table(response)
-    //                   this.onSubmittingForm = false;
-    //                   this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                     data: {
-    //                       title: 'notificationDetailsScreen.uploadIconFailed',
-    //                       content: {
-    //                         text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                         data: null
-    //                       }
-    //                     }
-    //                   })
-    //                 } catch (error) {
-    //                   console.table(error)
-    //                 }
-    //               } else {
-    //                 notification.large_icon = response.data.url
-    //               }
-    //               break;
-    //             default:
-    //               break;
-    //           }
-    //         })
-    //         if (!error) {
-    //           this.createNotification(notification)
-    //         }
-    //       })
-    //     } else {
-    //       this.createNotification(notification)
-    //     }
-    //   }
-    // } else {
-    //   notification.id = formValue.id;
-    //   let tasks = [];
-    //   let fileTypes = [];
-    //   let shouldDeleteCSV = false;
-    //   let shouldDeleteIcon = false;
-    //   let shouldDeleteImage = false;
-    //   if (formValue.recipientType !== formValue.oldRecipientType) {
-    //     if (formValue.oldRecipientType === true) {
-    //       shouldDeleteCSV = true;
-    //     } else {
-    //       let csvFormData = new FormData();
-    //       csvFormData.append('file', this.csvFile.value)
-    //       csvFormData.append('component', this.fileService.notificationRecipientComp)
-    //       tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
-    //       fileTypes.push('csv')
-    //     }
-    //   } else if (formValue.recipientType && formValue.recipient !== formValue.oldRecipient) {
-    //     shouldDeleteCSV = true;
-    //     let csvFormData = new FormData();
-    //     csvFormData.append('file', this.csvFile.value)
-    //     csvFormData.append('component', this.fileService.notificationRecipientComp)
-    //     tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
-    //     fileTypes.push('csv')
-    //   }
+    console.log('NotificationDetailsComponent | showFormError')
+    let formValue = this.notifForm.value
+    let scheduleDate = new Date();
+    if (formValue.scheduledFlag) {
+      scheduleDate = formValue.scheduleDate;
+      let scheduleTime = formValue.scheduleTime.split(':')
+      scheduleDate.setHours(Number(scheduleTime[0]))
+      scheduleDate.setMinutes(Number(scheduleTime[1]))
+    }
+    let notification = new Notification()
+    notification.recipient_all_flg = formValue.recipientAllFlag
+    notification.title = formValue.title;
+    notification.content = formValue.content;
+    notification.link_type = formValue.linkType;
+    notification.link_id = formValue.linkId;
+    notification.scheduled_flg = formValue.scheduledFlag;
+    notification.schedule_sending = scheduleDate;
+    notification.large_icon = formValue.icon;
+    notification.large_image = formValue.image;
+    notification.recipient_list = formValue.recipient;
+    if (this.isCreate) {
+      this.uploadFilesCreate(notification)
+    } else {
+      this.uploadFilesUpdate(notification, formValue)
+    }
+  }
 
-    //   if (formValue.iconFile) {
-    //     if (formValue.oldIcon) {
-    //       shouldDeleteIcon = true
-    //     }
-    //     let iconFormData = new FormData();
-    //     iconFormData.append('file', formValue.iconFile)
-    //     iconFormData.append('component', this.fileService.notificationIkonComponent)
-    //     tasks.push(this.fileService.uploadFile(iconFormData).pipe(catchError(e => of(e))))
-    //     fileTypes.push('icon')
-    //   } else if (formValue.oldIcon) {
-    //     shouldDeleteIcon = true
-    //   }
+  // handling uploading files on create mode
+  uploadFilesCreate(notification: Notification) {
+    console.log('NotificationDetailsComponent | uploadFilesCreate')
+    let tasks = [];
+    let fileTypes = [];
+    if (!this.recipientAllFlag.value) {
+      let csvFormData = this.createUploadFileFormData(this.csvFile.value, this.fileService.notificationRecipientComp)
+      tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
+      fileTypes.push('csv')
+    }
+    if (this.iconFile.value) {
+      let iconFormData = this.createUploadFileFormData(this.iconFile.value, this.fileService.notificationIconComponent)
+      tasks.push(this.fileService.uploadFile(iconFormData).pipe(catchError(e => of(e))))
+      fileTypes.push('icon')
+    }
+    if (this.imageFile.value) {
+      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
+        compressedImg => {
+          console.log(compressedImg)
+          let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)
+          tasks.push(this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))))
+          fileTypes.push('image')
+          forkJoin(tasks).subscribe((responses: Array<any>) => {
+            let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+            if (!error) {
+              this.createNotification(notification)
+            }
+          })
+        }, error => {
+          console.log(error)
+          this.onSubmittingForm = false;
+        }
+      )
+    } else {
+      if (tasks.length > 0) {
+        forkJoin(tasks).subscribe((responses: Array<any>) => {
+          console.log(responses)
+          let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+          if (!error) {
+            this.createNotification(notification)
+          }
+        })
+      } else {
+        this.createNotification(notification)
+      }
+    }
+  }
 
-    //   if (formValue.imageFile) {
-    //     if (formValue.oldImage) {
-    //       shouldDeleteImage = true
-    //     }
-        
-    //     this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
-    //       compressedImg => {
-    //         console.log(compressedImg);
-    //         let imageFormData = new FormData();
-    //         imageFormData.append('file', compressedImg)
-    //         imageFormData.append('component', this.fileService.notificationComponent)
-    //         tasks.push(this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))))
-    //         fileTypes.push('image')
-    //         forkJoin(tasks).subscribe((responses: Array<any>) => {
-    //           let error = false;
-    //           responses.forEach((response, index) => {
-    //             console.table(response)
-    //             switch (fileTypes[index]) {
-    //               case 'csv':
-    //                 if (response instanceof HttpErrorResponse) {
-    //                   error = true;
-    //                   this.onSubmittingForm = false;
-    //                   try {
-    //                     this.onSubmittingForm = false;
-    //                     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                       data: {
-    //                         title: 'notificationDetailsScreen.uploadCSVFailed',
-    //                         content: {
-    //                           text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                           data: null
-    //                         }
-    //                       }
-    //                     })
-    //                   } catch (error) {
-    //                     console.table(error)
-    //                   }
-    //                 } else {
-    //                   notification.target_user_file = response.data.url
-    //                 }
-    //                 break;
-    //               case 'icon':
-    //                 if (response instanceof HttpErrorResponse) {
-    //                   error = true;
-    //                   this.onSubmittingForm = false;
-    //                   try {
-    //                     this.onSubmittingForm = false;
-    //                     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                       data: {
-    //                         title: 'notificationDetailsScreen.uploadIconFailed',
-    //                         content: {
-    //                           text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                           data: null
-    //                         }
-    //                       }
-    //                     })
-    //                   } catch (error) {
-    //                     console.table(error)
-    //                   }
-    //                 } else {
-    //                   notification.large_icon = response.data.url
-    //                 }
-    //                 break;
-    //               case 'image':
-    //                 if (response instanceof HttpErrorResponse) {
-    //                   error = true;
-    //                   this.onSubmittingForm = false;
-    //                   try {
-    //                     this.onSubmittingForm = false;
-    //                     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                       data: {
-    //                         title: 'notificationDetailsScreen.uploadImageFailed',
-    //                         content: {
-    //                           text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                           data: null
-    //                         }
-    //                       }
-    //                     })
-    //                   } catch (error) {
-    //                     console.table(error)
-    //                   }
-    //                 } else {
-    //                   notification.large_image = response.data.url
-    //                 }
-    //                 break;
-    //               default:
-    //                 break;
-    //             }
-    //           })
-    //           if (!error) {
-    //             this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
-    //           }
-    //         })
-    //       }, error => {
-    //         this.onSubmittingForm = false;
-    //         console.log(error)
-    //       })
-    //   } else {
-    //     if (formValue.oldImage) {
-    //       shouldDeleteImage = true
-    //     }
-    //     if(tasks.length > 0){
-    //       forkJoin(tasks).subscribe((responses: Array<any>) => {
-    //         let error = false;
-    //         responses.forEach((response, index) => {
-    //           console.table(response)
-    //           switch (fileTypes[index]) {
-    //             case 'csv':
-    //               if (response instanceof HttpErrorResponse) {
-    //                 error = true;
-    //                 this.onSubmittingForm = false;
-    //                 try {
-    //                   this.onSubmittingForm = false;
-    //                   this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                     data: {
-    //                       title: 'notificationDetailsScreen.uploadCSVFailed',
-    //                       content: {
-    //                         text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                         data: null
-    //                       }
-    //                     }
-    //                   })
-    //                 } catch (error) {
-    //                   console.table(error)
-    //                 }
-    //               } else {
-    //                 notification.target_user_file = response.data.url
-    //               }
-    //               break;
-    //             case 'icon':
-    //               if (response instanceof HttpErrorResponse) {
-    //                 error = true;
-    //                 this.onSubmittingForm = false;
-    //                 try {
-    //                   this.onSubmittingForm = false;
-    //                   this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //                     data: {
-    //                       title: 'notificationDetailsScreen.uploadIconFailed',
-    //                       content: {
-    //                         text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-    //                         data: null
-    //                       }
-    //                     }
-    //                   })
-    //                 } catch (error) {
-    //                   console.table(error)
-    //                 }
-    //               } else {
-    //                 notification.large_icon = response.data.url
-    //               }
-    //               break;
-    //             default:
-    //               break;
-    //           }
-    //         })
-    //         if (!error) {
-    //           this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
-    //         }
-    //       })
-    //     } else {
-    //       this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
-    //     }
-    //   }
-    // }
+  // handling uploading files on update mode
+  uploadFilesUpdate(notification: Notification, formValue) {
+    console.log('NotificationDetailsComponent | uploadFilesUpdate')
+    notification.id = formValue.id;
+    let tasks = [];
+    let fileTypes = [];
+    let shouldDeleteCSV = false;
+    let shouldDeleteIcon = false;
+    let shouldDeleteImage = false;
+    if (formValue.recipientAllFlag !== formValue.oldRecipientAllFlag) {
+      if (!formValue.oldRecipientAllFlag) {
+        shouldDeleteCSV = true;
+      } else {
+        let csvFormData = this.createUploadFileFormData(this.csvFile.value, this.fileService.notificationRecipientComp)
+        tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
+        fileTypes.push('csv')
+      }
+    } else if (!formValue.recipientAllFlag && formValue.recipient !== formValue.oldRecipient) {
+      shouldDeleteCSV = true;
+      let csvFormData = new FormData();
+      csvFormData.append('file', this.csvFile.value)
+      csvFormData.append('component', this.fileService.notificationRecipientComp)
+      tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
+      fileTypes.push('csv')
+    }
+
+    if (formValue.iconFile) {
+      if (formValue.oldIcon) {
+        shouldDeleteIcon = true
+      }
+      let iconFormData = this.createUploadFileFormData(this.iconFile.value, this.fileService.notificationIconComponent)
+      tasks.push(this.fileService.uploadFile(iconFormData).pipe(catchError(e => of(e))))
+      fileTypes.push('icon')
+    } else if (formValue.oldIcon) {
+      shouldDeleteIcon = true
+    }
+
+    if (formValue.imageFile) {
+      if (formValue.oldImage) {
+        shouldDeleteImage = true
+      }
+
+      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
+        compressedImg => {
+          console.log(compressedImg);
+          let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)
+          tasks.push(this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))))
+          fileTypes.push('image')
+          forkJoin(tasks).subscribe((responses: Array<any>) => {
+            let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+            if (!error) {
+              this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+            }
+          })
+        }, error => {
+          this.onSubmittingForm = false;
+          console.log(error)
+        })
+    } else {
+      if (formValue.oldImage) {
+        shouldDeleteImage = true
+      }
+      if (tasks.length > 0) {
+        forkJoin(tasks).subscribe((responses: Array<any>) => {
+          let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+          if (!error) {
+            this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+          }
+        })
+      } else {
+        this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+      }
+    }
+  }
+
+  // handling uploading files response (forkJoin result)
+  handleUploadFilesResponse(responses: Array<any>, fileTypes, notification: Notification) {
+    let error = false;
+    responses.forEach((response, index) => {
+      console.table(response)
+      switch (fileTypes[index]) {
+        case 'csv':
+          if (response instanceof HttpErrorResponse) {
+            error = true;
+            this.onSubmittingForm = false;
+            try {
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'notificationDetailsScreen.uploadCSVFailed',
+                  content: {
+                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          } else {
+            notification.recipient_list = response.data.url
+          }
+          break;
+        case 'icon':
+          if (response instanceof HttpErrorResponse) {
+            error = true;
+            this.onSubmittingForm = false;
+            try {
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'notificationDetailsScreen.uploadIconFailed',
+                  content: {
+                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          } else {
+            notification.large_icon = response.data.url
+          }
+          break;
+        case 'image':
+          if (response instanceof HttpErrorResponse) {
+            error = true;
+            this.onSubmittingForm = false;
+            try {
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'notificationDetailsScreen.uploadImageFailed',
+                  content: {
+                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          } else {
+            notification.large_image = response.data.url
+          }
+          break;
+        default:
+          break;
+      }
+    })
+    return error;
+  }
+
+  createUploadFileFormData(file, component) {
+    let formData = new FormData();
+    formData.append("file", file)
+    formData.append("component", component)
+    return formData;
   }
 
   createNotification(notification) {
@@ -1057,10 +905,12 @@ export class NotificationDetailsComponent implements OnInit {
       if (this.scheduledFlag.errors.required) {
         errorText = 'forms.schedule.errorTypeRequired';
       }
-    } else if (this.notifForm.errors.scheduleRequired) {
-      errorText = 'forms.schedule.errorRequired';
-    } else if (this.notifForm.errors.scheduleMin) {
-      errorText = 'forms.schedule.errorMin';
+    } else if (this.notifForm.errors) {
+      if (this.notifForm.errors.scheduleRequired) {
+        errorText = 'forms.schedule.errorRequired';
+      } else if (this.notifForm.errors.scheduleMin) {
+        errorText = 'forms.schedule.errorMin';
+      }
     }
     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       data: {

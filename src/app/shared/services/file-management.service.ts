@@ -14,7 +14,7 @@ export class FileManagementService {
   paymentInstComponent = 'payment-instruction';
   specialOfferComponent = 'special-offer';
   notificationComponent = 'notification';
-  notificationIkonComponent = 'notification-icon';
+  notificationIconComponent = 'notification-icon';
   notificationRecipientComp = 'notification-recipient';
   specialOfferRecipientComp = 'special-offer-recipient';
   compressImageSizeInMB = 0.2;

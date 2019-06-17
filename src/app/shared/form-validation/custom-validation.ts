@@ -259,7 +259,7 @@ export class CustomValidation {
 
   //used to validate image resolution
   static imageResolution(control: AbstractControl, width: number, height: number) {
-    console.log('CustomValidation | imageMaxResolution');
+    console.log('CustomValidation | imageResolution');
     const file = <File>control.value;
     control.setErrors(null)
     if (file) {
@@ -275,9 +275,9 @@ export class CustomValidation {
 
         //Validate the File Height and Width.
         image.onload = function () {
-          const height = image.height;
-          const width = image.width;
-          if (height !== height || width !== width) {
+          const imgHeight = image.height;
+          const imgWidth = image.width;
+          if (imgHeight !== height || imgWidth !== width) {
             control.setErrors({ resolution: true })
           }
         };

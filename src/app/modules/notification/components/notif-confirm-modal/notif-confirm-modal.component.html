@@ -11,10 +11,10 @@
             {{'forms.recipient.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
-            <span *ngIf="data.notification.recipientType ===  false">
+            <span *ngIf="data.notification.recipientAllFlag ===  true">
               {{'forms.recipient.options.all' | translate}}
             </span>
-            <span *ngIf="data.notification.recipientType ===  true">
+            <span *ngIf="data.notification.recipientAllFlag ===  false">
               {{'forms.recipient.options.selectedUsers' | translate}}
             </span>
           </div>
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="data.notification.linkType; else articleLinkType">
+      <div *ngIf="data.notification.linkType === notificationLinkType.specialOffer; else articleLinkType">
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
             {{'forms.notifSpecialOffer.fieldTitle' | translate}}
