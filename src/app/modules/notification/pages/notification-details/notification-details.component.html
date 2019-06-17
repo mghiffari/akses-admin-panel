@@ -23,31 +23,31 @@
         </div>
         <div fxFlex="70%" fxLayout="row wrap" fxLayoutGap="10px">
           <div fxFlex="80%" fxFlex.lt-md="100%">
-            <mat-radio-group formControlName="recipientType" fxLayout="column" fxLayoutGap="10px">
-              <mat-radio-button [value]="false" color="primary" [disabled]="isLinkTypeSpecialOffer()">
+            <mat-radio-group formControlName="recipientAllFlag" fxLayout="column" fxLayoutGap="10px">
+              <mat-radio-button [value]="true" color="primary" [disabled]="isLinkTypeSpecialOffer()">
                 {{'forms.recipient.options.all' | translate}}
               </mat-radio-button>
-              <mat-radio-button [value]="true" color="primary">
+              <mat-radio-button [value]="false" color="primary">
                 <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
                   <div>
                     {{'forms.recipient.options.selectedUsers' | translate}}
                   </div>
                   <div>
-                    <button mat-raised-button color="accent" [disabled]="recipientType.value === false"
+                    <button mat-raised-button color="accent" [disabled]="recipientAllFlag.value"
                       (click)="csvInput.click()">{{'uploadCSV' | translate}}</button>
                     <input hidden #csvInput type="file" accept=".csv" (change)="onChangeCSVFile($event)">
                   </div>
                   <div fxLayout="row" fxLayoutAlign="start center"
-                    *ngIf="csvFile.valid && recipient.valid && recipientType.value">
+                    *ngIf="csvFile.valid && recipient.valid && !recipientAllFlag.value">
                     <mat-icon class="text-success">check_circle</mat-icon>
                   </div>
                 </div>
               </mat-radio-button>
             </mat-radio-group>
             <mat-error class="bottom-error"
-              *ngIf="recipientType.invalid && (recipientType.dirty || recipientType.touched) || recipient.invalid && (recipient.dirty || recipient.touched) || csvFile.invalid && (csvFile.dirty || csvFile.touched)">
+              *ngIf="recipientAllFlag.invalid && (recipientAllFlag.dirty || recipientAllFlag.touched) || recipient.invalid && (recipient.dirty || recipient.touched) || csvFile.invalid && (csvFile.dirty || csvFile.touched)">
               <span
-                *ngIf="recipientType.errors?.required || recipient.errors?.required; else csvFileError">{{'forms.recipient.errorRequired' | translate}}</span>
+                *ngIf="recipientAllFlag.errors?.required || recipient.errors?.required; else csvFileError">{{'forms.recipient.errorRequired' | translate}}</span>
                 <ng-template #csvFileError>
                 <span *ngIf="csvFile.errors?.required">{{'forms.recipient.errorCSVRequired' | translate}}</span>
                 <span *ngIf="csvFile.errors?.type">{{'forms.recipient.errorFileType' | translate}}</span>
@@ -230,12 +230,12 @@
           <div fxFlexAlign="center" fxFlex="30%">
             {{'forms.notifLinkType.fieldTitle' | translate}}
           </div>
-          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
             <mat-radio-group formControlName="linkType" fxLayout="column" fxLayoutGap="10px">
-              <mat-radio-button [value]="false" color="primary">
+              <mat-radio-button [value]="notificationLinkType.article" color="primary">
                 {{'forms.notifLinkType.options.article' | translate}}
               </mat-radio-button>
-              <mat-radio-button [value]="true" color="primary">
+              <mat-radio-button [value]="notificationLinkType.specialOffer" color="primary" #specialOfferRB>
                 {{'forms.notifLinkType.options.specialOffer' | translate}}
               </mat-radio-button>
             </mat-radio-group>
@@ -251,7 +251,7 @@
           <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
             <mat-form-field appearance="fill">
               <mat-select formControlName="linkId">
-                <mat-option value="" (click)="selectedArticleTitle=''">
+                <mat-option value="" (click)="selectedLinkTitle=''">
                   {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
                 <mat-option *ngFor="let offer of specialOffers" [value]="offer.id"
                   (click)="selectedLinkTitle=offer.title">{{offer.title}}</mat-option>
@@ -285,10 +285,10 @@
             <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
-                  <mat-option value="" (click)="selectedArticleTitle=''">
+                  <mat-option value="" (click)="selectedLinkTitle=''">
                     {{'forms.notifArticle.placeholder' | translate}}</mat-option>
                   <mat-option *ngFor="let article of articles" [value]="article.id"
-                    (click)="selectedArticleTitle=article.title">{{article.title}}</mat-option>
+                    (click)="selectedLinkTitle=article.title">{{article.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-error class="bottom-error" *ngIf="linkId.invalid && (linkId.dirty || linkId.touched)">

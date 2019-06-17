@@ -1,7 +1,7 @@
 export class Notification {
     id: string;
     is_deleted: boolean;
-    link_type: boolean;
+    link_type: string;
     link_id: string;
     title: string;
     schedule_sending: Date;
@@ -13,4 +13,6 @@ export class Notification {
     is_editable: boolean;
     large_icon: string;
     large_image: string;
+    recipient_all_flg: boolean;
+    recipient_list: string;
 }
