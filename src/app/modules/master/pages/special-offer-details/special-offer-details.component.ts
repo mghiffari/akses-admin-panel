@@ -417,7 +417,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                 this.onSubmittingForm = false;
                 this.snackBar.openFromComponent(ErrorSnackbarComponent, {
                   data: {
-                    title: 'specialOfferDetailsScreen.uploadIconFailed',
+                    title: 'specialOfferDetailsScreen.uploadImageFailed',
                     content: {
                       text: 'apiErrors.' + (imageResponse.status ? imageResponse.error.err_code : 'noInternet'),
                       data: null
@@ -475,7 +475,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                 this.onSubmittingForm = false;
                 this.snackBar.openFromComponent(ErrorSnackbarComponent, {
                   data: {
-                    title: 'specialOfferDetailsScreen.uploadIconFailed',
+                    title: 'specialOfferDetailsScreen.uploadImageFailed',
                     content: {
                       text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                       data: null
