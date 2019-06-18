@@ -717,7 +717,6 @@
     "specialOfferListScreen": {
         "title": "Special Offers Data",
         "createOffer": "create new special offer",
-        "deleteConfirmation": "Are you sure you want to delete special offer {{title}}?",
         "loadFailed": "failed to get list of special offers"
     },
     "specialOfferDetailsScreen": {

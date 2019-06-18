@@ -60,66 +60,6 @@ export class SpecialOfferListComponent implements OnInit {
     this.lazyLoadData()
   }
 
-  //delete
-  onDelete(offer) {
-    console.log("SpecialOfferListComponent | onDelete")
-    const modalRef = this.modal.open(ConfirmationModalComponent, {
-      width: '260px',
-      data: {
-        title: 'deleteConfirmation',
-        content: {
-          string: 'specialOfferListScreen.deleteConfirmation',
-          data: {
-            title: offer.title
-          }
-        }
-      }
-    })
-    modalRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.loading = true;
-        let updatedOffer: SpecialOffer = Object.assign(new SpecialOffer(), offer)
-        updatedOffer.is_deleted = true;
-        this.offerService.updateOffer(updatedOffer).subscribe(
-          (data: any) => {
-            try {
-              console.table(data);
-              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                data: {
-                  title: 'success',
-                  content: {
-                    text: 'dataDeleted',
-                    data: null
-                  }
-                }
-              })
-              this.lazyLoadData()
-            } catch (error) {
-              console.table(error)
-            }
-          },
-          error => {
-            try {
-              console.table(error);
-              this.loading = false;
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'failedToDelete',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.table(error)
-            }
-          }
-        )
-      }
-    })
-  }
-
   // edit button handler
   onEdit(offer) {
     console.log('SpecialOfferListComponent | onEdit')
