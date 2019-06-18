@@ -716,10 +716,7 @@
     "specialOfferListScreen": {
         "title": "Data Special Offer",
         "createOffer": "tambahkan special offer baru",
-        "deleteConfirmation": "Apakah anda yakin untuk menghapus special offer {{title}}?",
-        "loadFailed": "gagal mendapatkan list special offer",
-        "immediate": "Langsung",
-        "scheduled": "Terjadwal"
+        "loadFailed": "gagal mendapatkan list special offer"
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "gagal mendapatkan data Special Offer",
