@@ -7,7 +7,6 @@ import { BannerListComponent } from './pages/banner-list/banner-list.component';
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
 import { BannerDetailsService } from './pages/banner-details/services/banner-details.service';
-import { EditorModule } from '@tinymce/tinymce-angular';
 import { BannerService } from './services/banner.service';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
@@ -21,6 +20,8 @@ import { BranchUploadModalComponent } from './components/branch-upload-modal/bra
 import { ChangePhoneListComponent } from './pages/change-phone-list/change-phone-list.component';
 import { ChangePhoneService } from './services/change-phone.service';
 import { RemarkInputModalComponent } from './components/remark-input-modal/remark-input-modal.component';
+import { SpecialOfferListComponent } from './pages/special-offer-list/special-offer-list.component';
+import { SpecialOfferDetailsComponent } from './pages/special-offer-details/special-offer-details.component';
 
 @NgModule({
   declarations: [
@@ -37,13 +38,14 @@ import { RemarkInputModalComponent } from './components/remark-input-modal/remar
     BranchListComponent,
     BranchUploadModalComponent,
     ChangePhoneListComponent,
-    RemarkInputModalComponent
+    RemarkInputModalComponent,
+    SpecialOfferListComponent,
+    SpecialOfferDetailsComponent
   ],
   imports: [
     CommonModule,
     MasterRoutingModule,
-    SharedModule,
-    EditorModule
+    SharedModule
   ],
   providers: [
     BannerDetailsService,

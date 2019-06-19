@@ -17,174 +17,335 @@
   </div>
   <form [formGroup]="notifForm" *ngIf="!loading">
     <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
-      <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
-        <div fxFlexAlign="center" fxFlex="40%" fxFlex.lt-md="30%">
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
+        <div fxFlex="30%">
           {{'forms.recipient.fieldTitle' | translate}}
         </div>
-        <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+        <div fxFlex="70%" fxLayout="row wrap" fxLayoutGap="10px">
           <div fxFlex="80%" fxFlex.lt-md="100%">
-            <mat-radio-group formControlName="recipient">
-              <mat-radio-button value="all" color="primary">
+            <mat-radio-group formControlName="recipientAllFlag" fxLayout="column" fxLayoutGap="10px">
+              <mat-radio-button [value]="true" color="primary" [disabled]="isLinkTypeSpecialOffer()">
                 {{'forms.recipient.options.all' | translate}}
               </mat-radio-button>
+              <mat-radio-button [value]="false" color="primary">
+                <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                  <div>
+                    {{'forms.recipient.options.selectedUsers' | translate}}
+                  </div>
+                  <div>
+                    <button mat-raised-button color="accent" [disabled]="recipientAllFlag.value"
+                      (click)="csvInput.click()">{{'uploadCSV' | translate}}</button>
+                    <input hidden #csvInput type="file" accept=".csv" (change)="onChangeCSVFile($event)">
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="start center"
+                    *ngIf="csvFile.valid && recipient.valid && !recipientAllFlag.value">
+                    <mat-icon class="text-success">check_circle</mat-icon>
+                  </div>
+                </div>
+              </mat-radio-button>
             </mat-radio-group>
-            <mat-error class="bottom-error" *ngIf="recipient.invalid && (recipient.dirty || recipient.touched)">
-              <span *ngIf="recipient.errors.required">{{'forms.recipient.errorRequired' | translate}}</span>
+            <mat-error class="bottom-error"
+              *ngIf="recipientAllFlag.invalid && (recipientAllFlag.dirty || recipientAllFlag.touched) || recipient.invalid && (recipient.dirty || recipient.touched) || csvFile.invalid && (csvFile.dirty || csvFile.touched)">
+              <span
+                *ngIf="recipientAllFlag.errors?.required || recipient.errors?.required; else csvFileError">{{'forms.recipient.errorRequired' | translate}}</span>
+                <ng-template #csvFileError>
+                <span *ngIf="csvFile.errors?.required">{{'forms.recipient.errorCSVRequired' | translate}}</span>
+                <span *ngIf="csvFile.errors?.type">{{'forms.recipient.errorFileType' | translate}}</span>
+              </ng-template>
             </mat-error>
           </div>
         </div>
       </div>
     </div>
-    <div fxLayout="row wrap" class="padding-16 border-bottom-gray" fxLayoutGap="10px grid">
-      <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%">
-        <div fxLayout="row" class="padding-bottom-16">
-          <div fxFlexAlign="center" fxFlex="40%" fxFlex.lt-md="30%">
+    <div fxLayout="row wrap" class="padding-16 border-bottom-gray">
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutGap="16px">
+        <div fxLayout="row">
+          <div fxFlex="30%">
+            {{'forms.notifLargeIcon.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%">
+            <div fxLayout="row wrap" fxLayoutGap="10px">
+              <div fxFlex="64px" class="padding-5 dashed-border-medium-gray">
+                <div style="width: 100%;" [style.height]="iconContainer.offsetWidth + 'px'" #iconContainer>
+                  <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
+                    *ngIf="(!icon.value || icon.value===''); else iconExist">
+                    <mat-icon class="icon-42">collections</mat-icon>
+                  </div>
+                  <ng-template #iconExist>
+                    <img width="100%" height="100%" [src]="icon.value">
+                  </ng-template>
+                </div>
+              </div>
+              <div fxLayoutGap="10px" fxLayout="row">
+                <mat-icon class="cursor-pointer" (click)="onDeleteLargeIcon()" *ngIf="(icon.value && icon.value!=='')">
+                  delete</mat-icon>
+                <mat-icon class="text-medium-gray cursor-not-allowed" *ngIf="(!icon.value || icon.value==='')">
+                  delete
+                </mat-icon>
+                <mat-icon color="primary" class="cursor-pointer" (click)="iconInput.click()">cloud_upload</mat-icon>
+                <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeLargeIcon($event)">
+              </div>
+            </div>
+            <mat-hint class="bottom-hint">
+              {{'forms.notifLargeIcon.hint' | translate: notifIconRes}}
+            </mat-hint>
+            <mat-error class="bottom-error" *ngIf="iconFile.invalid && (iconFile.dirty || iconFile.touched)">
+              <span *ngIf="iconFile.errors?.type">{{'forms.notifLargeIcon.errorType' | translate}}</span>
+              <span
+                *ngIf="!iconFile.errors?.type && iconFile.errors?.resolution">{{'forms.notifLargeIcon.errorResolution' | translate : notifIconRes}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex="30%">
+            {{'forms.notifImage.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%">
+            <div fxLayout="row wrap" fxLayoutGap="10px">
+              <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%"
+                class="padding-5 dashed-border-medium-gray">
+                <div style="width: 100%;" [style.height]="imgContainer.offsetWidth * (notifImageRatioPercentage) + 'px'"
+                  #imgContainer>
+                  <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
+                    *ngIf="(!image.value || image.value===''); else imgExist" class="bg-medium-gray">
+                    <mat-icon class="icon-42">collections</mat-icon>
+                  </div>
+                  <ng-template #imgExist>
+                    <img width="100%" height="100%" [src]="image.value">
+                  </ng-template>
+                </div>
+              </div>
+              <div fxLayoutGap="10px" fxLayout="row">
+                <mat-icon class="cursor-pointer" (click)="onDeleteBigImage()" *ngIf="(image.value && image.value!=='')">
+                  delete</mat-icon>
+                <mat-icon class="text-medium-gray cursor-not-allowed" *ngIf="(!image.value || image.value==='')">
+                  delete
+                </mat-icon>
+                <mat-icon color="primary" class="cursor-pointer" (click)="imageInput.click()">cloud_upload</mat-icon>
+                <input hidden #imageInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeBigImage($event)">
+              </div>
+            </div>
+            <mat-hint class="bottom-hint">
+              {{'forms.notifImage.hint' | translate: notifImageRes}}
+            </mat-hint>
+            <mat-error class="bottom-error" *ngIf="imageFile.invalid && (imageFile.dirty || imageFile.touched)">
+              <span *ngIf="imageFile.errors?.type">{{'forms.notifImage.errorType' | translate}}</span>
+              <span
+                *ngIf="!imageFile.errors?.type && imageFile.errors?.resolution">{{'forms.notifImage.errorResolution' | translate : notifImageRes}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex="30%" fxFlexAlign="center">
             {{'forms.title.fieldTitle' | translate}}
           </div>
-          <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-            <div fxFlex="80%" fxFlex.lt-md="100%">
-              <mat-form-field appearance="fill">
-                <input matInput placeholder="{{'forms.title.placeholder' | translate}}" formControlName="title">
-              </mat-form-field>
-              <div fxLayout="row" fxLayoutAlign="end center">
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.title.placeholder' | translate}}" formControlName="title">
+            </mat-form-field>
+            <div fxFlexLayout="row">
+              <div fxFlex="grow">
+                <mat-error class="bottom-error" *ngIf="title.invalid && (title.dirty || title.touched)">
+                  <span *ngIf="title.errors.required">{{'forms.title.errorRequired' | translate}}</span>
+                  <span *ngIf="title.errors.maxlength">{{'forms.title.errorMaxLength' | translate: notifTitle}}</span>
+                </mat-error>
+              </div>
+              <div>
                 <mat-hint class="bottom-hint">
                   {{title.value ? title.value.length : 0}}/{{notifTitle.maxLength}}
                 </mat-hint>
               </div>
-              <mat-error class="bottom-error" *ngIf="title.invalid && (title.dirty || title.touched)">
-                <span *ngIf="title.errors.required">{{'forms.title.errorRequired' | translate}}</span>
-                <span *ngIf="title.errors.maxlength">{{'forms.title.errorMaxLength' | translate: notifTitle}}</span>
-              </mat-error>
             </div>
           </div>
         </div>
         <div fxLayout="row">
-          <div fxFlex="40%" fxFlex.lt-md="30%">
+          <div fxFlex="30%">
             {{'forms.content.fieldTitle' | translate}}
           </div>
-          <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-            <div fxFlex="80%" fxFlex.lt-md="100%">
-              <mat-form-field appearance="fill">
-                <textarea formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
-                  cdkAutosizeMaxRows="5" placeholder="{{'forms.content.placeholder' | translate}}"></textarea>
-              </mat-form-field>
-              <div fxLayout="row" fxLayoutAlign="end center">
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+            <mat-form-field appearance="fill">
+              <textarea formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                cdkAutosizeMaxRows="5" placeholder="{{'forms.content.placeholder' | translate}}"></textarea>
+            </mat-form-field>
+            <div fxFlexLayout="row">
+              <div fxFlex="grow">
+                <mat-error class="bottom-error" *ngIf="content.invalid && (content.dirty || content.touched)">
+                  <span *ngIf="content.errors.required">{{'forms.content.errorRequired' | translate}}</span>
+                  <span
+                    *ngIf="content.errors.maxlength">{{'forms.content.errorMaxLength' | translate: notifContent}}</span>
+                </mat-error>
+              </div>
+              <div>
                 <mat-hint class="bottom-hint">
                   {{content.value ? content.value.length : 0}}/{{notifContent.maxLength}}
                 </mat-hint>
               </div>
-              <mat-error class="bottom-error" *ngIf="content.invalid && (content.dirty || content.touched)">
-                <span *ngIf="content.errors.required">{{'forms.content.errorRequired' | translate}}</span>
-                <span *ngIf="content.errors.maxlength">{{'forms.content.errorMaxLength' | translate: notifContent}}</span>
-              </mat-error>
             </div>
           </div>
         </div>
       </div>
-      <div fxHide fxShow.lt-md fxFlex.lt-md="25%" fxFlex.lt-sm="10%"></div>
-      <div fxFlex="20%" fxFlex.lt-lg="30%" fxFlex.lt-md="50%" fxFlex.lt-sm="80%">
-        <mat-card>
-          <mat-card-content>
-            <div class="font-gotham-bold">{{title.value}}</div>
-            <div class="margin-top-5">{{content.value}}</div>
-          </mat-card-content>
-          <mat-card-actions>
-          </mat-card-actions>
-        </mat-card>
+      <div fxFlex="40%" fxFlex.lt-lg="30%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
+        <div fxFlex="65%" fxFlex.lt-lg="80%" fxFlex-lt.md="100%">
+          <mat-card style="width: 100%">
+            <mat-card-content fxLayout="column" fxLayoutGap="5px">
+              <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+                <div>
+                  <img width="16px" height="16px" src="../../../../../assets/img/akses-icon.svg" />
+                </div>
+                <div class="font-sub-tag">{{appName}}</div>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <div fxFlex="grow">
+                  <div class="font-roboto-bold font-tag">{{title.value}}</div>
+                  <div class="margin-top-5 font-tag">{{content.value}}</div>
+                </div>
+                <div fxFlex="64px" fxFlexAlign="start" fxLayout="row" fxLayoutAlign="end start">
+                  <mat-icon class="icon-42" *ngIf="(!icon.value || icon.value===''); else iconPreviewExist">collections
+                  </mat-icon>
+                  <ng-template #iconPreviewExist>
+                    <img height="42px" widht="42px" [src]="icon.value" />
+                  </ng-template>
+                </div>
+              </div>
+              <div fxLayout="row">
+                <div style="width: 100%;" [style.height]="imgContainer.offsetWidth * (notifImageRatioPercentage) + 'px'"
+                  #imgContainer>
+                  <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
+                    *ngIf="(!image.value || image.value===''); else imgPreviewExist" class="bg-medium-gray">
+                    <mat-icon class="icon-42">collections</mat-icon>
+                  </div>
+                  <ng-template #imgPreviewExist>
+                    <img width="100%" height="100%" [src]="image.value">
+                  </ng-template>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
-      <div fxHide fxShow.lt-md fxFlex.lt-md="25%" fxFlex.lt-sm="10%"></div>
     </div>
     <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
-      <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%">
-        <div fxLayout="row" class="padding-bottom-16">
-          <div fxFlexAlign="center" fxFlex="40%" fxFlex.lt-md="30%">
-            {{'forms.articleCategory.fieldTitle' | translate}}
-          </div>
-          <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-            <div fxFlex="80%" fxFlex.lt-md="100%">
-              <mat-form-field appearance="fill">
-                <input matInput placeholder="{{'forms.articleCategory.placeholder' | translate}}"
-                  formControlName="articleCategory">
-              </mat-form-field>
-              <mat-error class="bottom-error"
-                *ngIf="articleCategory.invalid && (articleCategory.dirty || articleCategory.touched)">
-                <span
-                  *ngIf="articleCategory.errors.required">{{'forms.articleCategory.errorRequired' | translate}}</span>
-              </mat-error>
-            </div>
-          </div>
-        </div>
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutGap="16px">
         <div fxLayout="row">
-          <div fxFlexAlign="center" fxFlex="40%" fxFlex.lt-md="30%">
-            {{'forms.notifArticle.fieldTitle' | translate}}
+          <div fxFlexAlign="center" fxFlex="30%">
+            {{'forms.notifLinkType.fieldTitle' | translate}}
           </div>
-          <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-            <div fxFlex="80%" fxFlex.lt-md="100%">
-              <mat-form-field appearance="fill">
-                <mat-select formControlName="articleId">
-                  <mat-option value="" (click)="selectedArticleTitle=''">
-                    {{'forms.notifArticle.placeholder' | translate}}</mat-option>
-                  <mat-option *ngFor="let article of articles" [value]="article.id"
-                    (click)="selectedArticleTitle=article.title">{{article.title}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-error class="bottom-error" *ngIf="articleId.invalid && (articleId.dirty || articleId.touched)">
-                <span *ngIf="articleId.errors.required">{{'forms.notifArticle.errorRequired' | translate}}</span>
-              </mat-error>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
-      <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%">
-        <div fxFlex="40%" fxFlex.lt-md="30%">
-          {{'forms.schedule.fieldTitle' | translate}}
-        </div>
-        <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-          <div fxFlex="80%" fxFlex.lt-md="100%" fxLayout="column">
-            <mat-radio-group formControlName="scheduledFlag" fxLayout="column" fxLayoutGap="10px"
-              class="margin-bottom-10">
-              <mat-radio-button [value]="false" color="primary">
-                {{'forms.schedule.options.immediate' | translate}}
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+            <mat-radio-group formControlName="linkType" fxLayout="column" fxLayoutGap="10px">
+              <mat-radio-button [value]="notificationLinkType.article" color="primary">
+                {{'forms.notifLinkType.options.article' | translate}}
               </mat-radio-button>
-              <mat-radio-button [value]="true" color="primary">
-                {{'forms.schedule.options.certainTime' | translate}}
+              <mat-radio-button [value]="notificationLinkType.specialOffer" color="primary" #specialOfferRB>
+                {{'forms.notifLinkType.options.specialOffer' | translate}}
               </mat-radio-button>
             </mat-radio-group>
-            <mat-form-field appearance="fill" *ngIf="scheduledFlag.value" class="margin-bottom-10">
-              <input matInput [min]="now()" [matDatepicker]="datepicker"
-                placeholder="{{'forms.schedule.datePlaceholder' | translate}}" formControlName="scheduleDate">
-              <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-              <mat-datepicker #datepicker class="calendar-mat-icon-button"></mat-datepicker>
+            <mat-error class="bottom-error" *ngIf="linkType.invalid && (linkType.dirty || linkType.touched)">
+              <span *ngIf="linkType.errors.required">{{'forms.notifLinkType.errorRequired' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout="row" *ngIf="isLinkTypeSpecialOffer(); else linkTypeArticle">
+          <div fxFlexAlign="center" fxFlex="30%">
+            {{'forms.notifSpecialOffer.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+            <mat-form-field appearance="fill">
+              <mat-select formControlName="linkId">
+                <mat-option value="" (click)="selectedLinkTitle=''">
+                  {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
+                <mat-option *ngFor="let offer of specialOffers" [value]="offer.id"
+                  (click)="selectedLinkTitle=offer.title">{{offer.title}}</mat-option>
+              </mat-select>
             </mat-form-field>
-            <div fxLayout="row" *ngIf="scheduledFlag.value">
-              <div fxFlex="100px">
-                <mat-form-field appearance="fill">
-                  <input matInput type="time" formControlName="scheduleTime">
-                </mat-form-field>
-              </div>
+            <mat-error class="bottom-error" *ngIf="linkId.invalid && (linkId.dirty || linkId.touched)">
+              <span *ngIf="linkId.errors.required">{{'forms.notifSpecialOffer.errorRequired' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <ng-template #linkTypeArticle>
+          <div fxLayout="row">
+            <div fxFlexAlign="center" fxFlex="30%">
+              {{'forms.articleCategory.fieldTitle' | translate}}
             </div>
-            <mat-error class="bottom-error" *ngIf="
+            <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+              <mat-form-field appearance="fill">
+                <input matInput placeholder="{{'forms.articleCategory.placeholder' | translate}}"
+                  formControlName="linkCategory">
+              </mat-form-field>
+              <mat-error class="bottom-error"
+                *ngIf="linkCategory.invalid && (linkCategory.dirty || linkCategory.touched)">
+                <span *ngIf="linkCategory.errors.required">{{'forms.articleCategory.errorRequired' | translate}}</span>
+              </mat-error>
+            </div>
+          </div>
+          <div fxLayout="row">
+            <div fxFlexAlign="center" fxFlex="30%">
+              {{'forms.notifArticle.fieldTitle' | translate}}
+            </div>
+            <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+              <mat-form-field appearance="fill">
+                <mat-select formControlName="linkId">
+                  <mat-option value="" (click)="selectedLinkTitle=''">
+                    {{'forms.notifArticle.placeholder' | translate}}</mat-option>
+                  <mat-option *ngFor="let article of articles" [value]="article.id"
+                    (click)="selectedLinkTitle=article.title">{{article.title}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error class="bottom-error" *ngIf="linkId.invalid && (linkId.dirty || linkId.touched)">
+                <span *ngIf="linkId.errors.required">{{'forms.notifArticle.errorRequired' | translate}}</span>
+              </mat-error>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%">
+        <div fxFlex="30%">
+          {{'forms.schedule.fieldTitle' | translate}}
+        </div>
+        <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="column" fxLayoutGap="10px">
+          <mat-radio-group formControlName="scheduledFlag" fxLayout="column" fxLayoutGap="10px"
+            class="margin-bottom-10">
+            <mat-radio-button [value]="false" color="primary">
+              {{'forms.schedule.options.immediate' | translate}}
+            </mat-radio-button>
+            <mat-radio-button [value]="true" color="primary">
+              {{'forms.schedule.options.certainTime' | translate}}
+            </mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field appearance="fill" *ngIf="scheduledFlag.value" class="margin-bottom-10">
+            <input matInput [min]="now()" [matDatepicker]="datepicker"
+              placeholder="{{'forms.schedule.datePlaceholder' | translate}}" formControlName="scheduleDate">
+            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+            <mat-datepicker #datepicker class="calendar-mat-icon-button"></mat-datepicker>
+          </mat-form-field>
+          <div fxLayout="row" *ngIf="scheduledFlag.value">
+            <div fxFlex="50%" fxFlex.lt-md="70%">
+              <mat-form-field appearance="fill">
+                <input matInput type="time" formControlName="scheduleTime">
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-error class="bottom-error" *ngIf="
               scheduledFlag.invalid || scheduleDate.dirty || scheduleDate.touched ||
               scheduleTime.dirty || scheduleTime.touched || notifForm.errors
               ">
-              <span *ngIf="scheduledFlag.errors?.required">{{'forms.schedule.errorTypeRequired' | translate}}</span>
-              <span
-                *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleRequired">{{'forms.schedule.errorRequired' | translate}}</span>
-              <span
-                *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleMin">{{'forms.schedule.errorMin' | translate}}</span>
-            </mat-error>
-          </div>
+            <span *ngIf="scheduledFlag.errors?.required">{{'forms.schedule.errorTypeRequired' | translate}}</span>
+            <span
+              *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleRequired">{{'forms.schedule.errorRequired' | translate}}</span>
+            <span
+              *ngIf="!scheduledFlag.errors?.required && notifForm.errors?.scheduleMin">{{'forms.schedule.errorMin' | translate}}</span>
+          </mat-error>
         </div>
       </div>
     </div>
     <div fxLayout="row" class="padding-16" fxLayoutGap="10px">
-      <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
-        <div fxFlexAlign="center" fxFlex="40%" fxFlex.lt-md="30%">
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
+        <div fxFlexAlign="center" fxFlex="30%">
         </div>
-        <div fxFlex="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-          <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()">
+        <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+          <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()" [disabled]="notifForm.invalid">
             {{'save' | translate}}
           </button>
           <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">

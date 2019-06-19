@@ -6,6 +6,7 @@
                 "banners": "Home Banner",
                 "users": "User",
                 "articles": "Artikel",
+                "specialOffers": "Special Offer",
                 "faqs": "FAQ",
                 "branches": "Lokasi Cabang",
                 "changePhonenumberRequests": "Ubah Nomor Handphone"
@@ -185,7 +186,12 @@
             "placeholder": "Kode cabang",
             "errorRequired": "Kode Cabang wajib diisi",
             "errorFormat": "Kode Cabang hanya harus dalam angka",
-            "errorLength": "Kode Cabang harus terdiri {{minLength}} angka"
+            "errorLength": "Kode Cabang harus terdiri {{minLength}} angka",
+            "errorDuplicate": {
+                "preText": "Kode Cabang telah digunakan, klik ", 
+                "here": "disini",
+                "endText": " untuk melihat kode cabang tersebut"
+            }
         },
         "branchType": {
             "fieldTitle": "Tipe Cabang",
@@ -291,8 +297,11 @@
             "fieldTitle": "Penerima",
             "placeholder": "Penerima",
             "errorRequired": "Penerima wajib diisi",
+            "errorFileType": "Hanya format .csv yang dapat diupload",
+            "errorCSVRequired": "File csv wajib diisi",
             "options": {
-                "all": "Semua"
+                "all": "Semua",
+                "selectedUsers": "Sebagian"
             }
         },
         "content": {
@@ -300,6 +309,31 @@
             "placeholder": "Pesan",
             "errorRequired": "Pesan wajib diisi",
             "errorMaxLength": "Jumlah karakter maksimum untuk Pesan adalah {{maxLength}}"
+        },
+        "notifLargeIcon": {
+            "fieldTitle": "Ikon",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
+            "errorResolution": "Hanya ukuran {{width}} X {{height}} pixel yang dapat diupload",
+            "hint": "Ukuran {{width}} X {{height}} pixel (tipe file: .jpeg / .png)"
+        },
+        "notifImage": {
+            "fieldTitle": "Gambar",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
+            "errorResolution": "Hanya ukuran {{width}} X {{height}} pixel yang dapat diupload",
+            "hint": "Ukuran {{width}} X {{height}} pixel (tipe file: .jpeg / .png)"
+        },
+        "notifLinkType": {
+            "fieldTitle": "Tipe",
+            "errorRequired": "Tipe wajib diisi",
+            "options": {
+                "article": "Artikel",
+                "specialOffer": "Special Offer"
+            }
+        },
+        "notifSpecialOffer": {
+            "fieldTitle": "Special Offer",
+            "placeholder": "Pilih Special Offer",
+            "errorRequired": "Special Offer wajib diisi"
         },
         "articleCategory": {
             "fieldTitle": "Kategori Artikel",
@@ -320,6 +354,35 @@
                 "immediate": "Langsung",
                 "certainTime": "Terjadwal"
             },
+            "datePlaceholder": "MM/dd/yyyy"
+        },
+        "offerImage": {
+            "fieldTitle": "Gambar",
+            "errorRequired": "Gambar wajib diisi",
+            "errorRatio": "Hanya rasio {{width}}:{{height}} yang dapat diupload",
+            "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
+            "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )"
+        },
+        "description": {
+            "fieldTitle": "Deskripsi",
+            "placeholder": "Deskripsi",
+            "errorRequired": "Deskripsi wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Deskripsi adalah {{maxLength}}"
+        },
+        "termsAndConditions": {
+            "fieldTitle": "Syarat dan Ketentuan",
+            "errorRequired": "Syarat dan Ketentuan wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Syarat dan Ketentuan adalah {{maxLength}}"
+        },
+        "redeemVoucherInstructions": {
+            "fieldTitle": "Instruksi Penukaran Voucher",
+            "errorRequired": "Instruksi Penukaran Voucher wajib diisi",
+            "errorMaxLength": "Jumlah karakter maksimum untuk Instruksi Penukaran Voucher adalah {{maxLength}}"
+        },
+        "endDatetime": {
+            "fieldTitle": "Tanggal Selesai",
+            "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid",
+            "errorMin": "Tanggal Selesai harus lebih dari 1 jam sejak saat ini",
             "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
@@ -350,7 +413,9 @@
             "active": "Aktif",
             "inactive": "Non-aktif",
             "approved": "Approved",
-            "rejected": "Rejected"
+            "rejected": "Rejected",
+            "delivered": "Terkirim",
+            "pending": "Pending"
         },
         "uniqueTag": "Unique Tag",
         "title": "Judul",
@@ -452,6 +517,8 @@
     "edit": "edit",
     "example": "contoh",
     "invalidForm": "form tidak valid",
+    "imageNotExist": "gambar tidak tersedia",
+    "uploadCSV": "upload csv",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -466,6 +533,10 @@
     "movePageConfirmationModal": {
         "title": "Konfirmasi Pindah Halaman",
         "content": "Apakah anda yakin untuk meninggalkan halaman ini? Perubahan akan dihapus"
+    },
+    "dataConfirmationModal": {
+        "title": "Konfirmasi Data",
+        "content": "Apakah Anda yakin bahwa semua data dan konten yang terisi sudah benar?"
     },
     "userListScreen": {
         "title": "Data User",
@@ -533,7 +604,8 @@
         "getProvincesFailed": "gagal mendapatkan list provinsi",
         "getCitiesFailed": "gagal mendapatkan list kota / kabupaten",
         "getDistrictsFailed": "gagal mendapatkan list kecamatan",
-        "getSubDistrictsFailed": "gagal mendapatkan list kelurahan"
+        "getSubDistrictsFailed": "gagal mendapatkan list kelurahan",
+        "duplicateBranchCode": "Kode Cabang sudah tersedia"
     },
     "branchListScreen": {
         "title": "Data Lokasi Cabang",
@@ -630,10 +702,37 @@
         "updateFailed": "gagal mengubah data",
         "createFailed": "gagal menambahkan notifikasi baru",
         "notifSaveConfirm": "Konfirmasi Simpan Notifikasi",
+        "deleteCSVFailed": "gagal menghapus file csv",
+        "deleteImageFailed": "gagal menghapus gambar",
+        "deleteIconFailed": "gagal menghapus ikon",
+        "uploadCSVFailed": "upload file csv gagal",
+        "uploadImageFailed": "upload gambar gagal",
+        "uploadIconFailed": "upload ikon gagal",
         "cantUpdate": {
             "immediate": "tidak dapat mengubah notifikasi yang langsung dikirim",
             "minDuration": "tidak dapat mengubah notifikasi dengan jadwal kurang dari 1 jam sejak saat ini"
         }
+    },
+    "specialOfferListScreen": {
+        "title": "Data Special Offer",
+        "createOffer": "tambahkan special offer baru",
+        "loadFailed": "gagal mendapatkan list special offer"
+    },
+    "specialOfferDetailsScreen": {
+        "getOfferFailed": "gagal mendapatkan data Special Offer",
+        "getCategoryFailed": "gagal mendapatkan kategori Special Offer",
+        "createTitle": "Tambahkan Special Offer Baru",
+        "updateTitle": "Ubah Special Offer",
+        "succesCreated": "Special Offer berhasil ditambahkan",
+        "succesUpdated": "Special Offer berhasil diubah",
+        "updateFailed": "gagal mengubah data",
+        "createFailed": "gagal menambahkan Special Offer baru",
+        "cantUpdate": {
+            "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini"
+        },
+        "uploadImageFailed": "upload gambar gagal",
+        "uploadCSVFailed": "upload file csv gagal",
+        "deleteImageFailed": "gagal menghapus gambar"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
@@ -730,6 +829,21 @@
         "01090": "gagal menambahkan notifikasi baru",
         "01091": "notifikasi tidak ditemukan",
         "01092": "notifikasi sudah terkirim atau sudah dihapus di one signal",
-        "01093": "gagal menghapus notifikasi"
+        "01093": "gagal menghapus notifikasi",
+        "01094": "judul notifikasi wajib diisi",
+        "01095": "pesan notifikasi wajib diisi",
+        "01096": "artikel notifikasi wajib diisi",
+        "01097": "id notifikasi wajib diisi",
+        "01098": "judul notifikasi wajib diisi",
+        "01099": "pesan notifikasi wajib diisi",
+        "01100": "artikel notifikasi wajib diisi",
+        "01101": "id notifikasi wajib diisi",
+        "01102": "format teks tidak disupport",
+        "01103": "penerima wajib diisi",
+        "01104": "syarat dan ketentuan wajib diisi",
+        "01105": "gambar wajib diisi",
+        "01106": "tanggal selesai wajib diisi",
+        "01107": "langkah penukaran voucher wajib diisi",
+        "01108": "kode cabang sudah tersedia"
     }
 }

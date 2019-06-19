@@ -3,16 +3,19 @@
     {{'notificationDetailsScreen.notifSaveConfirm' | translate}}
   </div>
   <div mat-dialog-content fxFlex="grow" class="border-bottom-gray border-top-gray">
-    <div fxFlex="grow" style="height: 100%; width: 100%" class="padding-top-16 padding-bottom-16 text-dark-gray" 
-    fxFlexLayout="column" fxLayoutGap="24px grid">
+    <div fxFlex="grow" style="height: 100%; width: 100%" class="padding-top-16 padding-bottom-16 text-dark-gray"
+      fxFlexLayout="column" fxLayoutGap="24px grid">
       <div>
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
             {{'forms.recipient.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
-            <span *ngIf="data.notification.recipient ===  'all'">
+            <span *ngIf="data.notification.recipientAllFlag ===  true">
               {{'forms.recipient.options.all' | translate}}
+            </span>
+            <span *ngIf="data.notification.recipientAllFlag ===  false">
+              {{'forms.recipient.options.selectedUsers' | translate}}
             </span>
           </div>
         </div>
@@ -37,26 +40,38 @@
           </div>
         </div>
       </div>
-      <div>
+      <div *ngIf="data.notification.linkType === notificationLinkType.specialOffer; else articleLinkType">
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
-            {{'forms.articleCategory.fieldTitle' | translate}}
+            {{'forms.notifSpecialOffer.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
-            {{data.notification.articleCategory}}
+            {{data.notification.linkTitle}}
           </div>
         </div>
       </div>
-      <div>
-        <div fxLayout="row wrap" fxLayoutGap="10px grid">
-          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
-            {{'forms.notifArticle.fieldTitle' | translate}}
-          </div>
-          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
-            {{data.notification.articleTitle}}
+      <ng-template #articleLinkType>
+        <div>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+              {{'forms.articleCategory.fieldTitle' | translate}}
+            </div>
+            <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+              {{data.notification.linkCategory}}
+            </div>
           </div>
         </div>
-      </div>
+        <div>
+          <div fxLayout="row wrap" fxLayoutGap="10px grid">
+            <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+              {{'forms.notifArticle.fieldTitle' | translate}}
+            </div>
+            <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+              {{data.notification.linkTitle}}
+            </div>
+          </div>
+        </div>
+      </ng-template>
       <div>
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">

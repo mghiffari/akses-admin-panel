@@ -2,7 +2,7 @@
   <div #container style="width: 250px; max-width: 100%">
     <div fxLayout="row" fxLayoutAlign="center center" [style.height]="container.offsetWidth + 'px'"
       class="bg-yellow-adira">
-      <img width="80%" src="./../../../../assets/img/Logo.Adira.svg">
+      <img width="80%" src="./../../../../assets/img/Logo.Adira.svg" alt="{{'imageNotExist' | translate}}">
     </div>
     <form [formGroup]="authForm" *ngIf="mode === 'login'" #loginFormDirective="ngForm">
       <div fxLayout="row" class="margin-top-20">

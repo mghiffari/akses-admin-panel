@@ -31,7 +31,8 @@
     <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
       <input #bannerImage type="file" accept='image/*' (change)="uploadImage('banner', bannerImage.files)"
         class="text-label" [(ngModel)]="getCreateBannerData().banner" />
-      <img [src]="getCreateBannerData().banner" *ngIf="getCreateBannerData().banner" height="200" width="320">
+      <img [src]="getCreateBannerData().banner" *ngIf="getCreateBannerData().banner" height="200" width="320"
+        alt="{{'imageNotExist' | translate}}">
       <div class="bottom-error mat-error ng-star-inserted" *ngIf="getErrorMessage().imageBanner">
         {{getErrorMessage().imageBanner}}</div>
     </div>
@@ -192,7 +193,7 @@
             <input #footImage type="file" accept='image/*' (change)="uploadImage('footer', footImage.files)"
               [(ngModel)]="getCreateBannerData().foot_image_content" />
             <img [src]="getCreateBannerData().foot_image_content" *ngIf="getCreateBannerData().foot_image_content"
-              height="200" width="320">
+              alt="{{'imageNotExist' | translate}}" height="200" width="320">
             <span class="bottom-error mat-error ng-star-inserted"
               *ngIf="getErrorMessage().imageFooter">{{getErrorMessage().imageFooter}}</span>
           </div>

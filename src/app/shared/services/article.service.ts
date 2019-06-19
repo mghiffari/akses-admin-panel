@@ -6,7 +6,6 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   providedIn: 'root'
 })
 export class ArticleService {
-  uploadApiUrl = environment.apiurl + 'upload/';
   articleApiUrl = environment.apiurl + 'article/';
   articleCategoryApiUrl = this.articleApiUrl + 'category/';
 

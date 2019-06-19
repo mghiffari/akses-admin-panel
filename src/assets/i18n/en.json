@@ -6,6 +6,7 @@
                 "banners": "Home Banners",
                 "users": "Users",
                 "articles": "Articles",
+                "specialOffers": "Special Offers",
                 "faqs": "FAQs",
                 "branches": "Branch Locations",
                 "changePhonenumberRequests": "Change Phonenumber Requests"
@@ -185,7 +186,12 @@
             "placeholder": "Branch code",
             "errorRequired": "Branch Code is required",
             "errorFormat": "Branch Code should only contain numbers",
-            "errorLength": "Branch Code should contain {{minLength}} numbers"
+            "errorLength": "Branch Code should contain {{minLength}} numbers",
+            "errorDuplicate": {
+                "preText": "Branch Code already exist, click ",
+                "here": "here",
+                "endText": " to see the branch"
+            }
         },
         "branchType": {
             "fieldTitle": "Branch Type",
@@ -291,8 +297,11 @@
             "fieldTitle": "Recipient",
             "placeholder": "Recipient",
             "errorRequired": "Recipient is required",
+            "errorFileType": "Only .csv format is supported",
+            "errorCSVRequired": "csv file is required",
             "options": {
-                "all": "All"
+                "all": "All",
+                "selectedUsers": "Selected Users"
             }
         },
         "content": {
@@ -300,6 +309,31 @@
             "placeholder": "Content",
             "errorRequired": "Content is required",
             "errorMaxLength": "Max. length of Content is {{maxLength}}"
+        },
+        "notifLargeIcon": {
+            "fieldTitle": "Large Icon",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "errorResolution": "Only {{width}} X {{height}} pixel is supported",
+            "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
+        },
+        "notifImage": {
+            "fieldTitle": "Image",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "errorResolution": "Only {{width}} X {{height}} pixel is supported",
+            "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
+        },
+        "notifLinkType": {
+            "fieldTitle": "Type",
+            "errorRequired": "Type is required",
+            "options": {
+                "article": "Article",
+                "specialOffer": "Special Offer"
+            }
+        },
+        "notifSpecialOffer": {
+            "fieldTitle": "Special Offer",
+            "placeholder": "Select a Special Offer",
+            "errorRequired": "Special Offer is required"
         },
         "articleCategory": {
             "fieldTitle": "Article Category",
@@ -320,6 +354,35 @@
                 "immediate": "Immediate",
                 "certainTime": "Scheduled"
             },
+            "datePlaceholder": "MM/dd/yyyy"
+        },
+        "offerImage": {
+            "fieldTitle": "Image",
+            "errorRequired": "Image is required",
+            "errorRatio": "Only {{width}}:{{height}} ratio is supported",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
+        },
+        "description": {
+            "fieldTitle": "Description",
+            "placeholder": "Description",
+            "errorRequired": "Description is required",
+            "errorMaxLength": "Max. length of Description is {{maxLength}}"
+        },
+        "termsAndConditions": {
+            "fieldTitle": "Terms and Conditions",
+            "errorRequired": "Terms and Conditions is required",
+            "errorMaxLength": "Max. length of Terms and Conditions is {{maxLength}}"
+        },
+        "redeemVoucherInstructions": {
+            "fieldTitle": "Redeem Voucher Instructions",
+            "errorRequired": "Redeem Voucher Instructions is required",
+            "errorMaxLength": "Max. length of Redeem Voucher Instructions is {{maxLength}}"
+        },
+        "endDatetime": {
+            "fieldTitle": "End Date",
+            "errorRequired": "End Date must have date and time format value",
+            "errorMin": "End Date should be more than 1 hr from now",
             "datePlaceholder": "MM/dd/yyyy"
         },
         "buttonText": {
@@ -350,7 +413,9 @@
             "active": "Active",
             "inactive": "Inactive",
             "approved": "Approved",
-            "rejected": "Rejected"
+            "rejected": "Rejected",
+            "delivered": "Delivered",
+            "pending": "Pending"
         },
         "uniqueTag": "Unique Tag",
         "title": "Title",
@@ -452,6 +517,8 @@
     "edit": "edit",
     "example": "example",
     "invalidForm": "invalid form",
+    "imageNotExist": "image not exist",
+    "uploadCSV": "upload csv",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -466,6 +533,10 @@
     "movePageConfirmationModal": {
         "title": "Leave Page Confirmation",
         "content": "Are you sure you want to leave this page? Changes will be discarded"
+    },
+    "dataConfirmationModal": {
+        "title": "Data Confirmation",
+        "content": "Are you sure that all the data and content are correct?"
     },
     "userListScreen": {
         "title": "Users Data",
@@ -533,7 +604,8 @@
         "getProvincesFailed": "failed to get province list",
         "getCitiesFailed": "failed to get city list",
         "getDistrictsFailed": "failed to get district list",
-        "getSubDistrictsFailed": "failed to get sub-district list"
+        "getSubDistrictsFailed": "failed to get sub-district list",
+        "duplicateBranchCode": "Branch Code already exist"
     },
     "branchListScreen": {
         "title": "Branch Locations Data",
@@ -631,10 +703,37 @@
         "updateFailed": "failed to update data",
         "createFailed": "failed to create new notification",
         "notifSaveConfirm": "Save Notification Confirmation",
+        "deleteCSVFailed": "failed to delete csv file",
+        "deleteImageFailed": "failed to delete image",
+        "deleteIconFailed": "failed to delete icon",
+        "uploadCSVFailed": "failed to upload csv file",
+        "uploadImageFailed": "failed to upload image",
+        "uploadIconFailed": "failed to upload icon",
         "cantUpdate": {
             "immediate": "can't update immediately sent notification",
             "minDuration": "can't update notification which schedule is less than one hour"
         }
+    },
+    "specialOfferListScreen": {
+        "title": "Special Offers Data",
+        "createOffer": "create new special offer",
+        "loadFailed": "failed to get list of special offers"
+    },
+    "specialOfferDetailsScreen": {
+        "getOfferFailed": "failed to get Special Offer data",
+        "getCategoryFailed": "failed to get Special Offer categories",
+        "createTitle": "Create New Special Offer",
+        "updateTitle": "Update Special Offer",
+        "succesCreated": "new Special Offer successfully created",
+        "succesUpdated": "Special Offer successfully updated",
+        "updateFailed": "failed to update data",
+        "createFailed": "failed to create new Special Offer",
+        "cantUpdate": {
+            "minDuration": "can't update special offer which expiry date is less than one hour"
+        }, 
+        "uploadImageFailed": "failed to upload image",
+        "uploadCSVFailed": "failed to upload csv file",
+        "deleteImageFailed": "failed to delete image"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -731,6 +830,21 @@
         "01090": "failed to create new notification",
         "01091": "notification not found",
         "01092": "notification have been sent or deleted in one signal",
-        "01093": "failed to delete notification"
+        "01093": "failed to delete notification",
+        "01094": "missing required notification title parameter",
+        "01095": "missing required notification message parameter",
+        "01096": "missing required notification article parameter",
+        "01097": "missing required update notification id parameter",
+        "01098": "missing required update notification title parameter",
+        "01099": "missing required update notification message param",
+        "01100": "missing required update notification articleid param",
+        "01101": "missing required delete notification notifid param",
+        "01102": "text param must not contain fancytext",
+        "01103": "recipient is required",
+        "01104": "missing required terms and conditions parameter",
+        "01105": "missing required image parameter",
+        "01106": "missing required end date parameter",
+        "01107": "missing required instructions parameter",
+        "01108": "branch code already exist"
     }
 }

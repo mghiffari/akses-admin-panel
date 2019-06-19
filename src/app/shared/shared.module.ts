@@ -5,7 +5,7 @@ import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {TranslateModule} from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { AccountService } from './services/account.service';
 import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
@@ -19,6 +19,9 @@ import { MaskedNumInputComponent } from './components/masked-num-input/masked-nu
 import { FileManagementService } from './services/file-management.service';
 import { BoldRendererPipe } from './pipes/bold-renderer.pipe';
 import { ArticleService } from './services/article.service';
+import { SpecialOfferService } from './services/special-offer.service';
+import { TinymceEditorComponent } from './components/tinymce-editor/tinymce-editor.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -28,14 +31,16 @@ import { ArticleService } from './services/article.service';
     ErrorSnackbarComponent, 
     PasswordToggleInputComponent, 
     MaskedNumInputComponent, 
-    BoldRendererPipe
+    BoldRendererPipe, 
+    TinymceEditorComponent
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
     HttpClientModule,
     TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EditorModule
   ], 
   exports: [
     AngularMaterialModule,
@@ -46,7 +51,9 @@ import { ArticleService } from './services/article.service';
     TranslateModule,
     PasswordToggleInputComponent,
     MaskedNumInputComponent,
-    BoldRendererPipe
+    BoldRendererPipe,
+    TinymceEditorComponent,
+    EditorModule
   ],
   providers:[
     AuthService,
@@ -59,7 +66,8 @@ import { ArticleService } from './services/article.service';
     LovService,
     CreditSimulationService,
     FileManagementService,
-    ArticleService
+    ArticleService,
+    SpecialOfferService
   ],
   entryComponents: [
     ErrorModalComponent,

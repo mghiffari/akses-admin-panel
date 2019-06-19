@@ -375,7 +375,7 @@ export class PIDetailsComponent implements OnInit {
       this.onSubmittingForm = true;
       let formData = new FormData()
       formData.append("file", this.iconFile.value)
-      formData.append("component", "payment-instruction")
+      formData.append("component", this.fileMgtService.paymentInstComponent)
       this.uploadIcon(formData);
     } else {
       if (this.oldIcon.value === this.icon.value) {
@@ -595,6 +595,7 @@ export class PIDetailsComponent implements OnInit {
     this.fileMgtService.deleteFile(data).subscribe(
       response => {
         console.table(response);
+        this.onSubmittingForm = false;
         let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
           data: {
             title: 'success',

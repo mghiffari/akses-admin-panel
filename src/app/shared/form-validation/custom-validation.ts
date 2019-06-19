@@ -40,12 +40,38 @@ export class CustomValidation {
     maxLength: 15
   }
 
+  static specialOfferImg = {
+    ratio: {
+      height: 10,
+      width: 16
+    }
+  }
+
+  static offerTitle = {
+    maxLength: 80
+  }
+
   static scheduleMinDuration = 3600000
+
+  static notifImage = {
+    resolution: {
+      width: 1440,
+      height: 720
+    }
+  }
+
+  static notifLargeIcon = {
+    resolution: {
+      width: 256,
+      height: 256
+    }
+  }
+
   static notifTitle = {
-    maxLength: 100
+    maxLength: 50
   }
   static notifContent = {
-    maxLength: 200
+    maxLength: 300
   }
 
   static adiraEmailPattern = environment.enableAdiraEmailValidation ? /@adira.co.id$/ : /^/;
@@ -195,14 +221,15 @@ export class CustomValidation {
         image.onload = function () {
           const height = image.height;
           const width = image.width;
-          if (width / height !== widthRatio / heightRatio) {
+          if (width / widthRatio !== height / heightRatio) {
             control.setErrors({ ratio: true })
           }
         };
       }
     }
   }
-  //used to validate image ratio
+  
+  //used to validate image max resolution
   static imageMaxResolution(control: AbstractControl, maxWidth: number, maxHeight: number) {
     console.log('CustomValidation | imageMaxResolution');
     const file = <File>control.value;
@@ -230,9 +257,37 @@ export class CustomValidation {
     }
   }
 
-  //used to check password valid or not
+  //used to validate image resolution
+  static imageResolution(control: AbstractControl, width: number, height: number) {
+    console.log('CustomValidation | imageResolution');
+    const file = <File>control.value;
+    control.setErrors(null)
+    if (file) {
+      let reader = new FileReader()
+      reader.readAsDataURL(file);
+      reader.onload = function (e) {
+
+        //Initiate the JavaScript Image object.
+        let image = new Image();
+
+        //Set the Base64 string return from FileReader as source.
+        image.src = e.target['result'];
+
+        //Validate the File Height and Width.
+        image.onload = function () {
+          const imgHeight = image.height;
+          const imgWidth = image.width;
+          if (imgHeight !== height || imgWidth !== width) {
+            control.setErrors({ resolution: true })
+          }
+        };
+      }
+    }
+  }
+
+  //used to check notif schedule valid or not
   static notifSchedule: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
-    console.log('CustomValidation | matchPassword');
+    console.log('CustomValidation | notifSchedule');
     let scheduleFlag = formGroup.get('scheduledFlag').value;
     if (scheduleFlag) {
       let scheduleDate: Date = formGroup.get('scheduleDate').value;
@@ -255,7 +310,27 @@ export class CustomValidation {
     }
   };
 
-  // use to check wheteher datetime is at least one hour from now
+  //used to check offer end Date valid or not
+  static offerEndDate: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+    console.log('CustomValidation | offerEndDate')
+      let endDate: Date = formGroup.get('endDate').value;
+      let endTime = formGroup.get('endTime').value;
+      if (endDate && endTime && endTime !== '') {
+        let timeSplit = endTime.split(':');
+        let timeHrs = Number(timeSplit[0]);
+        let timeMin = Number(timeSplit[1]);
+        endDate.setHours(timeHrs, timeMin, 0, 0);
+        if (CustomValidation.durationFromNowValidation(endDate)) {
+          return null;
+        } else {
+          return { 'endDateMin': true }
+        }
+      } else {
+        return { 'endDateRequired': true }
+      }
+  };
+
+  // use to check wheteher datetime is more than one hour from now
   static durationFromNowValidation(date) {
     console.log('CustomValidation | durationFromNowValidation');
     date.setSeconds(0, 0);

@@ -187,12 +187,26 @@ body {
     border-top: 1px solid map-get($colors, gray);
 }
 
+.dashed-border-medium-gray{
+    border: 1.5px dashed map-get($colors, gray);
+}
+
 .bg-yellow-adira {
     background-color: map-get($colors, yellow);
 }
 
 .bg-light-gray {
     background-color: map-get($colors, light-gray);
+}
+
+.bg-medium-gray {
+    background-color: map-get($colors, medium-gray);
+}
+
+.icon-42 {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 42px !important;
 }
 
 .cursor-pointer{
@@ -252,6 +266,14 @@ body {
     color: map-get($colors, dark-gray)
 }
 
+.text-warning{
+    color: map-get($colors, pale-orange)
+}
+
+.text-blue{
+    color: map-get($colors, blue)
+}
+
 .top-action-text{
     @extend .font-gotham-bold;
     @extend .font-sub-description;
@@ -277,6 +299,10 @@ button[block-button]{
     font-size: map-get($font-sizes, 'description') !important;
     width: 16px !important; 
     height: 16px !important;
+}
+
+.th-min-width-150 {
+    min-width: 150px;
 }
 
 .th-min-width {
