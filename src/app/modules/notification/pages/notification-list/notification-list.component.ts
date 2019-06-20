@@ -7,6 +7,7 @@ import { CustomValidation } from 'src/app/shared/form-validation/custom-validati
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { Notification } from '../../models/notification';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-notification-list',
@@ -39,6 +40,7 @@ export class NotificationListComponent implements OnInit {
   closeText = '';
   loading = false;
   isFocusedInput = false;
+  locale = 'id';
 
   private table: any;
   @ViewChild('notifsTable') set tabl(table: ElementRef) {
@@ -54,11 +56,15 @@ export class NotificationListComponent implements OnInit {
     private notifService: NotificationService,
     private snackBar: MatSnackBar,
     private modal: MatDialog,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit() {
     console.log('NotificationListComponent | ngOnInit');
+    this.translateService.get('angularLocale').subscribe(res => {
+      this.locale = res;
+    });
     this.lazyLoadData()
   }
 
@@ -138,6 +144,19 @@ export class NotificationListComponent implements OnInit {
   // refresh button handler
   onRefresh(notif){
     console.log('NotificationListComponent | onRefresh')
+    this.loading = true;
+    if(notif.clicked){
+      if(notif.clicked < notif.total_users){
+        notif.clicked += 1;
+      }
+    } else {
+      if(notif.total_users > 0){
+        notif.clicked = 1;
+      }
+    }
+    this.loading = false;
+    this.table.renderRows();
+    
     // this.loading = true;
     // this.notifService.getNotifById(notif.id).subscribe(
     //   response => {
