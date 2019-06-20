@@ -1,12 +1,9 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
-import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
-import { SpecialOffer } from 'src/app/shared/models/special-offer';
 
 @Component({
   selector: 'app-special-offer-list',
