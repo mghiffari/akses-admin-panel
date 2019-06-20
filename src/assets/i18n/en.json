@@ -519,6 +519,7 @@
     "invalidForm": "invalid form",
     "imageNotExist": "image not exist",
     "uploadCSV": "upload csv",
+    "failedToRefreshData": "refresh data failed",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",

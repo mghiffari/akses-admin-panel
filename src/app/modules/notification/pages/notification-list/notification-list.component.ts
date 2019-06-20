@@ -135,6 +135,41 @@ export class NotificationListComponent implements OnInit {
     }
   }
 
+  // refresh button handler
+  onRefresh(notif){
+    console.log('NotificationListComponent | onRefresh')
+    // this.loading = true;
+    // this.notifService.getNotifById(notif.id).subscribe(
+    //   response => {
+    //     try {
+    //       console.table(response)
+    //       this.loading = false;
+    //       notif = response.data;
+    //       if (this.table) {
+    //         this.table.renderRows();
+    //       }      
+    //     } catch (error) {
+    //       console.log(error)
+    //     }
+    //   }, error => {
+    //     try {
+    //       console.table(error)
+    //       this.loading = false;
+    //       this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+    //         data: {
+    //           title: 'failedToRefreshData',
+    //           content: {
+    //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+    //             data: null
+    //           }
+    //         }
+    //       })
+    //     } catch (error) {
+    //       console.log(error)
+    //     }
+    //   }
+    // )
+  }
   // show error if to be edited notification data is not valid eq: immediate notif & notif <= 1 hr
   editNotifError(){
     console.log('NotificationListComponent | editNotifError')
