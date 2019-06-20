@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class NotificationService {
   notificationApiUrl = environment.apiurl + 'notification/'
+  refreshNotifApiUrl = this.notificationApiUrl + 'refresh/';
 
   // constructor
   constructor(
@@ -23,7 +24,7 @@ export class NotificationService {
   //get n data by id
   getNotifById(id: string) {
     let url = this.notificationApiUrl + id;
-    console.log("NotificationService | loadBannerById " + url);
+    console.log("NotificationService | getNotifById " + url);
     return this.authService.wrapTokenGetApi(url);
   }
 
@@ -45,6 +46,13 @@ export class NotificationService {
     let url = this.notificationApiUrl + id;
     console.log("NotificationService | deleteNotif ", url);
     return this.authService.wrapTokenDeleteApi(url)
+  }
+
+  //refresh notif by id
+  refreshNotif(id: string) {
+    let url = this.refreshNotifApiUrl + id;
+    console.log("NotificationService | refreshNotif " + url);
+    return this.authService.wrapTokenPatchApi(url, {});
   }
   
 }

@@ -15,4 +15,6 @@ export class Notification {
     large_image: string;
     recipient_all_flg: boolean;
     recipient_list: string;
+    sent: number;
+    clicked: number
 }
