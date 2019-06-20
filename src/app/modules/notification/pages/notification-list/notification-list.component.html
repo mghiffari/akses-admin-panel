@@ -78,22 +78,25 @@
       <ng-container matColumnDef="clicked">
         <th mat-header-cell *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.notificationTable.clicked' | translate}} </th>
-        <td mat-cell *matCellDef="let element">
-
+        <td mat-cell *matCellDef="let element" align="right">
+          <span *ngIf="element.total_users">
+            {{(element.clicked ? element.clicked/element.total_users : 0) | percent : '1.0-4' : locale}}
+          </span>
         </td>
       </ng-container>
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
+        <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width text-center-important">
           {{'table.actions' | translate}} </th>
         <td mat-cell *matCellDef="let element" align="center">
-          <div *ngIf="isEditableNotif(element)">
+          <span *ngIf="isEditableNotif(element)">
               <mat-icon class="cursor-pointer" (click)="onDelete(element)">delete</mat-icon>
               <mat-icon color="primary" class="cursor-pointer" (click)="onEdit(element)">edit</mat-icon>
-          </div>
-          <div *ngIf="!isEditableNotif(element)" class="text-medium-gray">
+          </span>
+          <span *ngIf="!isEditableNotif(element)" class="text-medium-gray">
               <mat-icon class="cursor-not-allowed">delete</mat-icon>
               <mat-icon class="cursor-not-allowed">edit</mat-icon>
-          </div>
+          </span>
+          <mat-icon class="cursor-pointer" (click)="onRefresh(element)">refresh</mat-icon>
         </td>
       </ng-container>
       <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="notifColumns; sticky: true"></tr>
