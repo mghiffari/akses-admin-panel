@@ -72,16 +72,14 @@
         <th mat-header-cell *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.notificationTable.sent' | translate}} </th>
         <td mat-cell *matCellDef="let element" align="right">
-          <span>{{element.total_users}}</span>
+          <span>{{element.sent}}</span>
         </td>
       </ng-container>
       <ng-container matColumnDef="clicked">
         <th mat-header-cell *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.notificationTable.clicked' | translate}} </th>
         <td mat-cell *matCellDef="let element" align="right">
-          <span *ngIf="element.total_users">
-            {{(element.clicked ? element.clicked/element.total_users : 0) | percent : '1.0-4' : locale}}
-          </span>
+          {{element.clicked}}
         </td>
       </ng-container>
       <ng-container matColumnDef="action">
