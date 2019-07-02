@@ -456,7 +456,7 @@ export class BranchDetailsComponent implements OnInit {
     if (this.isCreate) {
       this.validateBranchCode()
     } else {
-      let form = this.branchForm.value;
+      let form = this.branchForm.getRawValue();
       this.branchModel = new Branch();
       this.branchModel.name = form.name;
       this.branchModel.branch_code = form.branchCode;

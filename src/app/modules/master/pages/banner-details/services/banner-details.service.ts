@@ -456,7 +456,7 @@ export class BannerDetailsService {
   compressImage(component:string, file:File){
     console.log('BannerDetailService | compressImage');
     var compressedImage: File = null;
-    this._ng2ImgToolsService.compress([file], 0.2).subscribe( result =>{
+    this._ng2ImgToolsService.compress([file], 0.2, true).subscribe( result =>{
         compressedImage = result;
         if(component === "banner") {
           this.vBannerUpload.component = "Banner";

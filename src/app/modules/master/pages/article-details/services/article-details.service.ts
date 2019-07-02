@@ -222,7 +222,7 @@ export class ArticleDetailsService {
   compressImage(component:string, file:File){
     console.log('ArticleDetailsService | compressImage');
     var compressedImage: File = null;
-    this._ng2ImgToolsService.compress([file], 0.2).subscribe( result =>{
+    this._ng2ImgToolsService.compress([file], 0.2, true).subscribe( result =>{
         compressedImage = result;
         if(component === "article") {
           this.vArticleImageUpload.component = "Article";

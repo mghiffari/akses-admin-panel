@@ -517,7 +517,7 @@ export class NotificationDetailsComponent implements OnInit {
       fileTypes.push('icon')
     }
     if (this.imageFile.value) {
-      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
+      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg)
           let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)
@@ -591,7 +591,7 @@ export class NotificationDetailsComponent implements OnInit {
         shouldDeleteImage = true
       }
 
-      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
+      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg);
           let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)
