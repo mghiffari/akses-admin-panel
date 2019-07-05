@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import Utils from '../../../shared/common/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChangePhoneService {
-  requestApiUrl = environment.apiurl + 'editphone/';
-  updateRequestApiUrl = this.requestApiUrl + 'update';
+  requestApiUrl = environment.apiurl + 'editphone';
+  updateRequestApiUrl = this.requestApiUrl + '/update';
   
   constructor(private authService: AuthService) { }
 
   // get request list based on page, page size and search keyword
   getRequestList(page, pageSize, search) {
-    let url = this.requestApiUrl + page + '/' + pageSize + '/' + search;
+    let url = this.requestApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("ChangePhoneService | getRequestList ", url);
     return this.authService.wrapTokenGetApi(url)
   }

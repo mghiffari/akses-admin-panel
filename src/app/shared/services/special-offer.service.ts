@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
+import Utils from '../common/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpecialOfferService {
-  specialOfferApiUrl = environment.apiurl + 'specialoffer/';
+  specialOfferApiUrl = environment.apiurl + 'specialoffer';
 
   constructor(
     private authService: AuthService
@@ -20,7 +21,7 @@ export class SpecialOfferService {
 
   //used to hit get special offer list API
   getOfferList(page, pageSize, search){
-    let url = this.specialOfferApiUrl+ page + '/' + pageSize + '/' + search; 
+    let url = this.specialOfferApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search); 
     console.log("SpecialOfferService | getUserListApi ", url);
     return this.authService.wrapTokenGetApi(url)
   }
@@ -34,7 +35,7 @@ export class SpecialOfferService {
 
   //get offer by id
   getOfferById(id: string) {
-    let url = this.specialOfferApiUrl + id;
+    let url = this.specialOfferApiUrl + '/' + id;
     console.log("SpecialOfferService | getOfferById " + url);
     return this.authService.wrapTokenGetApi(url);
   }

@@ -6,11 +6,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PayInstService {
-  paymentInstructionApiUrl = environment.apiurl + 'paymentinstruction/'
-  listApiUrl = this.paymentInstructionApiUrl + 'list/';
-  detailApiUrl = this.paymentInstructionApiUrl + 'detail/';
-  swapOrderListApiUrl = this.listApiUrl + 'swap-order/';
-  listByIdApiUrl = this.listApiUrl + 'id/';
+  paymentInstructionApiUrl = environment.apiurl + 'paymentinstruction'
+  listApiUrl = this.paymentInstructionApiUrl + '/list';
+  detailApiUrl = this.paymentInstructionApiUrl + '/detail';
+  swapOrderListApiUrl = this.listApiUrl + '/swap-order';
+  listByIdApiUrl = this.listApiUrl + '/id';
 
   constructor(
     private authService: AuthService
@@ -19,7 +19,7 @@ export class PayInstService {
   // get list by payment type
   getListByType(type){
     console.log('PayInstService | getListByType')
-    let url = this.listApiUrl + encodeURIComponent(type);
+    let url = this.listApiUrl + '/' + encodeURIComponent(type);
     return this.authService.wrapTokenGetApi(url)
   }
 
@@ -49,14 +49,14 @@ export class PayInstService {
 
   // get list by id
   getListById(id){
-    let url = this.listByIdApiUrl + id;
+    let url = this.listByIdApiUrl + '/' + id;
     console.log('PayInstService | getListById ', url)
     return this.authService.wrapTokenGetApi(url)
   }
 
   // get instruction list(steps)
   getListDetails(listId){
-    let url = this.detailApiUrl + listId;
+    let url = this.detailApiUrl + '/' + listId;
     console.log('PayInstService | getListDetails ', url)
     return this.authService.wrapTokenGetApi(url)
   }

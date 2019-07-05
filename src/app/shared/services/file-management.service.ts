@@ -6,8 +6,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class FileManagementService {
-  uploadApiUrl = environment.apiurl + 'upload/';
-  deleteApiUrl = this.uploadApiUrl + 'delete/';
+  uploadApiUrl = environment.apiurl + 'upload';
+  deleteApiUrl = this.uploadApiUrl + '/delete';
   articleComponent = 'article';
   bannerComponent = 'component';
   footerComponent = 'footer';
@@ -32,5 +32,21 @@ export class FileManagementService {
     console.log("FileManagementService | deleteFile " + this.deleteApiUrl);
     return this.authService.wrapTokenDeleteApi(this.deleteApiUrl, null, data);
   }
+
+  convertFileToBase64(file) {
+    const reader = new FileReader();
+  
+    return new Promise((resolve, reject) => {
+      reader.onerror = () => {
+        reader.abort();
+        reject(new DOMException("Problem parsing input file."));
+      };
+  
+      reader.onload = () => {
+        resolve(reader.result);
+      };
+      reader.readAsText(file);
+    });
+  };
 
 }

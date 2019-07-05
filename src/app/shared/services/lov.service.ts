@@ -6,13 +6,13 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   providedIn: 'root'
 })
 export class LovService {
-  lovApiUrl = environment.apiurl + 'lov/';
-  lovTypeApiUrl = this.lovApiUrl + 'type?value=';
+  lovApiUrl = environment.apiurl + 'lov';
+  lovTypeApiUrl = environment.apiurl + environment.endPoint.lovType + '/type?value=';
   getModulsApiUrl = this.lovTypeApiUrl + 'internal_navigation';
   getArticleCatApiUrl = this.lovTypeApiUrl + 'article_category';
   getFAQCatApiUrl = this.lovTypeApiUrl + 'faq_category';
   getSpecialOfferCatApiUrl = this.lovTypeApiUrl + 'special_offer_type';
-  indonesiaZoneApiUrl = this.lovApiUrl + 'indonesia-zone';
+  indonesiaZoneApiUrl = this.lovApiUrl + '/indonesia-zone';
   branchTypeApiUrl = this.lovTypeApiUrl + 'branch_type';
   indonesiaZoneCityApiUrl = this.indonesiaZoneApiUrl + '?province=';
   indonesiaZoneDistrictApiUrl = this.indonesiaZoneApiUrl + '?city=';

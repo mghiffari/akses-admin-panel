@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { constants } from 'src/app/shared/constants/constants';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-notif-confirm-modal',

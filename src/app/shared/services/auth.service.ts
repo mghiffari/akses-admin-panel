@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  authApiUrl = environment.apiurl + 'auth/';
-  loginApiUrl = this.authApiUrl + 'login';
-  resetPasswordApiUrl = this.authApiUrl + 'reset-pass/'
+  authApiUrl = environment.apiurl + 'auth';
+  loginApiUrl = environment.apiurl + environment.endPoint.login;
+  resetPasswordApiUrl = this.authApiUrl + '/reset-pass'
 
   //if this updated, also update value in index.html
   storageKey = {
@@ -138,10 +138,12 @@ export class AuthService {
   //wraping the get API with access token or not inside header
   wrapTokenGetApi(url, accessToken = null) {
     console.log('AuthService | wrapTokenGetApi ', url);
+    let headers = new HttpHeaders()
+    headers.append('Content-Type', 'application/json')
     return this.http
       .get<HttpResponse<Object>>(url, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(headers, accessToken)
       })
       .pipe(
         tap((resp: any) => {

@@ -3,10 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   appName: 'Akses',
   apiurl: 'http://sit.aksesadirafinance.com/',
   branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
+  endPoint: {
+    updateAccount: 'msa-account',
+    login: 'msap-login',
+    lovType: 'msap-lov',
+    createNotification: 'msap-notification',
+  },
   enableAdiraEmailValidation: false,
   version: '1.0.20',
   versionDate: new Date(2019, 5, 20),

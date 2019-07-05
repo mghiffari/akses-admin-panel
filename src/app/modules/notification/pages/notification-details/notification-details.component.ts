@@ -17,7 +17,7 @@ import { catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
-import { constants } from 'src/app/shared/constants/constants';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-notification-details',
