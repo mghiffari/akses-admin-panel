@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-article-details',
   templateUrl: './article-details.component.html',
-  styleUrls: ['./article-details.component.scss']
+  styleUrls: []
 })
 export class ArticleDetailsComponent implements OnInit {
   vCurrentPage: string;

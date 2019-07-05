@@ -36,7 +36,7 @@ export class BoldRendererPipe implements PipeTransform {
         }
         if (lastCloseBracketIndex > -1) {
           openBracketStack = [];
-          text += '<b>' + content.substring(i + 1, lastCloseBracketIndex) + '</b>'
+          text += '<span class="font-roboto-bold">' + content.substring(i + 1, lastCloseBracketIndex) + '</span>'
           i = lastCloseBracketIndex + 1;
         } else {
           text += '[' + content.substring(i + 1, content.length)

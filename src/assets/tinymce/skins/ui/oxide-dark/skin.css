@@ -1455,7 +1455,6 @@ body.tox-dialog__disable-scroll {
 }
 .tox .tox-mbtn__select-chevron {
   align-items: center;
-  display: flex;
   justify-content: center;
   width: 16px;
   display: none;

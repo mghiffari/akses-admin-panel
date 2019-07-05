@@ -124,9 +124,8 @@ color: $black;
 }
 
 .role-text {
-  @extend .font-gotham-light;
+  @extend .font-gotham-bold;
   font-style: normal;
-  font-weight: bold;
   line-height: normal;
   font-size: 9px;
   letter-spacing: 1px;
