@@ -116,11 +116,10 @@ export class AuthService {
   //wraping the post API using access token or not inside header
   wrapTokenPostApi(url, data, accessToken = null) {
     console.log('AuthService | wrapTokenPostApi ', url);
-    let headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
     return this.http
       .post<HttpResponse<Object>>(url, data, {
         observe: 'response',
-        headers: this.appendAuthHeaders(headers, accessToken)
+        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -234,7 +233,7 @@ export class AuthService {
   }
 
   //wraping the delete API with access token or not inside header
-  wrapTokenDeleteApi(url, accessToken = null, body=null) {
+  wrapTokenDeleteApi(url, accessToken = null, body=null, headers = null) {
     console.log('AuthService | wrapTokenDeleteApi ', url);
     if(body){
       return this.wrapTokenRequestApi('delete', url, body, accessToken)
@@ -242,7 +241,7 @@ export class AuthService {
       return this.http
         .delete<HttpResponse<Object>>(url, {
           observe: 'response',
-          headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
+          headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
         })
         .pipe(
           tap((resp: any) => {

@@ -520,6 +520,7 @@
     "imageNotExist": "gambar tidak tersedia",
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data gagal",
+    "failedToProcessFile": "proses file gagal",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",

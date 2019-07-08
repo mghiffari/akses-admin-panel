@@ -15,6 +15,7 @@ import { SpecialOffer } from 'src/app/shared/models/special-offer';
 import { LovService } from 'src/app/shared/services/lov.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { toBase64String } from '@angular/compiler/src/output/source_map';
 
 @Component({
   selector: 'app-special-offer-details',
@@ -402,91 +403,142 @@ export class SpecialOfferDetailsComponent implements OnInit {
           let csvFormData = new FormData();
           csvFormData.append("file", formValue.csvFile)
           csvFormData.append("component", this.fileService.specialOfferRecipientComp)
-          let tasks = [
-            this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))),
-            this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e)))
+          let convertTasks = [
+            this.fileService.fileToBase64(compressedImg).pipe(catchError(e => of(e))),
+            this.fileService.fileToBase64(formValue.csvFile).pipe(catchError(e => of(e)))
           ]
-          forkJoin(tasks).subscribe((responses: Array<any>) => {
-            let imageResponse = responses[0];
-            let csvResponse = responses[1];
-            try {
-              console.table(imageResponse)
-              console.table(csvResponse)
-              if (imageResponse instanceof HttpErrorResponse) {
-                this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadImageFailed',
-                    content: {
-                      text: 'apiErrors.' + (imageResponse.status ? imageResponse.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } else if (csvResponse instanceof HttpErrorResponse) {
-                this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadCSVFailed',
-                    content: {
-                      text: 'apiErrors.' + (csvResponse.status ? csvResponse.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } else {
-                offer.url = csvResponse.data.url;
-                offer.sp_offer_image = imageResponse.data.url;
-                offer.title = formValue.title;
-                offer.description = formValue.description;
-                offer.terms_and_conditions = formValue.termsAndConds;
-                offer.instructions = formValue.instructions;
-                offer.end_date = endDate;
-                offer.category = formValue.category
-                this.insertOffer(offer);
-              }
-            } catch (error) {
-              console.table(error)
+          forkJoin(convertTasks).subscribe((responses: Array<any>) => {
+            let imgConvertRes = responses[0]
+            let csvConvertRes = responses[1]
+            console.log(imgConvertRes)
+            console.log(csvConvertRes)
+            if(imgConvertRes instanceof DOMException){
               this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'specialOfferDetailsScreen.uploadImageFailed',
+                  content: {
+                    text: 'failedToProcessFile',
+                    data: null
+                  }
+                }
+              })
+            } else if (csvConvertRes instanceof DOMException){
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'specialOfferDetailsScreen.uploadCSVFailed',
+                  content: {
+                    text: 'failedToProcessFile',
+                    data: null
+                  }
+                }
+              })
+            } else {
+              imageFormData.set('file', imgConvertRes)
+              csvFormData.set('file', csvConvertRes)
+              let tasks = [
+                this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))),
+                this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e)))
+              ]
+              forkJoin(tasks).subscribe((responses: Array<any>) => {
+                let imageResponse = responses[0];
+                let csvResponse = responses[1];
+                try {
+                  console.table(imageResponse)
+                  console.table(csvResponse)
+                  if (imageResponse instanceof HttpErrorResponse) {
+                    this.onSubmittingForm = false;
+                    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'specialOfferDetailsScreen.uploadImageFailed',
+                        content: {
+                          text: 'apiErrors.' + (imageResponse.status ? imageResponse.error.err_code : 'noInternet'),
+                          data: null
+                        }
+                      }
+                    })
+                  } else if (csvResponse instanceof HttpErrorResponse) {
+                    this.onSubmittingForm = false;
+                    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'specialOfferDetailsScreen.uploadCSVFailed',
+                        content: {
+                          text: 'apiErrors.' + (csvResponse.status ? csvResponse.error.err_code : 'noInternet'),
+                          data: null
+                        }
+                      }
+                    })
+                  } else {
+                    offer.url = csvResponse.data.url;
+                    offer.sp_offer_image = imageResponse.data.url;
+                    offer.title = formValue.title;
+                    offer.description = formValue.description;
+                    offer.terms_and_conditions = formValue.termsAndConds;
+                    offer.instructions = formValue.instructions;
+                    offer.end_date = endDate;
+                    offer.category = formValue.category
+                    this.insertOffer(offer);
+                  }
+                } catch (error) {
+                  console.table(error)
+                  this.onSubmittingForm = false;
+                }
+              })
             }
           })
         } else {
-          this.fileService.uploadFile(imageFormData).subscribe(
-            response => {
-              try {
-                console.table(response)
-                offer.id = formValue.id;
-                offer.sp_offer_image = response.data.url;
-                offer.title = formValue.title;
-                offer.description = formValue.description;
-                offer.terms_and_conditions = formValue.termsAndConds;
-                offer.instructions = formValue.instructions;
-                offer.end_date = endDate;
-                offer.category = formValue.category
-                this.updateOffer(offer, true)
-              } catch (error) {
-                console.table(error)
-                this.onSubmittingForm = false;
-              }
-            }, error => {
-              try {
-                console.table(error)
-                this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadImageFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
+          this.fileService.fileToBase64(imageFormData.get('file')).subscribe(base64String => {
+            imageFormData.set('file', base64String)
+            this.fileService.uploadFile(imageFormData).subscribe(
+              response => {
+                try {
+                  console.table(response)
+                  offer.id = formValue.id;
+                  offer.sp_offer_image = response.data.url;
+                  offer.title = formValue.title;
+                  offer.description = formValue.description;
+                  offer.terms_and_conditions = formValue.termsAndConds;
+                  offer.instructions = formValue.instructions;
+                  offer.end_date = endDate;
+                  offer.category = formValue.category
+                  this.updateOffer(offer, true)
+                } catch (error) {
+                  console.table(error)
+                  this.onSubmittingForm = false;
+                }
+              }, error => {
+                try {
+                  console.table(error)
+                  this.onSubmittingForm = false;
+                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                    data: {
+                      title: 'specialOfferDetailsScreen.uploadImageFailed',
+                      content: {
+                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                        data: null
+                      }
                     }
-                  }
-                })
-              } catch (error) {
-                console.table(error)
-                this.onSubmittingForm = false;
+                  })
+                } catch (error) {
+                  console.table(error)
+                  this.onSubmittingForm = false;
+                }
               }
-            }
-          )
+            )
+          }, error => {
+            console.error(error);
+            this.onSubmittingForm = false;
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'specialOfferDetailsScreen.uploadImageFailed',
+                content: {
+                  text: 'failedToProcessFile',
+                  data: null
+                }
+              }
+            })
+          })
         }
       }, error => {
         console.table(error);

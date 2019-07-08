@@ -520,6 +520,7 @@
     "imageNotExist": "image not exist",
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data failed",
+    "failedToProcessFile": "failed to process file",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
