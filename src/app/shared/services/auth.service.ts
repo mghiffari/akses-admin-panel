@@ -93,6 +93,12 @@ export class AuthService {
     return headers.append('access-token', accessToken);
   }
 
+  initRequestHeaders(contentType= 'application/json; charset=utf-8'){
+    return new HttpHeaders({
+      'Content-Type':contentType
+    });
+  }
+
   //show dialog when user logged out
   showLoggedOutDialog(): void {
     console.log('AuthService | showLoggedOutDialog');
@@ -110,10 +116,11 @@ export class AuthService {
   //wraping the post API using access token or not inside header
   wrapTokenPostApi(url, data, accessToken = null) {
     console.log('AuthService | wrapTokenPostApi ', url);
+    let headers = new HttpHeaders({'Content-Type':'application/json; charset=utf-8'});
     return this.http
       .post<HttpResponse<Object>>(url, data, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(headers, accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -138,12 +145,10 @@ export class AuthService {
   //wraping the get API with access token or not inside header
   wrapTokenGetApi(url, accessToken = null) {
     console.log('AuthService | wrapTokenGetApi ', url);
-    let headers = new HttpHeaders()
-    headers.append('Content-Type', 'application/json')
     return this.http
       .get<HttpResponse<Object>>(url, {
         observe: 'response',
-        headers: this.appendAuthHeaders(headers, accessToken)
+        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -173,12 +178,12 @@ export class AuthService {
   }
 
   //wraping the put API with access token or not inside header
-  wrapTokenPutApi(url, data, accessToken = null) {
+  wrapTokenPutApi(url, data, accessToken = null, headers = null) {
     console.log('AuthService | wrapTokenPutApi ', url);
     return this.http
       .put<HttpResponse<Object>>(url, data, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -206,7 +211,7 @@ export class AuthService {
     return this.http
       .patch<HttpResponse<Object>>(url, data, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -237,7 +242,7 @@ export class AuthService {
       return this.http
         .delete<HttpResponse<Object>>(url, {
           observe: 'response',
-          headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+          headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
         })
         .pipe(
           tap((resp: any) => {

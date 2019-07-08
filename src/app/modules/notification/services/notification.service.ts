@@ -9,6 +9,7 @@ import Utils from '../../../shared/common/utils';
 export class NotificationService {
   notificationApiUrl = environment.apiurl + 'notification'
   createNotificationApiUrl = environment.apiurl + environment.endPoint.createNotification
+  deleteNotificationApiUrl = environment.apiurl + environment.endPoint.deleteNotification
   refreshNotifApiUrl = this.notificationApiUrl + '/refresh';
 
   // constructor
@@ -45,7 +46,7 @@ export class NotificationService {
 
   // delete notification
   deleteNotif(id) {
-    let url = this.notificationApiUrl + '/' + id;
+    let url = this.deleteNotificationApiUrl + '/' + id;
     console.log("NotificationService | deleteNotif ", url);
     return this.authService.wrapTokenDeleteApi(url)
   }

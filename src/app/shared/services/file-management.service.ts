@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,23 @@ export class FileManagementService {
       reader.readAsText(file);
     });
   };
+
+  fileToBase64(file) {
+    return Observable.create((observer: Observer<any>) => {
+      const reader = new FileReader();
+      reader.onerror = () => {
+        reader.abort();
+        observer.error(new DOMException("Problem parsing input file."))
+        observer.complete()
+      };
+  
+      reader.onload = () => {
+        observer.next(reader.result);
+        observer.complete()
+      };
+
+      reader.readAsDataURL(file)
+    })
+  }
 
 }

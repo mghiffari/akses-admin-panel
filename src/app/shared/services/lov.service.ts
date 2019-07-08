@@ -7,7 +7,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class LovService {
   lovApiUrl = environment.apiurl + 'lov';
-  lovTypeApiUrl = environment.apiurl + environment.endPoint.lovType + '/type?value=';
+  lovType = environment.endPoint.lovType;
+  lovTypeApiUrl = environment.apiurl + this.lovType + '/type?value=';
   getModulsApiUrl = this.lovTypeApiUrl + 'internal_navigation';
   getArticleCatApiUrl = this.lovTypeApiUrl + 'article_category';
   getFAQCatApiUrl = this.lovTypeApiUrl + 'faq_category';

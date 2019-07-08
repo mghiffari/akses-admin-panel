@@ -8,6 +8,7 @@ export const environment = {
     login: 'auth/login',
     lovType: 'lov',
     createNotification: 'notification',
+    deleteNotification: 'notification'
   },
   enableAdiraEmailValidation: false,
   version: '1.0.20',
