@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: scroll">
-    <table mat-table [dataSource]="requests" width="100%" #branchesTable>
+    <table mat-table [dataSource]="requests" class="table-min-100" #branchesTable>
       <ng-container matColumnDef="selection">
         <th mat-header-cell *matHeaderCellDef class="font-th th-width-25">
           <mat-checkbox color="primary" (change)="onChangeSelectAll($event)"
@@ -78,7 +78,7 @@
       <ng-container matColumnDef="actionsStatus">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width text-center-important">
           {{'table.changePhonenumberRequestTable.actionsStatus' | translate}} </th>
-        <td mat-cell *matCellDef="let element" [align]="!element.status || element.status === '' ? 'center' : 'left'">
+        <td mat-cell *matCellDef="let element" [class.text-center]="!element.status || element.status === ''">
           <div *ngIf="element.status && element.status.toLowerCase() === status.closed.toLowerCase()">
             <span *ngIf="element.action.toLowerCase() === action.approved.toLowerCase()" class="text-success">
               {{'table.status.approved' | translate}}
@@ -103,7 +103,7 @@
       <ng-container matColumnDef="remark">
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
           {{'table.changePhonenumberRequestTable.remark' | translate}} </th>
-        <td mat-cell *matCellDef="let element" align="center">
+        <td mat-cell *matCellDef="let element" class="text-center">
           <div *ngIf="element.action?.toLowerCase() === 'rejected'">
             <mat-icon *ngIf="(!element.remarks || element.remarks === '')" class="cursor-pointer"
               (click)="editRemark(element)">edit</mat-icon>
