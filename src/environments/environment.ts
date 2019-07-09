@@ -12,18 +12,8 @@ export const environment = {
     login: 'auth/login',
     lovType: 'lov',
     createNotification: 'notification',
-  deleteNotification: 'notification'
+  updateNotification: 'notification'
   },
-  // apiurl: '//sit.aksesadirafinance.com/',
-  // branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
-  // lovType: 'msap-lov',
-  // endPoint: {
-  //   updateAccount: 'msa-account',
-  //   login: 'msap-login',
-  //   lovType: 'msap-lov',
-  //   createNotification: 'msap-notification',
-  //   deleteNotification: 'delete-notification'
-  // },
   enableAdiraEmailValidation: false,
   version: '1.0.20',
   versionDate: new Date(2019, 5, 20),

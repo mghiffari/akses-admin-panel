@@ -10,7 +10,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class NotificationService {
   notificationApiUrl = environment.apiurl + 'notification'
   createNotificationApiUrl = environment.apiurl + environment.endPoint.createNotification
-  deleteNotificationApiUrl = environment.apiurl + environment.endPoint.deleteNotification
+  updateNotifApiUrl = environment.apiurl + environment.endPoint.updateNotification
   refreshNotifApiUrl = this.notificationApiUrl + '/refresh';
 
   // constructor
@@ -42,12 +42,13 @@ export class NotificationService {
   updateNotif(data) {
     let url = this.notificationApiUrl;
     console.log("NotificationService | updateNotif ", url);
-    return this.authService.wrapTokenPatchApi(url, data)
+    // return this.authService.wrapTokenPatchApi(url, data)
+    return this.authService.wrapTokenPutApi(url, data)
   }
 
   // delete notification
   deleteNotif(id) {
-    let url = this.deleteNotificationApiUrl + '/' + id;
+    let url = this.notificationApiUrl + '/' + id;
     console.log("NotificationService | deleteNotif ", url);
     return this.authService.wrapTokenDeleteApi(url)
   }
@@ -56,7 +57,8 @@ export class NotificationService {
   refreshNotif(id: string) {
     let url = this.refreshNotifApiUrl + '/' + id;
     console.log("NotificationService | refreshNotif " + url);
-    return this.authService.wrapTokenPatchApi(url, {});
+    // return this.authService.wrapTokenPatchApi(url, {});
+    return this.authService.wrapTokenPutApi(url, {});
   }
   
 }

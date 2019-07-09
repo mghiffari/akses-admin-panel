@@ -26,7 +26,8 @@ export class PayInstService {
   // swap list order 
   swapListOrder(data){
     console.log('PayInstService | swapListOrder')
-    return this.authService.wrapTokenPatchApi(this.swapOrderListApiUrl, data);
+    // return this.authService.wrapTokenPatchApi(this.swapOrderListApiUrl, data);
+    return this.authService.wrapTokenPutApi(this.swapOrderListApiUrl, data);
   }
 
   // update list

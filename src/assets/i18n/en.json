@@ -645,11 +645,12 @@
         "rejectFailed": "failed to reject change phone number request",
         "approveSuccess": "change phone number request successfully approved",
         "approveFailed": "failed to approve change phone number request",
-        "bulkRejectFailed": "failed to reject {{totalRequest}} requests",
-        "bulkRejectSuccess": "{{totalRequest}} requests are rejected",
-        "bulkApproveFailed": "failed to approve {{totalRequest}} requests",
-        "bulkApproveSuccess": "{{totalRequest}} requests are approved",
+        "bulkRejectFailed": "failed to reject requests",
+        "bulkRejectSuccess": "requests are rejected",
+        "bulkApproveFailed": "failed to approve requests",
+        "bulkApproveSuccess": "requests are approved",
         "totalRequestSelected": "{{totalRequest}} requests are selected",
+        "totalRequestFailed": "{{totalRequest}} requests failed",
         "confirmationModal": {
             "reject": {
                 "title": "Rejecting Confirmation",

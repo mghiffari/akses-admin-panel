@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Auth } from '../models/auth';
 import { tap, map, catchError } from 'rxjs/operators';
-import { throwError, ObservableInput, Observable, of } from 'rxjs';
+import { throwError } from 'rxjs';
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -90,7 +90,8 @@ export class AuthService {
   appendAuthHeaders(headers: HttpHeaders, accessToken = null) {
     console.log('AuthService | appendAuthHeaders')
     accessToken = accessToken ? accessToken : this.getAccessToken()
-    return headers.append('access-token', accessToken);
+    return headers.append('Authorization', accessToken);
+    // return headers.append('access-token', accessToken);
   }
 
   initRequestHeaders(contentType= 'application/json; charset=utf-8'){
@@ -303,7 +304,7 @@ export class AuthService {
   //get token inside response when hit API
   getTokenInResponse(resp) {
     console.log('AuthService | getTokenInResponse');
-    let token = resp.headers.get('access-token')
+    let token = resp.headers.get('Authorization')
     if (token) {
       if (this.getAccessToken()) {
         this.setAccessToken(token)
