@@ -4,14 +4,12 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { NotifConfirmModalComponent } from '../../components/notif-confirm-modal/notif-confirm-modal.component';
 import { Overlay } from '@angular/cdk/overlay';
 import { ArticleService } from 'src/app/shared/services/article.service';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { Notification } from '../../models/notification';
 import { NotificationService } from '../../services/notification.service';
-import { ArticleData } from 'src/app/modules/master/models/articles';
 import { environment } from 'src/environments/environment';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
@@ -519,7 +517,7 @@ export class NotificationDetailsComponent implements OnInit {
       fileTypes.push('icon')
     }
     if (this.imageFile.value) {
-      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
+      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg)
           let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)
@@ -593,7 +591,7 @@ export class NotificationDetailsComponent implements OnInit {
         shouldDeleteImage = true
       }
 
-      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
+      this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg);
           let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)

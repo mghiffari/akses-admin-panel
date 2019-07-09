@@ -519,6 +519,7 @@
     "invalidForm": "form tidak valid",
     "imageNotExist": "gambar tidak tersedia",
     "uploadCSV": "upload csv",
+    "failedToRefreshData": "refresh data gagal",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",

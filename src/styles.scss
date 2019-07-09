@@ -278,7 +278,6 @@ body {
     @extend .font-gotham-bold;
     @extend .font-sub-description;
     color: map-get($colors, purple);
-    font-family: Gotham-Bold;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
@@ -380,6 +379,10 @@ td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:
     text-align: left;
 }
 
+.text-right{
+    text-align: right;
+}
+
 .text-center-important
 .mat-sort-header-container {
     display: flex;
@@ -395,4 +398,8 @@ a.top-action-text {
 .notif-snackbar{
     padding: 0 !important;
     background-color: rgba($color: #000000, $alpha: 0)
+}
+
+.table-min-100{
+    min-width: 100%;
 }

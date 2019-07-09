@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
-import * as papa from 'papaparse';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
@@ -386,7 +385,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   // upload csv and image
   uploadFiles() {
     console.log('SpecialOfferDetailsComponent | uploadFiles')
-    this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB).subscribe(
+    this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
       compressedImg => {
         console.log(compressedImg)
         let imageFormData = new FormData()
