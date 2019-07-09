@@ -46,6 +46,14 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
+              ]
+            },
+            "sit": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.sit.ts"
+                }
               ],
               "optimization": true,
               "outputHashing": "all",
@@ -74,6 +82,9 @@
           "configurations": {
             "production": {
               "browserTarget": "AdiraAksesAdminPanel:build:production"
+            },
+            "sit": {
+              "browserTarget": "AdiraAksesAdminPanel:build:sit"
             }
           }
         },
@@ -139,6 +150,9 @@
           "configurations": {
             "production": {
               "devServerTarget": "AdiraAksesAdminPanel:serve:production"
+            },
+            "sit": {
+              "devServerTarget": "AdiraAksesAdminPanel:serve:sit"
             }
           }
         },

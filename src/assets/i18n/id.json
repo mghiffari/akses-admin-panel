@@ -520,6 +520,7 @@
     "imageNotExist": "gambar tidak tersedia",
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data gagal",
+    "failedToProcessFile": "proses file gagal",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -644,11 +645,12 @@
         "rejectFailed": "permohonan ubah nomor HP gagal ditolak",
         "approveSuccess": "permohonan ubah nomor HP berhasil disetujui",
         "approveFailed": "permohonan ubah nomor HP gagal disetujui",
-        "bulkRejectFailed": "{{totalRequest}} permohonan gagal ditolak",
-        "bulkRejectSuccess": "{{totalRequest}} permohonan berhasil ditolak",
-        "bulkApproveFailed": "{{totalRequest}} permohonan gagal disetujui",
-        "bulkApproveSuccess": "{{totalRequest}} permohonan berhasil disetujui",
+        "bulkRejectFailed": "permohonan gagal ditolak",
+        "bulkRejectSuccess": "permohonan berhasil ditolak",
+        "bulkApproveFailed": "permohonan gagal disetujui",
+        "bulkApproveSuccess": "permohonan berhasil disetujui",
         "totalRequestSelected": "{{totalRequest}} permohonan dipilih",
+        "totalRequestFailed": "{{totalRequest}} permohonan gagal",
         "confirmationModal": {
             "reject": {
                 "title": "Konfirmasi Penolakan",

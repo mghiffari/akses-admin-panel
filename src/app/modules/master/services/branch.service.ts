@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import Utils from '../../../shared/common/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BranchService {
 
-  branchApiUrl = environment.apiurl + 'branch/';
-  getBranchByCodeApiUrl = this.branchApiUrl + 'q?code='
-  uploadCSVApiUrl = this.branchApiUrl + 'csv';
+  branchApiUrl = environment.apiurl + 'branch';
+  getBranchByCodeApiUrl = this.branchApiUrl + '/q?code='
+  uploadCSVApiUrl = this.branchApiUrl + '/csv';
 
   //constructor
   constructor(private authService: AuthService) { 
@@ -18,7 +19,7 @@ export class BranchService {
 
   //get branch list with pagination and search
   getBranchList(page, pageSize, search) {
-    let url = this.branchApiUrl + page + '/' + pageSize + '/' + search;
+    let url = this.branchApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("BranchService | getBranchList ", url);
     return this.authService.wrapTokenGetApi(url)
   }
@@ -31,7 +32,7 @@ export class BranchService {
 
   //get branch by id
   getBranchById(id){
-    let url = this.branchApiUrl + id;
+    let url = this.branchApiUrl + '/' + id;
     console.log("BranchService | getBranchById ", url);
     return this.authService.wrapTokenGetApi(url);
   }

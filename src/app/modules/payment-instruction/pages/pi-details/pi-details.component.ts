@@ -124,7 +124,7 @@ export class PIDetailsComponent implements OnInit {
           oldIcon: new FormControl(''),
           grpTitle: new FormControl('', Validators.required),
           instructions: new FormArray([], [
-            Validators.required, 
+            Validators.required,
             Validators.maxLength(this.instructionValidation.maxLength)]),
           order: new FormControl(null),
           instructionType: new FormControl(null)
@@ -404,57 +404,72 @@ export class PIDetailsComponent implements OnInit {
   }
 
   // call upload icon
-  uploadIcon(iconFormData) {
+  uploadIcon(iconFormData: FormData) {
     console.log('PIDetailsComponent | uploadIcon')
-    this.fileMgtService.uploadFile(iconFormData).subscribe(
-      response => {
-        try {
-          console.table(response)
-          if (this.isCreate) {
-            let newInstructionList = new InstructionList();
-            newInstructionList.grp_title = this.grpTitle.value;
-            newInstructionList.icon = response.data.url;
-            newInstructionList.instruction_type = this.instructionType.value;
-            this.insertNewInstruction(newInstructionList)
-          } else {
-            let instructionDetails = [];
-            let stepsForm = this.instructions.value;
-            let instObject = {
-              grp_title: this.grpTitle.value,
-              icon: response.data.url
-            }
-            for (let i = 0; i < stepsForm.length; i++) {
-              let form = stepsForm[i]
-              let step = new InstructionDetails();
-              step.list_id = this.id.value;
-              step.content = form.content;
-              step.order = i + 1;
-              instructionDetails.push(Object.assign(step, instObject))
-            }
-            this.updateInstructionDetails(instructionDetails, true)
-          }
-        } catch (error) {
-          console.table(error)
-          this.onSubmittingForm = false;
-        }
-      }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.uploadIconFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
+    this.fileMgtService.fileToBase64(iconFormData.get('file')).subscribe(base64String => {
+      iconFormData.set('file', base64String)
+      this.fileMgtService.uploadFile(iconFormData).subscribe(
+        response => {
+          try {
+            console.table(response)
+            if (this.isCreate) {
+              let newInstructionList = new InstructionList();
+              newInstructionList.grp_title = this.grpTitle.value;
+              newInstructionList.icon = response.data.url;
+              newInstructionList.instruction_type = this.instructionType.value;
+              this.insertNewInstruction(newInstructionList)
+            } else {
+              let instructionDetails = [];
+              let stepsForm = this.instructions.value;
+              let instObject = {
+                grp_title: this.grpTitle.value,
+                icon: response.data.url
               }
+              for (let i = 0; i < stepsForm.length; i++) {
+                let form = stepsForm[i]
+                let step = new InstructionDetails();
+                step.list_id = this.id.value;
+                step.content = form.content;
+                step.order = i + 1;
+                instructionDetails.push(Object.assign(step, instObject))
+              }
+              this.updateInstructionDetails(instructionDetails, true)
             }
-          })
-        } catch (error) {
-          console.table(error)
+          } catch (error) {
+            console.table(error)
+            this.onSubmittingForm = false;
+          }
+        }, error => {
+          try {
+            console.table(error)
+            this.onSubmittingForm = false;
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'paymentInstructionDetailsScreen.uploadIconFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                  data: null
+                }
+              }
+            })
+          } catch (error) {
+            console.table(error)
+          }
         }
-      }
-    )
+      )
+    }, error => {
+      console.table(error)
+      this.onSubmittingForm = false;
+      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+        data: {
+          title: 'paymentInstructionDetailsScreen.uploadIconFailed',
+          content: {
+            text: 'failedToProcessFile',
+            data: null
+          }
+        }
+      })
+    })
   }
 
   // call upload icon
@@ -585,7 +600,7 @@ export class PIDetailsComponent implements OnInit {
     console.log('PIDetailsComponent | deleteIcon');
     let split = url.split('/')
     let name = url
-    if(split.length >= 2){
+    if (split.length >= 2) {
       name = split.pop()
       name = split.pop() + '/' + name;
     }

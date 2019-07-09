@@ -437,56 +437,89 @@ export class ArticleDetailsService {
       vFormDataImageUpload.append('url', vImageUpload.url);
     }
     let promise = new Promise((resolve, reject) => {
-      this._fileMgtService.uploadFile(vFormDataImageUpload)
-      .subscribe(
-        (data: any) => {
-          console.table(data);
-          try {           
-            if(component === "article") {
-              this.vArticleData.article_image = data.data.url;
-            } else {
-              this.vArticleData.foot_image_content = data.data.url;
-            }
-            resolve();
-          } catch (error) {
-            console.table(error);
-            reject();
-          }
-        }, 
-        error => {
-          try {
-            if(component === "footer") {
-              this.vErrorMessage.imageArticle = error.error.err_code;
-              this.vLoadingStatus = false;
-            } else {
-              this.vErrorMessage.imageFooter = error.error.err_code;
-              this.vLoadingStatus = false;
-            }
-            if(this.vCurrentPage.includes("create")) {
-              this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'articleDetailsScreen.createFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
-                  }
+      this._fileMgtService.fileToBase64(vImageUpload.file).subscribe(base64String => {
+        vFormDataImageUpload.set('file', base64String)
+        this._fileMgtService.uploadFile(vFormDataImageUpload)
+          .subscribe(
+            (data: any) => {
+              console.table(data);
+              try {           
+                if(component === "article") {
+                  this.vArticleData.article_image = data.data.url;
+                } else {
+                  this.vArticleData.foot_image_content = data.data.url;
                 }
-              });
-            } else {
-              this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'articleDetailsScreen.updateFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
-                  }
+                resolve();
+              } catch (error) {
+                console.table(error);
+                reject();
+              }
+            }, 
+            error => {
+              try {
+                if(component === "footer") {
+                  this.vErrorMessage.imageArticle = error.error.err_code;
+                  this.vLoadingStatus = false;
+                } else {
+                  this.vErrorMessage.imageFooter = error.error.err_code;
+                  this.vLoadingStatus = false;
                 }
-              });
+                if(this.vCurrentPage.includes("create")) {
+                  this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                    data: {
+                      title: 'articleDetailsScreen.createFailed',
+                      content: {
+                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                      }
+                    }
+                  });
+                } else {
+                  this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                    data: {
+                      title: 'articleDetailsScreen.updateFailed',
+                      content: {
+                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                      }
+                    }
+                  });
+                }
+              } catch (error) {
+                console.table(error);
+              }
+              reject();
             }
-          } catch (error) {
-            console.table(error);
-          }
-          reject();
+          );
+      }, error => {
+        console.error(error)
+        if(component === "footer") {
+          this.vErrorMessage.imageArticle = error.error.err_code;
+          this.vLoadingStatus = false;
+        } else {
+          this.vErrorMessage.imageFooter = error.error.err_code;
+          this.vLoadingStatus = false;
         }
-      );
+        if(this.vCurrentPage.includes("create")) {
+          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'articleDetailsScreen.createFailed',
+              content: {
+                text: 'failedToProcessFile'
+              }
+            }
+          });
+        } else {
+          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'articleDetailsScreen.updateFailed',
+              content: {
+                text: 'failedToProcessFile'
+              }
+            }
+          });
+          
+        }
+        reject()
+      })
     });
     return promise;
   }

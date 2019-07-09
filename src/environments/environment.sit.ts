@@ -1,14 +1,18 @@
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+
 export const environment = {
   production: true,
   appName: 'Akses',
-  apiurl: 'http://149.129.250.31:30001/api/v1/',
+  apiurl: '//sit.aksesadirafinance.com/',
   branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
   endPoint: {
-    updateAccount: 'account',
-    login: 'auth/login',
-    lovType: 'lov',
-    createNotification: 'notification',
-    updateNotification: 'notification'
+    updateAccount: 'msa-account',
+    login: 'msap-login',
+    lovType: 'msap-lov',
+    createNotification: 'msap-notification',
+    updateNotification: 'patch-notification'
   },
   enableAdiraEmailValidation: false,
   version: '1.0.20',
@@ -31,3 +35,13 @@ export const environment = {
     }
   }
 };
+
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

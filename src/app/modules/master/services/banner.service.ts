@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { BannerData, UpdateBannerData } from '../models/banner-detail';
+import { BannerData } from '../models/banner-detail';
+import Utils from '../../../shared/common/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BannerService {
-
-  uploadApiUrl = environment.apiurl + 'upload/';
-  bannerApiUrl = environment.apiurl + 'banner/';
+  bannerApiUrl = environment.apiurl + 'banner';
 
   //constructor
   constructor(private authService: AuthService) {
@@ -19,14 +17,14 @@ export class BannerService {
 
   //get banner list with pagination and search and sort
   getBannerList(page, pageSize, search, datatableObject) {
-    let url = this.bannerApiUrl + page + '/' + pageSize + '/' + search;
+    let url = this.bannerApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("Banner Service | getBannerListApi ", url);
     return this.authService.wrapTokenPostApi(url, datatableObject)
   }
 
   //get banner data by id
   loadBannerById(id: string) {
-    let url = this.bannerApiUrl + id;
+    let url = this.bannerApiUrl + '/' + id;
     console.log("Banner Service | loadBannerById " + url);
     return this.authService.wrapTokenGetApi(url);
   }
