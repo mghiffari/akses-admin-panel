@@ -28,7 +28,6 @@ export class ChangePhoneService {
     } else {
       data = [request];
     }
-    // return this.authService.wrapTokenPatchApi(this.updateRequestApiUrl, data)
     return this.authService.wrapTokenPutApi(this.updateRequestApiUrl, data)
   }
 }

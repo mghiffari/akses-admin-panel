@@ -27,7 +27,6 @@ import { constants } from 'src/app/shared/common/constants';
 export class NotificationDetailsComponent implements OnInit {
   appName = environment.appName;
   notifForm: FormGroup;
-  // editedNotification: Notification;
   onSubmittingForm = false;
   id;
   isCreate = true;
@@ -83,7 +82,7 @@ export class NotificationDetailsComponent implements OnInit {
           oldImage: new FormControl(null),
           imageFile: new FormControl(null, CustomValidation.type(['jpg', 'jpeg', 'png'])),
           title: new FormControl('', [Validators.required, Validators.maxLength(this.notifTitle.maxLength)]),
-          content: new FormControl('', [Validators.required, Validators.maxLength(this.notifContent.maxLength)]),
+          content: new FormControl('', [Validators.maxLength(this.notifContent.maxLength)]),
           linkType: new FormControl(this.notificationLinkType.article, Validators.required),
           linkCategory: new FormControl({ value: constants.articleTypePromo, disabled: true }, Validators.required),
           linkId: new FormControl('', Validators.required),
@@ -92,7 +91,7 @@ export class NotificationDetailsComponent implements OnInit {
           oldScheduleSending: new FormControl(),
           scheduleTime: new FormControl('')
         }, {
-            validators: CustomValidation.notifSchedule
+            validators: [CustomValidation.notifSchedule, CustomValidation.notifImageOrContentRequired]
           })
         this.articleService.getArticlesByCategory(this.linkCategory.value).subscribe(
           response => {
@@ -505,27 +504,27 @@ export class NotificationDetailsComponent implements OnInit {
   uploadFilesCreate(notification: Notification) {
     console.log('NotificationDetailsComponent | uploadFilesCreate')
     let tasks = [];
-    let convertTasks = [];
+    let getUploadUrlTasks = [];
     let fileTypes = [];
     if (!this.recipientAllFlag.value) {
-      convertTasks.push(this.fileService.fileToBase64(this.csvFile.value).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.csvFile.value, this.fileService.notificationRecipientComp).pipe(catchError(e => of(e))))
       fileTypes.push('csv')
     }
     if (this.iconFile.value) {
-      convertTasks.push(this.fileService.fileToBase64(this.iconFile.value).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.iconFile.value, this.fileService.notificationIconComponent).pipe(catchError(e => of(e))))
       fileTypes.push('icon')
     }
     if (this.imageFile.value) {
       this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg)
-          convertTasks.push(this.fileService.fileToBase64(compressedImg).pipe(catchError(e => of(e))))
+          getUploadUrlTasks.push(this.fileService.getUploadUrl(compressedImg, this.fileService.notificationComponent).pipe(catchError(e => of(e))))
           fileTypes.push('image')
-          forkJoin(convertTasks).subscribe((convertRes: Array<any>) => {
-            let errorConvert = this.handleConvertFilesResponse(convertRes, fileTypes, tasks)
+          forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+            let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
             if (!errorConvert) {
               forkJoin(tasks).subscribe((responses: Array<any>) => {
-                let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+                let error = this.handleUploadFilesResponse(responses, fileTypes)
                 if (!error) {
                   this.createNotification(notification)
                 }
@@ -538,12 +537,12 @@ export class NotificationDetailsComponent implements OnInit {
         }
       )
     } else {
-      if (convertTasks.length > 0) {
-        forkJoin(convertTasks).subscribe((convertRes: Array<any>) => {
-          let errorConvert = this.handleConvertFilesResponse(convertRes, fileTypes, tasks)
+      if (getUploadUrlTasks.length > 0) {
+        forkJoin(getUploadUrlTasks).subscribe((convertRes: Array<any>) => {
+          let errorConvert = this.handleGetUploadUrlResponse(convertRes, fileTypes, tasks, notification)
           if (!errorConvert) {
             forkJoin(tasks).subscribe((responses: Array<any>) => {
-              let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+              let error = this.handleUploadFilesResponse(responses, fileTypes)
               if (!error) {
                 this.createNotification(notification)
               }
@@ -556,12 +555,11 @@ export class NotificationDetailsComponent implements OnInit {
     }
   }
 
-  // handling uploading files on update mode
   uploadFilesUpdate(notification: Notification, formValue) {
     console.log('NotificationDetailsComponent | uploadFilesUpdate')
     notification.id = formValue.id;
     let tasks = [];
-    let convertTasks = [];
+    let getUploadUrlTasks = [];
     let fileTypes = [];
     let shouldDeleteCSV = false;
     let shouldDeleteIcon = false;
@@ -570,12 +568,12 @@ export class NotificationDetailsComponent implements OnInit {
       if (!formValue.oldRecipientAllFlag) {
         shouldDeleteCSV = true;
       } else {
-        convertTasks.push(this.fileService.fileToBase64(this.csvFile.value).pipe(catchError(e => of(e))))
+        getUploadUrlTasks.push(this.fileService.getUploadUrl(this.csvFile.value, this.fileService.notificationRecipientComp).pipe(catchError(e => of(e))))
         fileTypes.push('csv')
       }
     } else if (!formValue.recipientAllFlag && formValue.recipient !== formValue.oldRecipient) {
       shouldDeleteCSV = true;
-      convertTasks.push(this.fileService.fileToBase64(this.csvFile.value).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.csvFile.value, this.fileService.notificationRecipientComp).pipe(catchError(e => of(e))))
       fileTypes.push('csv')
     }
 
@@ -583,7 +581,7 @@ export class NotificationDetailsComponent implements OnInit {
       if (formValue.oldIcon) {
         shouldDeleteIcon = true
       }
-      convertTasks.push(this.fileService.fileToBase64(this.iconFile.value).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.iconFile.value, this.fileService.notificationIconComponent).pipe(catchError(e => of(e))))
       fileTypes.push('icon')
     } else if (formValue.oldIcon) {
       shouldDeleteIcon = true
@@ -597,13 +595,13 @@ export class NotificationDetailsComponent implements OnInit {
       this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg);
-          convertTasks.push(this.fileService.fileToBase64(compressedImg).pipe(catchError(e => of(e))))
+          getUploadUrlTasks.push(this.fileService.getUploadUrl(compressedImg, this.fileService.notificationComponent).pipe(catchError(e => of(e))))
           fileTypes.push('image')
-          forkJoin(convertTasks).subscribe((convertRes: Array<any>) => {
-            let errorConvert = this.handleConvertFilesResponse(convertRes, fileTypes, tasks)
+          forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+            let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
             if (!errorConvert) {
               forkJoin(tasks).subscribe((responses: Array<any>) => {
-                let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+                let error = this.handleUploadFilesResponse(responses, fileTypes)
                 if (!error) {
                   this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
                 }
@@ -618,12 +616,12 @@ export class NotificationDetailsComponent implements OnInit {
       if (formValue.oldImage) {
         shouldDeleteImage = true
       }
-      if (convertTasks.length > 0) {
-        forkJoin(convertTasks).subscribe((convertRes: Array<any>) => {
-          let errorConvert = this.handleConvertFilesResponse(convertRes, fileTypes, tasks)
+      if (getUploadUrlTasks.length > 0) {
+        forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+          let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
           if (!errorConvert) {
             forkJoin(tasks).subscribe((responses: Array<any>) => {
-              let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
+              let error = this.handleUploadFilesResponse(responses, fileTypes)
               if (!error) {
                 this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
               }
@@ -636,14 +634,14 @@ export class NotificationDetailsComponent implements OnInit {
     }
   }
 
-  // handling uploading files response (forkJoin result)
-  handleConvertFilesResponse(responses: Array<any>, fileTypes, tasks: any[]) {
+  // handling get uploading files url response (forkJoin result)
+  handleGetUploadUrlResponse(responses: Array<any>, fileTypes, tasks: any[], notification: Notification) {
     let error = false;
     responses.forEach((response, index) => {
       console.log(response)
       switch (fileTypes[index]) {
         case 'csv':
-          if (response instanceof DOMException) {
+          if (response instanceof HttpErrorResponse) {
             error = true;
             this.onSubmittingForm = false;
             try {
@@ -652,7 +650,7 @@ export class NotificationDetailsComponent implements OnInit {
                 data: {
                   title: 'notificationDetailsScreen.uploadCSVFailed',
                   content: {
-                    text: 'failedToProcessFile',
+                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
                     data: null
                   }
                 }
@@ -661,8 +659,14 @@ export class NotificationDetailsComponent implements OnInit {
               console.error(error)
             }
           } else {
-            let csvFormData = this.createUploadFileFormData(response, this.fileService.notificationRecipientComp)
-            tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
+            try {
+              let uploadUrl = response.data.signurl;
+              notification.recipient_list = uploadUrl.split('?')[0]
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.csvFile.value).pipe(catchError(e => of(e))))              
+            } catch (error) {
+              console.error(error)
+              this.onSubmittingForm = false
+            }
           }
           break;
         case 'icon':
@@ -675,7 +679,7 @@ export class NotificationDetailsComponent implements OnInit {
                 data: {
                   title: 'notificationDetailsScreen.uploadIconFailed',
                   content: {
-                    text: 'failedToProcessFile',
+                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
                     data: null
                   }
                 }
@@ -684,8 +688,14 @@ export class NotificationDetailsComponent implements OnInit {
               console.error(error)
             }
           } else {
-            let iconFormData = this.createUploadFileFormData(response, this.fileService.notificationIconComponent)
-            tasks.push(this.fileService.uploadFile(iconFormData).pipe(catchError(e => of(e))))
+            try {
+              let uploadUrl = response.data.signurl;
+              notification.large_icon = uploadUrl.split('?')[0]
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.iconFile.value).pipe(catchError(e => of(e))))              
+            } catch (error) {
+              console.error(error)
+              this.onSubmittingForm = false
+            }
           }
           break;
         case 'image':
@@ -698,7 +708,7 @@ export class NotificationDetailsComponent implements OnInit {
                 data: {
                   title: 'notificationDetailsScreen.uploadImageFailed',
                   content: {
-                    text: 'failedToProcessFile',
+                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
                     data: null
                   }
                 }
@@ -707,8 +717,14 @@ export class NotificationDetailsComponent implements OnInit {
               console.error(error)
             }
           } else {
-            let imageFormData = this.createUploadFileFormData(response, this.fileService.notificationComponent)
-            tasks.push(this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))))
+            try {
+              let uploadUrl = response.data.signurl;
+              notification.large_image = uploadUrl.split('?')[0]
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.imageFile.value).pipe(catchError(e => of(e))))              
+            } catch (error) {
+              console.error(error)
+              this.onSubmittingForm = false
+            }
           }
           break;
         default:
@@ -719,7 +735,7 @@ export class NotificationDetailsComponent implements OnInit {
   }
 
   // handling uploading files response (forkJoin result)
-  handleUploadFilesResponse(responses: Array<any>, fileTypes, notification: Notification) {
+  handleUploadFilesResponse(responses: Array<any>, fileTypes) {
     let error = false;
     responses.forEach((response, index) => {
       console.table(response)
@@ -734,7 +750,7 @@ export class NotificationDetailsComponent implements OnInit {
                 data: {
                   title: 'notificationDetailsScreen.uploadCSVFailed',
                   content: {
-                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
+                    text: 'error',
                     data: null
                   }
                 }
@@ -742,8 +758,6 @@ export class NotificationDetailsComponent implements OnInit {
             } catch (error) {
               console.table(error)
             }
-          } else {
-            notification.recipient_list = response.data.url
           }
           break;
         case 'icon':
@@ -756,7 +770,7 @@ export class NotificationDetailsComponent implements OnInit {
                 data: {
                   title: 'notificationDetailsScreen.uploadIconFailed',
                   content: {
-                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
+                    text: 'error',
                     data: null
                   }
                 }
@@ -764,8 +778,6 @@ export class NotificationDetailsComponent implements OnInit {
             } catch (error) {
               console.table(error)
             }
-          } else {
-            notification.large_icon = response.data.url
           }
           break;
         case 'image':
@@ -778,7 +790,7 @@ export class NotificationDetailsComponent implements OnInit {
                 data: {
                   title: 'notificationDetailsScreen.uploadImageFailed',
                   content: {
-                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
+                    text: 'error',
                     data: null
                   }
                 }
@@ -786,8 +798,6 @@ export class NotificationDetailsComponent implements OnInit {
             } catch (error) {
               console.table(error)
             }
-          } else {
-            notification.large_image = response.data.url
           }
           break;
         default:

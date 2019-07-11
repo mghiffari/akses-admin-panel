@@ -91,7 +91,6 @@ export class AuthService {
     console.log('AuthService | appendAuthHeaders')
     accessToken = accessToken ? accessToken : this.getAccessToken()
     return headers.append('Authorization', accessToken);
-    // return headers.append('access-token', accessToken);
   }
 
   initRequestHeaders(contentType= 'application/json; charset=utf-8'){
@@ -131,7 +130,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -152,7 +151,7 @@ export class AuthService {
       })
       .pipe(
         tap((resp: any) => {
-          let token = resp.headers.get('access-token')
+          let token = resp.headers.get('Authorization')
           if (token) {
             if (this.getAccessToken()) {
               this.setAccessToken(token)
@@ -166,7 +165,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -194,7 +193,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -222,7 +221,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -253,7 +252,7 @@ export class AuthService {
               this.logout();
               this.showLoggedOutDialog()
             } else {
-              let token = err.headers.get('access-token')
+              let token = err.headers.get('Authorization')
               if (this.getAccessToken() && token) {
                 this.setAccessToken(token)
               }
@@ -290,7 +289,7 @@ export class AuthService {
           this.logout();
           this.showLoggedOutDialog()
         } else {
-          let token = err.headers.get('access-token')
+          let token = err.headers.get('Authorization')
           if (this.getAccessToken() && token) {
             this.setAccessToken(token)
           }

@@ -481,94 +481,101 @@ export class BannerDetailsService {
   //used to upload image (banner and footer using same function)
   uploadImage(component: string, vImageUpload: ImageUpload) {
     console.log('BannerDetailService | uploadImage');
-    var vFormDataImageUpload = new FormData();
-    vFormDataImageUpload.append('component', vImageUpload.component);
-    vFormDataImageUpload.append('file', vImageUpload.file);
-    if (this.vCurrentPage.includes("update")) {
-      vFormDataImageUpload.append('url', vImageUpload.url);
-    }
     let promise = new Promise((resolve, reject) => {
-      this._fileMgtService.fileToBase64(vImageUpload.file).subscribe(base64String => {
-        vFormDataImageUpload.set('file', base64String)
-        this._fileMgtService.uploadFile(vFormDataImageUpload)
-          .subscribe(
-            (data: any) => {
-              console.table(data);
-              try {
-                if (component === "banner") {
-                  this.vBannerData.banner = data.data.url;
-                } else {
-                  this.vBannerData.foot_image_content = data.data.url;
+      this._fileMgtService.getUploadUrl(vImageUpload.file, vImageUpload.component, this.vCurrentPage.includes("update") ? vImageUpload.url : null).subscribe(
+        response => {
+          try {
+            console.table(response)
+            let url = response.data.signurl
+            let fileUri = url.split('?')[0]
+            this._fileMgtService.uploadFile(url, vImageUpload.file).subscribe(
+              response => {
+                try {
+                  if (component === "banner") {
+                    this.vBannerData.banner = fileUri;
+                  } else {
+                    this.vBannerData.foot_image_content = fileUri;
+                  }
+                  resolve();
+                } catch (error) {
+                  console.table(error);
+                  reject();
                 }
-                resolve();
-              } catch (error) {
-                console.table(error);
-                reject();
-              }
-            },
-            error => {
-              try {
-                if (component === "footer") {
-                  this.vErrorMessage.imageBanner = error.error.err_code;
-                  this.vLoadingStatus = false;
-                } else {
-                  this.vErrorMessage.imageFooter = error.error.err_code;
-                  this.vLoadingStatus = false;
-                }
-                if (this.vCurrentPage.includes("create")) {
-                  this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'bannersDetailScreen.createFailed',
-                      content: {
-                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+              }, error => {
+                console.table(error)
+                try {
+                  if (component === "footer") {
+                    this.vErrorMessage.imageBanner = error.error.err_code;
+                    this.vLoadingStatus = false;
+                  } else {
+                    this.vErrorMessage.imageFooter = error.error.err_code;
+                    this.vLoadingStatus = false;
+                  }
+                  if (this.vCurrentPage.includes("create")) {
+                    this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'bannersDetailScreen.createFailed',
+                        content: {
+                          text: 'failedToProcessFile'
+                        }
                       }
-                    }
-                  });
-                } else {
-                  this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'bannersDetailScreen.updateFailed',
-                      content: {
-                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                    });
+                  } else {
+                    this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'bannersDetailScreen.updateFailed',
+                        content: {
+                          text: 'failedToProcessFile'
+                        }
                       }
-                    }
-                  });
+                    });
+                  }
+                } catch (error) {
+                  console.table(error);
+                } finally {
+                  reject();
                 }
-              } catch (error) {
-                console.table(error);
               }
-              reject();
+            )
+          } catch (error) {
+            console.error(error)
+            reject()
+          }
+        }, error => {
+          try {
+            if (component === "footer") {
+              this.vErrorMessage.imageBanner = error.error.err_code;
+              this.vLoadingStatus = false;
+            } else {
+              this.vErrorMessage.imageFooter = error.error.err_code;
+              this.vLoadingStatus = false;
             }
-          );
-      }, error => {
-        if (component === "footer") {
-          this.vErrorMessage.imageBanner = error.error.err_code;
-          this.vLoadingStatus = false;
-        } else {
-          this.vErrorMessage.imageFooter = error.error.err_code;
-          this.vLoadingStatus = false;
+            if (this.vCurrentPage.includes("create")) {
+              this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'bannersDetailScreen.createFailed',
+                  content: {
+                    text: 'failedToProcessFile'
+                  }
+                }
+              });
+            } else {
+              this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'bannersDetailScreen.updateFailed',
+                  content: {
+                    text: 'failedToProcessFile'
+                  }
+                }
+              });
+            }
+          } catch (error) {
+            console.table(error);
+          } finally {
+            reject();
+          }
         }
-        if (this.vCurrentPage.includes("create")) {
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'bannersDetailScreen.createFailed',
-              content: {
-                text: 'failedToProcessFile'
-              }
-            }
-          });
-        } else {
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'bannersDetailScreen.updateFailed',
-              content: {
-                text: 'failedToProcessFile'
-              }
-            }
-          });
-        }
-        reject();
-      })
+      )
     });
     return promise;
   }

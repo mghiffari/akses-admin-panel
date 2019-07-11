@@ -66,7 +66,7 @@ export class BranchUploadModalComponent implements OnInit {
     this.onSubmittingForm = true;
     this.fileService.fileToBase64(this.file).subscribe(
       base64String => {
-        this.branchService.uploadCSV(base64String).subscribe(
+        this.branchService.uploadCSV(base64String.split(',').pop()).subscribe(
           response => {
             console.table(response)
             this.onSubmittingForm = false;
