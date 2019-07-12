@@ -128,10 +128,12 @@
             <mat-hint class="bottom-hint">
               {{'forms.notifImage.hint' | translate: notifImageRes}}
             </mat-hint>
-            <mat-error class="bottom-error" *ngIf="imageFile.invalid && (imageFile.dirty || imageFile.touched)">
+            <mat-error class="bottom-error" *ngIf="notifForm.invalid && (notifForm.dirty || notifForm.touched)">
               <span *ngIf="imageFile.errors?.type">{{'forms.notifImage.errorType' | translate}}</span>
               <span
                 *ngIf="!imageFile.errors?.type && imageFile.errors?.resolution">{{'forms.notifImage.errorResolution' | translate : notifImageRes}}</span>
+              <span
+                *ngIf="notifForm.errors?.notifImageOrContentRequired">{{'forms.notifForm.notifImageOrContentRequired' | translate}}</span>
             </mat-error>
           </div>
         </div>
@@ -169,10 +171,11 @@
             </mat-form-field>
             <div fxFlexLayout="row">
               <div fxFlex="grow">
-                <mat-error class="bottom-error" *ngIf="content.invalid && (content.dirty || content.touched)">
-                  <span *ngIf="content.errors.required">{{'forms.content.errorRequired' | translate}}</span>
+                <mat-error class="bottom-error" *ngIf="notifForm.invalid && (notifForm.dirty || notifForm.touched)">
                   <span
-                    *ngIf="content.errors.maxlength">{{'forms.content.errorMaxLength' | translate: notifContent}}</span>
+                    *ngIf="content.errors?.maxlength">{{'forms.content.errorMaxLength' | translate: notifContent}}</span>
+                  <span
+                    *ngIf="notifForm.errors?.notifImageOrContentRequired">{{'forms.notifForm.notifImageOrContentRequired' | translate}}</span>
                 </mat-error>
               </div>
               <div>

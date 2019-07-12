@@ -44,10 +44,11 @@ export class BranchService {
   }
 
   //upload csv
-  uploadCSV(file: File){
+  uploadCSV(file){
     console.log("BranchService | uploadCSV ", this.uploadCSVApiUrl);
-    let data = new FormData();
-    data.append('csv', file);
+    let data = {
+      csv: file
+    }
     return this.authService.wrapTokenPostApi(this.uploadCSVApiUrl, data);
   }
 

@@ -373,10 +373,7 @@ export class PIDetailsComponent implements OnInit {
     console.log('PIDetailsComponent | save')
     if (this.isCreate) {
       this.onSubmittingForm = true;
-      let formData = new FormData()
-      formData.append("file", this.iconFile.value)
-      formData.append("component", this.fileMgtService.paymentInstComponent)
-      this.uploadIcon(formData);
+      this.uploadIcon();
     } else {
       if (this.oldIcon.value === this.icon.value) {
         let instructionDetails = [];
@@ -395,81 +392,80 @@ export class PIDetailsComponent implements OnInit {
         }
         this.updateInstructionDetails(instructionDetails, false)
       } else {
-        let formData = new FormData()
-        formData.append("file", this.iconFile.value)
-        formData.append("component", "payment-instruction")
-        this.uploadIcon(formData);
+        this.uploadIcon();
       }
     }
   }
 
   // call upload icon
-  uploadIcon(iconFormData: FormData) {
+  uploadIcon() {
     console.log('PIDetailsComponent | uploadIcon')
-    this.fileMgtService.fileToBase64(iconFormData.get('file')).subscribe(base64String => {
-      iconFormData.set('file', base64String)
-      this.fileMgtService.uploadFile(iconFormData).subscribe(
-        response => {
-          try {
-            console.table(response)
-            if (this.isCreate) {
-              let newInstructionList = new InstructionList();
-              newInstructionList.grp_title = this.grpTitle.value;
-              newInstructionList.icon = response.data.url;
-              newInstructionList.instruction_type = this.instructionType.value;
-              this.insertNewInstruction(newInstructionList)
-            } else {
-              let instructionDetails = [];
-              let stepsForm = this.instructions.value;
-              let instObject = {
-                grp_title: this.grpTitle.value,
-                icon: response.data.url
-              }
-              for (let i = 0; i < stepsForm.length; i++) {
-                let form = stepsForm[i]
-                let step = new InstructionDetails();
-                step.list_id = this.id.value;
-                step.content = form.content;
-                step.order = i + 1;
-                instructionDetails.push(Object.assign(step, instObject))
-              }
-              this.updateInstructionDetails(instructionDetails, true)
-            }
-          } catch (error) {
-            console.table(error)
-            this.onSubmittingForm = false;
-          }
-        }, error => {
-          try {
-            console.table(error)
-            this.onSubmittingForm = false;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'paymentInstructionDetailsScreen.uploadIconFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+    this.fileMgtService.getUploadUrl(this.iconFile.value, this.fileMgtService.paymentInstComponent).subscribe(
+      response => {
+        try {
+          let uploadUrl = response.data.signurl
+          let iconPath = uploadUrl.split('?')[0]
+          this.fileMgtService.uploadFile(uploadUrl, this.iconFile.value).subscribe(
+            response => {
+              console.table(response)
+              if (this.isCreate) {
+                let newInstructionList = new InstructionList();
+                newInstructionList.grp_title = this.grpTitle.value;
+                newInstructionList.icon = iconPath;
+                newInstructionList.instruction_type = this.instructionType.value;
+                this.insertNewInstruction(newInstructionList)
+              } else {
+                let instructionDetails = [];
+                let stepsForm = this.instructions.value;
+                let instObject = {
+                  grp_title: this.grpTitle.value,
+                  icon: iconPath
                 }
+                for (let i = 0; i < stepsForm.length; i++) {
+                  let form = stepsForm[i]
+                  let step = new InstructionDetails();
+                  step.list_id = this.id.value;
+                  step.content = form.content;
+                  step.order = i + 1;
+                  instructionDetails.push(Object.assign(step, instObject))
+                }
+                this.updateInstructionDetails(instructionDetails, true)
               }
-            })
-          } catch (error) {
-            console.table(error)
-          }
+            }, error => {
+              console.table(error)
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'paymentInstructionDetailsScreen.uploadIconFailed',
+                  content: {
+                    text: 'error',
+                    data: null
+                  }
+                }
+              })
+            }
+          )
+        } catch (error) {
+          console.error(error)
+          this.onSubmittingForm = false;
         }
-      )
-    }, error => {
-      console.table(error)
-      this.onSubmittingForm = false;
-      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-        data: {
-          title: 'paymentInstructionDetailsScreen.uploadIconFailed',
-          content: {
-            text: 'failedToProcessFile',
-            data: null
-          }
+      }, error => {
+        try {
+          console.table(error)
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'paymentInstructionDetailsScreen.uploadIconFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.log(error)
         }
       })
-    })
   }
 
   // call upload icon

@@ -42,7 +42,6 @@ export class NotificationService {
   updateNotif(data) {
     let url = this.notificationApiUrl;
     console.log("NotificationService | updateNotif ", url);
-    // return this.authService.wrapTokenPatchApi(url, data)
     return this.authService.wrapTokenPutApi(url, data)
   }
 
@@ -57,7 +56,6 @@ export class NotificationService {
   refreshNotif(id: string) {
     let url = this.refreshNotifApiUrl + '/' + id;
     console.log("NotificationService | refreshNotif " + url);
-    // return this.authService.wrapTokenPatchApi(url, {});
     return this.authService.wrapTokenPutApi(url, {});
   }
   
