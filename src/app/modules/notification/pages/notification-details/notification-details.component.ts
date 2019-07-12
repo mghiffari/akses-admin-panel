@@ -82,7 +82,7 @@ export class NotificationDetailsComponent implements OnInit {
           oldImage: new FormControl(null),
           imageFile: new FormControl(null, CustomValidation.type(['jpg', 'jpeg', 'png'])),
           title: new FormControl('', [Validators.required, Validators.maxLength(this.notifTitle.maxLength)]),
-          content: new FormControl('', [Validators.maxLength(this.notifContent.maxLength)]),
+          content: new FormControl('', [Validators.required, Validators.maxLength(this.notifContent.maxLength)]),
           linkType: new FormControl(this.notificationLinkType.article, Validators.required),
           linkCategory: new FormControl({ value: constants.articleTypePromo, disabled: true }, Validators.required),
           linkId: new FormControl('', Validators.required),
@@ -91,7 +91,7 @@ export class NotificationDetailsComponent implements OnInit {
           oldScheduleSending: new FormControl(),
           scheduleTime: new FormControl('')
         }, {
-            validators: [CustomValidation.notifSchedule, CustomValidation.notifImageOrContentRequired]
+            validators: CustomValidation.notifSchedule
           })
         this.articleService.getArticlesByCategory(this.linkCategory.value).subscribe(
           response => {

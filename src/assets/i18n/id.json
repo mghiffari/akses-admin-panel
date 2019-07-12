@@ -385,9 +385,6 @@
             "errorMin": "Tanggal Selesai harus lebih dari 1 jam sejak saat ini",
             "datePlaceholder": "MM/dd/yyyy"
         },
-        "notifForm": {
-            "notifImageOrContentRequired": "Gambar atau Pesan wajib diisi"
-        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"

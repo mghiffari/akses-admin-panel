@@ -385,9 +385,6 @@
             "errorMin": "End Date should be more than 1 hr from now",
             "datePlaceholder": "MM/dd/yyyy"
         },
-        "notifForm": {
-            "notifImageOrContentRequired": "Image or Content is required"
-        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
