@@ -60,6 +60,54 @@
     <div fxLayout="row wrap" class="padding-16 border-bottom-gray">
       <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutGap="16px">
         <div fxLayout="row">
+          <div fxFlex="30%" fxFlexAlign="center">
+            {{'forms.title.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.title.placeholder' | translate}}" formControlName="title">
+            </mat-form-field>
+            <div fxFlexLayout="row">
+              <div fxFlex="grow">
+                <mat-error class="bottom-error" *ngIf="title.invalid && (title.dirty || title.touched)">
+                  <span *ngIf="title.errors.required">{{'forms.title.errorRequired' | translate}}</span>
+                  <span *ngIf="title.errors.maxlength">{{'forms.title.errorMaxLength' | translate: notifTitle}}</span>
+                </mat-error>
+              </div>
+              <div>
+                <mat-hint class="bottom-hint">
+                  {{title.value ? title.value.length : 0}}/{{notifTitle.maxLength}}
+                </mat-hint>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxFlex="30%">
+            {{'forms.content.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+            <mat-form-field appearance="fill">
+              <textarea formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                cdkAutosizeMaxRows="5" placeholder="{{'forms.content.placeholder' | translate}}"></textarea>
+            </mat-form-field>
+            <div fxFlexLayout="row">
+              <div fxFlex="grow">
+                <mat-error class="bottom-error" *ngIf="content.invalid && (content.dirty || content.touched)">
+                  <span *ngIf="content.errors.required">{{'forms.content.errorRequired' | translate}}</span>
+                  <span
+                    *ngIf="content.errors.maxlength">{{'forms.content.errorMaxLength' | translate: notifContent}}</span>
+                </mat-error>
+              </div>
+              <div>
+                <mat-hint class="bottom-hint">
+                  {{content.value ? content.value.length : 0}}/{{notifContent.maxLength}}
+                </mat-hint>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row">
           <div fxFlex="30%">
             {{'forms.notifLargeIcon.fieldTitle' | translate}}
           </div>
@@ -133,54 +181,6 @@
               <span
                 *ngIf="!imageFile.errors?.type && imageFile.errors?.resolution">{{'forms.notifImage.errorResolution' | translate : notifImageRes}}</span>
             </mat-error>
-          </div>
-        </div>
-        <div fxLayout="row">
-          <div fxFlex="30%" fxFlexAlign="center">
-            {{'forms.title.fieldTitle' | translate}}
-          </div>
-          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
-            <mat-form-field appearance="fill">
-              <input matInput placeholder="{{'forms.title.placeholder' | translate}}" formControlName="title">
-            </mat-form-field>
-            <div fxFlexLayout="row">
-              <div fxFlex="grow">
-                <mat-error class="bottom-error" *ngIf="title.invalid && (title.dirty || title.touched)">
-                  <span *ngIf="title.errors.required">{{'forms.title.errorRequired' | translate}}</span>
-                  <span *ngIf="title.errors.maxlength">{{'forms.title.errorMaxLength' | translate: notifTitle}}</span>
-                </mat-error>
-              </div>
-              <div>
-                <mat-hint class="bottom-hint">
-                  {{title.value ? title.value.length : 0}}/{{notifTitle.maxLength}}
-                </mat-hint>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div fxLayout="row">
-          <div fxFlex="30%">
-            {{'forms.content.fieldTitle' | translate}}
-          </div>
-          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
-            <mat-form-field appearance="fill">
-              <textarea formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
-                cdkAutosizeMaxRows="5" placeholder="{{'forms.content.placeholder' | translate}}"></textarea>
-            </mat-form-field>
-            <div fxFlexLayout="row">
-              <div fxFlex="grow">
-                <mat-error class="bottom-error" *ngIf="content.invalid && (content.dirty || content.touched)">
-                  <span *ngIf="content.errors.required">{{'forms.content.errorRequired' | translate}}</span>
-                  <span
-                    *ngIf="content.errors.maxlength">{{'forms.content.errorMaxLength' | translate: notifContent}}</span>
-                </mat-error>
-              </div>
-              <div>
-                <mat-hint class="bottom-hint">
-                  {{content.value ? content.value.length : 0}}/{{notifContent.maxLength}}
-                </mat-hint>
-              </div>
-            </div>
           </div>
         </div>
       </div>
