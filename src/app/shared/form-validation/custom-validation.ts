@@ -330,18 +330,6 @@ export class CustomValidation {
       }
   };
 
-  //used to check offer end Date valid or not
-  static notifImageOrContentRequired: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
-    console.log('CustomValidation | notifImageOrContentRequired')
-      let image = formGroup.get('image').value;
-      let content = formGroup.get('content').value;
-      if((!image || image === '') && (!content  || content === '')){
-        return { 'notifImageOrContentRequired': true }
-      } else {
-        return null
-      }
-  };
-
   // use to check wheteher datetime is more than one hour from now
   static durationFromNowValidation(date) {
     console.log('CustomValidation | durationFromNowValidation');

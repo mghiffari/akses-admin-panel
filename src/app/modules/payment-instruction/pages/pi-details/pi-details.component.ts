@@ -555,7 +555,7 @@ export class PIDetailsComponent implements OnInit {
       response => {
         console.table(response)
         if (shouldDeleteIcon) {
-          this.deleteIcon(instructionDetails[0].icon)
+          this.deleteIcon(this.oldIcon.value)
         } else {
           this.onSubmittingForm = false;
           let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
