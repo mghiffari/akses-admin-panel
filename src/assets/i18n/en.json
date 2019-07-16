@@ -850,7 +850,7 @@
         "01107": "missing required instructions parameter",
         "01108": "branch code already exist",
         "01109": "token expired",
-        "01110": "oid not found",
+        "01110": "oid not registered",
         "01111": "user data not found",
         "01112" : "notification has already been sent to all recipients"
     }

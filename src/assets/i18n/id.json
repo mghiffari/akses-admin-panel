@@ -849,7 +849,7 @@
         "01107": "langkah penukaran voucher wajib diisi",
         "01108": "kode cabang sudah tersedia",
         "01109": "token expired",
-        "01110": "oid tidak ditemukan",
+        "01110": "oid tidak terdaftar",
         "01111": "data user tidak ditemukan",
         "01112" : "notifikasi telah dikirim ke semua user"
     }
