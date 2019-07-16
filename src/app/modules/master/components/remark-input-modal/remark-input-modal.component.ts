@@ -53,16 +53,33 @@ export class RemarkInputModalComponent implements OnInit {
     this.requestService.bulkUpdateRequest(request).subscribe(
       response => {
         this.onSubmittingForm = false;
-        this.snackbar.openFromComponent(SuccessSnackbarComponent, {
-          data: {
-            title: 'success',
-            content: {
-              text: 'changePhonenumberRequestListScreen.addRemarkSuccess',
-              data: null
-            }
+        try {
+          let data = response.data;
+          if(data.fail_count === 0){
+            this.snackbar.openFromComponent(SuccessSnackbarComponent, {
+              data: {
+                title: 'success',
+                content: {
+                  text: 'changePhonenumberRequestListScreen.addRemarkSuccess',
+                  data: null
+                }
+              }
+            })
+            this.dialogRef.close(true)
+          } else {
+            this.snackbar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'changePhonenumberRequestListScreen.addRemarkFailed',
+                content: {
+                  text: '',
+                  data: null
+                }
+              }
+            })
           }
-        })
-        this.dialogRef.close(true)
+        } catch (error) {
+          console.error(error)
+        }
       }, error => {
         try {
           this.onSubmittingForm = false;
