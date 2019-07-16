@@ -851,6 +851,6 @@
         "01109": "token expired",
         "01110": "oid tidak ditemukan",
         "01111": "data user tidak ditemukan",
-        "01112" : "notifikasi sudah dikirim ke semua user"
+        "01112" : "notifikasi telah dikirim ke semua user"
     }
 }
