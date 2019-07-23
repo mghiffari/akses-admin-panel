@@ -43,6 +43,14 @@
       <div *ngIf="data.notification.linkType === notificationLinkType.specialOffer; else articleLinkType">
         <div fxLayout="row wrap" fxLayoutGap="10px grid">
           <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
+            {{'forms.specialOfferCategory.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">
+            {{data.notification.linkCategory}}
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="10px grid">
+          <div fxFlex="30%" fxFlex.lt-md="40%" fxFlex.lt-sm="100%">
             {{'forms.notifSpecialOffer.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" class="font-sub-description">

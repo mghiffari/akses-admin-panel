@@ -330,6 +330,11 @@
                 "specialOffer": "Special Offer"
             }
         },
+        "specialOfferCategory": {
+            "fieldTitle": "Kategori Special Offer",
+            "placeholder": "Kategori special offer",
+            "errorRequired": "Kategori Special Offer wajib diisi"
+        },
         "notifSpecialOffer": {
             "fieldTitle": "Special Offer",
             "placeholder": "Pilih Special Offer",

@@ -126,7 +126,7 @@ export class NotificationDetailsComponent implements OnInit {
                                   + (scheduleMin > 9 ? '' : '0') + scheduleMin
                               }
                               let selectedLink = null;
-                              if (editedNotif.link_type === this.notificationLinkType.specialOffer) {
+                              if (editedNotif.link_type.includes(this.notificationLinkType.specialOffer)) {
                                 selectedLink = this.specialOffers.find(el => {
                                   return el.id === editedNotif.link_id;
                                 })
@@ -150,6 +150,7 @@ export class NotificationDetailsComponent implements OnInit {
                                 oldImage: editedNotif.large_image,
                                 linkType: editedNotif.link_type,
                                 linkId: selectedLink ? selectedLink.id : '',
+                                linkCategory: selectedLink ? selectedLink.category : '',
                                 scheduledFlag: editedNotif.scheduled_flg,
                                 scheduleDate: scheduleDate,
                                 scheduleTime: scheduleTime,
@@ -241,17 +242,21 @@ export class NotificationDetailsComponent implements OnInit {
     )
   }
 
+  // Handle link type value change
   handleLinkTypeChange() {
     this.linkType.valueChanges.subscribe(val => {
       // link type is special offer
       this.linkId.setValue('')
-      console.log('link type ', val)
       if (val === this.notificationLinkType.specialOffer) {
         this.recipientAllFlag.setValue(false)
+        this.linkCategory.setValue('')
+      } else {
+        this.linkCategory.setValue(constants.articleTypePromo)
       }
     })
   }
 
+  // Handle recipient all flag value change
   handleRecipientAllFlagChange() {
     this.recipientAllFlag.valueChanges.subscribe(val => {
       // recipient target is selected users
@@ -261,8 +266,8 @@ export class NotificationDetailsComponent implements OnInit {
         }
       } else {
         // recipient target is all users
-        this.csvFile.setValue(null);
-        this.csvFile.clearValidators();
+        this.csvFile.setValue(null)
+        this.csvFile.clearValidators()
         this.csvFile.setValidators(CustomValidation.type('csv'))
         this.recipient.setValue(null)
       }
@@ -272,90 +277,124 @@ export class NotificationDetailsComponent implements OnInit {
     })
   }
 
+  // Handle when selecting special offer
+  handleSelectSpecialOffer(specialOffer = null){
+    console.log('NotificationDetailsComponent | handleSelectSpecialOffer')
+    if(specialOffer){
+      this.linkCategory.setValue(specialOffer.category)
+      this.selectedLinkTitle = specialOffer.title
+    } else {
+      this.linkCategory.setValue('')
+      this.selectedLinkTitle = ''
+    }
+  }
+
+  // Check whether linktype is special offer
   isLinkTypeSpecialOffer() {
     return this.linkType.value === this.notificationLinkType.specialOffer;
   }
 
+  // recipientAllFlag formControl getter
   get recipientAllFlag() {
     return this.notifForm.get('recipientAllFlag')
   }
 
+  // oldRecipientAllFlag formControl getter
   get oldRecipientAllFlag() {
     return this.notifForm.get('oldRecipientAllFlag')
   }
 
+  // recipient formControl getter
   get recipient() {
     return this.notifForm.get('recipient')
   }
 
+  // oldRecipient formControl getter
   get oldRecipient() {
     return this.notifForm.get('oldRecipient')
   }
 
+  // csvFile formControl getter
   get csvFile() {
     return this.notifForm.get('csvFile')
   }
 
+  // icon formControl getter
   get icon() {
     return this.notifForm.get('icon')
   }
 
+  // oldIcon formControl getter
   get oldIcon() {
     return this.notifForm.get('oldIcon')
   }
 
+  // iconFile formControl getter
   get iconFile() {
     return this.notifForm.get('iconFile')
   }
 
+  // image formControl getter
   get image() {
     return this.notifForm.get('image')
   }
 
+  // oldImage formControl getter
   get oldImage() {
     return this.notifForm.get('oldImage')
   }
 
+  // imageFile formControl getter
   get imageFile() {
     return this.notifForm.get('imageFile')
   }
 
+  // title formControl getter
   get title() {
     return this.notifForm.get('title')
   }
 
+  // content formControl getter
   get content() {
     return this.notifForm.get('content')
   }
 
+  // linkType formControl getter
   get linkType() {
     return this.notifForm.get('linkType')
   }
 
+  // linkCategory formControl getter
   get linkCategory() {
     return this.notifForm.get('linkCategory')
   }
 
+  // linkId formControl getter
   get linkId() {
     return this.notifForm.get('linkId')
   }
 
+  // scheduledFlag formControl getter
   get scheduledFlag() {
     return this.notifForm.get('scheduledFlag')
   }
 
+  // scheduleDate formControl getter
   get scheduleDate() {
     return this.notifForm.get('scheduleDate')
   }
 
+  // scheduleTime formControl getter
   get scheduleTime() {
     return this.notifForm.get('scheduleTime')
   }
 
+  // oldScheduleSending formControl getter
   get oldScheduleSending() {
     return this.notifForm.get('oldScheduleSending')
   }
 
+  // Handle when csv file input value change
   onChangeCSVFile(event) {
     console.log('NotificationDetailsComponent | onChangeCSVFile')
     const file = event.target.files[0];
@@ -413,18 +452,22 @@ export class NotificationDetailsComponent implements OnInit {
     }
   }
 
+  // Handle deleting image
   onDeleteBigImage() {
     this.onDeleteImage(this.image, this.imageFile, this.imageInput)
   }
 
+  // Handle on change image file input value
   onChangeBigImage(event) {
     this.onChangeImgFile(this.image, this.imageFile, this.imageInput, this.notifImageRes, event)
   }
 
+  // Handle deleting icon
   onDeleteLargeIcon() {
     this.onDeleteImage(this.icon, this.iconFile, this.iconInput)
   }
 
+  // Handle on change icon file input value
   onChangeLargeIcon(event) {
     this.onChangeImgFile(this.icon, this.iconFile, this.iconInput, this.notifIconRes, event)
   }
@@ -474,8 +517,8 @@ export class NotificationDetailsComponent implements OnInit {
   // check and upload csv and images
   uploadFiles() {
     console.log('NotificationDetailsComponent | showFormError')
-    let formValue = this.notifForm.value
-    let scheduleDate = new Date();
+    let formValue = this.notifForm.getRawValue()
+    let scheduleDate = new Date()
     if (formValue.scheduledFlag) {
       scheduleDate = formValue.scheduleDate;
       let scheduleTime = formValue.scheduleTime.split(':')
@@ -484,15 +527,23 @@ export class NotificationDetailsComponent implements OnInit {
     }
     let notification = new Notification()
     notification.recipient_all_flg = formValue.recipientAllFlag
-    notification.title = formValue.title;
-    notification.content = formValue.content;
-    notification.link_type = formValue.linkType;
-    notification.link_id = formValue.linkId;
-    notification.scheduled_flg = formValue.scheduledFlag;
-    notification.schedule_sending = scheduleDate;
-    notification.large_icon = formValue.icon;
-    notification.large_image = formValue.image;
-    notification.recipient_list = formValue.recipient;
+    notification.title = formValue.title
+    notification.content = formValue.content
+    notification.link_id = formValue.linkId
+    notification.scheduled_flg = formValue.scheduledFlag
+    notification.schedule_sending = scheduleDate
+    notification.large_icon = formValue.icon
+    notification.large_image = formValue.image
+    notification.recipient_list = formValue.recipient
+    if(formValue.linkType === this.notificationLinkType.specialOffer){
+      if(formValue.linkCategory.toLowerCase().includes(constants.specialOfferCategory.durable)){
+        notification.link_type = this.notificationLinkType.specialOfferLinkCategory.durable
+      } else {
+        notification.link_type = this.notificationLinkType.specialOfferLinkCategory.oneclick
+      }
+    } else {
+      notification.link_type = formValue.linkType
+    }
     if (this.isCreate) {
       this.uploadFilesCreate(notification)
     } else {
@@ -555,6 +606,7 @@ export class NotificationDetailsComponent implements OnInit {
     }
   }
 
+  // handling uploading files on edit mode
   uploadFilesUpdate(notification: Notification, formValue) {
     console.log('NotificationDetailsComponent | uploadFilesUpdate')
     notification.id = formValue.id;
@@ -807,13 +859,7 @@ export class NotificationDetailsComponent implements OnInit {
     return error;
   }
 
-  createUploadFileFormData(file, component) {
-    let formData = new FormData();
-    formData.append("file", file)
-    formData.append("component", component)
-    return formData;
-  }
-
+  // call create notification api
   createNotification(notification) {
     console.log('NotificationDetailsComponent | createNotification')
     this.notifService.createNotif(notification).subscribe(
