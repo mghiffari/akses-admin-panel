@@ -330,6 +330,11 @@
                 "specialOffer": "Special Offer"
             }
         },
+        "specialOfferCategory": {
+            "fieldTitle": "Special Offer Category",
+            "placeholder": "Special offer category",
+            "errorRequired": "Special Offer Category is required"
+        },
         "notifSpecialOffer": {
             "fieldTitle": "Special Offer",
             "placeholder": "Select a Special Offer",

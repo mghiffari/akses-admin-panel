@@ -12,11 +12,11 @@ export const environment = {
     login: 'auth/login',
     lovType: 'lov',
     createNotification: 'notification',
-  updateNotification: 'notification'
+    updateNotification: 'notification'
   },
   enableAdiraEmailValidation: false,
-  version: '1.0.21',
-  versionDate: new Date(2019, 6, 11),
+  version: '1.0.22',
+  versionDate: new Date(2019, 6, 23),
   tinyMceSettings: {
     inline: false,
     statusbar: false,
