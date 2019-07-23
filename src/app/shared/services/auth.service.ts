@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Auth } from '../models/auth';
 import { tap, map, catchError } from 'rxjs/operators';
-import { throwError, ObservableInput, Observable, of } from 'rxjs';
+import { throwError } from 'rxjs';
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -12,9 +12,9 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  authApiUrl = environment.apiurl + 'auth/';
-  loginApiUrl = this.authApiUrl + 'login';
-  resetPasswordApiUrl = this.authApiUrl + 'reset-pass/'
+  authApiUrl = environment.apiurl + 'auth';
+  loginApiUrl = environment.apiurl + environment.endPoint.login;
+  resetPasswordApiUrl = this.authApiUrl + '/reset-pass'
 
   //if this updated, also update value in index.html
   storageKey = {
@@ -90,7 +90,13 @@ export class AuthService {
   appendAuthHeaders(headers: HttpHeaders, accessToken = null) {
     console.log('AuthService | appendAuthHeaders')
     accessToken = accessToken ? accessToken : this.getAccessToken()
-    return headers.append('access-token', accessToken);
+    return headers.append('Authorization', accessToken);
+  }
+
+  initRequestHeaders(contentType= 'application/json; charset=utf-8'){
+    return new HttpHeaders({
+      'Content-Type':contentType
+    });
   }
 
   //show dialog when user logged out
@@ -113,7 +119,7 @@ export class AuthService {
     return this.http
       .post<HttpResponse<Object>>(url, data, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -124,7 +130,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -141,11 +147,11 @@ export class AuthService {
     return this.http
       .get<HttpResponse<Object>>(url, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
-          let token = resp.headers.get('access-token')
+          let token = resp.headers.get('Authorization')
           if (token) {
             if (this.getAccessToken()) {
               this.setAccessToken(token)
@@ -159,7 +165,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -171,12 +177,12 @@ export class AuthService {
   }
 
   //wraping the put API with access token or not inside header
-  wrapTokenPutApi(url, data, accessToken = null) {
+  wrapTokenPutApi(url, data, accessToken = null, headers = null) {
     console.log('AuthService | wrapTokenPutApi ', url);
     return this.http
       .put<HttpResponse<Object>>(url, data, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -187,7 +193,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -204,7 +210,7 @@ export class AuthService {
     return this.http
       .patch<HttpResponse<Object>>(url, data, {
         observe: 'response',
-        headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
       .pipe(
         tap((resp: any) => {
@@ -215,7 +221,7 @@ export class AuthService {
             this.logout();
             this.showLoggedOutDialog()
           } else {
-            let token = err.headers.get('access-token')
+            let token = err.headers.get('Authorization')
             if (this.getAccessToken() && token) {
               this.setAccessToken(token)
             }
@@ -227,7 +233,7 @@ export class AuthService {
   }
 
   //wraping the delete API with access token or not inside header
-  wrapTokenDeleteApi(url, accessToken = null, body=null) {
+  wrapTokenDeleteApi(url, accessToken = null, body=null, headers = null) {
     console.log('AuthService | wrapTokenDeleteApi ', url);
     if(body){
       return this.wrapTokenRequestApi('delete', url, body, accessToken)
@@ -235,7 +241,7 @@ export class AuthService {
       return this.http
         .delete<HttpResponse<Object>>(url, {
           observe: 'response',
-          headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
+          headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
         })
         .pipe(
           tap((resp: any) => {
@@ -246,7 +252,7 @@ export class AuthService {
               this.logout();
               this.showLoggedOutDialog()
             } else {
-              let token = err.headers.get('access-token')
+              let token = err.headers.get('Authorization')
               if (this.getAccessToken() && token) {
                 this.setAccessToken(token)
               }
@@ -283,7 +289,7 @@ export class AuthService {
           this.logout();
           this.showLoggedOutDialog()
         } else {
-          let token = err.headers.get('access-token')
+          let token = err.headers.get('Authorization')
           if (this.getAccessToken() && token) {
             this.setAccessToken(token)
           }
@@ -297,7 +303,7 @@ export class AuthService {
   //get token inside response when hit API
   getTokenInResponse(resp) {
     console.log('AuthService | getTokenInResponse');
-    let token = resp.headers.get('access-token')
+    let token = resp.headers.get('Authorization')
     if (token) {
       if (this.getAccessToken()) {
         this.setAccessToken(token)

@@ -520,6 +520,7 @@
     "imageNotExist": "image not exist",
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data failed",
+    "failedToProcessFile": "failed to process file",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -644,11 +645,12 @@
         "rejectFailed": "failed to reject change phone number request",
         "approveSuccess": "change phone number request successfully approved",
         "approveFailed": "failed to approve change phone number request",
-        "bulkRejectFailed": "failed to reject {{totalRequest}} requests",
-        "bulkRejectSuccess": "{{totalRequest}} requests are rejected",
-        "bulkApproveFailed": "failed to approve {{totalRequest}} requests",
-        "bulkApproveSuccess": "{{totalRequest}} requests are approved",
+        "bulkRejectFailed": "failed to reject requests",
+        "bulkRejectSuccess": "requests are rejected",
+        "bulkApproveFailed": "failed to approve requests",
+        "bulkApproveSuccess": "requests are approved",
         "totalRequestSelected": "{{totalRequest}} requests are selected",
+        "totalRequestFailed": "{{totalRequest}} requests failed",
         "confirmationModal": {
             "reject": {
                 "title": "Rejecting Confirmation",
@@ -846,6 +848,10 @@
         "01105": "missing required image parameter",
         "01106": "missing required end date parameter",
         "01107": "missing required instructions parameter",
-        "01108": "branch code already exist"
+        "01108": "branch code already exist",
+        "01109": "token expired",
+        "01110": "oid not registered",
+        "01111": "user data not found",
+        "01112" : "notification has already been sent to all recipients"
     }
 }

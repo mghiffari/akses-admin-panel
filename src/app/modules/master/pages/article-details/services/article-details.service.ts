@@ -50,7 +50,7 @@ export class ArticleDetailsService {
     private _snackBarService: MatSnackBar,
     private _routerService: Router,
     private _lovService: LovService,
-    private _articleService: ArticleService, 
+    private _articleService: ArticleService,
     private _fileMgtService: FileManagementService
   ) { }
 
@@ -58,7 +58,7 @@ export class ArticleDetailsService {
   getPageTitle(page: string) {
     console.log('ArticleDetailsService | getPageTitle');
     this.vCurrentPage = page;
-    if(page.includes("create")){
+    if (page.includes("create")) {
       this.translateText('articleDetailsScreen.createArticleTitle', 'vPageTitle');
     } else {
       this.translateText('articleDetailsScreen.updateArticleTitle', 'vPageTitle');
@@ -103,7 +103,7 @@ export class ArticleDetailsService {
   }
 
   //used to reset article data object
-  resetArticleData(){
+  resetArticleData() {
     console.log('ArticleDetailsService | resetArticleData');
     this.vArticleData = {
       category: "",
@@ -125,7 +125,7 @@ export class ArticleDetailsService {
   }
 
   //used to set article data object when update article
-  setArticleData(data){
+  setArticleData(data) {
     console.log('ArticleDetailService | setArticleData');
     this.vArticleData = {
       category: data.category,
@@ -170,7 +170,7 @@ export class ArticleDetailsService {
   }
 
   //used to reset article data when footer image check box clicked
-  resetFootImage(foot_image_flg: string, foot_image_content:string, foot_image_redirect: string){
+  resetFootImage(foot_image_flg: string, foot_image_content: string, foot_image_redirect: string) {
     console.log('ArticleDetailsService | resetFootImage');
     this.vArticleData.foot_image_flg = foot_image_flg;
     this.vArticleData.foot_image_content = foot_image_content;
@@ -178,7 +178,7 @@ export class ArticleDetailsService {
   }
 
   //used to reset article data when foot button check box clicked
-  resetFootButton(foot_button_flg: string, foot_button_content:string, foot_button_redirect:string){
+  resetFootButton(foot_button_flg: string, foot_button_content: string, foot_button_redirect: string) {
     console.log('ArticleDetailsService | resetFootButton');
     this.vArticleData.foot_button_flg = foot_button_flg;
     this.vArticleData.foot_button_content = foot_button_content;
@@ -186,7 +186,7 @@ export class ArticleDetailsService {
   }
 
   //used to preview article image when user choose image from the galery
-  previewImage(component:string, files) {
+  previewImage(component: string, files) {
     console.log('ArticleDetailsService | previewImage');
     var image: File = null;
     image = files;
@@ -196,7 +196,7 @@ export class ArticleDetailsService {
     var mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
       this._translateService.get('forms.articlePicture.errorType').subscribe(res => {
-        if(component === "article") {
+        if (component === "article") {
           this.vErrorMessage.imageArticle = res;
         } else {
           this.vErrorMessage.imageFooter = res;
@@ -208,7 +208,7 @@ export class ArticleDetailsService {
     reader.onload = (_event) => {
       var img = new Image();
       img.src = reader.result.toString();
-      if(component === "article") {
+      if (component === "article") {
         this.vArticleData.article_image = img.src;
       } else {
         this.vArticleData.foot_image_content = img.src;
@@ -219,78 +219,78 @@ export class ArticleDetailsService {
   }
 
   // used to compress image when user choose image from galery
-  compressImage(component:string, file:File){
+  compressImage(component: string, file: File) {
     console.log('ArticleDetailsService | compressImage');
     var compressedImage: File = null;
-    this._ng2ImgToolsService.compress([file], 0.2, true).subscribe( result =>{
-        compressedImage = result;
-        if(component === "article") {
-          this.vArticleImageUpload.component = "Article";
-          this.vArticleImageUpload.file = compressedImage;
-          this.vArticleImageUpload.url = this.vUpdateAricleImageURL;
-        } else if(component === "footer") {
-          this.vFooterUpload.component = "Article";
-          this.vFooterUpload.file = compressedImage;
-          this.vFooterUpload.url = this.vUpdateFooterURL;
-        }
-       }, error => {
-          console.error("Compression error:", error);
-          if(component === "article") {
-            this.vErrorMessage.imageArticle = error;
-          } else {
-            this.vErrorMessage.imageFooter = error;
-          }
-       }
+    this._ng2ImgToolsService.compress([file], 0.2, true).subscribe(result => {
+      compressedImage = result;
+      if (component === "article") {
+        this.vArticleImageUpload.component = "Article";
+        this.vArticleImageUpload.file = compressedImage;
+        this.vArticleImageUpload.url = this.vUpdateAricleImageURL;
+      } else if (component === "footer") {
+        this.vFooterUpload.component = "Article";
+        this.vFooterUpload.file = compressedImage;
+        this.vFooterUpload.url = this.vUpdateFooterURL;
+      }
+    }, error => {
+      console.error("Compression error:", error);
+      if (component === "article") {
+        this.vErrorMessage.imageArticle = error;
+      } else {
+        this.vErrorMessage.imageFooter = error;
+      }
+    }
     );
   }
 
   //used to disable save button
-  isDisableCreateArticle(){
+  isDisableCreateArticle() {
     console.log('ArticleDetailsService | isDisableCreateArticle');
     this.resetErrorMessage();
-    if(this.vArticleData.category === undefined || this.vArticleData.category === ''){
+    if (this.vArticleData.category === undefined || this.vArticleData.category === '') {
       return true;
-    } else if(this.vArticleData.title === undefined || this.vArticleData.title === ''){
+    } else if (this.vArticleData.title === undefined || this.vArticleData.title === '') {
       return true;
-    } else if(this.vArticleData.article_image === undefined || this.vArticleData.article_image === null || this.vArticleData.article_image == ''){
+    } else if (this.vArticleData.article_image === undefined || this.vArticleData.article_image === null || this.vArticleData.article_image == '') {
       return true;
-    } else if(this.vErrorMessage.imageArticle !== "") {
+    } else if (this.vErrorMessage.imageArticle !== "") {
       return true;
-    } else if(this.vArticleData.content === undefined || this.vArticleData.content === ''){
+    } else if (this.vArticleData.content === undefined || this.vArticleData.content === '') {
       return true;
     } else {
-      if(this.vArticleData.foot_text_flg.length > 0) {
-        if(this.vArticleData.foot_text_content === undefined || this.vArticleData.foot_text_content === '') {
+      if (this.vArticleData.foot_text_flg.length > 0) {
+        if (this.vArticleData.foot_text_content === undefined || this.vArticleData.foot_text_content === '') {
           return true;
-        } else if(this.vArticleData.foot_text_redirect === undefined || this.vArticleData.foot_text_redirect === ''){
+        } else if (this.vArticleData.foot_text_redirect === undefined || this.vArticleData.foot_text_redirect === '') {
           return true;
-        } else if(!this.vRegexURL.test(this.vArticleData.foot_text_redirect) && this.vArticleData.foot_text_flg == "ext") {
+        } else if (!this.vRegexURL.test(this.vArticleData.foot_text_redirect) && this.vArticleData.foot_text_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
             this.vErrorMessage.extUrlFooterText = res;
           })
           return true;
         }
       }
-      if(this.vArticleData.foot_image_flg != null) {
-        if(this.vArticleData.foot_image_content === undefined || this.vArticleData.foot_image_content === null) {
+      if (this.vArticleData.foot_image_flg != null) {
+        if (this.vArticleData.foot_image_content === undefined || this.vArticleData.foot_image_content === null) {
           return true;
-        } else if(this.vErrorMessage.imageFooter != "") {
+        } else if (this.vErrorMessage.imageFooter != "") {
           return true;
-        } else if(this.vArticleData.foot_image_redirect === undefined || this.vArticleData.foot_image_redirect === ''){
+        } else if (this.vArticleData.foot_image_redirect === undefined || this.vArticleData.foot_image_redirect === '') {
           return true;
-        } else if(!this.vRegexURL.test(this.vArticleData.foot_image_redirect) && this.vArticleData.foot_image_flg == "ext"){
+        } else if (!this.vRegexURL.test(this.vArticleData.foot_image_redirect) && this.vArticleData.foot_image_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
             this.vErrorMessage.extUrlFooterImage = res;
           })
           return true;
         }
       }
-      if(this.vArticleData.foot_button_flg.length > 0) {
-        if(this.vArticleData.foot_button_content === undefined || this.vArticleData.foot_button_content === '') {
+      if (this.vArticleData.foot_button_flg.length > 0) {
+        if (this.vArticleData.foot_button_content === undefined || this.vArticleData.foot_button_content === '') {
           return true;
-        } else if(this.vArticleData.foot_button_redirect === undefined || this.vArticleData.foot_button_redirect === ''){
+        } else if (this.vArticleData.foot_button_redirect === undefined || this.vArticleData.foot_button_redirect === '') {
           return true;
-        } else if(!this.vRegexURL.test(this.vArticleData.foot_button_redirect) && this.vArticleData.foot_button_flg == "ext") {
+        } else if (!this.vRegexURL.test(this.vArticleData.foot_button_redirect) && this.vArticleData.foot_button_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
             this.vErrorMessage.extUrlFooterButton = res;
           })
@@ -309,33 +309,33 @@ export class ArticleDetailsService {
     console.log('ArticleDetailsService | loadCategoryData');
     this.vLoadingFormStatus = true;
     this._lovService.getArticleCategory()
-    .subscribe(
-      (data: any) => {
-        try {
-          console.table(data);
-          this.vLoadingFormStatus = false;
-          this.vLovCategoryData = data.data[0].aks_adm_lovs;
-        } catch (error) {
-          console.table(error);
-        }
-      },
-      error => {
-        try {
-          this.vLoadingFormStatus = false;
-          console.error(error);
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'articleListScreen.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+      .subscribe(
+        (data: any) => {
+          try {
+            console.table(data);
+            this.vLoadingFormStatus = false;
+            this.vLovCategoryData = data.data[0].aks_adm_lovs;
+          } catch (error) {
+            console.table(error);
+          }
+        },
+        error => {
+          try {
+            this.vLoadingFormStatus = false;
+            console.error(error);
+            this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'articleListScreen.loadFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                }
               }
-            }
-          });
-        } catch (error) {
-          console.error(error);
+            });
+          } catch (error) {
+            console.error(error);
+          }
         }
-      }
-    )
+      )
   }
 
   //used to load moduls data
@@ -343,33 +343,33 @@ export class ArticleDetailsService {
     console.log('ArticleDetailsService | loadModuls');
     this.vLoadingFormStatus = true;
     this._lovService.getModuls()
-    .subscribe(
-      (data: any) => {
-        try {
-          console.table(data);
-          this.vLoadingFormStatus = false;
-          this.vLovModulsData = data.data[0].aks_adm_lovs;  
-        } catch (error) {
-          console.table(error);
-        }
-      },
-      error => {
-        try {
-          this.vLoadingFormStatus = false;
-          console.error(error);
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'articleListScreen.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+      .subscribe(
+        (data: any) => {
+          try {
+            console.table(data);
+            this.vLoadingFormStatus = false;
+            this.vLovModulsData = data.data[0].aks_adm_lovs;
+          } catch (error) {
+            console.table(error);
+          }
+        },
+        error => {
+          try {
+            this.vLoadingFormStatus = false;
+            console.error(error);
+            this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'articleListScreen.loadFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                }
               }
-            }
-          });
-        } catch (error) {
-          console.error(error);
+            });
+          } catch (error) {
+            console.error(error);
+          }
         }
-      }
-    );
+      );
   }
 
   //load article data by id when first load update
@@ -379,50 +379,50 @@ export class ArticleDetailsService {
     this.vLoadingFormStatus = true;
     let promise = new Promise((resolve, reject) => {
       this._articleService.loadArticleById(id)
-      .subscribe(
-        (data: any) => {
-          try {           
-            if(data.data.clickable_flg === 1) {
-              data.data.clickable_flg = true;
-            } else {
-              data.data.clickable_flg = false;
-            }
-            if(data.data.clickable_is_detail === 1) {
-              data.data.clickable_is_detail = true;
-            } else {
-              data.data.clickable_is_detail = false;
-            }
-            if(data.data.clickable_is_internal === 1) {
-              data.data.clickable_is_internal = true;
-            } else {
-              data.data.clickable_is_internal = false;
-            }
-            this.setArticleData(data.data);
-            this.vLoadingFormStatus = false;
-            resolve();
-          } catch (error) {
-            console.table(error);
-            reject();
-          }
-        },
-        error => {
-          try {
-            console.table(error);
-            this.vLoadingStatus = false;
-            this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'articleDetailsScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
-                }
+        .subscribe(
+          (data: any) => {
+            try {
+              if (data.data.clickable_flg === 1) {
+                data.data.clickable_flg = true;
+              } else {
+                data.data.clickable_flg = false;
               }
-            });
-          } catch (error) {
-            console.table(error);
-            reject();
+              if (data.data.clickable_is_detail === 1) {
+                data.data.clickable_is_detail = true;
+              } else {
+                data.data.clickable_is_detail = false;
+              }
+              if (data.data.clickable_is_internal === 1) {
+                data.data.clickable_is_internal = true;
+              } else {
+                data.data.clickable_is_internal = false;
+              }
+              this.setArticleData(data.data);
+              this.vLoadingFormStatus = false;
+              resolve();
+            } catch (error) {
+              console.table(error);
+              reject();
+            }
+          },
+          error => {
+            try {
+              console.table(error);
+              this.vLoadingStatus = false;
+              this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'articleDetailsScreen.loadFailed',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                  }
+                }
+              });
+            } catch (error) {
+              console.table(error);
+              reject();
+            }
           }
-        }
-      )
+        )
     });
     return promise;
   }
@@ -430,39 +430,76 @@ export class ArticleDetailsService {
   //used to upload image (article and footer using same function)
   uploadImage(component: string, vImageUpload: ImageUpload) {
     console.log('ArticleDetailService | uploadImage');
-    var vFormDataImageUpload = new FormData();
-    vFormDataImageUpload.append('component', vImageUpload.component);
-    vFormDataImageUpload.append('file', vImageUpload.file);
-    if(this.vCurrentPage.includes("update")){
-      vFormDataImageUpload.append('url', vImageUpload.url);
-    }
     let promise = new Promise((resolve, reject) => {
-      this._fileMgtService.uploadFile(vFormDataImageUpload)
-      .subscribe(
-        (data: any) => {
-          console.table(data);
-          try {           
-            if(component === "article") {
-              this.vArticleData.article_image = data.data.url;
-            } else {
-              this.vArticleData.foot_image_content = data.data.url;
-            }
-            resolve();
-          } catch (error) {
-            console.table(error);
-            reject();
-          }
-        }, 
-        error => {
+      this._fileMgtService.getUploadUrl(vImageUpload.file, vImageUpload.component, this.vCurrentPage.includes("update") ? vImageUpload.url : null).subscribe(
+        response => {
           try {
-            if(component === "footer") {
+            console.table(response)
+            let url = response.data.signurl
+            let fileUri = url.split('?')[0]
+            this._fileMgtService.uploadFile(url, vImageUpload.file).subscribe(
+              response => {
+                try {
+                  if (component === "article") {
+                    this.vArticleData.article_image = fileUri;
+                  } else {
+                    this.vArticleData.foot_image_content = fileUri;
+                  }
+                  resolve();
+                } catch (error) {
+                  console.table(error);
+                  reject();
+                }
+              }, error => {
+                console.table(error)
+                try {
+                  if (component === "footer") {
+                    this.vErrorMessage.imageArticle = error.error.err_code;
+                    this.vLoadingStatus = false;
+                  } else {
+                    this.vErrorMessage.imageFooter = error.error.err_code;
+                    this.vLoadingStatus = false;
+                  }
+                  if (this.vCurrentPage.includes("create")) {
+                    this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'articleDetailsScreen.createFailed',
+                        content: {
+                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                        }
+                      }
+                    });
+                  } else {
+                    this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'articleDetailsScreen.updateFailed',
+                        content: {
+                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                        }
+                      }
+                    });
+                  }
+                } catch (error) {
+                  console.table(error);
+                } finally {
+                  reject();
+                }
+              }
+            )
+          } catch (error) {
+            console.error(error)
+            reject()
+          }
+        }, error => {
+          try {
+            if (component === "footer") {
               this.vErrorMessage.imageArticle = error.error.err_code;
               this.vLoadingStatus = false;
             } else {
               this.vErrorMessage.imageFooter = error.error.err_code;
               this.vLoadingStatus = false;
             }
-            if(this.vCurrentPage.includes("create")) {
+            if (this.vCurrentPage.includes("create")) {
               this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
                 data: {
                   title: 'articleDetailsScreen.createFailed',
@@ -483,10 +520,11 @@ export class ArticleDetailsService {
             }
           } catch (error) {
             console.table(error);
+          } finally {
+            reject();
           }
-          reject();
         }
-      );
+      )
     });
     return promise;
   }
@@ -495,39 +533,39 @@ export class ArticleDetailsService {
   createArticle() {
     console.log('ArticleDetailsService | createArticle');
     this._articleService.createArticle(this.vArticleData)
-    .subscribe(
-      (data: any) => {
-        console.table(data);
-        this.vLoadingStatus = false;
-        let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
-          data: {
-            title: 'success',
-            content: {
-              text: 'articleDetailsScreen.successCreateArticle'
-            }
-          }
-        })
-        snackbarSucess.afterDismissed().subscribe(() => {
-          this.goToListScreen();
-        })
-      },
-      error => {
-        try {
-          console.table(error);
+      .subscribe(
+        (data: any) => {
+          console.table(data);
           this.vLoadingStatus = false;
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+          let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
             data: {
-              title: 'articleDetailsScreen.createFailed',
+              title: 'success',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                text: 'articleDetailsScreen.successCreateArticle'
               }
             }
-          });
-        } catch (error) {
-          console.table(error);
+          })
+          snackbarSucess.afterDismissed().subscribe(() => {
+            this.goToListScreen();
+          })
+        },
+        error => {
+          try {
+            console.table(error);
+            this.vLoadingStatus = false;
+            this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'articleDetailsScreen.createFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                }
+              }
+            });
+          } catch (error) {
+            console.table(error);
+          }
         }
-      }
-    );
+      );
   }
 
   //used to hit update article API
@@ -552,49 +590,49 @@ export class ArticleDetailsService {
       foot_button_content: this.vArticleData.foot_button_content,
     }
     this._articleService.updateArticle(vUpdateArticleData)
-    .subscribe(
-      (data: any) => {
-        console.table(data);
-        this.vLoadingStatus = false;
-        let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
-          data: {
-            title: 'success',
-            content: {
-              text: 'articleDetailsScreen.successUpdateArticle'
-            }
-          }
-        })
-        snackbarSucess.afterDismissed().subscribe(() => {
-          this.goToListScreen();
-        })
-      },
-      error => {
-        try {
+      .subscribe(
+        (data: any) => {
+          console.table(data);
           this.vLoadingStatus = false;
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+          let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
             data: {
-              title: 'articleDetailsScreen.updateFailed',
+              title: 'success',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                text: 'articleDetailsScreen.successUpdateArticle'
               }
             }
-          });
-        } catch (error) {
-          console.table(error);
+          })
+          snackbarSucess.afterDismissed().subscribe(() => {
+            this.goToListScreen();
+          })
+        },
+        error => {
+          try {
+            this.vLoadingStatus = false;
+            this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'articleDetailsScreen.updateFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                }
+              }
+            });
+          } catch (error) {
+            console.table(error);
+          }
         }
-      }
-    );
+      );
   }
 
   //used when button save clicked
   buttonSave() {
     console.log('ArticleDetailService | buttonSave');
     this.vLoadingStatus = true;
-    if(this.vArticleData.article_image.includes("data") && (this.vArticleData.foot_image_content != undefined && this.vArticleData.foot_image_content != "")){
-      if(this.vArticleData.foot_image_content.includes("data")) {
+    if (this.vArticleData.article_image.includes("data") && (this.vArticleData.foot_image_content != undefined && this.vArticleData.foot_image_content != "")) {
+      if (this.vArticleData.foot_image_content.includes("data")) {
         this.uploadImage("article", this.vArticleImageUpload).then(response => {
           this.uploadImage("footer", this.vFooterUpload).then(response => {
-            if(this.vCurrentPage.includes("create")) {
+            if (this.vCurrentPage.includes("create")) {
               this.createArticle();
             } else {
               // this.updateArticle();
@@ -608,16 +646,16 @@ export class ArticleDetailsService {
           console.table(err);
         });
       }
-    } else if(!this.vArticleData.article_image.includes("data") && (this.vArticleData.foot_image_content === undefined || this.vArticleData.foot_image_content == "" || this.vArticleData.foot_image_content == null)) {
-      if(this.vCurrentPage.includes("create")) {
+    } else if (!this.vArticleData.article_image.includes("data") && (this.vArticleData.foot_image_content === undefined || this.vArticleData.foot_image_content == "" || this.vArticleData.foot_image_content == null)) {
+      if (this.vCurrentPage.includes("create")) {
         this.createArticle();
       } else {
         this.updateArticle();
       }
     } else {
-      if(this.vArticleData.article_image.includes("data")) {
+      if (this.vArticleData.article_image.includes("data")) {
         this.uploadImage("article", this.vArticleImageUpload).then(response => {
-          if(this.vCurrentPage.includes("create")) {
+          if (this.vCurrentPage.includes("create")) {
             this.createArticle();
           } else {
             this.updateArticle();
@@ -626,9 +664,9 @@ export class ArticleDetailsService {
           this.vLoadingStatus = false;
           console.table(err);
         });
-      } else if(this.vArticleData.foot_image_content.includes("data")) {
+      } else if (this.vArticleData.foot_image_content.includes("data")) {
         this.uploadImage("footer", this.vFooterUpload).then(response => {
-          if(this.vCurrentPage.includes("create")) {
+          if (this.vCurrentPage.includes("create")) {
             this.createArticle();
           } else {
             this.updateArticle();
@@ -638,7 +676,7 @@ export class ArticleDetailsService {
           console.table(err);
         });
       } else {
-        if(this.vCurrentPage.includes("create")) {
+        if (this.vCurrentPage.includes("create")) {
           this.createArticle();
         } else {
           this.updateArticle();
@@ -648,7 +686,7 @@ export class ArticleDetailsService {
   }
 
   //used to translate text using localization
-  translateText(text: string, variableToAssign: string){
+  translateText(text: string, variableToAssign: string) {
     console.log('ArticleDetailsService | translateText');
     return this._translateService.get(text).subscribe(res => {
       this[variableToAssign] = res;

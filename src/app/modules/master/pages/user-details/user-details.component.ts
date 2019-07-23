@@ -160,8 +160,8 @@ export class UserDetailsComponent implements OnInit {
         )
     } else {
       let editedUser = {
-        firstName: this.userModel.firstName,
-        lastName: this.userModel.lastName,
+        firstname: this.userModel.firstName,
+        lastname: this.userModel.lastName,
         id: this.id
       }
       this.onSubmittingForm = true;

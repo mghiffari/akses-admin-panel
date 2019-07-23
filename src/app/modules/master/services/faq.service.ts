@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { FAQ } from '../models/faq';
+import Utils from '../../../shared/common/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FAQService {
-  faqApiUrl = environment.apiurl + 'faq/';
+  faqApiUrl = environment.apiurl + 'faq';
 
   //constructor
   constructor(private authService: AuthService) { 
@@ -16,7 +17,7 @@ export class FAQService {
 
   //get faq list with pagination and search
   getFaqList(page, pageSize, search) {
-    let url = this.faqApiUrl + page + '/' + pageSize + '/' + search;
+    let url = this.faqApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("FAQService | getFaqList ", url);
     return this.authService.wrapTokenGetApi(url)
   }
@@ -29,7 +30,7 @@ export class FAQService {
 
   //get FAQ by id
   getFaqById(id){
-    let url = this.faqApiUrl + id;
+    let url = this.faqApiUrl + '/' + id;
     console.log("FAQService | getFaqById ", url);
     return this.authService.wrapTokenGetApi(url);
   }

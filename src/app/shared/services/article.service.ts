@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import Utils from '../common/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
-  articleApiUrl = environment.apiurl + 'article/';
-  articleCategoryApiUrl = this.articleApiUrl + 'category/';
+  articleApiUrl = environment.apiurl + 'article';
+  articleCategoryApiUrl = this.articleApiUrl + '/category';
 
   //constructor
   constructor(private authService: AuthService) { 
@@ -16,14 +17,14 @@ export class ArticleService {
 
   //get article list with pagination and search
   getArticleList(page, pageSize, search) {
-    let url = this.articleApiUrl + page + '/' + pageSize + '/' + search;
+    let url = this.articleApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("ArticleService | getArticleList ", url);
     return this.authService.wrapTokenGetApi(url)
   }
 
   //load article
   loadArticleById(id: string) {
-    let url = this.articleApiUrl+id;
+    let url = this.articleApiUrl + '/' + id;
     console.log("ArticleService | loadArticleById " + url);
     return this.authService.wrapTokenGetApi(url);
   }
@@ -44,7 +45,7 @@ export class ArticleService {
 
   //get article list by category
   getArticlesByCategory(category){
-    let url = this.articleCategoryApiUrl + category;
+    let url = this.articleCategoryApiUrl + '/' + category;
     console.log("ArticleService | getArticlesByCategory ", url);
     return this.authService.wrapTokenGetApi(url)
   }

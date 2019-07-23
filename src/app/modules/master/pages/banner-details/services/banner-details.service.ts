@@ -20,7 +20,7 @@ export class BannerDetailsService {
   vBannerData: BannerData = new BannerData();
   vUpdateBannerData: UpdateBannerData = new UpdateBannerData();
 
-  vOrders : Array<{
+  vOrders: Array<{
     value: string;
     viewValue: number;
   }>;
@@ -60,7 +60,7 @@ export class BannerDetailsService {
   getPageTitle(page: string) {
     console.log('BannerDetailService | getPageTitle');
     this.vCurrentPage = page;
-    if(page.includes("create")){
+    if (page.includes("create")) {
       this.translateText('bannersDetailScreen.createBannerTitle', 'vPageTitle');
     } else {
       this.translateText('bannersDetailScreen.updateBannerTitle', 'vPageTitle');
@@ -69,7 +69,7 @@ export class BannerDetailsService {
   }
 
   //used to get banner data object
-  getCreateBannerData(){
+  getCreateBannerData() {
     console.log('BannerDetailService | getCreateBannerData')
     return this.vBannerData;
   }
@@ -99,7 +99,7 @@ export class BannerDetailsService {
   }
 
   //used to translate text using localization
-  translateText(text: string, variableToAssign: string){
+  translateText(text: string, variableToAssign: string) {
     console.log('BannerDetailService | translateText');
     return this._translateService.get(text).subscribe(res => {
       this[variableToAssign] = res;
@@ -113,7 +113,7 @@ export class BannerDetailsService {
   }
 
   //used to reset banner data when clickable check box clicked
-  resetClickable(clickable_is_detail:boolean, clickable_is_internal:boolean, clickable_is_redirect:string) {
+  resetClickable(clickable_is_detail: boolean, clickable_is_internal: boolean, clickable_is_redirect: string) {
     console.log('BannerDetailService | resetClickable');
     this.vBannerData.clickable_is_detail = clickable_is_detail;
     this.vBannerData.clickable_is_internal = clickable_is_internal;
@@ -121,7 +121,7 @@ export class BannerDetailsService {
   }
 
   //used to reset banner data when detail page radio button clicked
-  resetDetailPage(description: string){
+  resetDetailPage(description: string) {
     console.log('BannerDetailService | resetDetailPage');
     this.vBannerData.description = description;
   }
@@ -135,7 +135,7 @@ export class BannerDetailsService {
   }
 
   //used to reset banner data when footer image check box clicked
-  resetFootImage(foot_image_flg: string, foot_image_content:string, foot_image_redirect: string){
+  resetFootImage(foot_image_flg: string, foot_image_content: string, foot_image_redirect: string) {
     console.log('BannerDetailService | resetFootImage');
     this.vBannerData.foot_image_flg = foot_image_flg;
     this.vBannerData.foot_image_content = foot_image_content;
@@ -143,7 +143,7 @@ export class BannerDetailsService {
   }
 
   //used to reset banner data when foot button check box clicked
-  resetFootButton(foot_button_flg: string, foot_button_content:string, foot_button_redirect:string){
+  resetFootButton(foot_button_flg: string, foot_button_content: string, foot_button_redirect: string) {
     console.log('BannerDetailService | resetFootButton');
     this.vBannerData.foot_button_flg = foot_button_flg;
     this.vBannerData.foot_button_content = foot_button_content;
@@ -151,7 +151,7 @@ export class BannerDetailsService {
   }
 
   //used to reset banner data object
-  resetCreateBannerData(){
+  resetCreateBannerData() {
     console.log('BannerDetailService | resetCreateBannerData');
     this.vBannerData = {
       title: "",
@@ -177,7 +177,7 @@ export class BannerDetailsService {
   }
 
   //used to set banner data object when update banner
-  setBannerData(data){
+  setBannerData(data) {
     console.log('BannerDetailService | setBannerData');
     this.vBannerData = {
       title: data.title,
@@ -218,31 +218,31 @@ export class BannerDetailsService {
   }
 
   //used to disable save button
-  isDisableCreateBanner(){
+  isDisableCreateBanner() {
     console.log('BannerDetailService | isDisableCreateBanner');
     this.resetErrorMessage();
-    if(this.vBannerData.title === undefined || this.vBannerData.title === ''){
+    if (this.vBannerData.title === undefined || this.vBannerData.title === '') {
       return true;
-    } else if(this.vBannerData.banner === undefined || this.vBannerData.banner === null){
+    } else if (this.vBannerData.banner === undefined || this.vBannerData.banner === null) {
       return true;
-    } else if(this.vErrorMessage.imageBanner !== "") {
+    } else if (this.vErrorMessage.imageBanner !== "") {
       return true;
-    } else if(this.vBannerData.order === undefined || this.vBannerData.order === 0){
+    } else if (this.vBannerData.order === undefined || this.vBannerData.order === 0) {
       return true;
-    } else if(this.vBannerData.start_date === undefined || this.vBannerData.start_date === ''){
+    } else if (this.vBannerData.start_date === undefined || this.vBannerData.start_date === '') {
       return true;
-    } else if(this.vBannerData.end_date === undefined || this.vBannerData.end_date === ''){
+    } else if (this.vBannerData.end_date === undefined || this.vBannerData.end_date === '') {
       return true;
-    } else if(this.vBannerData.clickable_flg){
-      if(this.vBannerData.clickable_is_detail === undefined || this.vBannerData.clickable_is_detail === null){
+    } else if (this.vBannerData.clickable_flg) {
+      if (this.vBannerData.clickable_is_detail === undefined || this.vBannerData.clickable_is_detail === null) {
         return true;
       } else {
-        if(!this.vBannerData.clickable_is_detail){
-          if(this.vBannerData.clickable_is_internal === undefined || this.vBannerData.clickable_is_internal === null){
+        if (!this.vBannerData.clickable_is_detail) {
+          if (this.vBannerData.clickable_is_internal === undefined || this.vBannerData.clickable_is_internal === null) {
             return true;
-          } else if(this.vBannerData.clickable_redirect === undefined || this.vBannerData.clickable_redirect === '') {
+          } else if (this.vBannerData.clickable_redirect === undefined || this.vBannerData.clickable_redirect === '') {
             return true;
-          } else if(!this.vRegexURL.test(this.vBannerData.clickable_redirect) && !this.vBannerData.clickable_is_internal) {
+          } else if (!this.vRegexURL.test(this.vBannerData.clickable_redirect) && !this.vBannerData.clickable_is_internal) {
             this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
               this.vErrorMessage.extUrlShow = res;
             })
@@ -250,42 +250,42 @@ export class BannerDetailsService {
           }
           this.resetErrorMessage();
           return false;
-        } else if(this.vBannerData.clickable_is_detail) {
-          if(this.vBannerData.description === undefined || this.vBannerData.description === '') {
+        } else if (this.vBannerData.clickable_is_detail) {
+          if (this.vBannerData.description === undefined || this.vBannerData.description === '') {
             return true;
           }
-          if(this.vBannerData.foot_text_flg.length > 0) {
-            if(this.vBannerData.foot_text_content === undefined || this.vBannerData.foot_text_content === '') {
+          if (this.vBannerData.foot_text_flg.length > 0) {
+            if (this.vBannerData.foot_text_content === undefined || this.vBannerData.foot_text_content === '') {
               return true;
-            } else if(this.vBannerData.foot_text_redirect === undefined || this.vBannerData.foot_text_redirect === ''){
+            } else if (this.vBannerData.foot_text_redirect === undefined || this.vBannerData.foot_text_redirect === '') {
               return true;
-            } else if(!this.vRegexURL.test(this.vBannerData.foot_text_redirect) && this.vBannerData.foot_text_flg == "ext") {
+            } else if (!this.vRegexURL.test(this.vBannerData.foot_text_redirect) && this.vBannerData.foot_text_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
                 this.vErrorMessage.extUrlFooterText = res;
               })
               return true;
             }
           }
-          if(this.vBannerData.foot_image_flg != null) {
-            if(this.vBannerData.foot_image_content === undefined || this.vBannerData.foot_image_content === null) {
+          if (this.vBannerData.foot_image_flg != null) {
+            if (this.vBannerData.foot_image_content === undefined || this.vBannerData.foot_image_content === null) {
               return true;
-            } else if(this.vErrorMessage.imageFooter != "") {
+            } else if (this.vErrorMessage.imageFooter != "") {
               return true;
-            } else if(this.vBannerData.foot_image_redirect === undefined || this.vBannerData.foot_image_redirect === ''){
+            } else if (this.vBannerData.foot_image_redirect === undefined || this.vBannerData.foot_image_redirect === '') {
               return true;
-            } else if(!this.vRegexURL.test(this.vBannerData.foot_image_redirect) && this.vBannerData.foot_image_flg == "ext"){
+            } else if (!this.vRegexURL.test(this.vBannerData.foot_image_redirect) && this.vBannerData.foot_image_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
                 this.vErrorMessage.extUrlFooterImage = res;
               })
               return true;
             }
           }
-          if(this.vBannerData.foot_button_flg.length > 0) {
-            if(this.vBannerData.foot_button_content === undefined || this.vBannerData.foot_button_content === '') {
+          if (this.vBannerData.foot_button_flg.length > 0) {
+            if (this.vBannerData.foot_button_content === undefined || this.vBannerData.foot_button_content === '') {
               return true;
-            } else if(this.vBannerData.foot_button_redirect === undefined || this.vBannerData.foot_button_redirect === ''){
+            } else if (this.vBannerData.foot_button_redirect === undefined || this.vBannerData.foot_button_redirect === '') {
               return true;
-            } else if(!this.vRegexURL.test(this.vBannerData.foot_button_redirect) && this.vBannerData.foot_button_flg == "ext") {
+            } else if (!this.vRegexURL.test(this.vBannerData.foot_button_redirect) && this.vBannerData.foot_button_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
                 this.vErrorMessage.extUrlFooterButton = res;
               })
@@ -304,16 +304,16 @@ export class BannerDetailsService {
   }
 
   //used to load orders data
-  loadOrders(){
+  loadOrders() {
     console.log('BannerDetailService | loadOrders');
     this.vOrders = [
-      {value: 'order-0', viewValue: 1},
-      {value: 'order-1', viewValue: 2},
-      {value: 'order-2', viewValue: 3},
-      {value: 'order-3', viewValue: 4},
-      {value: 'order-4', viewValue: 5},
-      {value: 'order-5', viewValue: 6},
-      {value: 'order-6', viewValue: 7},
+      { value: 'order-0', viewValue: 1 },
+      { value: 'order-1', viewValue: 2 },
+      { value: 'order-2', viewValue: 3 },
+      { value: 'order-3', viewValue: 4 },
+      { value: 'order-4', viewValue: 5 },
+      { value: 'order-5', viewValue: 6 },
+      { value: 'order-6', viewValue: 7 },
     ];
   }
 
@@ -322,72 +322,20 @@ export class BannerDetailsService {
     console.log('BannerDetailService | loadModuls');
     this.vLoadingFormStatus = true;
     this._lovService.getModuls()
-    .subscribe(
-      (data: any) => {
-        try {
-          console.table(data);
-          this.vLoadingFormStatus = false;
-          this.vLovModulsData = data.data[0].aks_adm_lovs;  
-        } catch (error) {
-          console.table(error);
-        }
-      },
-      error => {
-        try {
-          this.vLoadingFormStatus = false;
-          console.error(error);
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'bannersDetailScreen.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
-              }
-            }
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    );
-  }
-
-  //used to load banner data by id from sevices
-  loadBannerById(id: string) {
-    console.log('BannerDetailService | loadBannerById');
-    this.vUpdateBannerData.id = id;
-    this.vLoadingFormStatus = true;
-    let promise = new Promise((resolve, reject) => {
-      this._bannerService.loadBannerById(id)
       .subscribe(
         (data: any) => {
-          try {           
-            if(data.data.clickable_flg === 1) {
-              data.data.clickable_flg = true;
-            } else {
-              data.data.clickable_flg = false;
-            }
-            if(data.data.clickable_is_detail === 1) {
-              data.data.clickable_is_detail = true;
-            } else {
-              data.data.clickable_is_detail = false;
-            }
-            if(data.data.clickable_is_internal === 1) {
-              data.data.clickable_is_internal = true;
-            } else {
-              data.data.clickable_is_internal = false;
-            }
-            this.setBannerData(data.data);
+          try {
+            console.table(data);
             this.vLoadingFormStatus = false;
-            resolve();
+            this.vLovModulsData = data.data[0].aks_adm_lovs;
           } catch (error) {
             console.table(error);
-            reject();
           }
         },
         error => {
           try {
-            console.table(error);
-            this.vLoadingStatus = false;
+            this.vLoadingFormStatus = false;
+            console.error(error);
             this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'bannersDetailScreen.loadFailed',
@@ -397,17 +345,69 @@ export class BannerDetailsService {
               }
             });
           } catch (error) {
-            console.table(error);
-            reject();
+            console.error(error);
           }
         }
-      )
+      );
+  }
+
+  //used to load banner data by id from sevices
+  loadBannerById(id: string) {
+    console.log('BannerDetailService | loadBannerById');
+    this.vUpdateBannerData.id = id;
+    this.vLoadingFormStatus = true;
+    let promise = new Promise((resolve, reject) => {
+      this._bannerService.loadBannerById(id)
+        .subscribe(
+          (data: any) => {
+            try {
+              if (data.data.clickable_flg === 1) {
+                data.data.clickable_flg = true;
+              } else {
+                data.data.clickable_flg = false;
+              }
+              if (data.data.clickable_is_detail === 1) {
+                data.data.clickable_is_detail = true;
+              } else {
+                data.data.clickable_is_detail = false;
+              }
+              if (data.data.clickable_is_internal === 1) {
+                data.data.clickable_is_internal = true;
+              } else {
+                data.data.clickable_is_internal = false;
+              }
+              this.setBannerData(data.data);
+              this.vLoadingFormStatus = false;
+              resolve();
+            } catch (error) {
+              console.table(error);
+              reject();
+            }
+          },
+          error => {
+            try {
+              console.table(error);
+              this.vLoadingStatus = false;
+              this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'bannersDetailScreen.loadFailed',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                  }
+                }
+              });
+            } catch (error) {
+              console.table(error);
+              reject();
+            }
+          }
+        )
     });
     return promise;
   }
 
   //used to preview banner image when user choose image from the galery
-  previewImage(component:string, files) {
+  previewImage(component: string, files) {
     console.log('BannerDetailService | previewImage');
     var image: File = null;
     image = files;
@@ -417,7 +417,7 @@ export class BannerDetailsService {
     var mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
       this._translateService.get('forms.homeBanner.errorType').subscribe(res => {
-        if(component === "banner") {
+        if (component === "banner") {
           this.vErrorMessage.imageBanner = res;
         } else {
           this.vErrorMessage.imageFooter = res;
@@ -442,7 +442,7 @@ export class BannerDetailsService {
       //     return;
       //   }
       // }
-      if(component === "banner") {
+      if (component === "banner") {
         this.vBannerData.banner = img.src;
       } else {
         this.vBannerData.foot_image_content = img.src;
@@ -453,72 +453,109 @@ export class BannerDetailsService {
   }
 
   //used to compress image when user choose image from galery
-  compressImage(component:string, file:File){
+  compressImage(component: string, file: File) {
     console.log('BannerDetailService | compressImage');
     var compressedImage: File = null;
-    this._ng2ImgToolsService.compress([file], 0.2, true).subscribe( result =>{
-        compressedImage = result;
-        if(component === "banner") {
-          this.vBannerUpload.component = "Banner";
-          this.vBannerUpload.file = compressedImage;
-          this.vBannerUpload.url = this.vUpdateBannerURL;
-        } else if(component === "footer") {
-          this.vFooterUpload.component = "Banner";
-          this.vFooterUpload.file = compressedImage;
-          this.vFooterUpload.url = this.vUpdateFooterURL;
-        }
-       }, error => {
-          console.error("Compression error:", error);
-          if(component === "banner") {
-            this.vErrorMessage.imageBanner = error;
-          } else {
-            this.vErrorMessage.imageFooter = error;
-          }
-       }
+    this._ng2ImgToolsService.compress([file], 0.2, true).subscribe(result => {
+      compressedImage = result;
+      if (component === "banner") {
+        this.vBannerUpload.component = "Banner";
+        this.vBannerUpload.file = compressedImage;
+        this.vBannerUpload.url = this.vUpdateBannerURL;
+      } else if (component === "footer") {
+        this.vFooterUpload.component = "Banner";
+        this.vFooterUpload.file = compressedImage;
+        this.vFooterUpload.url = this.vUpdateFooterURL;
+      }
+    }, error => {
+      console.error("Compression error:", error);
+      if (component === "banner") {
+        this.vErrorMessage.imageBanner = error;
+      } else {
+        this.vErrorMessage.imageFooter = error;
+      }
+    }
     );
   }
 
   //used to upload image (banner and footer using same function)
   uploadImage(component: string, vImageUpload: ImageUpload) {
     console.log('BannerDetailService | uploadImage');
-    var vFormDataImageUpload = new FormData();
-    vFormDataImageUpload.append('component', vImageUpload.component);
-    vFormDataImageUpload.append('file', vImageUpload.file);
-    if(this.vCurrentPage.includes("update")){
-      vFormDataImageUpload.append('url', vImageUpload.url);
-    }
     let promise = new Promise((resolve, reject) => {
-      this._fileMgtService.uploadFile(vFormDataImageUpload)
-      .subscribe(
-        (data: any) => {
-          console.table(data);
-          try {           
-            if(component === "banner") {
-              this.vBannerData.banner = data.data.url;
-            } else {
-              this.vBannerData.foot_image_content = data.data.url;
-            }
-            resolve();
-          } catch (error) {
-            console.table(error);
-            reject();
-          }
-        }, 
-        error => {
+      this._fileMgtService.getUploadUrl(vImageUpload.file, vImageUpload.component, this.vCurrentPage.includes("update") ? vImageUpload.url : null).subscribe(
+        response => {
           try {
-            if(component === "footer") {
+            console.table(response)
+            let url = response.data.signurl
+            let fileUri = url.split('?')[0]
+            this._fileMgtService.uploadFile(url, vImageUpload.file).subscribe(
+              response => {
+                try {
+                  if (component === "banner") {
+                    this.vBannerData.banner = fileUri;
+                  } else {
+                    this.vBannerData.foot_image_content = fileUri;
+                  }
+                  resolve();
+                } catch (error) {
+                  console.table(error);
+                  reject();
+                }
+              }, error => {
+                console.table(error)
+                try {
+                  if (component === "footer") {
+                    this.vErrorMessage.imageBanner = error.error.err_code;
+                    this.vLoadingStatus = false;
+                  } else {
+                    this.vErrorMessage.imageFooter = error.error.err_code;
+                    this.vLoadingStatus = false;
+                  }
+                  if (this.vCurrentPage.includes("create")) {
+                    this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'bannersDetailScreen.createFailed',
+                        content: {
+                          text: 'failedToProcessFile'
+                        }
+                      }
+                    });
+                  } else {
+                    this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'bannersDetailScreen.updateFailed',
+                        content: {
+                          text: 'failedToProcessFile'
+                        }
+                      }
+                    });
+                  }
+                } catch (error) {
+                  console.table(error);
+                } finally {
+                  reject();
+                }
+              }
+            )
+          } catch (error) {
+            console.error(error)
+            reject()
+          }
+        }, error => {
+          try {
+            if (component === "footer") {
               this.vErrorMessage.imageBanner = error.error.err_code;
               this.vLoadingStatus = false;
             } else {
               this.vErrorMessage.imageFooter = error.error.err_code;
               this.vLoadingStatus = false;
             }
-            if(this.vCurrentPage.includes("create")) {
+            if (this.vCurrentPage.includes("create")) {
               this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
                 data: {
                   title: 'bannersDetailScreen.createFailed',
                   content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                    text: 'failedToProcessFile'
                   }
                 }
               });
@@ -527,17 +564,18 @@ export class BannerDetailsService {
                 data: {
                   title: 'bannersDetailScreen.updateFailed',
                   content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                    text: 'failedToProcessFile'
                   }
                 }
               });
             }
           } catch (error) {
             console.table(error);
+          } finally {
+            reject();
           }
-          reject();
         }
-      );
+      )
     });
     return promise;
   }
@@ -546,39 +584,39 @@ export class BannerDetailsService {
   createBanner() {
     console.log('BannerDetailService | createBanner');
     this._bannerService.createBanner(this.vBannerData)
-    .subscribe(
-      (data: any) => {
-        console.table(data);
-        this.vLoadingStatus = false;
-        let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
-          data: {
-            title: 'success',
-            content: {
-              text: 'bannersDetailScreen.successCreateBanner'
-            }
-          }
-        })
-        snackbarSucess.afterDismissed().subscribe(() => {
-          this.goToListScreen();
-        })
-      },
-      error => {
-        try {
-          console.table(error);
+      .subscribe(
+        (data: any) => {
+          console.table(data);
           this.vLoadingStatus = false;
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+          let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
             data: {
-              title: 'bannersDetailScreen.createFailed',
+              title: 'success',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                text: 'bannersDetailScreen.successCreateBanner'
               }
             }
-          });
-        } catch (error) {
-          console.table(error);
+          })
+          snackbarSucess.afterDismissed().subscribe(() => {
+            this.goToListScreen();
+          })
+        },
+        error => {
+          try {
+            console.table(error);
+            this.vLoadingStatus = false;
+            this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'bannersDetailScreen.createFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                }
+              }
+            });
+          } catch (error) {
+            console.table(error);
+          }
         }
-      }
-    );
+      );
   }
 
   //used to hit update banner API
@@ -607,49 +645,49 @@ export class BannerDetailsService {
       foot_button_content: this.vBannerData.foot_button_content,
     }
     this._bannerService.updateBanner(this.vUpdateBannerData)
-    .subscribe(
-      (data: any) => {
-        console.table(data);
-        this.vLoadingStatus = false;
-        let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
-          data: {
-            title: 'success',
-            content: {
-              text: 'bannersDetailScreen.successUpdateBanner'
-            }
-          }
-        })
-        snackbarSucess.afterDismissed().subscribe(() => {
-          this.goToListScreen();
-        })
-      },
-      error => {
-        try {
+      .subscribe(
+        (data: any) => {
+          console.table(data);
           this.vLoadingStatus = false;
-          this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+          let snackbarSucess = this._snackBarService.openFromComponent(SuccessSnackbarComponent, {
             data: {
-              title: 'bannersDetailScreen.updateFailed',
+              title: 'success',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                text: 'bannersDetailScreen.successUpdateBanner'
               }
             }
-          });
-        } catch (error) {
-          console.table(error);
+          })
+          snackbarSucess.afterDismissed().subscribe(() => {
+            this.goToListScreen();
+          })
+        },
+        error => {
+          try {
+            this.vLoadingStatus = false;
+            this._snackBarService.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: 'bannersDetailScreen.updateFailed',
+                content: {
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
+                }
+              }
+            });
+          } catch (error) {
+            console.table(error);
+          }
         }
-      }
-    );
+      );
   }
 
   //used when button save clicked
   buttonSave() {
     console.log('BannerDetailService | buttonSave');
     this.vLoadingStatus = true;
-    if(this.vBannerData.banner.includes("data") && (this.vBannerData.foot_image_content != undefined && this.vBannerData.foot_image_content != "")){
-      if(this.vBannerData.foot_image_content.includes("data")) {
+    if (this.vBannerData.banner.includes("data") && (this.vBannerData.foot_image_content != undefined && this.vBannerData.foot_image_content != "")) {
+      if (this.vBannerData.foot_image_content.includes("data")) {
         this.uploadImage("banner", this.vBannerUpload).then(response => {
           this.uploadImage("footer", this.vFooterUpload).then(response => {
-            if(this.vCurrentPage.includes("create")) {
+            if (this.vCurrentPage.includes("create")) {
               this.createBanner();
             } else {
               this.updateBanner()
@@ -663,16 +701,16 @@ export class BannerDetailsService {
           console.table(err);
         });
       }
-    } else if(!this.vBannerData.banner.includes("data") && (this.vBannerData.foot_image_content === undefined || this.vBannerData.foot_image_content == "" || this.vBannerData.foot_image_content == null)) {
-      if(this.vCurrentPage.includes("create")) {
+    } else if (!this.vBannerData.banner.includes("data") && (this.vBannerData.foot_image_content === undefined || this.vBannerData.foot_image_content == "" || this.vBannerData.foot_image_content == null)) {
+      if (this.vCurrentPage.includes("create")) {
         this.createBanner();
       } else {
         this.updateBanner()
       }
     } else {
-      if(this.vBannerData.banner.includes("data")) {
+      if (this.vBannerData.banner.includes("data")) {
         this.uploadImage("banner", this.vBannerUpload).then(response => {
-          if(this.vCurrentPage.includes("create")) {
+          if (this.vCurrentPage.includes("create")) {
             this.createBanner();
           } else {
             this.updateBanner()
@@ -681,9 +719,9 @@ export class BannerDetailsService {
           this.vLoadingStatus = false;
           console.table(err);
         });
-      } else if(this.vBannerData.foot_image_content.includes("data")) {
+      } else if (this.vBannerData.foot_image_content.includes("data")) {
         this.uploadImage("footer", this.vFooterUpload).then(response => {
-          if(this.vCurrentPage.includes("create")) {
+          if (this.vCurrentPage.includes("create")) {
             this.createBanner();
           } else {
             this.updateBanner()
@@ -693,7 +731,7 @@ export class BannerDetailsService {
           console.table(err);
         });
       } else {
-        if(this.vCurrentPage.includes("create")) {
+        if (this.vCurrentPage.includes("create")) {
           this.createBanner();
         } else {
           this.updateBanner()

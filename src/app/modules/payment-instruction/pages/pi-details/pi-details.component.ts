@@ -124,7 +124,7 @@ export class PIDetailsComponent implements OnInit {
           oldIcon: new FormControl(''),
           grpTitle: new FormControl('', Validators.required),
           instructions: new FormArray([], [
-            Validators.required, 
+            Validators.required,
             Validators.maxLength(this.instructionValidation.maxLength)]),
           order: new FormControl(null),
           instructionType: new FormControl(null)
@@ -373,10 +373,7 @@ export class PIDetailsComponent implements OnInit {
     console.log('PIDetailsComponent | save')
     if (this.isCreate) {
       this.onSubmittingForm = true;
-      let formData = new FormData()
-      formData.append("file", this.iconFile.value)
-      formData.append("component", this.fileMgtService.paymentInstComponent)
-      this.uploadIcon(formData);
+      this.uploadIcon();
     } else {
       if (this.oldIcon.value === this.icon.value) {
         let instructionDetails = [];
@@ -395,46 +392,61 @@ export class PIDetailsComponent implements OnInit {
         }
         this.updateInstructionDetails(instructionDetails, false)
       } else {
-        let formData = new FormData()
-        formData.append("file", this.iconFile.value)
-        formData.append("component", "payment-instruction")
-        this.uploadIcon(formData);
+        this.uploadIcon();
       }
     }
   }
 
   // call upload icon
-  uploadIcon(iconFormData) {
+  uploadIcon() {
     console.log('PIDetailsComponent | uploadIcon')
-    this.fileMgtService.uploadFile(iconFormData).subscribe(
+    this.fileMgtService.getUploadUrl(this.iconFile.value, this.fileMgtService.paymentInstComponent).subscribe(
       response => {
         try {
-          console.table(response)
-          if (this.isCreate) {
-            let newInstructionList = new InstructionList();
-            newInstructionList.grp_title = this.grpTitle.value;
-            newInstructionList.icon = response.data.url;
-            newInstructionList.instruction_type = this.instructionType.value;
-            this.insertNewInstruction(newInstructionList)
-          } else {
-            let instructionDetails = [];
-            let stepsForm = this.instructions.value;
-            let instObject = {
-              grp_title: this.grpTitle.value,
-              icon: response.data.url
+          let uploadUrl = response.data.signurl
+          let iconPath = uploadUrl.split('?')[0]
+          this.fileMgtService.uploadFile(uploadUrl, this.iconFile.value).subscribe(
+            response => {
+              console.table(response)
+              if (this.isCreate) {
+                let newInstructionList = new InstructionList();
+                newInstructionList.grp_title = this.grpTitle.value;
+                newInstructionList.icon = iconPath;
+                newInstructionList.instruction_type = this.instructionType.value;
+                this.insertNewInstruction(newInstructionList)
+              } else {
+                let instructionDetails = [];
+                let stepsForm = this.instructions.value;
+                let instObject = {
+                  grp_title: this.grpTitle.value,
+                  icon: iconPath
+                }
+                for (let i = 0; i < stepsForm.length; i++) {
+                  let form = stepsForm[i]
+                  let step = new InstructionDetails();
+                  step.list_id = this.id.value;
+                  step.content = form.content;
+                  step.order = i + 1;
+                  instructionDetails.push(Object.assign(step, instObject))
+                }
+                this.updateInstructionDetails(instructionDetails, true)
+              }
+            }, error => {
+              console.table(error)
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'paymentInstructionDetailsScreen.uploadIconFailed',
+                  content: {
+                    text: 'error',
+                    data: null
+                  }
+                }
+              })
             }
-            for (let i = 0; i < stepsForm.length; i++) {
-              let form = stepsForm[i]
-              let step = new InstructionDetails();
-              step.list_id = this.id.value;
-              step.content = form.content;
-              step.order = i + 1;
-              instructionDetails.push(Object.assign(step, instObject))
-            }
-            this.updateInstructionDetails(instructionDetails, true)
-          }
+          )
         } catch (error) {
-          console.table(error)
+          console.error(error)
           this.onSubmittingForm = false;
         }
       }, error => {
@@ -451,10 +463,9 @@ export class PIDetailsComponent implements OnInit {
             }
           })
         } catch (error) {
-          console.table(error)
+          console.log(error)
         }
-      }
-    )
+      })
   }
 
   // call upload icon
@@ -544,7 +555,7 @@ export class PIDetailsComponent implements OnInit {
       response => {
         console.table(response)
         if (shouldDeleteIcon) {
-          this.deleteIcon(instructionDetails[0].icon)
+          this.deleteIcon(this.oldIcon.value)
         } else {
           this.onSubmittingForm = false;
           let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
@@ -585,7 +596,7 @@ export class PIDetailsComponent implements OnInit {
     console.log('PIDetailsComponent | deleteIcon');
     let split = url.split('/')
     let name = url
-    if(split.length >= 2){
+    if (split.length >= 2) {
       name = split.pop()
       name = split.pop() + '/' + name;
     }

@@ -130,7 +130,7 @@ export class ChangePhoneListComponent implements OnInit {
     }
   }
 
-  deselectAll(){
+  deselectAll() {
     this.selectedRequests = [];
     for (let i = 0; i < this.requests.length; i++) {
       let req: any = this.requests[i]
@@ -164,16 +164,38 @@ export class ChangePhoneListComponent implements OnInit {
         rejectedRequest.action = this.action.rejected;
         this.requestService.bulkUpdateRequest(rejectedRequest).subscribe(
           response => {
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'changePhonenumberRequestListScreen.rejectSuccess',
-                  data: null
-                }
+            try {
+              this.loading = false;
+              let data = response.data
+              if (data.fail_count === 0) {
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.rejectSuccess',
+                      data: null
+                    }
+                  }
+                })
+              } else {
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'changePhonenumberRequestListScreen.rejectFailed',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.totalRequestFailed',
+                      data: {
+                        totalRequest: data.fail_count
+                      }
+                    }
+                  }
+                })
               }
-            })
-            this.lazyLoadData();
+              if (data.success_count > 0) {
+                this.lazyLoadData();
+              }
+            } catch (error) {
+              console.table(error)
+            }
           }, error => {
             try {
               console.table(error);
@@ -218,16 +240,38 @@ export class ChangePhoneListComponent implements OnInit {
         approvedRequest.action = this.action.approved;
         this.requestService.bulkUpdateRequest(approvedRequest).subscribe(
           response => {
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'changePhonenumberRequestListScreen.approveSuccess',
-                  data: null
-                }
+            try {
+              this.loading = false;
+              let data = response.data
+              if (data.fail_count === 0) {
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.approveSuccess',
+                      data: null
+                    }
+                  }
+                })
+              } else {
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'changePhonenumberRequestListScreen.approveFailed',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.totalRequestFailed',
+                      data: {
+                        totalRequest: data.fail_count
+                      }
+                    }
+                  }
+                })
               }
-            })
-            this.lazyLoadData();
+              if (data.success_count > 0) {
+                this.lazyLoadData();
+              }
+            } catch (error) {
+              console.table(error)
+            }
           }, error => {
             try {
               console.table(error);
@@ -275,18 +319,40 @@ export class ChangePhoneListComponent implements OnInit {
         });
         this.requestService.bulkUpdateRequest(rejectedRequests).subscribe(
           response => {
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'changePhonenumberRequestListScreen.bulkRejectSuccess',
+            try {
+              this.loading = false;
+              let data = response.data
+              if (data.fail_count === 0) {
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
                   data: {
-                    totalRequest: this.selectedRequests.length
+                    title: 'success',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.bulkRejectSuccess',
+                      data: {
+                        totalRequest: this.selectedRequests.length
+                      }
+                    }
                   }
-                }
+                })
+              } else {
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'changePhonenumberRequestListScreen.bulkRejectFailed',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.totalRequestFailed',
+                      data: {
+                        totalRequest: data.fail_count
+                      }
+                    }
+                  }
+                })
               }
-            })
-            this.lazyLoadData();
+              if (data.success_count > 0) {
+                this.lazyLoadData();
+              }
+            } catch (error) {
+              console.table(error)
+            }
           }, error => {
             try {
               console.table(error);
@@ -336,18 +402,40 @@ export class ChangePhoneListComponent implements OnInit {
         });
         this.requestService.bulkUpdateRequest(approvedRequests).subscribe(
           response => {
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'changePhonenumberRequestListScreen.bulkApproveSuccess',
+            try {
+              this.loading = false;
+              let data = response.data
+              if (data.fail_count === 0) {
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
                   data: {
-                    totalRequest: this.selectedRequests.length
+                    title: 'success',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.bulkApproveSuccess',
+                      data: {
+                        totalRequest: this.selectedRequests.length
+                      }
+                    }
                   }
-                }
+                })
+              } else {
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'changePhonenumberRequestListScreen.bulkApproveFailed',
+                    content: {
+                      text: 'changePhonenumberRequestListScreen.totalRequestFailed',
+                      data: {
+                        totalRequest: data.fail_count
+                      }
+                    }
+                  }
+                })
               }
-            })
-            this.lazyLoadData();
+              if (data.success_count > 0) {
+                this.lazyLoadData();
+              }
+            } catch (error) {
+              console.table(error)
+            }
           }, error => {
             try {
               console.table(error);
@@ -402,12 +490,12 @@ export class ChangePhoneListComponent implements OnInit {
     })
   }
 
-// count duration from now to request request date
+  // count duration from now to request request date
   getDurationText(request: ChangePhone) {
     console.log('ChangePhoneListComponent | getDuration');
-    let duration = { 
-      day: request.request_age_days, 
-      hour: request.request_age_hours, 
+    let duration = {
+      day: request.request_age_days,
+      hour: request.request_age_hours,
       min: request.request_age_minutes
     }
     if (duration.day > 0) {
@@ -425,7 +513,7 @@ export class ChangePhoneListComponent implements OnInit {
         text: 'duration.inMin',
         duration: duration
       }
-    } 
+    }
   }
 
   // call api to get data based on table page, page size, and search keyword

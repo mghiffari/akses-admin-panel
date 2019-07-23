@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ChangePassword } from '../models/change-password';
 import { AuthService } from './auth.service';
-import { tap, catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
 import { UserForm } from 'src/app/modules/master/models/user-form';
+import Utils from '../common/utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-  accountApiUrl = environment.apiurl + 'account/'
-  changePassApiUrl = this.accountApiUrl + 'change-pass/'
-  createUserApiUrl = this.accountApiUrl + 'create-user'
+  accountApiUrl = environment.apiurl + 'account'
+  updateAccountApirUrl = environment.apiurl + environment.endPoint.updateAccount
+  changePassApiUrl = this.accountApiUrl + '/change-pass'
+  createUserApiUrl = this.accountApiUrl + '/create-user'
 
   constructor(
-    private http: HttpClient,
     private authService: AuthService
   ) { }
   
@@ -34,21 +33,21 @@ export class AccountService {
 
   //used to hit get user list API
   getUserList(page, pageSize, search){
-    let url = this.accountApiUrl+ page + '/' + pageSize + '/' + search; 
+    let url = this.accountApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search); 
     console.log("Account Service | getUserListApi ", url);
     return this.authService.wrapTokenGetApi(url)
   }
 
   //used to hit get user by id API
   getUserById(id){
-    let url = this.accountApiUrl+ id;
+    let url = this.accountApiUrl + '/' + id;
     console.log("Account Service | getUserById ", url);
     return this.authService.wrapTokenGetApi(url)
   }
 
   //used to hit update user API
   updateUser(data){
-    let url = this.accountApiUrl;
+    let url = this.updateAccountApirUrl;
     console.log("Account Service | updateUser ", url);
     return this.authService.wrapTokenPutApi(url, data)
   }

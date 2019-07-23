@@ -17,7 +17,7 @@ import { catchError } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
-import { constants } from 'src/app/shared/constants/constants';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-notification-details',
@@ -27,7 +27,6 @@ import { constants } from 'src/app/shared/constants/constants';
 export class NotificationDetailsComponent implements OnInit {
   appName = environment.appName;
   notifForm: FormGroup;
-  // editedNotification: Notification;
   onSubmittingForm = false;
   id;
   isCreate = true;
@@ -257,7 +256,7 @@ export class NotificationDetailsComponent implements OnInit {
     this.recipientAllFlag.valueChanges.subscribe(val => {
       // recipient target is selected users
       if (!val) {
-        if(this.recipient.value !== this.oldRecipient.value || this.oldRecipientAllFlag.value){
+        if (this.recipient.value !== this.oldRecipient.value || this.oldRecipientAllFlag.value) {
           this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')])
         }
       } else {
@@ -505,28 +504,31 @@ export class NotificationDetailsComponent implements OnInit {
   uploadFilesCreate(notification: Notification) {
     console.log('NotificationDetailsComponent | uploadFilesCreate')
     let tasks = [];
+    let getUploadUrlTasks = [];
     let fileTypes = [];
     if (!this.recipientAllFlag.value) {
-      let csvFormData = this.createUploadFileFormData(this.csvFile.value, this.fileService.notificationRecipientComp)
-      tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.csvFile.value, this.fileService.notificationRecipientComp).pipe(catchError(e => of(e))))
       fileTypes.push('csv')
     }
     if (this.iconFile.value) {
-      let iconFormData = this.createUploadFileFormData(this.iconFile.value, this.fileService.notificationIconComponent)
-      tasks.push(this.fileService.uploadFile(iconFormData).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.iconFile.value, this.fileService.notificationIconComponent).pipe(catchError(e => of(e))))
       fileTypes.push('icon')
     }
     if (this.imageFile.value) {
       this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg)
-          let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)
-          tasks.push(this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))))
+          getUploadUrlTasks.push(this.fileService.getUploadUrl(compressedImg, this.fileService.notificationComponent).pipe(catchError(e => of(e))))
           fileTypes.push('image')
-          forkJoin(tasks).subscribe((responses: Array<any>) => {
-            let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
-            if (!error) {
-              this.createNotification(notification)
+          forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+            let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
+            if (!errorConvert) {
+              forkJoin(tasks).subscribe((responses: Array<any>) => {
+                let error = this.handleUploadFilesResponse(responses, fileTypes)
+                if (!error) {
+                  this.createNotification(notification)
+                }
+              })
             }
           })
         }, error => {
@@ -535,12 +537,16 @@ export class NotificationDetailsComponent implements OnInit {
         }
       )
     } else {
-      if (tasks.length > 0) {
-        forkJoin(tasks).subscribe((responses: Array<any>) => {
-          console.log(responses)
-          let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
-          if (!error) {
-            this.createNotification(notification)
+      if (getUploadUrlTasks.length > 0) {
+        forkJoin(getUploadUrlTasks).subscribe((convertRes: Array<any>) => {
+          let errorConvert = this.handleGetUploadUrlResponse(convertRes, fileTypes, tasks, notification)
+          if (!errorConvert) {
+            forkJoin(tasks).subscribe((responses: Array<any>) => {
+              let error = this.handleUploadFilesResponse(responses, fileTypes)
+              if (!error) {
+                this.createNotification(notification)
+              }
+            })
           }
         })
       } else {
@@ -549,11 +555,11 @@ export class NotificationDetailsComponent implements OnInit {
     }
   }
 
-  // handling uploading files on update mode
   uploadFilesUpdate(notification: Notification, formValue) {
     console.log('NotificationDetailsComponent | uploadFilesUpdate')
     notification.id = formValue.id;
     let tasks = [];
+    let getUploadUrlTasks = [];
     let fileTypes = [];
     let shouldDeleteCSV = false;
     let shouldDeleteIcon = false;
@@ -562,16 +568,12 @@ export class NotificationDetailsComponent implements OnInit {
       if (!formValue.oldRecipientAllFlag) {
         shouldDeleteCSV = true;
       } else {
-        let csvFormData = this.createUploadFileFormData(this.csvFile.value, this.fileService.notificationRecipientComp)
-        tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
+        getUploadUrlTasks.push(this.fileService.getUploadUrl(this.csvFile.value, this.fileService.notificationRecipientComp).pipe(catchError(e => of(e))))
         fileTypes.push('csv')
       }
     } else if (!formValue.recipientAllFlag && formValue.recipient !== formValue.oldRecipient) {
       shouldDeleteCSV = true;
-      let csvFormData = new FormData();
-      csvFormData.append('file', this.csvFile.value)
-      csvFormData.append('component', this.fileService.notificationRecipientComp)
-      tasks.push(this.fileService.uploadFile(csvFormData).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.csvFile.value, this.fileService.notificationRecipientComp).pipe(catchError(e => of(e))))
       fileTypes.push('csv')
     }
 
@@ -579,8 +581,7 @@ export class NotificationDetailsComponent implements OnInit {
       if (formValue.oldIcon) {
         shouldDeleteIcon = true
       }
-      let iconFormData = this.createUploadFileFormData(this.iconFile.value, this.fileService.notificationIconComponent)
-      tasks.push(this.fileService.uploadFile(iconFormData).pipe(catchError(e => of(e))))
+      getUploadUrlTasks.push(this.fileService.getUploadUrl(this.iconFile.value, this.fileService.notificationIconComponent).pipe(catchError(e => of(e))))
       fileTypes.push('icon')
     } else if (formValue.oldIcon) {
       shouldDeleteIcon = true
@@ -594,13 +595,17 @@ export class NotificationDetailsComponent implements OnInit {
       this.ng2ImgToolsService.compress([this.imageFile.value], this.fileService.compressImageSizeInMB, true).subscribe(
         compressedImg => {
           console.log(compressedImg);
-          let imageFormData = this.createUploadFileFormData(compressedImg, this.fileService.notificationComponent)
-          tasks.push(this.fileService.uploadFile(imageFormData).pipe(catchError(e => of(e))))
+          getUploadUrlTasks.push(this.fileService.getUploadUrl(compressedImg, this.fileService.notificationComponent).pipe(catchError(e => of(e))))
           fileTypes.push('image')
-          forkJoin(tasks).subscribe((responses: Array<any>) => {
-            let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
-            if (!error) {
-              this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+          forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+            let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
+            if (!errorConvert) {
+              forkJoin(tasks).subscribe((responses: Array<any>) => {
+                let error = this.handleUploadFilesResponse(responses, fileTypes)
+                if (!error) {
+                  this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+                }
+              })
             }
           })
         }, error => {
@@ -611,11 +616,16 @@ export class NotificationDetailsComponent implements OnInit {
       if (formValue.oldImage) {
         shouldDeleteImage = true
       }
-      if (tasks.length > 0) {
-        forkJoin(tasks).subscribe((responses: Array<any>) => {
-          let error = this.handleUploadFilesResponse(responses, fileTypes, notification)
-          if (!error) {
-            this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+      if (getUploadUrlTasks.length > 0) {
+        forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+          let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
+          if (!errorConvert) {
+            forkJoin(tasks).subscribe((responses: Array<any>) => {
+              let error = this.handleUploadFilesResponse(responses, fileTypes)
+              if (!error) {
+                this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+              }
+            })
           }
         })
       } else {
@@ -624,11 +634,11 @@ export class NotificationDetailsComponent implements OnInit {
     }
   }
 
-  // handling uploading files response (forkJoin result)
-  handleUploadFilesResponse(responses: Array<any>, fileTypes, notification: Notification) {
+  // handling get uploading files url response (forkJoin result)
+  handleGetUploadUrlResponse(responses: Array<any>, fileTypes, tasks: any[], notification: Notification) {
     let error = false;
     responses.forEach((response, index) => {
-      console.table(response)
+      console.log(response)
       switch (fileTypes[index]) {
         case 'csv':
           if (response instanceof HttpErrorResponse) {
@@ -646,10 +656,17 @@ export class NotificationDetailsComponent implements OnInit {
                 }
               })
             } catch (error) {
-              console.table(error)
+              console.error(error)
             }
           } else {
-            notification.recipient_list = response.data.url
+            try {
+              let uploadUrl = response.data.signurl;
+              notification.recipient_list = uploadUrl.split('?')[0]
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.csvFile.value).pipe(catchError(e => of(e))))              
+            } catch (error) {
+              console.error(error)
+              this.onSubmittingForm = false
+            }
           }
           break;
         case 'icon':
@@ -668,10 +685,17 @@ export class NotificationDetailsComponent implements OnInit {
                 }
               })
             } catch (error) {
-              console.table(error)
+              console.error(error)
             }
           } else {
-            notification.large_icon = response.data.url
+            try {
+              let uploadUrl = response.data.signurl;
+              notification.large_icon = uploadUrl.split('?')[0]
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.iconFile.value).pipe(catchError(e => of(e))))              
+            } catch (error) {
+              console.error(error)
+              this.onSubmittingForm = false
+            }
           }
           break;
         case 'image':
@@ -690,10 +714,90 @@ export class NotificationDetailsComponent implements OnInit {
                 }
               })
             } catch (error) {
-              console.table(error)
+              console.error(error)
             }
           } else {
-            notification.large_image = response.data.url
+            try {
+              let uploadUrl = response.data.signurl;
+              notification.large_image = uploadUrl.split('?')[0]
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.imageFile.value).pipe(catchError(e => of(e))))              
+            } catch (error) {
+              console.error(error)
+              this.onSubmittingForm = false
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    })
+    return error;
+  }
+
+  // handling uploading files response (forkJoin result)
+  handleUploadFilesResponse(responses: Array<any>, fileTypes) {
+    let error = false;
+    responses.forEach((response, index) => {
+      console.table(response)
+      switch (fileTypes[index]) {
+        case 'csv':
+          if (response instanceof HttpErrorResponse) {
+            error = true;
+            this.onSubmittingForm = false;
+            try {
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'notificationDetailsScreen.uploadCSVFailed',
+                  content: {
+                    text: 'error',
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          }
+          break;
+        case 'icon':
+          if (response instanceof HttpErrorResponse) {
+            error = true;
+            this.onSubmittingForm = false;
+            try {
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'notificationDetailsScreen.uploadIconFailed',
+                  content: {
+                    text: 'error',
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          }
+          break;
+        case 'image':
+          if (response instanceof HttpErrorResponse) {
+            error = true;
+            this.onSubmittingForm = false;
+            try {
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'notificationDetailsScreen.uploadImageFailed',
+                  content: {
+                    text: 'error',
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
           }
           break;
         default:
