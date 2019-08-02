@@ -1,35 +1,71 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { AccountService } from 'src/app/shared/services/account.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { UserForm } from '../../models/user-form';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
+import { User } from '../../models/user';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 
 @Component({
-  selector: 'app-user-details',
-  templateUrl: './user-details.component.html',
-  styleUrls: []
+  selector: 'app-user-details-modal',
+  templateUrl: './user-details-modal.component.html',
+  styleUrls: ['./user-details-modal.component.scss']
 })
-export class UserDetailsComponent implements OnInit {
+export class UserDetailsModalComponent implements OnInit {
   userForm: FormGroup;
   userModel: UserForm;
   onSubmittingForm = false;
   maxLength = { maxLength: CustomValidation.nameField.maxLength }
-  id;
   isCreate = true;
-  loading = true;
+  id;
+  roles = [];
 
-  //constructor
-  constructor(
+  // constructor
+  constructor(public dialogRef: MatDialogRef<UserDetailsModalComponent>,
     private accountService: AccountService,
-    private router: Router,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
-  ) { 
-    console.log("UserDetailComponent | constructor")
+    @Inject(MAT_DIALOG_DATA) public data: any) { 
+      console.log("UserDetailsModalComponent | constructor")
+      dialogRef.disableClose = true;
+    }
+
+  ngOnInit() {
+    console.log("UserDetailsModalComponent | ngOnInit")
+    try {
+      console.log(this.data)
+      this.roles = this.data.roles
+      this.userForm = new FormGroup({
+        firstName: new FormControl('', [Validators.required,
+        Validators.maxLength(this.maxLength.maxLength),
+        CustomValidation.internationalName
+        ]),
+        lastName: new FormControl('', [Validators.required,
+        Validators.maxLength(this.maxLength.maxLength),
+        CustomValidation.internationalName
+        ]),
+        role: new FormControl('', Validators.required),
+        email: new FormControl('', [Validators.required, Validators.email, CustomValidation.adiraEmail])
+      })
+      if(!this.data.isCreate){
+        this.isCreate = false
+        let editedUser = this.data.editedUser
+        this.email.disable()
+        this.id = editedUser.id
+        let selectedRole = this.roles.find((el) => {
+          return el === editedUser.role
+        })
+        this.userForm.patchValue({
+          firstName: editedUser.firstname,
+          lastName: editedUser.lastname,
+          role: selectedRole ? selectedRole : '',
+          email: editedUser.login.email
+        })
+      }      
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   // firstName formControl getter
@@ -47,74 +83,14 @@ export class UserDetailsComponent implements OnInit {
     return this.userForm.get('email');
   }
 
-  //component on init
-  ngOnInit() {
-    console.log("UserDetailComponent | OnInit")
-    this.loading = true;
-    if (this.router.url.includes('update')) {
-      this.isCreate = false;
-      this.id = this.route.snapshot.params['id'];
-      this.accountService.getUserById(this.id).subscribe(
-        data => {
-          try {            
-            let editedUser = data.data;
-            this.userForm = new FormGroup({
-              firstName: new FormControl(editedUser.firstname, [Validators.required,
-              Validators.maxLength(CustomValidation.nameField.maxLength),
-              CustomValidation.internationalName
-              ]),
-              lastName: new FormControl(editedUser.lastname, [Validators.required,
-              Validators.maxLength(CustomValidation.nameField.maxLength),
-              CustomValidation.internationalName
-              ]),
-              email: new FormControl({
-                value: editedUser.login.email,
-                disabled: true
-              })
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        }, error => {
-          try {            
-            console.table(error);
-            let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'userDetailsScreen.getUserFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-            errorSnackbar.afterDismissed().subscribe(() => {
-              this.goToListScreen()
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        }).add(() => {
-          this.loading = false;
-        })
-    } else {
-      this.userForm = new FormGroup({
-        firstName: new FormControl('', [Validators.required,
-        Validators.maxLength(100),
-        CustomValidation.internationalName
-        ]),
-        lastName: new FormControl('', [Validators.required,
-        Validators.maxLength(100),
-        CustomValidation.internationalName
-        ]),
-        email: new FormControl('', [Validators.required, Validators.email, CustomValidation.adiraEmail])
-      })
-      this.loading = false;
-    }
+  // role formControl getter
+  get role() {
+    return this.userForm.get('role');
   }
 
   //save button click event handler
   save() {
-    console.log('UserDetailComponent | save')
+    console.log('UserDetailsModalComponent | save')
     this.onSubmittingForm = true;
     this.userModel = this.userForm.value;
     if (this.isCreate) {
@@ -124,7 +100,7 @@ export class UserDetailsComponent implements OnInit {
             try {            
               console.table(data);
               this.onSubmittingForm = false;
-              let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
                 data: {
                   title: 'success',
                   content: {
@@ -133,9 +109,7 @@ export class UserDetailsComponent implements OnInit {
                   }
                 }
               })
-              snackbarSucess.afterDismissed().subscribe(() => {
-                this.goToListScreen();
-              })
+              this.dialogRef.close(true)
             } catch (error) {
               console.log(error)
             }
@@ -170,7 +144,7 @@ export class UserDetailsComponent implements OnInit {
           try {            
             console.table(data);
             this.onSubmittingForm = false;
-            let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
               data: {
                 title: 'success',
                 content: {
@@ -179,9 +153,7 @@ export class UserDetailsComponent implements OnInit {
                 }
               }
             })
-            snackbarSucess.afterDismissed().subscribe(() => {
-              this.goToListScreen();
-            })
+            this.dialogRef.close(true)
           } catch (error) {
             console.log(error)
           }
@@ -206,11 +178,5 @@ export class UserDetailsComponent implements OnInit {
       )
     }
 
-  }
-
-  //redirect to user list screen
-  goToListScreen = () => {
-    console.log('UserDetailComponent | gotoListScreen')
-    this.router.navigate(['/master/users'])
   }
 }

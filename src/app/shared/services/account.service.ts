@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ChangePassword } from '../models/change-password';
 import { AuthService } from './auth.service';
-import { UserForm } from 'src/app/modules/master/models/user-form';
+import { UserForm } from 'src/app/modules/user-management/models/user-form';
 import Utils from '../common/utils';
 
 @Injectable({
