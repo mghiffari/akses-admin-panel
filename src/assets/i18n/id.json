@@ -4,7 +4,6 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banner",
-                "users": "User",
                 "articles": "Artikel",
                 "specialOffers": "Special Offer",
                 "faqs": "FAQ",
@@ -21,6 +20,12 @@
         },
         "notification": {
             "title": "Notifikasi"
+        },
+        "userManagement": {
+            "title": "User Management",
+            "children": {
+                "users": "User"
+            }
         }
     },
     "userAction": {
@@ -78,6 +83,11 @@
             "errorMaxLength": "Jumlah karakter maksimum untuk Nama Belakang adalah {{maxLength}}",
             "errorFormat": "Nama Belakang hanya boleh mengandung huruf, spasi, dan karakter sebagai berikut ,.'- tanpa spasi di awal dan akhir huruf",
             "placeholder": "Nama belakang"
+        },
+        "role": {
+            "fieldTitle": "Role",
+            "errorRequired": "Role wajib diisi",
+            "placeholder": "Pilih Role"
         },
         "bannerTitle": {
             "fieldTitle": "Judul Home Banner",
@@ -436,7 +446,8 @@
             "firstName": "Nama Depan",
             "lastName": "Nama Belakang",
             "email": "Email",
-            "createdDate": "Tanggal Dibuat"
+            "createdDate": "Tanggal Dibuat",
+            "role": "Role"
         },
         "branchTable": {
             "branchName": "Nama Cabang",
@@ -548,7 +559,8 @@
     "userListScreen": {
         "title": "Data User",
         "createUser": "tambahkan user baru",
-        "loadFailed": "gagal mendapatkan list user"
+        "loadFailed": "gagal mendapatkan list user",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus user {{name}}?"
     },
     "userDetailsScreen": {
         "getUserFailed": "gagal mendapatkan data user",

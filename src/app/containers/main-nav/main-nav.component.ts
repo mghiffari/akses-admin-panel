@@ -35,10 +35,6 @@ export class MainNavComponent {
       link: '/master',
       children: [
         {
-          title: 'navMenus.master.children.users',
-          link: '/users'
-        },
-        {
           title: 'navMenus.master.children.banners',
           link: '/banners'
         },
@@ -76,6 +72,16 @@ export class MainNavComponent {
     {
       title: 'navMenus.notification.title',
       link: '/notifications'
+    },
+    {
+      title: 'navMenus.userManagement.title',
+      link: '/user-management',
+      children: [
+        {
+          title: 'navMenus.userManagement.children.users',
+          link: '/users'
+        },
+      ]
     }
   ]
 

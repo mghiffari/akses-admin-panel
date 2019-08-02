@@ -1,0 +1,101 @@
+<div mat-dialog-title style="width: 100%" class="no-margin-important">
+  <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%">
+    <div class="font-gotham-bold font-sub-description">
+      <span *ngIf="isCreate">{{'userDetailsScreen.createTitle' | translate}}</span>
+      <span *ngIf="!isCreate">{{'userDetailsScreen.updateTitle' | translate}}</span>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content style="width: 100%">
+  <form [formGroup]="userForm">
+    <div style="width: 100%">
+      <div fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="column" fxLayoutGap="5px">
+          <div class="font-sub-description">
+            {{'forms.firstName.fieldTitle' | translate}}
+          </div>
+          <div style="width: 100%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.firstName.placeholder' | translate}}" formControlName="firstName">
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+              <span *ngIf="firstName.errors.required">{{'forms.firstName.errorRequired' | translate}}</span>
+              <span
+                *ngIf="firstName.errors.maxlength">{{'forms.firstName.errorMaxLength' | translate: maxLength }}</span>
+              <span
+                *ngIf="firstName.errors.internationalname && !firstName.errors.required">{{'forms.firstName.errorFormat' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout="column" fxLayoutGap="5px">
+          <div class="font-sub-description">
+            {{'forms.lastName.fieldTitle' | translate}}
+          </div>
+          <div style="width: 100%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.lastName.placeholder' | translate}}" formControlName="lastName">
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+              <span *ngIf="lastName.errors.required">{{'forms.lastName.errorRequired' | translate}}</span>
+              <span *ngIf="lastName.errors.maxlength">{{'forms.lastName.errorMaxLength' | translate: maxLength }}</span>
+              <span
+                *ngIf="lastName.errors.internationalname && !firstName.errors.required">{{'forms.lastName.errorFormat' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div fxLayout="column" fxLayoutGap="5px">
+          <div class="font-sub-description">
+            {{'forms.email.fieldTitle' | translate}}
+          </div>
+          <div style="width: 100%">
+            <mat-form-field appearance="fill">
+              <input matInput placeholder="{{'forms.email.placeholder' | translate}}" type="email"
+                formControlName="email">
+            </mat-form-field>
+            <mat-hint class="bottom-hint" *ngIf="!email.invalid || (!email.dirty && !email.touched)">
+              {{'userDetailsScreen.emailNotChangeAble' | translate}}</mat-hint>
+            <mat-error class="bottom-error" *ngIf="email.invalid && (email.dirty || email.touched)">
+              <span *ngIf="email.errors.required">{{'forms.email.errorRequired' | translate}}</span>
+              <span *ngIf="email.errors.email">{{'forms.email.errorFormat' | translate}}</span>
+              <span
+                *ngIf="email.errors.adiraEmail && !email.errors.email && !email.errors.required">{{'forms.email.errorAdira' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+        <div class="border-bottom-gray margin-left-min-24 margin-right-min-24"></div>
+        <div fxLayout="column" fxLayoutGap="5px">
+          <div class="font-sub-description">
+            {{'forms.role.fieldTitle' | translate}}
+          </div>
+          <div style="width: 100%">
+            <mat-form-field appearance="fill">
+              <mat-select formControlName="role">
+                <mat-option value="">{{'forms.role.placeholder' | translate}}</mat-option>
+                <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="role.invalid && (role.dirty || role.touched)">
+              <span *ngIf="role.errors.required">{{'forms.role.errorRequired' | translate}}</span>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
+  <div fxLayout="row" style="width: 100%" fxLayoutAlign="end center">
+    <button mat-raised-button color="accent" [mat-dialog-close]="false"
+      *ngIf="!onSubmittingForm">{{'cancel' | translate}}</button>
+    <button mat-raised-button color="primary" [disabled]="!userForm.valid" (click)="save()"
+      *ngIf="!onSubmittingForm">{{'save' | translate}}</button>
+    <button mat-raised-button color="primary" disabled *ngIf="onSubmittingForm">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div>
+          <mat-spinner diameter="16"></mat-spinner>
+        </div>
+        <div class="margin-left-5">{{'loading' | translate}}</div>
+      </div>
+    </button>
+  </div>
+</div>

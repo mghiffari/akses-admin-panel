@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UserListComponent } from './pages/user-list/user-list.component';
 import { BannerListComponent } from './pages/banner-list/banner-list.component';
-import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { BannerDetailsComponent } from './pages/banner-details/banner-details.component';
 import { ArticleListComponent } from './pages/article-list/article-list.component';
 import { ArticleDetailsComponent } from './pages/article-details/article-details.component';
@@ -16,27 +14,6 @@ import { SpecialOfferDetailsComponent } from './pages/special-offer-details/spec
 import { CanDeactivateGuard } from 'src/app/_guard/can-deactivate.guard';
 
 const routes: Routes = [
-  {
-    path: 'users',
-    component: UserListComponent,
-    data: {
-      title: 'Users'
-    }
-  },
-  {
-    path: 'users/create',
-    component: UserDetailsComponent,
-    data: {
-      title: 'Create New User'
-    }
-  },
-  {
-    path: 'users/update/:id',
-    component: UserDetailsComponent,
-    data: {
-      title: 'Update User'
-    }
-  },
   {
     path: 'banners',
     component: BannerListComponent,

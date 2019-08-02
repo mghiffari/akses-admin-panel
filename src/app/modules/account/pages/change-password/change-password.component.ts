@@ -73,7 +73,7 @@ export class ChangePasswordComponent implements OnInit {
             }
           })
           snackbarSucess.afterDismissed().subscribe(() => {
-            this.router.navigate(['/master/users'])
+            this.router.navigate(['/user-management/users'])
           })
 
         },

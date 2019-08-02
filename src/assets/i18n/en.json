@@ -4,7 +4,6 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banners",
-                "users": "Users",
                 "articles": "Articles",
                 "specialOffers": "Special Offers",
                 "faqs": "FAQs",
@@ -21,6 +20,12 @@
         },
         "notification": {
             "title": "Notification"
+        },
+        "userManagement": {
+            "title": "User Management",
+            "children": {
+                "users": "Users"
+            }
         }
     },
     "userAction": {
@@ -78,6 +83,11 @@
             "errorMaxLength": "Max. length of Last Name is {{maxLength}}",
             "errorFormat": "Last Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
             "placeholder": "Last name"
+        },
+        "role": {
+            "fieldTitle": "Role",
+            "errorRequired": "Role is required",
+            "placeholder": "Select a Role"
         },
         "bannerTitle": {
             "fieldTitle": "Home Banner Title",
@@ -436,7 +446,8 @@
             "firstName": "First Name",
             "lastName": "Last Name",
             "email": "Email",
-            "createdDate": "Created Date"
+            "createdDate": "Created Date",
+            "role": "Role"
         },
         "branchTable": {
             "branchName": "Branch Name",
@@ -548,7 +559,8 @@
     "userListScreen": {
         "title": "Users Data",
         "createUser": "create user",
-        "loadFailed": "failed to get list of users"
+        "loadFailed": "failed to get list of users",
+        "deleteConfirmation": "Are you sure you want to delete user {{name}}?"
     },
     "userDetailsScreen": {
         "getUserFailed": "failed to get user data",

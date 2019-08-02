@@ -1,8 +1,11 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { AccountService } from 'src/app/shared/services/account.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
+import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
+import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { UserDetailsModalComponent } from '../../components/user-details-modal/user-details-modal.component';
 
 @Component({
   selector: 'app-test',
@@ -24,6 +27,7 @@ export class UserListComponent implements OnInit {
     'lastname',
     'email',
     'createdDate',
+    'role',
     'action',
   ]
 
@@ -31,6 +35,7 @@ export class UserListComponent implements OnInit {
   search = '';
   loading = false;
   isFocusedInput = false;
+  roles = ['superadmin', 'admin', 'visitor'];
 
   private table: any;
   @ViewChild('userTable') set tabl(table: ElementRef) {
@@ -46,6 +51,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private snackBar: MatSnackBar,
+    private modal: MatDialog
   ) {
     console.log('UserComponent | constructor');
   }
@@ -72,6 +78,95 @@ export class UserListComponent implements OnInit {
     } else {
       this.lazyLoadData();
     }
+  }
+
+  //delete
+  onDelete(user: User){
+    console.log("UserComponent | onDelete")
+    const modalRef = this.modal.open(ConfirmationModalComponent, {
+      width: '260px',
+      data: {
+        title: 'deleteConfirmation',
+        content: {
+          string: 'userListScreen.deleteConfirmation',
+          data: {
+            name: user.firstname + ' ' + user.lastname
+          }
+        }
+      }
+    })
+    // modalRef.afterClosed().subscribe(result => {
+    //   if(result){
+    //     this.loading = true;
+    //     let delUser = Object.assign(new User(), user);
+    //     delUser.is_deleted = true;
+    //     this.accountService.updateUser(delUser).subscribe(
+    //       (data: any) => {
+    //         try {
+    //           console.table(data);
+    //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+    //             data: {
+    //               title: 'success',
+    //               content: {
+    //                 text: 'dataDeleted',
+    //                 data: null
+    //               }
+    //             }
+    //           })
+    //           this.lazyLoadData()              
+    //         } catch (error) {
+    //           console.table(error)
+    //         }
+    //       },
+    //       error => {
+    //         try {
+    //           console.table(error);
+    //           this.loading = false;
+    //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+    //             data: {
+    //               title: 'failedToDelete',
+    //               content: {
+    //                 text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+    //                 data: null
+    //               }
+    //             }
+    //           })              
+    //         } catch (error) {
+    //           console.table(error)
+    //         }
+    //       }
+    //     )
+    //   }
+    // })
+  }
+
+  // handle click edit button
+  onEdit(user){
+    console.log('UserComponent | onEdit');
+    this.modal.open(UserDetailsModalComponent, {
+      width: '80%',
+      minWidth: '260px',
+      maxWidth: '400px',
+      data: {
+        isCreate: false,
+        editedUser: {...user},
+        roles: this.roles
+      }
+    })
+  }
+
+  // handle click create link
+  onCreate(){
+    console.log('UserComponent | onCreate');
+    this.modal.open(UserDetailsModalComponent, {
+      width: '80%',
+      minWidth: '260px',
+      maxWidth: '400px',
+      data: {
+        isCreate: true,
+        roles: this.roles
+      }
+    })
   }
 
   // call api to get data based on table page, page size, and search keyword
