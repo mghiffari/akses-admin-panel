@@ -95,49 +95,49 @@ export class UserListComponent implements OnInit {
         }
       }
     })
-    // modalRef.afterClosed().subscribe(result => {
-    //   if(result){
-    //     this.loading = true;
-    //     let delUser = Object.assign(new User(), user);
-    //     delUser.is_deleted = true;
-    //     this.accountService.updateUser(delUser).subscribe(
-    //       (data: any) => {
-    //         try {
-    //           console.table(data);
-    //           this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-    //             data: {
-    //               title: 'success',
-    //               content: {
-    //                 text: 'dataDeleted',
-    //                 data: null
-    //               }
-    //             }
-    //           })
-    //           this.lazyLoadData()              
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       },
-    //       error => {
-    //         try {
-    //           console.table(error);
-    //           this.loading = false;
-    //           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //             data: {
-    //               title: 'failedToDelete',
-    //               content: {
-    //                 text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-    //                 data: null
-    //               }
-    //             }
-    //           })              
-    //         } catch (error) {
-    //           console.table(error)
-    //         }
-    //       }
-    //     )
-    //   }
-    // })
+    modalRef.afterClosed().subscribe(result => {
+      if(result){
+        this.loading = true;
+        let delUser = Object.assign(new User(), user);
+        delUser.is_deleted = true;
+        this.accountService.updateUser(delUser).subscribe(
+          (data: any) => {
+            try {
+              console.table(data);
+              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                data: {
+                  title: 'success',
+                  content: {
+                    text: 'dataDeleted',
+                    data: null
+                  }
+                }
+              })
+              this.lazyLoadData()              
+            } catch (error) {
+              console.table(error)
+            }
+          },
+          error => {
+            try {
+              console.table(error);
+              this.loading = false;
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'failedToDelete',
+                  content: {
+                    text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })              
+            } catch (error) {
+              console.table(error)
+            }
+          }
+        )
+      }
+    })
   }
 
   // handle click edit button
