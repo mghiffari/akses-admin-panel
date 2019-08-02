@@ -245,22 +245,39 @@
             </mat-error>
           </div>
         </div>
-        <div fxLayout="row" *ngIf="isLinkTypeSpecialOffer(); else linkTypeArticle">
-          <div fxFlexAlign="center" fxFlex="30%">
-            {{'forms.notifSpecialOffer.fieldTitle' | translate}}
+        <div *ngIf="isLinkTypeSpecialOffer(); else linkTypeArticle" fxLayout="column" fxLayoutGap="16px">
+          <div fxLayout="row">
+            <div fxFlexAlign="center" fxFlex="30%">
+              {{'forms.specialOfferCategory.fieldTitle' | translate}}
+            </div>
+            <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+              <mat-form-field appearance="fill">
+                <input matInput placeholder="{{'forms.specialOfferCategory.placeholder' | translate}}"
+                  formControlName="linkCategory">
+              </mat-form-field>
+              <mat-error class="bottom-error"
+                *ngIf="linkCategory.invalid && (linkCategory.dirty || linkCategory.touched)">
+                <span *ngIf="linkCategory.errors.required">{{'forms.specialOfferCategory.errorRequired' | translate}}</span>
+              </mat-error>
+            </div>
           </div>
-          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
-            <mat-form-field appearance="fill">
-              <mat-select formControlName="linkId">
-                <mat-option value="" (click)="selectedLinkTitle=''">
-                  {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
-                <mat-option *ngFor="let offer of specialOffers" [value]="offer.id"
-                  (click)="selectedLinkTitle=offer.title">{{offer.title}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-error class="bottom-error" *ngIf="linkId.invalid && (linkId.dirty || linkId.touched)">
-              <span *ngIf="linkId.errors.required">{{'forms.notifSpecialOffer.errorRequired' | translate}}</span>
-            </mat-error>
+          <div fxLayout="row">
+            <div fxFlexAlign="center" fxFlex="30%">
+              {{'forms.notifSpecialOffer.fieldTitle' | translate}}
+            </div>
+            <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
+              <mat-form-field appearance="fill">
+                <mat-select formControlName="linkId">
+                  <mat-option value="" (click)="handleSelectSpecialOffer()">
+                    {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
+                  <mat-option *ngFor="let offer of specialOffers" [value]="offer.id"
+                    (click)="handleSelectSpecialOffer(offer)">{{offer.title}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-error class="bottom-error" *ngIf="linkId.invalid && (linkId.dirty || linkId.touched)">
+                <span *ngIf="linkId.errors.required">{{'forms.notifSpecialOffer.errorRequired' | translate}}</span>
+              </mat-error>
+            </div>
           </div>
         </div>
         <ng-template #linkTypeArticle>
