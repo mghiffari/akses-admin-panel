@@ -3,6 +3,9 @@ import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageService } from 'src/app/shared/services/page.service';
 import { MatSnackBar } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
+import { Feature } from '../../models/feature';
+import { RolePrivilege } from '../../models/role-privilege';
+import { Privilege } from '../../models/privilege';
 
 @Component({
   selector: 'app-role-list',
@@ -24,8 +27,8 @@ export class RoleListComponent implements OnInit {
     'privileges'
   ]
 
-  roleList = [];
-  featureList = []
+  roleList: RolePrivilege[] = [];
+  featureList: Feature[] = []
   form: FormGroup
 
   private roleTable: any;
@@ -167,13 +170,13 @@ export class RoleListComponent implements OnInit {
     if (prevRoleForm) {
       let prevRole = prevRoleForm.value
       if (prevRole.id && prevRole.id !== '') {
-        let roleData = this.roleList.find(el => {
+        let roleData: RolePrivilege = this.roleList.find((el: RolePrivilege) => {
           return el.id === prevRole.id
         })
         if (roleData) {
           let privileges = []
-          this.featureList.forEach(feature => {
-            let featurePrivilege = roleData.privileges.find(prvg => {
+          this.featureList.forEach((feature: Feature) => {
+            let featurePrivilege: Privilege = roleData.privileges.find((prvg: Privilege) => {
               return prvg.pages_id === feature.id
             })
             if (featurePrivilege && featurePrivilege.view) {
@@ -286,87 +289,87 @@ export class RoleListComponent implements OnInit {
   // call api to get list of roles, privileges and list of features
   loadData() {
     console.log('RoleListComponent | loadData')
-    // this.loading = true;
-    // this.pageService.getRolePrivileges().subscribe(
-    //   response => {
-    //     try {
-    //       console.table(response)
-    //       this.loading = false;
-    //       this.featureList = response.data.features;
-    //       this.roleList = response.data.group;
-    //       let roles = []
-    //       this.roleList.forEach(el => {
-    //         let id = el.id;
-    //         let name = el.name;
-    //         let privileges = [];
-    //         this.featureList.forEach(feature => {
-    //           let featurePrivilege = el.privileges.find(prvg => {
-    //             return prvg.pages_id === feature.id
-    //           })
-    //           if (featurePrivilege && featurePrivilege.view) {
-    //             privileges.push(new FormGroup({
-    //               pageId: new FormControl(feature.id),
-    //               name: new FormControl(feature.name),
-    //               view: new FormControl(featurePrivilege.view),
-    //               create: new FormControl(featurePrivilege.create),
-    //               edit: new FormControl(featurePrivilege.edit),
-    //               delete: new FormControl(featurePrivilege.delete),
-    //               publish: new FormControl(featurePrivilege.publish),
-    //               download: new FormControl(featurePrivilege.download)
-    //             }))
-    //           } else {
-    //             privileges.push(new FormGroup({
-    //               pageId: new FormControl(feature.id),
-    //               name: new FormControl(feature.name),
-    //               view: new FormControl(false),
-    //               create: new FormControl(false),
-    //               edit: new FormControl(false),
-    //               delete: new FormControl(false),
-    //               publish: new FormControl(false),
-    //               download: new FormControl(false)
-    //             }))
-    //           }
-    //         })
-    //         roles.push(new FormGroup({
-    //           id: new FormControl(id),
-    //           name: new FormControl(name, Validators.required),
-    //           privileges: new FormArray(privileges)
-    //         }))
-    //       })
-    //       this.form = new FormGroup({
-    //         roles: new FormArray(roles)
-    //       })
-    //       if (this.selectedRowIndex < 0) {
-    //         if (this.roleList.length > 0) {
-    //           this.selectedRowIndex = 0;
-    //         }
-    //       } else {
-    //         if (this.roleList.length <= this.selectedRowIndex) {
-    //           this.selectedRowIndex = this.roleList.length - 1
-    //         }
-    //       }
-    //       this.renderTableRows()
-    //     } catch (error) {
-    //       console.error(error)
-    //     }
-    //   }, error => {
-    //     try {
-    //       console.table(error);
-    //       this.loading = false;
-    //       this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-    //         data: {
-    //           title: 'roleListScreen.loadFailed',
-    //           content: {
-    //             text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-    //             data: null
-    //           }
-    //         }
-    //       })
-    //     } catch (error) {
-    //       console.log(error)
-    //     }
-    //   }
-    // )
+    this.loading = true;
+    this.pageService.getRolePrivileges().subscribe(
+      response => {
+        try {
+          console.table(response)
+          this.loading = false;
+          this.featureList = response.data.features;
+          this.roleList = response.data.group;
+          let roles = []
+          this.roleList.forEach((el: RolePrivilege) => {
+            let id = el.id;
+            let name = el.name;
+            let privileges = [];
+            this.featureList.forEach((feature: Feature) => {
+              let featurePrivilege: Privilege = el.privileges.find((prvg: Privilege) => {
+                return prvg.pages_id === feature.id
+              })
+              if (featurePrivilege && featurePrivilege.view) {
+                privileges.push(new FormGroup({
+                  pageId: new FormControl(feature.id),
+                  name: new FormControl(feature.name),
+                  view: new FormControl(featurePrivilege.view),
+                  create: new FormControl(featurePrivilege.create),
+                  edit: new FormControl(featurePrivilege.edit),
+                  delete: new FormControl(featurePrivilege.delete),
+                  publish: new FormControl(featurePrivilege.publish),
+                  download: new FormControl(featurePrivilege.download)
+                }))
+              } else {
+                privileges.push(new FormGroup({
+                  pageId: new FormControl(feature.id),
+                  name: new FormControl(feature.name),
+                  view: new FormControl(false),
+                  create: new FormControl(false),
+                  edit: new FormControl(false),
+                  delete: new FormControl(false),
+                  publish: new FormControl(false),
+                  download: new FormControl(false)
+                }))
+              }
+            })
+            roles.push(new FormGroup({
+              id: new FormControl(id),
+              name: new FormControl(name, Validators.required),
+              privileges: new FormArray(privileges)
+            }))
+          })
+          this.form = new FormGroup({
+            roles: new FormArray(roles)
+          })
+          if (this.selectedRowIndex < 0) {
+            if (this.roleList.length > 0) {
+              this.selectedRowIndex = 0;
+            }
+          } else {
+            if (this.roleList.length <= this.selectedRowIndex) {
+              this.selectedRowIndex = this.roleList.length - 1
+            }
+          }
+          this.renderTableRows()
+        } catch (error) {
+          console.error(error)
+        }
+      }, error => {
+        try {
+          console.table(error);
+          this.loading = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'roleListScreen.loadFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    )
   }
 
   // render angular material table rows
