@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageService } from 'src/app/shared/services/page.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { Feature } from '../../models/feature';
 import { RolePrivilege } from '../../models/role-privilege';
 import { Privilege } from '../../models/privilege';
+import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-role-list',
@@ -45,6 +47,7 @@ export class RoleListComponent implements OnInit {
   constructor(
     private pageService: PageService,
     private snackBar: MatSnackBar,
+    private modal: MatDialog
   ) {
     console.log('RoleListComponent | constructor')
   }
@@ -58,6 +61,27 @@ export class RoleListComponent implements OnInit {
     this.isEditModeName = false
     this.selectedRowIndex = -1
     this.loadData()
+  }
+
+  // show prompt when routing to another page in edit mode
+  canDeactivate(): Observable<boolean> | boolean {
+    console.log('SpecialOfferDetailsComponent | canDeactivate');
+    if (this.form.dirty) {
+      const modalRef = this.modal.open(ConfirmationModalComponent, {
+        width: '260px',
+        restoreFocus: false,
+        data: {
+          title: 'movePageConfirmationModal.title',
+          content: {
+            string: 'movePageConfirmationModal.content',
+            data: null
+          }
+        }
+      })
+      return modalRef.afterClosed();
+    } else {
+      return true;
+    }
   }
 
   // roles control getter
@@ -113,42 +137,6 @@ export class RoleListComponent implements OnInit {
   getElementFeatureName(element) {
     console.log('RoleListComponent | getElementFeatureName')
     return this.getElementFormControl(element, 'name');
-  }
-
-  // method to get view privilege form control from table element form group
-  getElementFeatureView(element) {
-    console.log('RoleListComponent | getElementFeatureView')
-    return this.getElementFormControl(element, 'view');
-  }
-
-  // method to get create privilege form control from table element form group
-  getElementFeatureCreate(element) {
-    console.log('RoleListComponent | getElementFeatureCreate')
-    return this.getElementFormControl(element, 'create');
-  }
-
-  // method to get edit privilege form control from table element form group
-  getElementFeatureEdit(element) {
-    console.log('RoleListComponent | getElementFeatureEdit')
-    return this.getElementFormControl(element, 'edit');
-  }
-
-  // method to get delete privilege form control from table element form group
-  getElementFeatureDelete(element) {
-    console.log('RoleListComponent | getElementFeatureDelete')
-    return this.getElementFormControl(element, 'delete');
-  }
-
-  // method to get publish privilege form control from table element form group
-  getElementFeaturePublish(element) {
-    console.log('RoleListComponent | getElementFeaturePublish')
-    return this.getElementFormControl(element, 'publish');
-  }
-
-  // method to get download privilege form control from table element form group
-  getElementFeatureDownload(element) {
-    console.log('RoleListComponent | getElementFeatureDownload')
-    return this.getElementFormControl(element, 'download');
   }
 
   // method to get features
@@ -244,19 +232,36 @@ export class RoleListComponent implements OnInit {
   // call delete role api if saved, else remove from form array
   deleteRole(index) {
     console.log('RoleListComponent | deleteRole')
-    this.selectRole(index)
     let formArray = this.rolesFormArray
     let roleForm = formArray.at(index)
-    let roleId = roleForm.value.id
-    if (roleId && roleId !== '') {
-
-    } else {
-      if (index >= formArray.length - 1) {
-        this.selectRole(index - 1)
+    const modalRef = this.modal.open(ConfirmationModalComponent, {
+      width: '260px',
+      data: {
+        title: 'deleteConfirmation',
+        content: {
+          string: 'roleListScreen.deleteConfirmation',
+          data: {
+            name: this.getElementRoleName(roleForm).value
+          }
+        }
       }
-      formArray.removeAt(index)
-      this.renderTableRows()
-    }
+    })
+    modalRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.selectRole(index)
+        let roleId = roleForm.value.id
+
+        if (roleId && roleId !== '') {
+
+        } else {
+          if (index >= formArray.length - 1) {
+            this.selectRole(index - 1)
+          }
+          formArray.removeAt(index)
+          this.renderTableRows()
+        }
+      }
+    })
   }
 
   // append new role form to form array

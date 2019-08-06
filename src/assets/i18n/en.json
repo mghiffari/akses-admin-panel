@@ -777,7 +777,8 @@
     "roleListScreen": {
         "title": "Roles Data",
         "createRole": "create new role",
-        "loadFailed": "failed to get list of roles"
+        "loadFailed": "failed to get list of roles",
+        "deleteConfirmation": "Are you sure you want to delete role {{name}}?"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

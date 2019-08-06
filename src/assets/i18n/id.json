@@ -776,7 +776,8 @@
     "roleListScreen": {
         "title": "Data Role",
         "createRole": "tambahkan role baru",
-        "loadFailed": "gagal mendapatkan list role"
+        "loadFailed": "gagal mendapatkan list role",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus role {{name}}?"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
