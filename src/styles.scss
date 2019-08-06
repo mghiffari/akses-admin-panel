@@ -179,6 +179,10 @@ body {
     font-size: 75%;
 }
 
+.border-gray{
+    border: 1px solid map-get($colors, gray);
+}
+
 .border-bottom-gray{
     border-bottom: 1px solid map-get($colors, gray);
 }
@@ -215,7 +219,6 @@ body {
 
 .cursor-not-allowed{
     cursor: not-allowed;
-    pointer-events: none;
 }
 
 .page-title{
@@ -285,6 +288,11 @@ body {
     text-transform: uppercase;
 }
 
+.top-action-text.disabled{
+    @extend .text-medium-gray;
+    @extend .cursor-not-allowed;
+}
+
 .mat-simple-snackbar-action .mat-button{
     @extend .top-action-text;
     color: map-get($colors, white);
@@ -306,6 +314,10 @@ button[block-button]{
 
 .th-min-width {
     min-width: 100px;
+}
+
+.th-min-width-75{
+    min-width: 75px;
 }
 
 .th-min-width-50{

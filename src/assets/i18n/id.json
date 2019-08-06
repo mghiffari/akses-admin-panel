@@ -24,7 +24,8 @@
         "userManagement": {
             "title": "User Management",
             "children": {
-                "users": "User"
+                "users": "User",
+                "roles": "Role"
             }
         }
     },
@@ -400,6 +401,21 @@
             "errorMin": "Tanggal Selesai harus lebih dari 1 jam sejak saat ini",
             "datePlaceholder": "MM/dd/yyyy"
         },
+        "roleName": {
+            "fieldTitle": "Nama Role",
+            "placeholder": "Nama role",
+            "errorRequired": "Nama Role wajib diisi"
+        },
+        "privilege": {
+            "options": {
+                "create": "Create",
+                "view": "View",
+                "edit": "Edit",
+                "delete": "Delete",
+                "publish": "Publish",
+                "download": "Download"
+            }
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -486,6 +502,9 @@
             "sent": "Jumlah Penerima",
             "clicked": "Telah Diklik",
             "scheduleType": "Tipe"
+        },
+        "roleTable": {
+            "roleName": "Nama Role"
         }
     },
     "bannerListScreen": {
@@ -753,6 +772,11 @@
         "uploadImageFailed": "upload gambar gagal",
         "uploadCSVFailed": "upload file csv gagal",
         "deleteImageFailed": "gagal menghapus gambar"
+    },
+    "roleListScreen": {
+        "title": "Data Role",
+        "createRole": "tambahkan role baru",
+        "loadFailed": "gagal mendapatkan list role"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
