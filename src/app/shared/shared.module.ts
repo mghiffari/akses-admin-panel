@@ -22,6 +22,7 @@ import { ArticleService } from './services/article.service';
 import { SpecialOfferService } from './services/special-offer.service';
 import { TinymceEditorComponent } from './components/tinymce-editor/tinymce-editor.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { PageService } from './services/page.service';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     CreditSimulationService,
     FileManagementService,
     ArticleService,
-    SpecialOfferService
+    SpecialOfferService,
+    PageService
   ],
   entryComponents: [
     ErrorModalComponent,

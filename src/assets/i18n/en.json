@@ -24,7 +24,8 @@
         "userManagement": {
             "title": "User Management",
             "children": {
-                "users": "Users"
+                "users": "Users",
+                "roles": "Roles"
             }
         }
     },
@@ -400,6 +401,21 @@
             "errorMin": "End Date should be more than 1 hr from now",
             "datePlaceholder": "MM/dd/yyyy"
         },
+        "roleName": {
+            "fieldTitle": "Role Name",
+            "placeholder": "Role name",
+            "errorRequired": "Role Name is required"
+        },
+        "privilege": {
+            "options": {
+                "create": "Create",
+                "view": "View",
+                "edit": "Edit",
+                "delete": "Delete",
+                "publish": "Publish",
+                "download": "Download"
+            }
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -486,6 +502,9 @@
             "sent": "Total Recipient",
             "clicked": "Clicked",
             "scheduleType": "Type"
+        },
+        "roleTable": {
+            "roleName": "Role Name"
         }
     },
     "bannerListScreen": {
@@ -754,6 +773,11 @@
         "uploadImageFailed": "failed to upload image",
         "uploadCSVFailed": "failed to upload csv file",
         "deleteImageFailed": "failed to delete image"
+    },
+    "roleListScreen": {
+        "title": "Roles Data",
+        "createRole": "create new role",
+        "loadFailed": "failed to get list of roles"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

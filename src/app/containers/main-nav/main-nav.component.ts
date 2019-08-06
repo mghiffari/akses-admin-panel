@@ -81,6 +81,10 @@ export class MainNavComponent {
           title: 'navMenus.userManagement.children.users',
           link: '/users'
         },
+        {
+          title: 'navMenus.userManagement.children.roles',
+          link: '/roles'
+        }
       ]
     }
   ]
