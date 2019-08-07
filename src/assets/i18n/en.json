@@ -537,6 +537,7 @@
     "yesContinue": "yes, continue!",
     "reset": "reset",
     "cancel": "cancel",
+    "skip": "skip",
     "success": "success",
     "fail": "fail",
     "error": "error",
@@ -574,6 +575,10 @@
     "dataConfirmationModal": {
         "title": "Data Confirmation",
         "content": "Are you sure that all the data and content are correct?"
+    },
+    "saveConfirmationModal": {
+        "title": "New Changes Have Not been Saved",
+        "content": "Click 'save' to save the changes"
     },
     "userListScreen": {
         "title": "Users Data",
@@ -763,13 +768,13 @@
         "getCategoryFailed": "failed to get Special Offer categories",
         "createTitle": "Create New Special Offer",
         "updateTitle": "Update Special Offer",
-        "succesCreated": "new Special Offer successfully created",
+        "succesCreated": "Special Offer successfully created",
         "succesUpdated": "Special Offer successfully updated",
-        "updateFailed": "failed to update data",
+        "updateFailed": "failed to update special offer",
         "createFailed": "failed to create new Special Offer",
         "cantUpdate": {
             "minDuration": "can't update special offer which expiry date is less than one hour"
-        }, 
+        },
         "uploadImageFailed": "failed to upload image",
         "uploadCSVFailed": "failed to upload csv file",
         "deleteImageFailed": "failed to delete image"
@@ -778,7 +783,11 @@
         "title": "Roles Data",
         "createRole": "create new role",
         "loadFailed": "failed to get list of roles",
-        "deleteConfirmation": "Are you sure you want to delete role {{name}}?"
+        "deleteConfirmation": "Are you sure you want to delete role {{name}}?",
+        "succesCreated": "role successfully created",
+        "succesUpdated": "role successfully updated",
+        "updateFailed": "failed to update role",
+        "createFailed": "failed to create new role"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -894,6 +903,11 @@
         "01109": "token expired",
         "01110": "oid not registered",
         "01111": "user data not found",
-        "01112" : "notification has already been sent to all recipients"
+        "01112": "notification has already been sent to all recipients",
+        "01113": "role name is required",
+        "01114": "failed to create role",
+        "01115": "failed to update role",
+        "01116": "failed to get role list",
+        "01117": "role id is required"
     }
 }

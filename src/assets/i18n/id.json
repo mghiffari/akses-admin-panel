@@ -537,6 +537,7 @@
     "yesContinue": "yakin",
     "reset": "reset",
     "cancel": "batal",
+    "skip": "skip",
     "success": "berhasil",
     "fail": "gagal",
     "error": "error",
@@ -574,6 +575,10 @@
     "dataConfirmationModal": {
         "title": "Konfirmasi Data",
         "content": "Apakah Anda yakin bahwa semua data dan konten yang terisi sudah benar?"
+    },
+    "saveConfirmationModal": {
+        "title": "Perubahan Baru Belum Disimpan",
+        "content": "Klik tombol ‘simpan’ terlebih dahulu untuk menyimpan perubahan baru yang anda lakukan"
     },
     "userListScreen": {
         "title": "Data User",
@@ -738,7 +743,7 @@
         "updateTitle": "Ubah Notifikasi",
         "succesCreated": "notifikasi berhasil ditambahkan",
         "succesUpdated": "notifikasi berhasil diubah",
-        "updateFailed": "gagal mengubah data",
+        "updateFailed": "gagal mengubah data notifikasi",
         "createFailed": "gagal menambahkan notifikasi baru",
         "notifSaveConfirm": "Konfirmasi Simpan Notifikasi",
         "deleteCSVFailed": "gagal menghapus file csv",
@@ -764,8 +769,8 @@
         "updateTitle": "Ubah Special Offer",
         "succesCreated": "Special Offer berhasil ditambahkan",
         "succesUpdated": "Special Offer berhasil diubah",
-        "updateFailed": "gagal mengubah data",
-        "createFailed": "gagal menambahkan Special Offer baru",
+        "updateFailed": "gagal mengubah data special offer",
+        "createFailed": "gagal menambahkan special offer baru",
         "cantUpdate": {
             "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini"
         },
@@ -777,7 +782,11 @@
         "title": "Data Role",
         "createRole": "tambahkan role baru",
         "loadFailed": "gagal mendapatkan list role",
-        "deleteConfirmation": "Apakah anda yakin untuk menghapus role {{name}}?"
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus role {{name}}?",
+        "succesCreated": "role berhasil ditambahkan",
+        "succesUpdated": "role berhasil diubah",
+        "updateFailed": "gagal mengubah data role",
+        "createFailed": "gagal menambahkan role baru"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
@@ -893,6 +902,11 @@
         "01109": "token expired",
         "01110": "oid tidak terdaftar",
         "01111": "data user tidak ditemukan",
-        "01112" : "notifikasi telah dikirim ke semua user"
+        "01112" : "notifikasi telah dikirim ke semua user",
+        "01113": "nama role wajib diisi",
+        "01114": "gagal menambahkan role baru",
+        "01115": "gagal mengubah data role",
+        "01116": "gagal mendapatkan list role",
+        "01117": "id role wajib diisi"
     }
 }
