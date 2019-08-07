@@ -268,7 +268,7 @@
             <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
-                  <ngx-mat-select-search ngModel (ngModelChange)="filterSpecialOffers($event)" formControlName="searchSpecialOffer" [placeholderLabel]="''" ></ngx-mat-select-search>
+                  <ngx-mat-select-search (keyup)="filterSpecialOffers($event)" formControlName="searchSpecialOffer" [placeholderLabel]="''" ></ngx-mat-select-search>
                   <mat-option value="" (click)="handleSelectSpecialOffer()">
                     {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
                   <mat-option *ngFor="let offer of displaySpecialOffers" [value]="offer.id"
@@ -304,7 +304,7 @@
             <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
-                  <ngx-mat-select-search ngModel (ngModelChange)="filterArticles($event)" formControlName="searchArticle" [placeholderLabel]="''"></ngx-mat-select-search>
+                  <ngx-mat-select-search (keyup)="filterArticles($event)" formControlName="searchArticle" [placeholderLabel]="''"></ngx-mat-select-search>
                   <mat-option value="" (click)="selectedLinkTitle=''">
                     {{'forms.notifArticle.placeholder' | translate}}</mat-option>
                     <mat-option *ngFor="let article of displayArticles" [value]="article.id"

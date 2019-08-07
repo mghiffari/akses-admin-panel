@@ -66,7 +66,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   //component on init
   ngOnInit() {
-    console.log("NotificationDetailsComponent | OnInit")
+    console.log("NotificationDetailsComponent | OnInit");
     this.route.params.subscribe(
       params => {
         this.loading = true;
@@ -250,10 +250,11 @@ export class NotificationDetailsComponent implements OnInit {
 
   // Method to display the array of Articles based on search text
   filterArticles(e) {
-    if(e) {
+    console.log("NotificationDetailsComponent | filterArticles");
+    if(e.target.value) {
       this.displayArticles = [];
       this.articles.map((article) => {
-        if (article.title.toLowerCase().includes(e.toLowerCase())) {
+        if (article.title.toLowerCase().includes(e.target.value.toLowerCase())) {
           this.displayArticles.push(article);
         }
       });
@@ -264,10 +265,11 @@ export class NotificationDetailsComponent implements OnInit {
 
   // Method to display the array of Special Offers based on search text
   filterSpecialOffers(e) {
-    if(e) {
+    console.log("NotificationDetailsComponent | filterSpecialOffers");
+    if(e.target.value) {
       this.displaySpecialOffers = [];
       this.specialOffers.map((specialOffer) => {
-        if (specialOffer.title.toLowerCase().includes(e.toLowerCase())) {
+        if (specialOffer.title.toLowerCase().includes(e.target.value.toLowerCase())) {
           this.displaySpecialOffers.push(specialOffer);
         }
       });
@@ -278,6 +280,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   // Handle link type value change
   handleLinkTypeChange() {
+    console.log("NotificationDetailsComponent | handleLinkTypeChange");
     this.linkType.valueChanges.subscribe(val => {
       // link type is special offer
       this.linkId.setValue('')
@@ -292,6 +295,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   // Handle recipient all flag value change
   handleRecipientAllFlagChange() {
+    console.log("NotificationDetailsComponent | handleRecipientAllFlagChange");
     this.recipientAllFlag.valueChanges.subscribe(val => {
       // recipient target is selected users
       if (!val) {
@@ -313,7 +317,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   // Handle when selecting special offer
   handleSelectSpecialOffer(specialOffer = null){
-    console.log('NotificationDetailsComponent | handleSelectSpecialOffer')
+    console.log('NotificationDetailsComponent | handleSelectSpecialOffer');
     if(specialOffer){
       this.linkCategory.setValue(specialOffer.category)
       this.selectedLinkTitle = specialOffer.title
