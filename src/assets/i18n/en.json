@@ -31,6 +31,7 @@
         "report": {
             "title": "Report",
             "children": {
+                "balanceReport": "Balance Report",
                 "transReport": "Transaction Report"
             }
         }
@@ -795,7 +796,7 @@
         "updateFailed": "failed to update role",
         "createFailed": "failed to create new role"
     },
-    "transReport": {
+    "balanceReport": {
         "title": "Balance and Transaction Report",
         "loadFailed": "failed to get list of articles"
     },

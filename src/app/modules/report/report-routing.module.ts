@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TransReportListComponent } from './pages/trans-report-list/trans-report-list.component';
+import { TransReportComponent } from './pages/trans-report/trans-report.component';
+import { BalanceReportComponent } from './pages/balance-report/balance-report.component';
 
 const routes: Routes = [
   {
     path: 'transaction-report',
-    component: TransReportListComponent,
+    component: TransReportComponent,
     data: {
-      title: 'Transaction Report'
+      title: 'Laporan Transaksi'
     }
   },
+  {
+    path: 'balance-report',
+    component: BalanceReportComponent,
+    data: {
+      title: 'Laporan Balance'
+    }
+  }
 ];
 
 @NgModule({

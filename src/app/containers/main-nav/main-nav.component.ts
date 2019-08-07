@@ -95,6 +95,10 @@ export class MainNavComponent {
           title: 'navMenus.report.children.transReport',
           link: '/transaction-report'
         },
+        {
+          title: 'navMenus.report.children.balanceReport',
+          link: '/balance-report'
+        },
       ]
     },
   ]

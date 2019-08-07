@@ -29,9 +29,10 @@
             }
         },
         "report": {
-            "title": "Report",
+            "title": "Laporan",
             "children": {
-                "transReport": "Transaction Report"
+                "balanceReport": "Laporan Saldo",
+                "transReport": "Laporan Transaksi"
             }
         }
     },
@@ -794,8 +795,8 @@
         "updateFailed": "gagal mengubah data role",
         "createFailed": "gagal menambahkan role baru"
     },
-    "transReport": {
-        "title": "Balance dan Report Transaksi",
+    "balanceReport": {
+        "title": "Saldo dan Laporan Transaksi",
         "loadFailed": "gagal mendapatkan list report transaksi"
     },
     "apiErrors": {

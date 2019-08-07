@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TransReportListComponent } from './trans-report-list.component';
+import { BalanceReportComponent } from './balance-report.component';
 
-describe('TransReportListComponent', () => {
-  let component: TransReportListComponent;
-  let fixture: ComponentFixture<TransReportListComponent>;
+describe('BalanceReportComponent', () => {
+  let component: BalanceReportComponent;
+  let fixture: ComponentFixture<BalanceReportComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransReportListComponent ]
+      declarations: [ BalanceReportComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TransReportListComponent);
+    fixture = TestBed.createComponent(BalanceReportComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
