@@ -22,6 +22,8 @@ import { ArticleService } from './services/article.service';
 import { SpecialOfferService } from './services/special-offer.service';
 import { TinymceEditorComponent } from './components/tinymce-editor/tinymce-editor.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
 import { PageService } from './services/page.service';
 
 @NgModule({
@@ -41,7 +43,8 @@ import { PageService } from './services/page.service';
     HttpClientModule,
     TranslateModule,
     ReactiveFormsModule,
-    EditorModule
+    EditorModule,
+    NgxMatSelectSearchModule
   ], 
   exports: [
     AngularMaterialModule,
@@ -54,7 +57,8 @@ import { PageService } from './services/page.service';
     MaskedNumInputComponent,
     BoldRendererPipe,
     TinymceEditorComponent,
-    EditorModule
+    EditorModule,
+    NgxMatSelectSearchModule
   ],
   providers:[
     AuthService,

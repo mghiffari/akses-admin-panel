@@ -33,7 +33,9 @@ export class NotificationDetailsComponent implements OnInit {
   loading = true;
   selectedLinkTitle = '';
   articles = [];
+  displayArticles = [];
   specialOffers = [];
+  displaySpecialOffers = [];
   notifTitle = CustomValidation.notifTitle;
   notifContent = CustomValidation.notifContent;
   notifImageRes = CustomValidation.notifImage.resolution;
@@ -64,7 +66,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   //component on init
   ngOnInit() {
-    console.log("NotificationDetailsComponent | OnInit")
+    console.log("NotificationDetailsComponent | OnInit");
     this.route.params.subscribe(
       params => {
         this.loading = true;
@@ -89,7 +91,9 @@ export class NotificationDetailsComponent implements OnInit {
           scheduledFlag: new FormControl(false, Validators.required),
           scheduleDate: new FormControl(new Date()),
           oldScheduleSending: new FormControl(),
-          scheduleTime: new FormControl('')
+          scheduleTime: new FormControl(''),
+          searchArticle: new FormControl(''),
+          searchSpecialOffer: new FormControl('')
         }, {
             validators: CustomValidation.notifSchedule
           })
@@ -98,11 +102,13 @@ export class NotificationDetailsComponent implements OnInit {
             console.log(response)
             try {
               this.articles = response.data;
+              this.displayArticles = response.data;
               this.offerService.getActiveOfferList().subscribe(
                 response => {
                   try {
                     console.table(response);
-                    this.specialOffers = response.data
+                    this.specialOffers = response.data;
+                    this.displaySpecialOffers = response.data;
                     if (this.router.url.includes('update')) {
                       this.isCreate = false;
                       this.id = params.id;
@@ -242,8 +248,39 @@ export class NotificationDetailsComponent implements OnInit {
     )
   }
 
+  // Method to display the array of Articles based on search text
+  filterArticles(e) {
+    console.log("NotificationDetailsComponent | filterArticles");
+    if(e.target.value) {
+      this.displayArticles = [];
+      this.articles.map((article) => {
+        if (article.title.toLowerCase().includes(e.target.value.toLowerCase())) {
+          this.displayArticles.push(article);
+        }
+      });
+    } else {
+      this.displayArticles = this.articles;
+    }
+  };
+
+  // Method to display the array of Special Offers based on search text
+  filterSpecialOffers(e) {
+    console.log("NotificationDetailsComponent | filterSpecialOffers");
+    if(e.target.value) {
+      this.displaySpecialOffers = [];
+      this.specialOffers.map((specialOffer) => {
+        if (specialOffer.title.toLowerCase().includes(e.target.value.toLowerCase())) {
+          this.displaySpecialOffers.push(specialOffer);
+        }
+      });
+    } else {
+      this.displaySpecialOffers = this.specialOffers;
+    }
+  };
+
   // Handle link type value change
   handleLinkTypeChange() {
+    console.log("NotificationDetailsComponent | handleLinkTypeChange");
     this.linkType.valueChanges.subscribe(val => {
       // link type is special offer
       this.linkId.setValue('')
@@ -258,6 +295,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   // Handle recipient all flag value change
   handleRecipientAllFlagChange() {
+    console.log("NotificationDetailsComponent | handleRecipientAllFlagChange");
     this.recipientAllFlag.valueChanges.subscribe(val => {
       // recipient target is selected users
       if (!val) {
@@ -279,7 +317,7 @@ export class NotificationDetailsComponent implements OnInit {
 
   // Handle when selecting special offer
   handleSelectSpecialOffer(specialOffer = null){
-    console.log('NotificationDetailsComponent | handleSelectSpecialOffer')
+    console.log('NotificationDetailsComponent | handleSelectSpecialOffer');
     if(specialOffer){
       this.linkCategory.setValue(specialOffer.category)
       this.selectedLinkTitle = specialOffer.title
