@@ -908,6 +908,7 @@
         "01114": "failed to create role",
         "01115": "failed to update role",
         "01116": "failed to get role list",
-        "01117": "role id is required"
+        "01117": "role id is required",
+        "01118": "failed to delete role, role is used by some active users"
     }
 }
