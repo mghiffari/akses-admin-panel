@@ -71,7 +71,7 @@
             <mat-form-field appearance="fill">
               <mat-select formControlName="role">
                 <mat-option value="">{{'forms.role.placeholder' | translate}}</mat-option>
-                <mat-option *ngFor="let role of roles" [value]="role">{{role}}</mat-option>
+                <mat-option *ngFor="let role of roles" [value]="role">{{role.name}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-error class="bottom-error" *ngIf="role.invalid && (role.dirty || role.touched)">

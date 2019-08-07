@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { AccountService } from 'src/app/shared/services/account.service';
+import { PageService } from 'src/app/shared/services/page.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
@@ -35,7 +36,7 @@ export class UserListComponent implements OnInit {
   search = '';
   loading = false;
   isFocusedInput = false;
-  roles = ['superadmin', 'admin', 'visitor'];
+  roles = [];
 
   private table: any;
   @ViewChild('userTable') set tabl(table: ElementRef) {
@@ -50,6 +51,7 @@ export class UserListComponent implements OnInit {
   //constructor
   constructor(
     private accountService: AccountService,
+    private pageService: PageService,
     private snackBar: MatSnackBar,
     private modal: MatDialog
   ) {
@@ -59,7 +61,36 @@ export class UserListComponent implements OnInit {
   //angular on init
   ngOnInit() {
     console.log('UserComponent | ngOnInit');
-    this.lazyLoadData()
+    this.loading = true;
+    this.pageService.getRoleList().subscribe(
+      response => {
+        try {
+          console.table('data', response)
+          this.lazyLoadData();
+          this.roles = response.data;
+        } catch (error) {
+          console.error(error)
+        } 
+      },
+      error => {
+        try {
+          console.table(error);
+          this.loading = false;
+          let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'failedToGetRoles',
+              content: {
+                text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })              
+        } catch (error) {
+          console.table(error)
+        }
+      }
+    );
+    
   }
 
   // event handling paginator value changed (page index and page size)
