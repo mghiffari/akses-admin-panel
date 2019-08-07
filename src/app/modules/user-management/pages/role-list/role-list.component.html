@@ -68,6 +68,12 @@
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="loading" style="min-height:100px">
           <mat-spinner diameter="50"></mat-spinner>
         </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start start" class="margin-top-10 padding-left-16"
+          *ngIf="roles.controls.length === 0 && !loading">
+          <div class="font-gotham-light">
+            {{'table.noRecordsFound' | translate}}
+          </div>
+        </div>
       </div>
     </div>
     <div fxFlex="70%" fxFlex.lt-lg="60%" fxFlex.lt-md="100%" fxLayout="column" class="border-gray">
@@ -89,7 +95,8 @@
                     <div fxFlex="40%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column">
                       <div fxLayout="row wrap">
                         <div fxFlex="50%" fxFlex.lt-md="100%">
-                          <mat-checkbox color="primary" formControlName="view" (change)="onChangeViewPrivilege(element)">
+                          <mat-checkbox color="primary" formControlName="view"
+                            (change)="onChangeViewPrivilege(element)">
                             {{'forms.privilege.options.view' | translate}}
                           </mat-checkbox>
                         </div>
@@ -118,7 +125,8 @@
                           </mat-checkbox>
                         </div>
                         <div fxFlex="50%" fxFlex.lt-md="100%">
-                          <mat-checkbox color="primary" formControlName="download" (change)="onChangePrivilege(element)">
+                          <mat-checkbox color="primary" formControlName="download"
+                            (change)="onChangePrivilege(element)">
                             {{'forms.privilege.options.download' | translate}}
                           </mat-checkbox>
                         </div>
@@ -134,6 +142,12 @@
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" *ngIf="loading" style="min-height:100px">
           <mat-spinner diameter="50"></mat-spinner>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top-10 padding-left-16"
+          *ngIf="(getPrivilegesFormArray() && getPrivilegesFormArray().controls.length === 0) && !loading">
+          <div class="font-gotham-light">
+            {{'table.noRecordsFound' | translate}}
+          </div>
         </div>
       </div>
     </div>
