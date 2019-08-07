@@ -78,7 +78,7 @@ export class UserListComponent implements OnInit {
           this.loading = false;
           let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
             data: {
-              title: 'failedToGetRoles',
+              title: 'userListScreen.failedToGetRoles',
               content: {
                 text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
                 data: null
