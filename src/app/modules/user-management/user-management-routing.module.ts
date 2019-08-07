@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { RoleListComponent } from './pages/role-list/role-list.component';
+import { CanDeactivateGuard } from 'src/app/_guard/can-deactivate.guard';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: 'roles',
     component: RoleListComponent,
+    canDeactivate: [CanDeactivateGuard],
     data: {
       title: 'Roles'
     }
