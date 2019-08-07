@@ -584,7 +584,8 @@
         "title": "Users Data",
         "createUser": "create user",
         "loadFailed": "failed to get list of users",
-        "deleteConfirmation": "Are you sure you want to delete user {{name}}?"
+        "deleteConfirmation": "Are you sure you want to delete user {{name}}?",
+        "failedToGetRoles": "Failed top get list of roles"
     },
     "userDetailsScreen": {
         "getUserFailed": "failed to get user data",

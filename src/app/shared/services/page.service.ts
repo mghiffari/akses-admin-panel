@@ -11,6 +11,7 @@ export class PageService {
   getRolePrivilegeApiUrl = this.pageApiUrl + '/get-group';
   createRolePrivilegeApiUrl = this.pageApiUrl + '/create-group';
   updateRolePrivilegeApiUrl = this.pageApiUrl + '/update-group';
+  getRoleApiUrl = this.pageApiUrl + '/get-role';
 
   // constructor
   constructor(private authService: AuthService) { 
@@ -33,6 +34,12 @@ export class PageService {
   updateRolePrivileges(data: RolePrivilege) {
     console.log('PageService | updateRolePrivileges')
     return this.authService.wrapTokenPutApi(this.updateRolePrivilegeApiUrl, data)
+  }
+
+  // get roles list
+  getRoleList() {
+    console.log('PageService | getRoleList')
+    return this.authService.wrapTokenGetApi(this.getRoleApiUrl)
   }
   
 }

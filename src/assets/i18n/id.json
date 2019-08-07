@@ -584,7 +584,8 @@
         "title": "Data User",
         "createUser": "tambahkan user baru",
         "loadFailed": "gagal mendapatkan list user",
-        "deleteConfirmation": "Apakah anda yakin untuk menghapus user {{name}}?"
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus user {{name}}?",
+        "failedToGetRoles": "Gagal mendapatkan list role"
     },
     "userDetailsScreen": {
         "getUserFailed": "gagal mendapatkan data user",
