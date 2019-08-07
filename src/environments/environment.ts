@@ -15,8 +15,8 @@ export const environment = {
     updateNotification: 'notification'
   },
   enableAdiraEmailValidation: false,
-  version: '1.0.22',
-  versionDate: new Date(2019, 6, 23),
+  version: '1.0.23',
+  versionDate: new Date(2019, 7, 7),
   tinyMceSettings: {
     inline: false,
     statusbar: false,
