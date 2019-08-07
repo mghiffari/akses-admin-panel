@@ -908,6 +908,7 @@
         "01114": "gagal menambahkan role baru",
         "01115": "gagal mengubah data role",
         "01116": "gagal mendapatkan list role",
-        "01117": "id role wajib diisi"
+        "01117": "id role wajib diisi",
+        "01118": "gagal menghapus role, role digunakan oleh user aktif"
     }
 }

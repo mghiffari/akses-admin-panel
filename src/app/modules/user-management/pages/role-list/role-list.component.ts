@@ -332,15 +332,51 @@ export class RoleListComponent implements OnInit {
       if (result) {
         const afterSelect = () => {
           let roleId = roleForm.value.id
-
           if (roleId && roleId !== '') {
-
-          } else {
-            if (index >= formArray.length - 1) {
-              this.selectRole(index - 1)
+            let selectedRole = this.roleList.find((el: RolePrivilege) => {
+              return el.id === roleId
+            })
+            if (selectedRole) {
+              this.loading = true
+              let deletedRole: RolePrivilege = Object.assign(new RolePrivilege(), selectedRole)
+              deletedRole.is_deleted = true
+              this.pageService.updateRolePrivileges(deletedRole).subscribe(
+                response => {
+                  console.table(response);
+                  this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                    data: {
+                      title: 'success',
+                      content: {
+                        text: 'dataDeleted',
+                        data: null
+                      }
+                    }
+                  })
+                  this.loadData()
+                },
+                error => {
+                  try {
+                    console.table(error);
+                    this.loading = false;
+                    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'failedToDelete',
+                        content: {
+                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                          data: null
+                        }
+                      }
+                    })
+                  } catch (error) {
+                    console.table(error)
+                  }
+                }
+              )
             }
-            formArray.removeAt(index)
-            this.renderTableRows()
+          } else {
+            if (this.rolesFormArray.length > 0) {
+              this.selectedRowIndex = 0
+            }
           }
         }
         this.selectRole(index, afterSelect)
@@ -458,7 +494,7 @@ export class RoleListComponent implements OnInit {
                 })
               } catch (error) {
                 console.error(error)
-              } 
+              }
             }
           )
         } else {
@@ -491,7 +527,7 @@ export class RoleListComponent implements OnInit {
                 })
               } catch (error) {
                 console.error(error)
-              } 
+              }
             }
           )
         }
