@@ -251,7 +251,7 @@ export class RoleListComponent implements OnInit {
   }
 
   // select a role on the table handler
-  selectRole(index, afterSelect = null, failedSelect = null) {
+  selectRole(index, afterSelect = null) {
     console.log('RoleListComponent | selectRole')
     const select = () => {
       let prevIndex = this.selectedRowIndex
@@ -267,7 +267,7 @@ export class RoleListComponent implements OnInit {
         this.showSaveConfirmModal().subscribe(
           result => {
             if (result) {
-              this.save(select, failedSelect)
+              this.save(select)
             } else {
               select()
             }
@@ -280,7 +280,7 @@ export class RoleListComponent implements OnInit {
   }
 
   // enable editing selected role name
-  editRole(index, onSucess = null, onFailed = null) {
+  editRole(index, onSucess = null) {
     console.log('RoleListComponent | editRole')
     const enableEdit = () => {
       let prevIndex = this.selectedRowIndex
@@ -297,7 +297,7 @@ export class RoleListComponent implements OnInit {
         this.showSaveConfirmModal().subscribe(
           result => {
             if (result) {
-              this.save(enableEdit, onFailed)
+              this.save(enableEdit)
             } else {
               enableEdit()
             }
@@ -399,7 +399,7 @@ export class RoleListComponent implements OnInit {
   }
 
   // button save click handler
-  save(onSuccess = null, onFailed = null) {
+  save(onSuccess = null) {
     console.log('RoleListComponent | save')
     let selectedRoleFormGroup = this.selectedRole
     if (selectedRoleFormGroup) {
@@ -442,7 +442,7 @@ export class RoleListComponent implements OnInit {
                   }
                 }
               })
-              this.loadData(onSuccess, onFailed)
+              this.loadData(onSuccess)
             }, error => {
               try {
                 console.table(error)
@@ -458,11 +458,7 @@ export class RoleListComponent implements OnInit {
                 })
               } catch (error) {
                 console.error(error)
-              } finally {
-                if (onFailed) {
-                  onFailed()
-                }
-              }
+              } 
             }
           )
         } else {
@@ -479,7 +475,7 @@ export class RoleListComponent implements OnInit {
                   }
                 }
               })
-              this.loadData(onSuccess, onFailed)
+              this.loadData(onSuccess)
             }, error => {
               try {
                 console.table(error)
@@ -495,11 +491,7 @@ export class RoleListComponent implements OnInit {
                 })
               } catch (error) {
                 console.error(error)
-              } finally {
-                if (onFailed) {
-                  onFailed()
-                }
-              }
+              } 
             }
           )
         }
@@ -519,15 +511,12 @@ export class RoleListComponent implements OnInit {
             }
           }
         })
-        if (onFailed) {
-          onFailed()
-        }
       }
     }
   }
 
   // call api to get list of roles, privileges and list of features
-  loadData(onSuccess = null, onFailed = null) {
+  loadData(onSuccess = null) {
     console.log('RoleListComponent | loadData')
     this.loading = true;
     this.pageService.getRolePrivileges().subscribe(
@@ -603,9 +592,6 @@ export class RoleListComponent implements OnInit {
           }
         } catch (error) {
           console.error(error)
-          if (onFailed) {
-            onFailed()
-          }
         }
       }, error => {
         try {
@@ -622,10 +608,6 @@ export class RoleListComponent implements OnInit {
           })
         } catch (error) {
           console.error(error)
-        } finally {
-          if (onFailed) {
-            onFailed()
-          }
         }
       }
     )
