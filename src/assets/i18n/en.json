@@ -27,6 +27,12 @@
                 "users": "Users",
                 "roles": "Roles"
             }
+        },
+        "report": {
+            "title": "Report",
+            "children": {
+                "transReport": "Transaction Report"
+            }
         }
     },
     "userAction": {
@@ -788,6 +794,10 @@
         "succesUpdated": "role successfully updated",
         "updateFailed": "failed to update role",
         "createFailed": "failed to create new role"
+    },
+    "transReport": {
+        "title": "Balance and Transaction Report",
+        "loadFailed": "failed to get list of articles"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

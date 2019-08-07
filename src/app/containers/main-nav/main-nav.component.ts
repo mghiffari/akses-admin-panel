@@ -86,7 +86,17 @@ export class MainNavComponent {
           link: '/roles'
         }
       ]
-    }
+    },
+    {
+      title: 'navMenus.report.title',
+      link: '/report',
+      children: [
+        {
+          title: 'navMenus.report.children.transReport',
+          link: '/transaction-report'
+        },
+      ]
+    },
   ]
 
   //constructor

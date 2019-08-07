@@ -27,6 +27,12 @@
                 "users": "User",
                 "roles": "Role"
             }
+        },
+        "report": {
+            "title": "Report",
+            "children": {
+                "transReport": "Transaction Report"
+            }
         }
     },
     "userAction": {
@@ -787,6 +793,10 @@
         "succesUpdated": "role berhasil diubah",
         "updateFailed": "gagal mengubah data role",
         "createFailed": "gagal menambahkan role baru"
+    },
+    "transReport": {
+        "title": "Balance dan Report Transaksi",
+        "loadFailed": "gagal mendapatkan list report transaksi"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
