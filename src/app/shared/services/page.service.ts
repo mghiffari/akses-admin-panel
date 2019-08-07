@@ -36,6 +36,7 @@ export class PageService {
     return this.authService.wrapTokenPutApi(this.updateRolePrivilegeApiUrl, data)
   }
 
+  // get roles list
   getRoleList() {
     console.log('PageService | getRoleList')
     return this.authService.wrapTokenGetApi(this.getRoleApiUrl)
