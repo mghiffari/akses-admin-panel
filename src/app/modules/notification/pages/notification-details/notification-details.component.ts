@@ -33,7 +33,9 @@ export class NotificationDetailsComponent implements OnInit {
   loading = true;
   selectedLinkTitle = '';
   articles = [];
+  displayArticles = [];
   specialOffers = [];
+  displaySpecialOffers = [];
   notifTitle = CustomValidation.notifTitle;
   notifContent = CustomValidation.notifContent;
   notifImageRes = CustomValidation.notifImage.resolution;
@@ -89,7 +91,9 @@ export class NotificationDetailsComponent implements OnInit {
           scheduledFlag: new FormControl(false, Validators.required),
           scheduleDate: new FormControl(new Date()),
           oldScheduleSending: new FormControl(),
-          scheduleTime: new FormControl('')
+          scheduleTime: new FormControl(''),
+          searchArticle: new FormControl(''),
+          searchSpecialOffer: new FormControl('')
         }, {
             validators: CustomValidation.notifSchedule
           })
@@ -98,11 +102,13 @@ export class NotificationDetailsComponent implements OnInit {
             console.log(response)
             try {
               this.articles = response.data;
+              this.displayArticles = response.data;
               this.offerService.getActiveOfferList().subscribe(
                 response => {
                   try {
                     console.table(response);
-                    this.specialOffers = response.data
+                    this.specialOffers = response.data;
+                    this.displaySpecialOffers = response.data;
                     if (this.router.url.includes('update')) {
                       this.isCreate = false;
                       this.id = params.id;
@@ -241,6 +247,34 @@ export class NotificationDetailsComponent implements OnInit {
       }
     )
   }
+
+  // Method to display the array of Articles based on search text
+  filterArticles(e) {
+    if(e) {
+      this.displayArticles = [];
+      this.articles.map((article) => {
+        if (article.title.toLowerCase().includes(e.toLowerCase())) {
+          this.displayArticles.push(article);
+        }
+      });
+    } else {
+      this.displayArticles = this.articles;
+    }
+  };
+
+  // Method to display the array of Special Offers based on search text
+  filterSpecialOffers(e) {
+    if(e) {
+      this.displaySpecialOffers = [];
+      this.specialOffers.map((specialOffer) => {
+        if (specialOffer.title.toLowerCase().includes(e.toLowerCase())) {
+          this.displaySpecialOffers.push(specialOffer);
+        }
+      });
+    } else {
+      this.displaySpecialOffers = this.specialOffers;
+    }
+  };
 
   // Handle link type value change
   handleLinkTypeChange() {
