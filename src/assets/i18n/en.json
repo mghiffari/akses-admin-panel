@@ -537,6 +537,7 @@
     "yesContinue": "yes, continue!",
     "reset": "reset",
     "cancel": "cancel",
+    "skip": "skip",
     "success": "success",
     "fail": "fail",
     "error": "error",

@@ -537,6 +537,7 @@
     "yesContinue": "yakin",
     "reset": "reset",
     "cancel": "batal",
+    "skip": "skip",
     "success": "berhasil",
     "fail": "gagal",
     "error": "error",
