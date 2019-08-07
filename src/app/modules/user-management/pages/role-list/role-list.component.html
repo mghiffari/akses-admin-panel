@@ -1,0 +1,153 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      {{'roleListScreen.title' | translate}}
+    </div>
+  </div>
+  <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" class="padding-left-16">
+    <div>
+      <div class="top-action-text" [class.cursor-pointer]="!loading" [class.disabled]="loading"
+        fxLayoutAlign="start center" (click)="addRole()">
+        <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
+        <span>
+          {{'roleListScreen.createRole' | translate}}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="border-bottom-gray padding-16 box-min-height" fxLayout="row wrap" fxFlex="grow">
+    <div fxFlex="30%" fxFlex.lt-lg="40%" fxFlex.lt-md="100%" fxLayout="column" ngClass.md="padding-right-16"
+      ngClass.gt-md="padding-right-16" ngClass.lt-md="padding-bottom-16">
+      <div fxFlex="100%" class="border-gray position-relative" fxLayoutAlign="center center">
+        <div class="table-wrapper">
+          <table mat-table [dataSource]="roles.controls" #roleTable class="table-min-100">
+            <ng-container matColumnDef="number">
+              <th mat-header-cell *matHeaderCellDef class="font-th th-width-25"> {{'table.numbers' | translate}} </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                {{i + 1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="roleName">
+              <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-150">
+                {{'table.roleTable.roleName' | translate}}
+              </th>
+              <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+                <div *ngIf="isEditModeName && selectedRowIndex === i; else viewMode"
+                  class="padding-top-10 padding-bottom-10">
+                  <mat-form-field appearance="fill">
+                    <input matInput placeholder="{{'forms.roleName.placeholder' | translate}}" formControlName="name">
+                  </mat-form-field>
+                  <mat-error class="bottom-error"
+                    *ngIf="getElementRoleName(element).invalid && (getElementRoleName(element).dirty || getElementRoleName(element).touched)">
+                    <span
+                      *ngIf="getElementRoleName(element).errors.required">{{'forms.roleName.errorRequired' | translate}}</span>
+                  </mat-error>
+                </div>
+                <ng-template #viewMode>
+                  {{getElementRoleName(element).value}}
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-75 text-center-important"> </th>
+              <td mat-cell *matCellDef="let element; let i = index" class="text-center">
+                <div *ngIf="!isEditModeName || selectedRowIndex !== i">
+                  <mat-icon class="cursor-pointer" (click)="$event.stopPropagation(); deleteRole(i)">delete</mat-icon>
+                  <mat-icon color="primary" class="cursor-pointer" (click)="$event.stopPropagation(); editRole(i)">edit
+                  </mat-icon>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="roleColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; let i = index; columns: roleColumns"
+              [class.bg-light-gray]="selectedRowIndex === i" [hidden]="loading" (click)="selectRole(i)"></tr>
+          </table>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="loading" style="min-height:100px">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="70%" fxFlex.lt-lg="60%" fxFlex.lt-md="100%" fxLayout="column" class="border-gray">
+      <div fxFlex="100%" class="border-gray position-relative" fxLayoutAlign="center center">
+        <div class="table-wrapper">
+          <table *ngIf="selectedRowIndex >= 0" mat-table [dataSource]="getPrivilegesFormArray()?.controls" #featureTable
+            class="table-min-100">
+            <ng-container matColumnDef="featureName">
+              <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="feature">
+                <div class="padding-top-10 padding-bottom-10">
+                  {{getElementFeatureName(element).value}}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="privileges">
+              <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="privileges-min-width">
+                <div style="width: 100%" class="padding-top-10 padding-bottom-10">
+                  <div fxLayout="row">
+                    <div fxFlex="40%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column">
+                      <div fxLayout="row wrap">
+                        <div fxFlex="50%" fxFlex.lt-md="100%">
+                          <mat-checkbox color="primary" formControlName="view" (change)="onChangeViewPrivilege(element)">
+                            {{'forms.privilege.options.view' | translate}}
+                          </mat-checkbox>
+                        </div>
+                        <div fxFlex="50%" fxFlex.lt-md="100%">
+                          <mat-checkbox color="primary" formControlName="create" (change)="onChangePrivilege(element)">
+                            {{'forms.privilege.options.create' | translate}}
+                          </mat-checkbox>
+                        </div>
+                      </div>
+                      <div fxLayout="row wrap">
+                        <div fxFlex="50%" fxFlex.lt-md="100%">
+                          <mat-checkbox color="primary" formControlName="edit" (change)="onChangePrivilege(element)">
+                            {{'forms.privilege.options.edit' | translate}}
+                          </mat-checkbox>
+                        </div>
+                        <div fxFlex="50%" fxFlex.lt-md="100%">
+                          <mat-checkbox color="primary" formControlName="delete" (change)="onChangePrivilege(element)">
+                            {{'forms.privilege.options.delete' | translate}}
+                          </mat-checkbox>
+                        </div>
+                      </div>
+                      <div fxLayout="row wrap">
+                        <div fxFlex="50%" fxFlex.lt-md="100%">
+                          <mat-checkbox color="primary" formControlName="publish" (change)="onChangePrivilege(element)">
+                            {{'forms.privilege.options.publish' | translate}}
+                          </mat-checkbox>
+                        </div>
+                        <div fxFlex="50%" fxFlex.lt-md="100%">
+                          <mat-checkbox color="primary" formControlName="download" (change)="onChangePrivilege(element)">
+                            {{'forms.privilege.options.download' | translate}}
+                          </mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+            <tr mat-row *matRowDef="let row; columns: featureColumns" [hidden]="loading"></tr>
+          </table>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="loading" style="min-height:100px">
+          <mat-spinner diameter="50"></mat-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="padding-16" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" (click)="save()" *ngIf="!loading"
+      [disabled]="form.invalid && selectedRowIndex > -1">{{'save' | translate}}</button>
+    <button mat-raised-button color="primary" disabled *ngIf="loading">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div>
+          <mat-spinner diameter="16"></mat-spinner>
+        </div>
+        <div class="margin-left-5">{{'loading' | translate}}</div>
+      </div>
+    </button>
+  </div>
+</div>

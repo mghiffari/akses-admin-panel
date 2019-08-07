@@ -48,7 +48,6 @@ export class SpecialOfferListComponent implements OnInit {
   constructor(
     private offerService: SpecialOfferService,
     private snackBar: MatSnackBar,
-    private modal: MatDialog,
     private router: Router
   ) { }
 

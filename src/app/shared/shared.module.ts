@@ -24,6 +24,7 @@ import { TinymceEditorComponent } from './components/tinymce-editor/tinymce-edit
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
+import { PageService } from './services/page.service';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
     CreditSimulationService,
     FileManagementService,
     ArticleService,
-    SpecialOfferService
+    SpecialOfferService,
+    PageService
   ],
   entryComponents: [
     ErrorModalComponent,

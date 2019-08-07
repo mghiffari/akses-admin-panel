@@ -30,7 +30,7 @@
       </mat-paginator>
     </div>
   </div>
-  <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: scroll">
+  <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: auto">
     <table mat-table [dataSource]="banners" #bannersTable matSort (matSortChange)="onSortChange($event)" class="table-min-100">
       <ng-container matColumnDef="number">
         <th mat-header-cell *matHeaderCellDef class="font-th th-width-25"> {{'table.numbers' | translate}} </th>
