@@ -11,11 +11,11 @@
   </div>
   <div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
     <div fxLayout="row" style="width: 100%">
-      <button mat-raised-button color="accent" [mat-dialog-close]="false" block-button>{{'cancel' | translate}}</button>
+      <button mat-raised-button color="accent" [mat-dialog-close]="false" block-button>{{(data.button && data.button.cancel ? data.button.cancel : 'cancel' )| translate}}</button>
     </div>
     <div fxLayout="row" style="width: 100%" class="margin-top-5">
       <button mat-raised-button color="primary" [mat-dialog-close]="true"
-        block-button>{{'yesContinue' | translate}}</button>
+        block-button>{{(data.button && data.button.ok ? data.button.ok : 'yesContinue' )| translate}}</button>
     </div>
   </div>
 </div>

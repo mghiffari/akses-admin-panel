@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
+import { RolePrivilege } from 'src/app/modules/user-management/models/role-privilege';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PageService {
   pageApiUrl = environment.apiurl + 'page';
-  rolePrivilegeApiUrl = this.pageApiUrl + '/get-group';
+  getRolePrivilegeApiUrl = this.pageApiUrl + '/get-group';
+  createRolePrivilegeApiUrl = this.pageApiUrl + '/create-group';
+  updateRolePrivilegeApiUrl = this.pageApiUrl + '/update-group';
 
   // constructor
   constructor(private authService: AuthService) { 
@@ -17,7 +20,19 @@ export class PageService {
   // get list of roles and its priviledes and list of privileges
   getRolePrivileges() {
     console.log('PageService | getRolePrivileges')
-    return this.authService.wrapTokenGetApi(this.rolePrivilegeApiUrl)
+    return this.authService.wrapTokenGetApi(this.getRolePrivilegeApiUrl)
+  }
+
+  // create role privileges
+  createRolePrivileges(data: RolePrivilege) {
+    console.log('PageService | createRolePrivileges')
+    return this.authService.wrapTokenPostApi(this.createRolePrivilegeApiUrl, data)
+  }
+
+  // update role privileges
+  updateRolePrivileges(data: RolePrivilege) {
+    console.log('PageService | updateRolePrivileges')
+    return this.authService.wrapTokenPutApi(this.updateRolePrivilegeApiUrl, data)
   }
   
 }

@@ -19,7 +19,7 @@
     <div fxFlex="30%" fxFlex.lt-lg="40%" fxFlex.lt-md="100%" fxLayout="column" ngClass.md="padding-right-16"
       ngClass.gt-md="padding-right-16" ngClass.lt-md="padding-bottom-16">
       <div fxFlex="100%" class="border-gray position-relative" fxLayoutAlign="center center">
-        <div class="table-wrapper">
+        <div class="table-wrapper" #roleTableWrapper>
           <table mat-table [dataSource]="roles.controls" #roleTable class="table-min-100">
             <ng-container matColumnDef="number">
               <th mat-header-cell *matHeaderCellDef class="font-th th-width-25"> {{'table.numbers' | translate}} </th>
@@ -140,7 +140,7 @@
   </div>
   <div class="padding-16" fxLayout="row" fxLayoutAlign="end center">
     <button mat-raised-button color="primary" (click)="save()" *ngIf="!loading"
-      [disabled]="form.invalid && selectedRowIndex > -1">{{'save' | translate}}</button>
+      [disabled]="!selectedRole || selectedRole.invalid || selectedRole.pristine">{{'save' | translate}}</button>
     <button mat-raised-button color="primary" disabled *ngIf="loading">
       <div fxLayout="row" fxLayoutAlign="center center">
         <div>
