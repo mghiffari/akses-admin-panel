@@ -27,6 +27,13 @@
                 "users": "User",
                 "roles": "Role"
             }
+        },
+        "report": {
+            "title": "Laporan",
+            "children": {
+                "balanceReport": "Laporan Saldo",
+                "transReport": "Laporan Transaksi"
+            }
         }
     },
     "userAction": {
@@ -419,6 +426,17 @@
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
+        },
+        "transactionStartDate": {
+            "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid",
+            "errorMax": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai"
+        },
+        "transactionEndDate": {
+            "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid"
+        },
+        "transactionSearch":{
+            "placeholder": "Cari OID / VA / Nomor Handphone",
+            "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}"
         }
     },
     "loginScreen": {
@@ -505,6 +523,30 @@
         },
         "roleTable": {
             "roleName": "Nama Role"
+        },
+        "transactionTable": {
+            "oid": "OID",
+            "vaNumber": "Nomor VA",
+            "name": "Nama",
+            "phNumber": "Nomor Handphone",
+            "aksesPay": "Saldo Akses pay",
+            "timestamp": "Timestamp",
+            "transCode": "Kode Transaksi",
+            "transDesc": "Deskripsi Transaksi",
+            "amount": "Jumlah",
+            "destVANumber": "Nomor VA Tujuan",
+            "sourceVANumber": "Nomor VA Sumber",
+            "transDate": "Tanggal Transaksi",
+            "transSeq": "Urutan Transaksi",
+            "installmentAmount": "Besar Angsuran",
+            "withdrawalAmount": "Jumlah Penarikan",
+            "topUpAmount": "Jumlah Top Up",
+            "penaltyFee": "Denda Dibayar",
+            "fee": "Biaya Transaksi",
+            "withdrawalFee": "Biaya Penarikan",
+            "bankTransferFee": "Biaya Transfer Bank",
+            "ppn": "PPN",
+            "vaName": "Nama Bank"
         }
     },
     "bannerListScreen": {
@@ -549,6 +591,7 @@
     "approve": "approve",
     "reject": "reject",
     "add": "tambah",
+    "to": "to",
     "by": "by",
     "edit": "edit",
     "example": "contoh",
@@ -788,6 +831,16 @@
         "succesUpdated": "role berhasil diubah",
         "updateFailed": "gagal mengubah data role",
         "createFailed": "gagal menambahkan role baru"
+    },
+    "balanceReport": {
+        "title": "Saldo dan Laporan Transaksi",
+        "loadFailed": "gagal mendapatkan list report transaksi"
+    },
+    "transactionReport": {
+        "title": "Laporan Transaksi",
+        "dateFilter": "Filter Tanggal",
+        "downloadReport": "download laporan",
+        "dateFilterNotSet": "Filter Tanggal Belum Diatur"
     },
     "homeScreen": {
         "welcome": "Selamat datang,",

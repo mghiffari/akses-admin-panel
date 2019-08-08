@@ -27,6 +27,13 @@
                 "users": "Users",
                 "roles": "Roles"
             }
+        },
+        "report": {
+            "title": "Report",
+            "children": {
+                "balanceReport": "Balance Report",
+                "transReport": "Transaction Report"
+            }
         }
     },
     "userAction": {
@@ -416,6 +423,17 @@
                 "download": "Download"
             }
         },
+        "transactionStartDate": {
+            "errorRequired": "Start Date must have valid date format value",
+            "errorMax": "Start Date must be less than or equal than End Date"
+        },
+        "transactionEndDate": {
+            "errorRequired": "End Date must have valid date format value"
+        },
+        "transactionSearch":{
+            "placeholder": "Search OID / VA / Phone Number",
+            "hint": "Min. length of search text is {{minLength}}"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -505,6 +523,30 @@
         },
         "roleTable": {
             "roleName": "Role Name"
+        },
+        "transactionTable": {
+            "oid": "OID",
+            "vaNumber": "VA Number",
+            "name": "Name",
+            "phNumber": "Phone Number",
+            "aksesPay": "Akses pay Balance",
+            "timestamp": "Timestamp",
+            "transCode": "Transaction Code",
+            "transDesc": "Transaction Description",
+            "amount": "Amount",
+            "destVANumber": "Destination VA Number",
+            "sourceVANumber": "Source VA Number",
+            "transDate": "Transaction Date",
+            "transSeq": "Transaction Sequence",
+            "installmentAmount": "Installment Amount",
+            "withdrawalAmount": "Withdrawal Amount",
+            "topUpAmount": "Top Up Amount",
+            "penaltyFee": "Penalty Paid",
+            "fee": "Transaction Fee",
+            "withdrawalFee": "Withdrawal Fee",
+            "bankTransferFee": "Bank Transfer Fee",
+            "ppn": "PPN",
+            "vaName": "Bank Name"
         }
     },
     "bannerListScreen": {
@@ -550,6 +592,7 @@
     "reject": "reject",
     "add": "add",
     "by": "by",
+    "to": "to",
     "edit": "edit",
     "example": "example",
     "invalidForm": "invalid form",
@@ -789,6 +832,16 @@
         "succesUpdated": "role successfully updated",
         "updateFailed": "failed to update role",
         "createFailed": "failed to create new role"
+    },
+    "balanceReport": {
+        "title": "Balance and Transaction Report",
+        "loadFailed": "failed to get list of articles"
+    },
+    "transactionReport": {
+        "title": "Transaction Report",
+        "dateFilter": "Date Filter",
+        "downloadReport": "download report",
+        "dateFilterNotSet": "Date Filter Not Set"
     },
     "homeScreen": {
         "welcome": "Welcome,",
