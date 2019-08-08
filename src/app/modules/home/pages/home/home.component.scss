@@ -1,0 +1,68 @@
+@import '~src/assets/styles/colors';
+@import '~src/assets/styles/fonts';
+
+$gray: map-get($colors, gray);
+$dark-gray: map-get($colors, dark-gray);
+$purple: map-get($colors, purple);
+
+.name-container {
+    min-height: 64px;
+    border-bottom: 1px solid $gray;
+}
+
+.name-text {
+    @extend .font-gotham-bold;
+    font-style: normal;
+    line-height: normal;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $dark-gray;
+}
+
+.date-text {
+    @extend .font-roboto;
+    font-style: normal;
+    line-height: normal;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    color: $dark-gray;
+}
+
+.entry-text {
+    @extend .font-gotham-bold;
+    padding: 24px 16px 0;
+    font-style: normal;
+    line-height: normal;
+    font-size: 18px;
+    color: $dark-gray;
+}
+
+.tiles-container {
+    max-height: 100%;
+    margin-left: 16px;
+    padding-top: 16px;
+}
+
+.border-line {
+    border-top: 1px solid $gray;
+    margin: 0 16px 16px 0;
+}
+
+.card-container {
+    height: 68px;
+    border: 1px solid $gray;
+    text-align: center;
+    margin: 0 16px 16px 0;
+}
+
+.button-text {
+    @extend .font-gotham-bold;
+    font-style: normal;
+    line-height: normal;
+    font-size: 14px;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    color: $purple;
+    padding: 0 24px;
+}

@@ -844,6 +844,11 @@
         "downloadReport": "download report",
         "dateFilterNotSet": "Date Filter Not Set"
     },
+    "homeScreen": {
+        "welcome": "Welcome,",
+        "lastLogin": "LAST LOGIN",
+        "addEntry": "Add a New Entry"
+    },
     "apiErrors": {
         "noInternet": "no internet connection",
         "01000": "internal server error",

@@ -158,7 +158,7 @@ export class LoginComponent implements OnInit {
   goToUserPage() {
     console.log('LoginComponent | goToUserPage')
     console.log('redirect to user')
-    this.router.navigate(['/user-management/users']);
+    this.router.navigate(['/']);
   }
 
   // change to reset password form mode

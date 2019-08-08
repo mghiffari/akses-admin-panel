@@ -2,7 +2,7 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="!(isHandset$ | async)">
-    <div class="adira-yellow-theme" #toolbar>
+    <div class="adira-yellow-theme" #toolbar routerLink="/">
       <mat-toolbar color="primary">
         <div fxLayout="row" fxLayoutAlign="center center" style="height: 100%">
           <img width="80%" src="./../../../assets/img/Logo.Adira.svg" alt="{{'imageNotExist' | translate}}">

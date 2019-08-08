@@ -1,0 +1,22 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row wrap" class="name-container padding-16">
+    <div  fxFlex="75%" fxFlex.lg="75%" fxFlex.md="75%" fxFlex.sm="75%" fxFlex.xs="100%" class="page-title" fxLayoutAlign="start center">
+      {{'homeScreen.welcome' | translate}} {{userData?.firstname}} {{userData?.lastname}}
+    </div>
+    <div ngClass.xs="padding-top-16" fxLayout="column" fxFlex="25%" fxFlex.lg="25%" fxFlex.md="25%" fxFlex.sm="25%" fxFlex.xs="100%" fxLayoutAlign="center end">
+      <div class="name-text">{{'homeScreen.lastLogin' | translate}}</div>
+      <div class="date-text">{{userData?.last_login | date: 'dd-MM-yyyy, hh:mm'}}</div>
+    </div>
+  </div>
+  <div class="entry-text">{{'homeScreen.addEntry' | translate}}</div>
+  <div class="tiles-container">
+    <div class="border-line"></div>
+    <div fxLayout="row wrap">
+      <div *ngFor="let button of navigationButtons" [routerLink]="button.link" fxFlex="25%" fxFlex.lg="25%" fxFlex.md="25%" fxFlex.sm="33%" fxFlex.xs="50%">
+        <div fxLayoutAlign="center center" class="card-container">
+          <div class="button-text">{{button.title | translate}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -843,6 +843,11 @@
         "downloadReport": "download laporan",
         "dateFilterNotSet": "Filter Tanggal Belum Diatur"
     },
+    "homeScreen": {
+        "welcome": "Selamat datang,",
+        "lastLogin": "TERAKHIR LOGIN",
+        "addEntry": "Tambah Entri Baru"
+    },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
         "01000": "internal server error",
