@@ -11,5 +11,10 @@ export const constants = {
     specialOfferCategory: {
         oneclick: 'one click',
         durable: 'durable'
+    },
+    transactionType: {
+        topUp: 'TO',
+        payment: 'PM',
+        withdrawal: 'WT'
     }
 }

@@ -74,6 +74,10 @@ export class CustomValidation {
     maxLength: 300
   }
 
+  static transactionSearch = {
+    minLength: 8
+  }
+
   static adiraEmailPattern = environment.enableAdiraEmailValidation ? /@adira.co.id$/ : /^/;
   static internationalNamePattern = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+[ ][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+|[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð,.'-]+$/u;
 
@@ -343,4 +347,22 @@ export class CustomValidation {
       return false;
     }
   }
+
+  //used to check whether start date is less than equal end date
+  static dateRangeValidaton: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+    console.log('CustomValidation | dateRangeValidaton')
+      let endDate = formGroup.get('endDate').value;
+      let startDate = formGroup.get('startDate').value;
+      if (endDate && startDate && endDate !== '' && startDate !== '') {
+        startDate = new Date(startDate).setSeconds(0, 0);
+        endDate = new Date(endDate).setSeconds(0, 0);
+        if (startDate<=endDate) {
+          return null;
+        } else {
+          return { 'dateRange': true }
+        }
+      } else {
+        return null
+      }
+  };
 }
