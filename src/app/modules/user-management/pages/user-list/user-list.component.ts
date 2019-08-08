@@ -174,7 +174,7 @@ export class UserListComponent implements OnInit {
   // handle click edit button
   onEdit(user){
     console.log('UserComponent | onEdit');
-    this.modal.open(UserDetailsModalComponent, {
+    const modalRef = this.modal.open(UserDetailsModalComponent, {
       width: '80%',
       minWidth: '260px',
       maxWidth: '400px',
@@ -183,8 +183,13 @@ export class UserListComponent implements OnInit {
         editedUser: {...user},
         roles: this.roles
       }
-    })
-  }
+    });
+    modalRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.lazyLoadData();
+      }
+    });
+  };
 
   // handle click create link
   onCreate(){

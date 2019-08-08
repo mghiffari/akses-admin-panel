@@ -54,7 +54,7 @@ export class UserDetailsModalComponent implements OnInit {
         this.email.disable()
         this.id = editedUser.id
         let selectedRole = this.roles.find((el) => {
-          return el === editedUser.role
+          return el.id === editedUser.pgroup.group_id
         })
         this.userForm.patchValue({
           firstName: editedUser.firstname,
@@ -141,7 +141,8 @@ export class UserDetailsModalComponent implements OnInit {
       let editedUser = {
         firstname: this.userModel.firstName,
         lastname: this.userModel.lastName,
-        id: this.id
+        id: this.id,
+        groupId: this.userModel.groupId
       }
       this.onSubmittingForm = true;
       this.accountService.updateUser(editedUser).subscribe(
