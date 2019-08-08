@@ -15,8 +15,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
+        loadChildren: './modules/home/home.module#HomeModule',
       },
       {
         path: 'master',
@@ -50,7 +49,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/login',
+    redirectTo: '/',
   }
 ];
 

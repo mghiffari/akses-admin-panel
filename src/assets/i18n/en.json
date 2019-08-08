@@ -790,6 +790,11 @@
         "updateFailed": "failed to update role",
         "createFailed": "failed to create new role"
     },
+    "homeScreen": {
+        "welcome": "Welcome,",
+        "lastLogin": "LAST LOGIN",
+        "addEntry": "Add a New Entry"
+    },
     "apiErrors": {
         "noInternet": "no internet connection",
         "01000": "internal server error",
