@@ -37,7 +37,6 @@ export class NotificationListComponent implements OnInit {
 
   notifications: Notification[] = [];
   search = '';
-  closeText = '';
   loading = false;
   isFocusedInput = false;
 

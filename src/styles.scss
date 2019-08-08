@@ -308,6 +308,12 @@ button[block-button]{
     height: 16px !important;
 }
 
+.font-sub-content-icon {
+    font-size: map-get($font-sizes, 'sub-content') !important;
+    width: map-get($font-sizes, 'sub-content') !important; 
+    height: map-get($font-sizes, 'sub-content') !important;
+}
+
 .th-min-width-150 {
     min-width: 150px;
 }
