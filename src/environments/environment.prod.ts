@@ -2,6 +2,7 @@ export const environment = {
   production: true,
   appName: 'Akses',
   apiurl: 'http://10.161.17.229/api/v1/',
+  msPaymentApiUrl: 'http://149.129.250.31:30011/api/v1/',
   branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
   endPoint: {
     updateAccount: 'account',

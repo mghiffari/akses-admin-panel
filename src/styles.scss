@@ -133,6 +133,18 @@ body {
     position: absolute;
 }
 
+.search-right
+.mat-form-field-infix {
+    margin-right: 24px;
+    border-top: none !important;
+}
+
+.search-right
+.mat-form-field-suffix {
+    right: 12px;
+    position: absolute;
+}
+
 .custom .mat-form-field-suffix {
     position: absolute !important;
     right: 0.75em;
@@ -205,6 +217,10 @@ body {
 
 .bg-medium-gray {
     background-color: map-get($colors, medium-gray);
+}
+
+.bg-gray {
+    background-color: map-get($colors, gray);
 }
 
 .icon-42 {
