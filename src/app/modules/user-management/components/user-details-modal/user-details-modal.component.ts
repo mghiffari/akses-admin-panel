@@ -92,7 +92,12 @@ export class UserDetailsModalComponent implements OnInit {
   save() {
     console.log('UserDetailsModalComponent | save')
     this.onSubmittingForm = true;
-    this.userModel = this.userForm.value;
+    this.userModel = {
+      email: this.userForm.value.email,
+      firstName: this.userForm.value.firstName,
+      lastName: this.userForm.value.lastName,
+      groupId: this.userForm.value.role.id
+    };
     if (this.isCreate) {
       this.accountService.createUser(this.userModel)
         .subscribe(
