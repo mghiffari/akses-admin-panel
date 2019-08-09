@@ -7,7 +7,6 @@ import { CustomValidation } from 'src/app/shared/form-validation/custom-validati
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { environment } from 'src/environments/environment';
 import { Observable, of, forkJoin } from 'rxjs';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
@@ -15,7 +14,7 @@ import { SpecialOffer } from 'src/app/shared/models/special-offer';
 import { LovService } from 'src/app/shared/services/lov.service';
 import { catchError } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
-import { toBase64String } from '@angular/compiler/src/output/source_map';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-special-offer-details',
@@ -29,7 +28,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   isCreate = true;
   offerForm: FormGroup;
   categories = [];
-  tinyMceSettings = environment.tinyMceSettings
+  tinyMceSettings = constants.tinyMceSettings
   offerTitle = CustomValidation.offerTitle;
   imageRatio = CustomValidation.specialOfferImg.ratio;
   imageRatioPercentage = CustomValidation.specialOfferImg.ratio.height / CustomValidation.specialOfferImg.ratio.width;

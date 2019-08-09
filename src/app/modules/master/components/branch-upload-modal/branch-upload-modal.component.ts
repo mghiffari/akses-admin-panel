@@ -5,6 +5,7 @@ import { BranchService } from '../../services/branch.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { environment } from 'src/environments/environment';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-branch-upload-modal',
@@ -23,7 +24,7 @@ export class BranchUploadModalComponent implements OnInit {
   isTouchedInput = false;
   file: File;
   onSubmittingForm = false;
-  fileUrl = environment.branchCSVFileExampleUrl;
+  fileUrl = constants.branchCSVFileExampleUrl;
 
   //constructor
   constructor(public dialogRef: MatDialogRef<BranchUploadModalComponent>,
