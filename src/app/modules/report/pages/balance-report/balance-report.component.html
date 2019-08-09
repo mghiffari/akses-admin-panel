@@ -38,17 +38,17 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-150">
           {{'table.transactionTable.name' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.firstname}} {{element.lastname}} </td>
       </ng-container>
       <ng-container matColumnDef="phoneNumber">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.transactionTable.phNumber' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.mobileNumber}} </td>
       </ng-container>
       <ng-container matColumnDef="aksesPayBalance">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.transactionTable.aksesPay' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.aksesPayBalance}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.vaBalance}} </td>
       </ng-container>
       <ng-container matColumnDef="timestamp">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
@@ -80,40 +80,40 @@
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-width-25"> 
           {{'table.transactionTable.transCode' | translate}} </th>
         <td mat-cell *matCellDef="let element;">
-          {{element.transCode}}
+          {{element.fund_trx_code}}
         </td>
       </ng-container>
       <ng-container matColumnDef="transDesc">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.transactionTable.transDesc' | translate}} </th>
         <td mat-cell *matCellDef="let element">
-          {{element.transDesc}}
+          {{element.transaction_type}}
         </td>
       </ng-container>
       <ng-container matColumnDef="amount">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-150">
           {{'table.transactionTable.amount' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.fund_amt_va}} </td>
       </ng-container>
       <ng-container matColumnDef="VANumberDest">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.transactionTable.destVANumber' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.VANumberDest}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.fund_dest_va_no}} </td>
       </ng-container>
       <ng-container matColumnDef="sourceVANumber">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.transactionTable.sourceVANumber' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.sourceVANumber}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.fund_init_va_no}} </td>
       </ng-container>
       <ng-container matColumnDef="transDate">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.transactionTable.transDate' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.transDate}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.fund_trx_date | date: 'dd/MM/yyyy' }} </td>
       </ng-container>
       <ng-container matColumnDef="transSequence">
         <th mat-header-cell style="text-align: left !important;" *matHeaderCellDef class="font-th th-min-width-50">
           {{'table.transactionTable.transSeq' | translate}} </th>
-        <td mat-cell *matCellDef="let element"> {{element.transSequence}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.fund_trx_sequences}} </td>
       </ng-container>
       <tr class="bg-gray" mat-header-row *matHeaderRowDef="transactionColumn; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: transactionColumn;" [hidden]="loading"></tr>
@@ -128,7 +128,7 @@
     </div>
     <div>
       <div fxLayout="row wrap" fxLayoutAlign="start start" class="margin-top-10 padding-left-16"
-        *ngIf="(transData.length === 0 || balanceData === 0) && !loading">
+        *ngIf="(transData.length === 0 || transData === 0) && !loading">
         <div class="font-gotham-light">
           {{'table.noRecordsFound' | translate}}
         </div>
