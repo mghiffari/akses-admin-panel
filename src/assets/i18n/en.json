@@ -835,7 +835,7 @@
     },
     "balanceReport": {
         "title": "Balance and Transaction Report",
-        "loadFailed": "failed to get list of balance and transaction report",
+        "loadFailed": "failed to get balance and transaction report",
         "searchPlaceholder": "Search by OID/VA or Phone Number"
     },
     "transactionReport": {

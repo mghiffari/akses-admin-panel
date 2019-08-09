@@ -834,7 +834,7 @@
     },
     "balanceReport": {
         "title": "Laporan Saldo dan Transaksi",
-        "loadFailed": "gagal mendapatkan list saldo dan laporan transaksi",
+        "loadFailed": "gagal mendapatkan laporan saldo dan transaksi",
         "searchPlaceholder": "Cari berdasarkan OID/VA atau Nomor Handphone"
     },
     "transactionReport": {
