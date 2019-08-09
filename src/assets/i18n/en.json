@@ -432,7 +432,8 @@
         },
         "transactionSearch":{
             "placeholder": "Search OID / VA / Phone Number",
-            "hint": "Min. length of search text is {{minLength}}"
+            "hint": "Min. length of search text is {{minLength}}",
+            "errorRequired": "Search is required"
         },
         "buttonText": {
             "save": "Save",
@@ -842,7 +843,9 @@
         "title": "Transaction Report",
         "dateFilter": "Date Filter",
         "downloadReport": "download report",
-        "dateFilterNotSet": "Date Filter Not Set"
+        "dateFilterNotSet": "Date Filter Not Set",
+        "loadFailed": "failed to get transaction report",
+        "downloadFailed": "failed to download transaction report"
     },
     "homeScreen": {
         "welcome": "Welcome,",

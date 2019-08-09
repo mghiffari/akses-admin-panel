@@ -6,7 +6,7 @@ export class TransactionReport{
     transaction_code: string;
     transaction_type: string;
     amount: number;
-    penalty_fee: number;
+    penalty_fee: string;
     fee: number;
     bank_admin_fee: number;
     ppn: number;

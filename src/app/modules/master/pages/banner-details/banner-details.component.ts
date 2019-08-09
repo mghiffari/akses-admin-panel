@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BannerDetailsService } from './services/banner-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-banner-detail',
@@ -34,7 +34,7 @@ export class BannerDetailsComponent implements OnInit {
   vShowFooterButtonURL: boolean = false;
 
   //used for default rich text editor
-  tinyMceSettings = environment.tinyMceSettings;
+  tinyMceSettings = constants.tinyMceSettings;
 
   constructor(
     private _bannerDetailService: BannerDetailsService,

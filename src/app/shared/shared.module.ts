@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AngularMaterialModule } from './modules/angular-material.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -73,7 +73,8 @@ import { PageService } from './services/page.service';
     FileManagementService,
     ArticleService,
     SpecialOfferService,
-    PageService
+    PageService,
+    DatePipe
   ],
   entryComponents: [
     ErrorModalComponent,
