@@ -16,5 +16,9 @@ export const constants = {
         topUp: 'TO',
         payment: 'PM',
         withdrawal: 'WT'
+    },
+    productScreen: {
+        productName: '@dr_ymh_lndmrk_kslns',
+        productNumber: 64
     }
 }
