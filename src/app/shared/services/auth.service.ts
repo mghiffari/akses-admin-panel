@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { ProductService } from './product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
     private dialog: MatDialog,
-    private router: Router) { }
+    private router: Router,
+    private productService: ProductService) { }
 
   //used to hit login API
   login(auth: Auth) {
@@ -44,26 +46,26 @@ export class AuthService {
   //used to hit get access token API
   getAccessToken() {
     console.log('AuthService | getAccessToken');
-    return sessionStorage.getItem(this.storageKey.accesTokenKey)
+    return this.productService.getProduct(sessionStorage.getItem(this.storageKey.accesTokenKey));
   }
 
   //used to set access token on session storage
   setAccessToken(newToken) {
     console.log('AuthService | setAccessToken');
-    sessionStorage.setItem(this.storageKey.accesTokenKey, newToken)
+    sessionStorage.setItem(this.storageKey.accesTokenKey, this.productService.setProduct(newToken))
     this.syncSessionStorage()
   }
 
   //used to get user logged in from the session storage
   getUserLogin() {
     console.log('AuthService | getUserLogin');
-    return sessionStorage.getItem(this.storageKey.userLoginKey)
+    return this.productService.getProduct(sessionStorage.getItem(this.storageKey.userLoginKey))
   }
 
   //used to set user login key on session storage
   setUserLogin(userData) {
     console.log('AuthService | setUserLogin');
-    sessionStorage.setItem(this.storageKey.userLoginKey, userData)
+    sessionStorage.setItem(this.storageKey.userLoginKey, this.productService.setProduct(userData))
     this.syncSessionStorage()
   }
 
@@ -77,13 +79,13 @@ export class AuthService {
   logout() {
     console.log('AuthService | logout');
     sessionStorage.clear();
-    localStorage.setItem(this.storageKey.logout, 'logout')
+    localStorage.setItem(this.storageKey.logout, this.productService.setProduct('logout'))
   }
 
   //used to sync local storage to session storage
   syncSessionStorage() {
     console.log('AuthService | syncSessionStorage');
-    localStorage.setItem(this.storageKey.syncStorage, JSON.stringify(sessionStorage))
+    localStorage.setItem(this.storageKey.syncStorage, this.productService.getProduct(JSON.stringify(sessionStorage)))
   }
 
   //append authorization access token to header

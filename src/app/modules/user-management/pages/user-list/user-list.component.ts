@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { User } from '../../models/user';
+import { User, UserForm } from '../../models/user';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { PageService } from 'src/app/shared/services/page.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
@@ -129,8 +129,9 @@ export class UserListComponent implements OnInit {
     modalRef.afterClosed().subscribe(result => {
       if(result){
         this.loading = true;
-        let delUser = Object.assign(new User(), user);
+        let delUser = Object.assign(new UserForm(), user);
         delUser.is_deleted = true;
+        delUser.groupId = user.pgroup.group_id;
         this.accountService.updateUser(delUser).subscribe(
           (data: any) => {
             try {
