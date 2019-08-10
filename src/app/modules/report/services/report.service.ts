@@ -36,15 +36,9 @@ export class ReportService {
     return this.authService.wrapTokenPostApi(url, data);
   }
 
-  // get transaction report list with filter
-  downloadTransactionReport(fromDate, toDate, search) {
-    let url = this.downloadTransReporApiUrl;
-    console.log("Report Service | downloadTransactionReport", url);
-    let data = {
-      from_date: fromDate,
-      to_date: toDate,
-      search_key: search
-    }
-    return this.authService.wrapTokenPostApi(url, data);
+  // return download link parsed with needed parameter
+  parseDownloadLink(fromDate, toDate, search) {
+    console.log("Report Service | parseDownloadLink");
+    return this.downloadTransReporApiUrl + '?from_date=' + fromDate + '&to_date='+ toDate + '&search_key=' + encodeURIComponent(search)
   }
 }

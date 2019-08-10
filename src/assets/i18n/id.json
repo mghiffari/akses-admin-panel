@@ -436,7 +436,8 @@
         },
         "transactionSearch":{
             "placeholder": "Cari OID / VA / Nomor Handphone",
-            "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}"
+            "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}",
+            "errorRequired": "Keyword pencarian wajib diisi"
         }
     },
     "loginScreen": {
@@ -841,7 +842,9 @@
         "title": "Laporan Transaksi",
         "dateFilter": "Filter Tanggal",
         "downloadReport": "download laporan",
-        "dateFilterNotSet": "Filter Tanggal Belum Diatur"
+        "dateFilterNotSet": "Filter Tanggal Belum Diatur",
+        "loadFailed": "gagal mendapatkan laporan transaksi",
+        "downloadFailed": "gagal mendownload laporan transaksi"
     },
     "homeScreen": {
         "welcome": "Selamat datang,",

@@ -259,6 +259,10 @@ body {
     color: map-get($colors, purple);
 }
 
+.text-gray{
+    color: map-get($colors, gray);
+}
+
 .text-medium-gray{
     color: map-get($colors, medium-gray);
 }

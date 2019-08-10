@@ -10,7 +10,6 @@ import { ArticleService } from 'src/app/shared/services/article.service';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { Notification } from '../../models/notification';
 import { NotificationService } from '../../services/notification.service';
-import { environment } from 'src/environments/environment';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { catchError } from 'rxjs/operators';
@@ -25,7 +24,7 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: []
 })
 export class NotificationDetailsComponent implements OnInit {
-  appName = environment.appName;
+  appName = constants.appName;
   notifForm: FormGroup;
   onSubmittingForm = false;
   id;
