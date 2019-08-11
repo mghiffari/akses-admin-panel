@@ -230,16 +230,26 @@ export class NotificationListComponent implements OnInit {
             this.notifications = data.data;
             this.paginatorProps.length = data.count;
             this.now = new Date()
+          } catch (error) {
+            console.table(error);
+            this.notifications = [];
+            this.paginatorProps.pageIndex = 0;
+            this.paginatorProps.length = 0;
+          } finally {
             if (this.table) {
               this.table.renderRows();
             }
-          } catch (error) {
-            console.table(error);
           }
         },
         error => {
           try {
             console.table(error);
+            this.paginatorProps.pageIndex = 0;
+            this.paginatorProps.length = 0;
+            this.notifications = [];
+            if (this.table) {
+              this.table.renderRows();
+            }
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'notificationListScreen.loadFailed',
