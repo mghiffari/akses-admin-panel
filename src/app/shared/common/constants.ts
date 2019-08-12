@@ -24,7 +24,6 @@ export const constants = {
         specialOffer: 'specialoffer'
     },
     productScreen: {
-        productName: '@dr_ymh_lndmrk_kslns',
-        productNumber: 64
+        productName: '@dr_ymh_lndmrk_kslns'
     }
 }
