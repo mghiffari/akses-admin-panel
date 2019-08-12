@@ -6,9 +6,9 @@ import { FAQ } from '../../models/faq';
 import { FAQService } from '../../services/faq.service';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { environment } from 'src/environments/environment';
 import { LovData } from 'src/app/shared/models/lov';
 import { LovService } from 'src/app/shared/services/lov.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-faq-details',
@@ -23,7 +23,7 @@ export class FAQDetailsComponent implements OnInit {
   id;
   isCreate = true;
   loading = true;
-  tinyMceSettings = environment.tinyMceSettings;
+  tinyMceSettings = constants.tinyMceSettings;
 
   //constructor
   constructor(

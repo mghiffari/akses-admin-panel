@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleDetailsService } from 'src/app/modules/master/pages/article-details/services/article-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-article-details',
@@ -23,7 +23,7 @@ export class ArticleDetailsComponent implements OnInit {
   vShowFooterButtonModul: boolean = false;
   vShowFooterButtonURL: boolean = false;
 
-  tinyMceSettings = environment.tinyMceSettings;
+  tinyMceSettings = constants.tinyMceSettings;
 
   constructor(
     private _articleDetailsService: ArticleDetailsService,
