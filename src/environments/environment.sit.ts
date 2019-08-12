@@ -13,7 +13,7 @@ export const environment = {
     createNotification: 'msap-notification',
     updateNotification: 'patch-notification'
   },
-  enableAdiraEmailValidation: false,
+  enableAdiraEmailValidation: true,
   version: '1.0.21',
   versionDate: new Date(2019, 6, 11)
 };

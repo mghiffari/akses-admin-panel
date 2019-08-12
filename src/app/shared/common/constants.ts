@@ -18,6 +18,10 @@ export const constants = {
         }
     },
     branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
+    productScreen: {
+        productName: '@dr_ymh_lndmrk_kslns',
+        productNumber: 64
+    },
     articleTypePromo: 'Promo',
     notificationLinkType: {
         article: 'article',
@@ -35,9 +39,5 @@ export const constants = {
         topUp: 'TO',
         payment: 'PM',
         withdrawal: 'WT'
-    },
-    productScreen: {
-        productName: '@dr_ymh_lndmrk_kslns',
-        productNumber: 64
     }
 }

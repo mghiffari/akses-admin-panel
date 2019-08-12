@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { BranchService } from '../../services/branch.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { environment } from 'src/environments/environment';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { constants } from 'src/app/shared/common/constants';
 
