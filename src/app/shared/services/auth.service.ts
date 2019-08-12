@@ -52,20 +52,20 @@ export class AuthService {
   //used to set access token on session storage
   setAccessToken(newToken) {
     console.log('AuthService | setAccessToken');
-    sessionStorage.setItem(this.storageKey.accesTokenKey, this.productService.setProduct(newToken))
+    sessionStorage.setItem(this.storageKey.accesTokenKey, this.productService.setProduct(newToken));
     this.syncSessionStorage()
   }
 
   //used to get user logged in from the session storage
   getUserLogin() {
     console.log('AuthService | getUserLogin');
-    return this.productService.getProduct(sessionStorage.getItem(this.storageKey.userLoginKey))
+    return this.productService.getProduct(sessionStorage.getItem(this.storageKey.userLoginKey));
   }
 
   //used to set user login key on session storage
   setUserLogin(userData) {
     console.log('AuthService | setUserLogin');
-    sessionStorage.setItem(this.storageKey.userLoginKey, this.productService.setProduct(userData))
+    sessionStorage.setItem(this.storageKey.userLoginKey, this.productService.setProduct(userData));
     this.syncSessionStorage()
   }
 
@@ -85,7 +85,7 @@ export class AuthService {
   //used to sync local storage to session storage
   syncSessionStorage() {
     console.log('AuthService | syncSessionStorage');
-    localStorage.setItem(this.storageKey.syncStorage, this.productService.getProduct(JSON.stringify(sessionStorage)))
+    this.productService.getProduct(JSON.stringify(sessionStorage));
   }
 
   //append authorization access token to header
