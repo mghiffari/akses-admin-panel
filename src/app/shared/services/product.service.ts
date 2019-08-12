@@ -1,3 +1,4 @@
+// This file is to encrypt and decrypt the values in the session storage
 import { Injectable } from '@angular/core';
 
 import * as Crypto from 'crypto-js';
@@ -26,8 +27,8 @@ export class ProductService {
   getProduct(product: string): string {
     try {
       if(product) {
-        let value = product.substring(product.length - constants.productScreen.productNumber);
-        let result = Crypto.AES.decrypt(product.substring(0, product.length - constants.productScreen.productNumber), value);
+        let value = product.substring(product.length - constants.productScreen.productName.length);
+        let result = Crypto.AES.decrypt(product.substring(0, product.length - constants.productScreen.productName.length), value);
         return result.toString(Crypto.enc.Utf8);
       }
     } catch (error) {
@@ -39,7 +40,7 @@ export class ProductService {
   private getCommonProduct() {
     let value = '';
     let possible = constants.productScreen.productName;
-    for (let i = 0; i < constants.productScreen.productNumber; i++) {
+    for (let i = 0; i < constants.productScreen.productName.length; i++) {
       value += possible.charAt(Math.floor(Math.random() * possible.length));
     }
     return value.toString();
