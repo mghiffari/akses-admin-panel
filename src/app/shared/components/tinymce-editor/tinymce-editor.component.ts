@@ -1,6 +1,7 @@
 import { Component, Input, AfterViewInit, OnDestroy, forwardRef, NgZone } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment'
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { constants } from '../../common/constants';
 
 declare var tinymce: any;
 
@@ -76,7 +77,7 @@ export class TinymceEditorComponent implements AfterViewInit, OnDestroy, Control
     tinymce.init({
       readonly: this.disabled,
       selector: '#' + this.id,
-      ...environment.tinyMceSettings,
+      ...constants.tinyMceSettings,
       init_instance_callback: (editor) => {
         this.editor = editor;
         editor.setContent(this.value)
