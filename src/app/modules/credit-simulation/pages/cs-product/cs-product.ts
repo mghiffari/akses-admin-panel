@@ -185,9 +185,9 @@ export class CSProductComponent implements OnInit {
         }
       })
       modalRef.afterClosed().subscribe((result) => {
-        if(result){
+        if (result) {
           this.selectedIndex = idx
-        } 
+        }
       })
     } else {
       MatTabGroup.prototype._handleClick.apply(this.tabs, arguments);
@@ -207,7 +207,7 @@ export class CSProductComponent implements OnInit {
   }
 
   // get form control of area form based on index and form control name
-  getAreaFormControl(index, formControlName){
+  getAreaFormControl(index, formControlName) {
     let formArray = this.csFormGroup.get('areaForms') as FormArray;
     return formArray.at(index).get(formControlName);
   }
@@ -217,20 +217,20 @@ export class CSProductComponent implements OnInit {
     console.log('CreditSimulationProductComponent | onEdit');
     let areaForms = [];
     this.maxDecimalLength = CustomValidation.tenure;
-    for(let i=0; i< this.data.length; i++){
+    for (let i = 0; i < this.data.length; i++) {
       let cs: CreditSimulation = this.data[i];
       let formGroupContent: any = {};
       formGroupContent.id = new FormControl(cs.id);
-      for(let month of this.tenureMonths){
-        const key = 'tnr_'+month+'m';
+      for (let month of this.tenureMonths) {
+        const key = 'tnr_' + month + 'm';
         formGroupContent[key] = new FormControl(Number(cs[key]), [
-          Validators.required, 
+          Validators.required,
           Validators.min(0),
           CustomValidation.maxDecimalLength(this.maxDecimalLength.integerDigitLength, this.maxDecimalLength.fractionDigitLength)
         ])
       }
-      for(let num of this.tenure){
-        const key = 'tnr_'+num;
+      for (let num of this.tenure) {
+        const key = 'tnr_' + num;
         formGroupContent[key] = new FormControl(Number(cs[key]))
       }
       areaForms.push(new FormGroup(formGroupContent))
@@ -243,35 +243,35 @@ export class CSProductComponent implements OnInit {
   }
 
   //reinitialize value for form
-  onResetForm(){
+  onResetForm() {
     console.log('CreditSimulationProductComponent | onResetForm');
     this.csFormGroup.reset()
     let areaForms = this.csFormGroup.get('areaForms') as FormArray;
-    for (let i=0; i < areaForms.controls.length ; i++) {
+    for (let i = 0; i < areaForms.controls.length; i++) {
       let control = areaForms.controls[i];
       let cs = this.data[i];
       if (control instanceof FormGroup) {
         control.get('id').setValue(this.data[i].id)
-        for(let month of this.tenureMonths){
-          const key = 'tnr_'+month+'m';
+        for (let month of this.tenureMonths) {
+          const key = 'tnr_' + month + 'm';
           control.get(key).setValue(Number(cs[key]))
         }
-        for(let num of this.tenure){
-          const key = 'tnr_'+num;
+        for (let num of this.tenure) {
+          const key = 'tnr_' + num;
           control.get(key).setValue(Number(cs[key]))
         }
       }
-   }
+    }
   }
 
   // change from edit mode to view mode
-  onCloseEdit(){
+  onCloseEdit() {
     console.log('CreditSimulationProductComponent | onCloseEdit');
     this.edit = false;
   }
 
   //call api to save updated value 
-  onSaveEdit(){
+  onSaveEdit() {
     console.log('CreditSimulationProductComponent | onSaveEdit')
     this.onSubmittingForm = true;
     const dataParam = this.csFormGroup.get('areaForms').value
@@ -283,7 +283,7 @@ export class CSProductComponent implements OnInit {
             total: dataParam.length,
             successCount: response.data.success_count
           }
-          if(result.total == result.successCount){
+          if (result.total == result.successCount) {
             this.snackBar.openFromComponent(SuccessSnackbarComponent, {
               data: {
                 title: 'success',
@@ -304,7 +304,7 @@ export class CSProductComponent implements OnInit {
               }
             })
           }
-          if(result.successCount > 0){
+          if (result.successCount > 0) {
             this.edit = false;
             this.loadData()
           }
@@ -338,7 +338,7 @@ export class CSProductComponent implements OnInit {
   loadData() {
     console.log('CreditSimulationProductComponent | loadData')
     this.loading = true;
-    if(this.selectedIndex >= 0){
+    if (this.selectedIndex >= 0) {
       let component = this.components[this.selectedIndex]
       this.creditSimulationService.getProdCompCS(this.productId, component.component_id).subscribe(
         response => {
@@ -347,12 +347,20 @@ export class CSProductComponent implements OnInit {
             this.data = response.data;
           } catch (error) {
             console.table(error)
+            this.data = [];
           } finally {
+            if (this.table) {
+              this.table.renderRows();
+            }
             this.loading = false;
           }
         }, error => {
           try {
             console.table(error)
+            this.data = []
+            if (this.table) {
+              this.table.renderRows();
+            }
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'productCreditSimulationScreen.getCreditSimulationFailed',
@@ -369,9 +377,6 @@ export class CSProductComponent implements OnInit {
           }
         }
       )
-      if (this.table) {
-        this.table.renderRows();
-      }
       this.loading = false;
     } else {
       this.loading = false;

@@ -3,9 +3,6 @@ import { ChangePhoneService } from '../../services/change-phone.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { forkJoin, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { RemarkInputModalComponent } from '../../components/remark-input-modal/remark-input-modal.component';
 import { ChangePhone } from '../../models/change-phone';
@@ -533,16 +530,23 @@ export class ChangePhoneListComponent implements OnInit {
             this.selectedRequests = [];
             this.countSelectableRequest();
             this.now = new Date();
-            if (this.table) {
-              this.table.renderRows();
-            }
           } catch (error) {
             console.table(error);
+            this.requests = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
+            this.selectedRequests = [];
+            this.countSelectableRequest();
           }
         },
         error => {
           try {
             console.table(error);
+            this.requests = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
+            this.selectedRequests = [];
+            this.countSelectableRequest();
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'changePhonenumberRequestListScreen.loadFailed',
@@ -558,6 +562,9 @@ export class ChangePhoneListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
