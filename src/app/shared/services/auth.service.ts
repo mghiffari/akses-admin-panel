@@ -85,7 +85,7 @@ export class AuthService {
   //used to sync local storage to session storage
   syncSessionStorage() {
     console.log('AuthService | syncSessionStorage');
-    localStorage.setItem(this.storageKey.syncStorage, this.productService.getProduct(JSON.stringify(sessionStorage)))
+    localStorage.setItem(this.storageKey.syncStorage, JSON.stringify(sessionStorage))
   }
 
   //append authorization access token to header
