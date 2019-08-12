@@ -39,5 +39,5 @@ export const constants = {
         topUp: 'TO',
         payment: 'PM',
         withdrawal: 'WT'
-    },
+    }
 }

@@ -122,6 +122,7 @@ export class MainNavComponent {
     });
     if (this.authService.isUserLoggedIn()) {
       this.userName = JSON.parse(this.authService.getUserLogin()).firstname
+      this.role = JSON.parse(this.authService.getUserLogin()).group_name
     }
     this.loading = true;
     let creditSimulationProducts: CSProduct[] = [];

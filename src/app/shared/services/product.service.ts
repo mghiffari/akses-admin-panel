@@ -45,4 +45,3 @@ export class ProductService {
     return value.toString();
   };
 }
-

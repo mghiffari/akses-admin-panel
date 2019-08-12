@@ -79,7 +79,7 @@ export class AuthService {
   logout() {
     console.log('AuthService | logout');
     sessionStorage.clear();
-    localStorage.setItem(this.storageKey.logout, this.productService.setProduct('logout'));
+    localStorage.setItem(this.storageKey.logout, this.productService.setProduct('logout'))
   }
 
   //used to sync local storage to session storage

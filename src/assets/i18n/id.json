@@ -834,7 +834,7 @@
         "createFailed": "gagal menambahkan role baru"
     },
     "balanceReport": {
-        "title": "Saldo dan Laporan Transaksi",
+        "title": "Laporan Saldo dan Transaksi",
         "loadFailed": "gagal mendapatkan laporan saldo dan transaksi",
         "searchPlaceholder": "Cari berdasarkan OID/VA atau Nomor Handphone"
     },
