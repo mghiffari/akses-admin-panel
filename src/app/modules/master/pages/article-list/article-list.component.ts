@@ -154,11 +154,17 @@ export class ArticleListComponent implements OnInit {
             }
           } catch (error) {
             console.table(error);
-          }
+            this.articles = []
+            this.paginatorProps.pageIndex = 0
+            this.paginatorProps.length = 0
+          } 
         },
         error => {
           try {            
             console.table(error);
+            this.articles = []
+            this.paginatorProps.pageIndex = 0
+            this.paginatorProps.length = 0
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'articleListScreen.loadFailed',
@@ -174,6 +180,9 @@ export class ArticleListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if ( this.searchInput && isFocusedInput){
             setTimeout(() => {

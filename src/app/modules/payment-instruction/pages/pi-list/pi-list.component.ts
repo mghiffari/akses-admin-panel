@@ -197,14 +197,24 @@ export class PIListComponent implements OnInit {
           console.table(response)
           this.loading = false;
           this.data = response.data;
-          this.table.renderRows();
+          if(this.table){
+            this.table.renderRows();
+          }
         } catch (error) {
           console.table(error)
+          this.data = [];
+          if(this.table){
+            this.table.renderRows();
+          }
         }
       }, error => {
         try {
           console.table(error);
           this.loading = false;
+          this.data = [];
+          if(this.table){
+            this.table.renderRows();
+          }
           this.snackBar.openFromComponent(ErrorSnackbarComponent, {
             data: {
               title: 'paymentInstructionScreen.getInstructionListFailed',
@@ -220,5 +230,4 @@ export class PIListComponent implements OnInit {
       }
     )
   }
-
 }

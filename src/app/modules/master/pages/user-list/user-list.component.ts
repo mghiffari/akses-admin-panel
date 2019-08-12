@@ -88,16 +88,19 @@ export class UserListComponent implements OnInit {
             console.table(data);
             this.users = data.data;
             this.paginatorProps.length = data.count;
-            if (this.table) {
-              this.table.renderRows();
-            }
           } catch (error) {
             console.log(error)
+            this.users = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
           }
         },
         error => {
           try {            
             console.table(error);
+            this.users = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'userListScreen.loadFailed',
@@ -113,6 +116,9 @@ export class UserListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
