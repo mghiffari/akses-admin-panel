@@ -46,6 +46,7 @@ export class BalanceReportComponent implements OnInit {
   locale = 'id';
   loading = false;
   searchValidation = CustomValidation.transactionSearch;
+  isFocusedInput = false;
 
   private balanceTable: any;
   @ViewChild('balanceTable') set balanceTabl(table: ElementRef) {
@@ -55,6 +56,11 @@ export class BalanceReportComponent implements OnInit {
   private transTable: any;
   @ViewChild('transTable') set transTabl(table: ElementRef) {
     this.transTable = table;
+  }
+
+  private searchInput: any;
+  @ViewChild('searchInput') set searchInpt(input: ElementRef) {
+    this.searchInput = input;
   }
 
   // constructor
@@ -81,6 +87,7 @@ export class BalanceReportComponent implements OnInit {
   // call api to load data by search
   onSearch() {
     console.log('BalanceReportComponent | onSearch');
+    let isFocusedInput = this.isFocusedInput
     this.loading = true;
     let balanceData = [];
     this.reportService.getBalanceReport(this.search).subscribe(
@@ -105,7 +112,7 @@ export class BalanceReportComponent implements OnInit {
               data: {
                 title: 'balanceReport.loadFailed',
                 content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                  text: 'apiErrors.'+ (error.status ? 'ms-payment.' + error.error.err_code : 'noInternet'),
                   data: null
                 }
               }
@@ -120,13 +127,22 @@ export class BalanceReportComponent implements OnInit {
             this.loading = false;
           }
       }
-    );
+    ).add(() => {
+      if(this.searchInput && isFocusedInput){
+        setTimeout(() => {
+          this.searchInput.nativeElement.focus();
+        })
+      }
+    });
   };
 
   // check if serach valid or not
-  isSearchValid() {
+  isSearchValid(event = null) {
     console.log('BalanceReportComponent | isSearchValid')
-    return this.search !== undefined && this.search !== null && this.search !== '' && (this.search.length > this.searchValidation.minLength);
+    if(event){
+      this.search === event.target.value
+    } 
+    return this.search !== undefined && this.search !== null && this.search !== '' && (this.search.length >= this.searchValidation.minLength);
   }
 
 }
