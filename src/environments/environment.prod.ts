@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
-  apiurl: '//prod.aksesadirafinance.com/',
+  apiurl: '//prod.aksesadirafinance.com/ms-admin/',
   endPoint: {
-    updateAccount: 'msa-account',
-    login: 'msap-login',
-    lovType: 'msap-lov',
-    createNotification: 'msap-notification',
-    updateNotification: 'patch-notification'
+    updateAccount: 'account',
+    login: 'auth/login',
+    lovType: 'lov',
+    createNotification: 'notification',
+    updateNotification: 'notification'
   },
   enableAdiraEmailValidation: true,
   version: '1.0.21',
