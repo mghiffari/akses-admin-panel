@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiurl: '//prod.aksesadirafinance.com/ms-admin/',
+  apiurl: 'https://prod.aksesadirafinance.com/ms-admin/',
   msPaymentApiUrl: 'http://149.129.250.31:30011/api/v1/',
   endPoint: {
     updateAccount: 'account',

@@ -18,7 +18,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
 import { constants } from 'src/app/shared/common/constants';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { FAQListComponent } from 'src/app/modules/master/pages/faq-list/faq-list.component';
 
 @Component({
   selector: 'app-notification-details',
@@ -30,6 +29,7 @@ export class NotificationDetailsComponent implements OnInit {
   notifForm: FormGroup;
   onSubmittingForm = false;
   id;
+  showPreview = false;
   isCreate = true;
   loading = true;
   allowCreate = false;
