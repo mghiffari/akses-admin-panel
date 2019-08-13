@@ -12,6 +12,7 @@ import { map, catchError } from 'rxjs/operators';
 import { Branch } from '../../models/branch';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { HttpErrorResponse } from '@angular/common/http';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-branch-details',
@@ -36,6 +37,8 @@ export class BranchDetailsComponent implements OnInit {
   postalCodeLength = CustomValidation.postalCode;
   longitudeLength = CustomValidation.longitude;
   latitudeLength = CustomValidation.latitude;
+  allowCreate = false;
+  allowEdit = false;
 
   //constructor
   constructor(
@@ -44,7 +47,7 @@ export class BranchDetailsComponent implements OnInit {
     private lovService: LovService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     console.log("BranchDetailsComponent | constructor")
   }
@@ -122,98 +125,109 @@ export class BranchDetailsComponent implements OnInit {
   //component on init
   ngOnInit() {
     console.log("BranchDetailsComponent | OnInit")
-    this.loading = true;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.branchLocation)
+    this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
+    this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
     let user = JSON.parse(this.authService.getUserLogin())
     let username = user.firstname + ' ' + user.lastname;
     if (this.router.url.includes('update')) {
-      this.isCreate = false;
-      this.id = this.route.snapshot.params['id'];
-      this.branchService.getBranchById(this.id).subscribe(
-        response => {
-          try {
-            console.log(response)
-            let editedBranch: Branch = response.data;
-            this.branchForm = new FormGroup({
-              name: new FormControl(editedBranch.name, [Validators.required]),
-              type: new FormControl(editedBranch.type, [Validators.required]),
-              branchCode: new FormControl({ value: editedBranch.branch_code, disabled: true }, [Validators.required,
-              Validators.minLength(this.branchCodeLength.minLength),
-              Validators.maxLength(this.branchCodeLength.maxLength), Validators.pattern("^[0-9]*$")]),
-              latitude: new FormControl(editedBranch.latitude, [
-                Validators.required,
-                CustomValidation.maxDecimalLength(this.latitudeLength.integerDigitLength, this.latitudeLength.fractionDigitLength)
-              ]),
-              longitude: new FormControl(editedBranch.longitude, [Validators.required,
-              CustomValidation.maxDecimalLength(this.longitudeLength.integerDigitLength, this.longitudeLength.fractionDigitLength)
-              ]),
-              updatedBy: new FormControl(username),
-              region: new FormControl(editedBranch.region, [Validators.required]),
-              province: new FormControl(editedBranch.province, [Validators.required]),
-              city: new FormControl(editedBranch.city, [Validators.required]),
-              subDistrict: new FormControl(editedBranch.sub_district, [Validators.required]),
-              district: new FormControl(editedBranch.district, [Validators.required]),
-              address: new FormControl(editedBranch.address, [Validators.required]),
-              postalCode: new FormControl(editedBranch.postal_code, [Validators.pattern("^[0-9]*$"),
-              Validators.minLength(this.postalCodeLength.minLength),
-              Validators.maxLength(this.postalCodeLength.maxLength)])
-            })
-            this.updatedBy.disable();
-            this.getLOVs()
-          } catch (error) {
-            console.log(error)
-          }
-        }, error => {
-          try {
-            console.table(error);
-            let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchDetailsScreen.getBranchFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+      if (this.allowEdit) {
+        this.loading = true;
+        this.isCreate = false;
+        this.id = this.route.snapshot.params['id'];
+        this.branchService.getBranchById(this.id).subscribe(
+          response => {
+            try {
+              console.log(response)
+              let editedBranch: Branch = response.data;
+              this.branchForm = new FormGroup({
+                name: new FormControl(editedBranch.name, [Validators.required]),
+                type: new FormControl(editedBranch.type, [Validators.required]),
+                branchCode: new FormControl({ value: editedBranch.branch_code, disabled: true }, [Validators.required,
+                Validators.minLength(this.branchCodeLength.minLength),
+                Validators.maxLength(this.branchCodeLength.maxLength), Validators.pattern("^[0-9]*$")]),
+                latitude: new FormControl(editedBranch.latitude, [
+                  Validators.required,
+                  CustomValidation.maxDecimalLength(this.latitudeLength.integerDigitLength, this.latitudeLength.fractionDigitLength)
+                ]),
+                longitude: new FormControl(editedBranch.longitude, [Validators.required,
+                CustomValidation.maxDecimalLength(this.longitudeLength.integerDigitLength, this.longitudeLength.fractionDigitLength)
+                ]),
+                updatedBy: new FormControl(username),
+                region: new FormControl(editedBranch.region, [Validators.required]),
+                province: new FormControl(editedBranch.province, [Validators.required]),
+                city: new FormControl(editedBranch.city, [Validators.required]),
+                subDistrict: new FormControl(editedBranch.sub_district, [Validators.required]),
+                district: new FormControl(editedBranch.district, [Validators.required]),
+                address: new FormControl(editedBranch.address, [Validators.required]),
+                postalCode: new FormControl(editedBranch.postal_code, [Validators.pattern("^[0-9]*$"),
+                Validators.minLength(this.postalCodeLength.minLength),
+                Validators.maxLength(this.postalCodeLength.maxLength)])
+              })
+              this.updatedBy.disable();
+              this.getLOVs()
+            } catch (error) {
+              console.log(error)
+            }
+          }, error => {
+            try {
+              console.table(error);
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'branchDetailsScreen.getBranchFailed',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
                 }
-              }
-            })
-            errorSnackbar.afterDismissed().subscribe(() => {
-              this.goToListScreen()
-            })
-          } catch (error) {
-            this.loading = false;
-            console.log(error)
+              })
+              errorSnackbar.afterDismissed().subscribe(() => {
+                this.goToListScreen()
+              })
+            } catch (error) {
+              this.loading = false;
+              console.log(error)
+            }
+          })
+      } else {
+        this.authService.blockOpenPage()
+      }
+    } else {
+      if(this.allowCreate){
+        this.branchForm = new FormGroup({
+          name: new FormControl('', [Validators.required]),
+          type: new FormControl('', [Validators.required]),
+          branchCode: new FormControl('', [Validators.required,
+          Validators.minLength(this.branchCodeLength.minLength),
+          Validators.maxLength(this.branchCodeLength.maxLength), Validators.pattern("^[0-9]*$")]),
+          latitude: new FormControl('', [Validators.required,
+          CustomValidation.maxDecimalLength(this.latitudeLength.integerDigitLength, this.latitudeLength.fractionDigitLength)
+          ]),
+          longitude: new FormControl('', [Validators.required,
+          CustomValidation.maxDecimalLength(this.longitudeLength.integerDigitLength, this.longitudeLength.fractionDigitLength)
+          ]),
+          createdBy: new FormControl(username),
+          region: new FormControl('', [Validators.required]),
+          province: new FormControl('', [Validators.required]),
+          city: new FormControl('', [Validators.required]),
+          subDistrict: new FormControl('', [Validators.required]),
+          district: new FormControl('', [Validators.required]),
+          address: new FormControl('', [Validators.required]),
+          postalCode: new FormControl('', [Validators.pattern("^[0-9]*$"),
+          Validators.minLength(this.postalCodeLength.minLength),
+          Validators.maxLength(this.postalCodeLength.maxLength)])
+        })
+        this.createdBy.disable();
+        this.getLOVs();
+        this.branchCode.valueChanges.subscribe(value => {
+          if (this.branchCode.valid) {
+            //validate branchcode not exist
+            this.validateBranchCode(value)
           }
         })
-    } else {
-      this.branchForm = new FormGroup({
-        name: new FormControl('', [Validators.required]),
-        type: new FormControl('', [Validators.required]),
-        branchCode: new FormControl('', [Validators.required,
-        Validators.minLength(this.branchCodeLength.minLength),
-        Validators.maxLength(this.branchCodeLength.maxLength), Validators.pattern("^[0-9]*$")]),
-        latitude: new FormControl('', [Validators.required,
-        CustomValidation.maxDecimalLength(this.latitudeLength.integerDigitLength, this.latitudeLength.fractionDigitLength)
-        ]),
-        longitude: new FormControl('', [Validators.required,
-        CustomValidation.maxDecimalLength(this.longitudeLength.integerDigitLength, this.longitudeLength.fractionDigitLength)
-        ]),
-        createdBy: new FormControl(username),
-        region: new FormControl('', [Validators.required]),
-        province: new FormControl('', [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        subDistrict: new FormControl('', [Validators.required]),
-        district: new FormControl('', [Validators.required]),
-        address: new FormControl('', [Validators.required]),
-        postalCode: new FormControl('', [Validators.pattern("^[0-9]*$"),
-        Validators.minLength(this.postalCodeLength.minLength),
-        Validators.maxLength(this.postalCodeLength.maxLength)])
-      })
-      this.createdBy.disable();
-      this.getLOVs();
-      this.branchCode.valueChanges.subscribe(value => {
-        if (this.branchCode.valid) {
-          //validate branchcode not exist
-          this.validateBranchCode(value)
-        }
-      })
+      } else {
+        this.authService.blockOpenPage()
+      }
     }
   }
 
@@ -528,7 +542,7 @@ export class BranchDetailsComponent implements OnInit {
           console.table(response)
           this.onCheckCode = false;
           this.duplicateBranchId = response.data.id;
-          if(this.onSubmittingForm){
+          if (this.onSubmittingForm) {
             this.onSubmittingForm = false;
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
@@ -551,8 +565,8 @@ export class BranchDetailsComponent implements OnInit {
         this.onCheckCode = false;
         this.branchCode.setErrors(null)
         this.duplicateBranchId = '';
-        if(this.onSubmittingForm){
-            this.createBranch();
+        if (this.onSubmittingForm) {
+          this.createBranch();
         }
       }
     )

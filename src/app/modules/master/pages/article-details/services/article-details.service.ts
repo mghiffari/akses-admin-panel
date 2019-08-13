@@ -11,6 +11,8 @@ import { ArticleService } from 'src/app/shared/services/article.service';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +46,8 @@ export class ArticleDetailsService {
     extUrlFooterButton: string;
   }
 
+  vPrivilege = null
+
   constructor(
     private _translateService: TranslateService,
     private _ng2ImgToolsService: Ng2ImgToolsService,
@@ -51,8 +55,39 @@ export class ArticleDetailsService {
     private _routerService: Router,
     private _lovService: LovService,
     private _articleService: ArticleService,
-    private _fileMgtService: FileManagementService
+    private _fileMgtService: FileManagementService,
+    private _authService: AuthService
   ) { }
+
+  // get feature privilege
+  getFeaturePrvg(){
+    console.log('ArticleDetailsService | getFeaturePrvg');
+    this.vPrivilege = this._authService.getFeaturePrivilege(constants.features.article)
+  }
+
+  // get view privilege flag
+  getViewPrvg(){
+    console.log('ArticleDetailsService | getFeaturePrvg');
+    return this._authService.getFeatureViewPrvg(this.vPrivilege)
+  }
+
+  // get create privilege flag
+  getCreatePrvg(){
+    console.log('ArticleDetailsService | getCreatePrvg');
+    return this._authService.getFeatureCreatePrvg(this.vPrivilege)
+  }
+
+  // get edit privilege flag
+  getEditPrvg(){
+    console.log('ArticleDetailsService | getEditPrvg');
+    return this._authService.getFeatureEditPrvg(this.vPrivilege)
+  }
+
+  // show error snack bar if has no access
+  showNoAccessSnackbar(){
+    console.log('ArticleDetailsService | showNoAccessSnackbar');
+    this._authService.blockOpenPage()
+  }
 
   //get title for page (create or update)
   getPageTitle(page: string) {
