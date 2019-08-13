@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: angular-admin-panel
+  name: fe-admin-panel
   namespace: production
   labels:
-    app: angular-admin-panel
+    app: fe-admin-panel
 spec:
   replicas: 3
   strategy:
@@ -12,17 +12,17 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: angular-admin-panel
+      app: fe-admin-panel
       tier: frontend
   template:
     metadata:
       labels:
-        app: angular-admin-panel
+        app: fe-admin-panel
         tier: frontend
     spec:
       containers:
-      - name: angular-admin-panel
-        image: registry-intl.ap-southeast-5.aliyuncs.com/prod-akses/angular-admin-panel:latest
+      - name: fe-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/prod-akses/fe-admin-panel:latest
         imagePullPolicy: Always
         resources: 
           limits:
@@ -33,7 +33,7 @@ spec:
             memory: 250Mi
         ports:
         - containerPort: 8084
-          name: angular-admin-panel
+          name: fe-admin-panel
       imagePullSecrets:
       - name: regsecret
       restartPolicy: Always
