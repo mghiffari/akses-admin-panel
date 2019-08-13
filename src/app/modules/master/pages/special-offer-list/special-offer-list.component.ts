@@ -120,16 +120,19 @@ export class SpecialOfferListComponent implements OnInit {
             this.offers = response.data;
             this.paginatorProps.length = response.count;
             this.now = new Date()
-            if (this.table) {
-              this.table.renderRows();
-            }
           } catch (error) {
             console.table(error);
+            this.offers = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0
           }
         },
         error => {
           try {
             console.table(error);
+            this.offers = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'specialOfferListScreen.loadFailed',
@@ -145,6 +148,9 @@ export class SpecialOfferListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if (this.searchInput && isFocusedInput) {
             setTimeout(() => {

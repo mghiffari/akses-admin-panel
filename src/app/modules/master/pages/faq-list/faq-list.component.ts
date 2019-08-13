@@ -193,17 +193,20 @@ export class FAQListComponent implements OnInit {
           try {
             console.table(data);
             this.faqs = data.data;
-            this.paginatorProps.length = data.count;
-            if (this.table) {
-              this.table.renderRows();
-            }
+            this.paginatorProps.length = data.count;            
           } catch (error) {
             console.table(error);
+            this.faqs = []
+            this.paginatorProps.length = 0
+            this.paginatorProps.pageIndex = 0
           }
         },
         error => {
           try {
             console.table(error);
+            this.faqs = []
+            this.paginatorProps.length = 0
+            this.paginatorProps.pageIndex = 0
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'faqListScreen.loadFailed',
@@ -219,6 +222,9 @@ export class FAQListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
