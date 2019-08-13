@@ -154,7 +154,7 @@ export class TransReportComponent implements OnInit {
   onPaginatorChange(e) {
     console.log('TransReportComponent | onPaginatorChange');
     this.paginatorProps = Object.assign(this.paginatorProps, e)
-    if (this.filterForm.valid) {
+    if (!this.filterForm.valid) {
       this.resetPage()
       this.resetTable()
     } else {
