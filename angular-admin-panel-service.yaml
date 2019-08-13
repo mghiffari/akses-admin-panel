@@ -1,13 +1,17 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  name: angular-admin-panel-service
+  name: angular-admin-panel
+  namespace: production
+  labels:
+    app: angular-admin-panel
 spec:
-  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8084
+    protocol: TCP
   selector:
     app: angular-admin-panel
-  ports:
-  - protocol: TCP
-    port: 8084
-    targetPort: 80
-    nodePort: 30005
+    tier: frontend
+  type: LoadBalancer

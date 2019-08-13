@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: angular-admin-panel
+  namespace: production
+  labels:
+    app: angular-admin-panel
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: angular-admin-panel
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: angular-admin-panel
+        tier: frontend
+    spec:
+      containers:
+      - name: angular-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/prod-akses/angular-admin-panel:latest
+        imagePullPolicy: Always
+        resources: 
+          limits:
+            cpu: 150m
+            memory: 1000Mi
+          requests:
+            cpu: 15m
+            memory: 250Mi
+        ports:
+        - containerPort: 8084
+          name: angular-admin-panel
+      imagePullSecrets:
+      - name: regsecret
+      restartPolicy: Always
+      hostNetwork: true
