@@ -441,3 +441,16 @@ a.top-action-text {
 .table-min-100{
     min-width: 100%;
 }
+
+.pointer-auto {
+    pointer-events: auto;
+}
+
+.floating-preview-container {
+    width: 100%; 
+    position: absolute;  
+    z-index: 1; 
+    pointer-events: none
+}
+
+

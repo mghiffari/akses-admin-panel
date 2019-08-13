@@ -35,6 +35,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   offerTitle = CustomValidation.offerTitle;
   imageRatio = CustomValidation.specialOfferImg.ratio;
   imageRatioPercentage = CustomValidation.specialOfferImg.ratio.height / CustomValidation.specialOfferImg.ratio.width;
+  showPreview = false
   private imageInput: ElementRef;
   @ViewChild('imageInput') set imgInput(imageInput: ElementRef) {
     this.imageInput = imageInput;

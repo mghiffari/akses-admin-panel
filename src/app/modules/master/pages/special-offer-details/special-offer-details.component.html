@@ -15,7 +15,47 @@
       </a>
     </div>
   </div>
-  <form [formGroup]="offerForm" *ngIf="!loading">
+  <form [formGroup]="offerForm" *ngIf="!loading" #formContainer>
+    <div class="floating-preview-container" [style.min-height]="formContainer.offsetHeight+'px'">
+      <div fxLayout="row wrap" class="padding-16" style="position: sticky; top: 0">
+        <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutGap="16px">
+        </div>
+        <div fxFlex="40%" fxFlex.lt-lg="30%" fxFlex.lt-md="100%" fxLayout="row" fxLayoutAlign="end center">
+          <div fxFlex="65%" fxFlex.lt-lg="80%" fxFlex-lt.md="100%" fxLayout="column" fxLayoutAlign="start end">
+            <div class="padding-bottom-10" fxHide.md fxHide.gt-md>
+              <button class="pointer-auto" color="accent" mat-mini-fab (click)="showPreview = !showPreview">
+                <mat-icon>{{showPreview ? 'visibility' : 'visibility_off'}}</mat-icon>
+              </button>
+            </div>
+            <mat-card class="pointer-auto" style="width: 100%" [fxShow.lt-md]="showPreview">
+              <div mat-card-image>
+                <div style="width: 100%"
+                  [style.height]="previewImgContainer.offsetWidth * (imageRatioPercentage) + 'px'" #previewImgContainer>
+                  <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
+                    *ngIf="(!image.value || image.value===''); else previewImgExist" class="bg-medium-gray">
+                    <mat-icon class="icon-42">collections</mat-icon>
+                  </div>
+                  <ng-template #previewImgExist>
+                    <img width="100%" height="100%" [src]="image.value" alt="{{'imageNotExist' | translate}}">
+                  </ng-template>
+                </div>
+              </div>
+              <mat-card-content>
+                <div class="font-gotham-bold">{{title.value}}</div>
+                <div class="margin-top-8 margin-bottom-16">{{description.value}}</div>
+              </mat-card-content>
+              <div mat-card-image>
+                <mat-divider></mat-divider>
+              </div>
+              <mat-card-content>
+                <div class="font-gotham-bold padding-top-16">{{'forms.termsAndConditions.fieldTitle' | translate}}</div>
+                <div class="margin-top-8" [innerHTML]="termsAndConds.value"></div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+    </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" class="border-bottom-gray padding-16">
       <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
         <div fxFlexAlign="center" fxFlex="30%">
@@ -166,36 +206,6 @@
                 *ngIf="instructions.errors.required">{{'forms.redeemVoucherInstructions.errorRequired' | translate}}</span>
             </mat-error>
           </div>
-        </div>
-      </div>
-      <div fxFlex="40%" fxFlex.lt-lg="30%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row"
-        fxLayoutAlign="center start" ngClass.lt-md="margin-top-10">
-        <div fxFlex="65%" fxFlex.lt-lg="80%" fxFlex-lt.md="100%">
-          <mat-card style="width: 100%">
-            <div mat-card-image>
-              <div style="width: 100%" [style.height]="previewImgContainer.offsetWidth * (imageRatioPercentage) + 'px'"
-                #previewImgContainer>
-                <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
-                  *ngIf="(!image.value || image.value===''); else previewImgExist" class="bg-medium-gray">
-                  <mat-icon class="icon-42">collections</mat-icon>
-                </div>
-                <ng-template #previewImgExist>
-                  <img width="100%" height="100%" [src]="image.value" alt="{{'imageNotExist' | translate}}">
-                </ng-template>
-              </div>
-            </div>
-            <mat-card-content>
-              <div class="font-gotham-bold">{{title.value}}</div>
-              <div class="margin-top-8 margin-bottom-16">{{description.value}}</div>
-            </mat-card-content>
-            <div mat-card-image>
-              <mat-divider></mat-divider>
-            </div>
-            <mat-card-content>
-              <div class="font-gotham-bold padding-top-16">{{'forms.termsAndConditions.fieldTitle' | translate}}</div>
-              <div class="margin-top-8" [innerHTML]="termsAndConds.value"></div>
-            </mat-card-content>
-          </mat-card>
         </div>
       </div>
     </div>
