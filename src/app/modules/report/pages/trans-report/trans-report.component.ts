@@ -203,6 +203,9 @@ export class TransReportComponent implements OnInit {
   // call api to load data by filter
   loadData() {
     console.log('TransReportComponent | loadData')
+    let isFocusedEndDate = this.isFocusedEndDate
+    let isFocusedSearch = this.isFocusedSearch
+    let isFocusedStartDate =this.isFocusedStartDate
     this.loading = true
     this.reportService.getTransactionReport(
       this.paginatorProps.pageIndex + 1,
@@ -231,7 +234,7 @@ export class TransReportComponent implements OnInit {
             data: {
               title: 'transactionReport.loadFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                text: 'apiErrors.' + (error.status ? 'ms-payment.' + error.error.err_code : 'noInternet'),
                 data: null
               }
             }
@@ -243,15 +246,15 @@ export class TransReportComponent implements OnInit {
     ).add(
       () => {
         this.loading = false;
-        if (this.isFocusedStartDate && this.startDateInput) {
+        if (isFocusedStartDate && this.startDateInput) {
           setTimeout(() => {
             this.startDateInput.nativeElement.focus();
           });
-        } else if (this.isFocusedEndDate && this.endDateInput) {
+        } else if (isFocusedEndDate && this.endDateInput) {
           setTimeout(() => {
             this.endDateInput.nativeElement.focus();
           });
-        } else if (this.isFocusedSearch && this.searchInput) {
+        } else if (isFocusedSearch && this.searchInput) {
           setTimeout(() => {
             this.searchInput.nativeElement.focus();
           });

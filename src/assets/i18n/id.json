@@ -377,7 +377,7 @@
                 "immediate": "Langsung",
                 "certainTime": "Terjadwal"
             },
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
         },
         "offerImage": {
             "fieldTitle": "Gambar",
@@ -406,7 +406,7 @@
             "fieldTitle": "Tanggal Selesai",
             "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid",
             "errorMin": "Tanggal Selesai harus lebih dari 1 jam sejak saat ini",
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
         },
         "roleName": {
             "fieldTitle": "Nama Role",
@@ -592,7 +592,7 @@
     "approve": "approve",
     "reject": "reject",
     "add": "tambah",
-    "to": "to",
+    "to": "ke",
     "by": "by",
     "edit": "edit",
     "example": "contoh",
@@ -843,8 +843,7 @@
     },
     "balanceReport": {
         "title": "Laporan Saldo dan Transaksi",
-        "loadFailed": "gagal mendapatkan laporan saldo dan transaksi",
-        "searchPlaceholder": "Cari berdasarkan OID/VA atau Nomor Handphone"
+        "loadFailed": "gagal mendapatkan laporan saldo dan transaksi"
     },
     "transactionReport": {
         "title": "Laporan Transaksi",
@@ -979,6 +978,14 @@
         "01115": "gagal mengubah data role",
         "01116": "gagal mendapatkan list role",
         "01117": "id role wajib diisi",
-        "01118": "gagal menghapus role, role digunakan oleh user aktif"
+        "01118": "gagal menghapus role, role digunakan oleh user aktif",
+        "ms-payment": {
+            "07069": "tanggal mulai harus diisi",
+            "07070": "tanggal selesai harus diisi",
+            "07071": "keyword pencarian harus diisi",
+            "07072": "data tidak ditemukan",
+            "07073": "data tidak bisa dididownload",
+            "07075" : "transaksi tidak ditemukan"
+        }
     }
 }

@@ -377,7 +377,7 @@
                 "immediate": "Immediate",
                 "certainTime": "Scheduled"
             },
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
         },
         "offerImage": {
             "fieldTitle": "Image",
@@ -406,7 +406,7 @@
             "fieldTitle": "End Date",
             "errorRequired": "End Date must have date and time format value",
             "errorMin": "End Date should be more than 1 hr from now",
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
         },
         "roleName": {
             "fieldTitle": "Role Name",
@@ -430,7 +430,7 @@
         "transactionEndDate": {
             "errorRequired": "End Date must have valid date format value"
         },
-        "transactionSearch":{
+        "transactionSearch": {
             "placeholder": "Search OID / VA / Phone Number",
             "hint": "Min. length of search text is {{minLength}}",
             "errorRequired": "Search is required"
@@ -844,8 +844,7 @@
     },
     "balanceReport": {
         "title": "Balance and Transaction Report",
-        "loadFailed": "failed to get balance and transaction report",
-        "searchPlaceholder": "Search by OID/VA or Phone Number"
+        "loadFailed": "failed to get balance and transaction report"
     },
     "transactionReport": {
         "title": "Transaction Report",
@@ -980,6 +979,14 @@
         "01115": "failed to update role",
         "01116": "failed to get role list",
         "01117": "role id is required",
-        "01118": "failed to delete role, role is used by some active users"
+        "01118": "failed to delete role, role is used by some active users",
+        "ms-payment": {
+            "07069": "missing start date parameter",
+            "07070": "missing end date parameter",
+            "07071": "missing search key parameter",
+            "07072": "no data found",
+            "07073": "data cannot be downloaded",
+            "07075" : "transaction not found"
+        }
     }
 }
