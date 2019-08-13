@@ -5,9 +5,10 @@ import { Auth } from '../models/auth';
 import { tap, map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { ErrorModalComponent } from '../components/error-modal/error-modal.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProductService } from './product.service';
+import { ErrorSnackbarComponent } from '../components/error-snackbar/error-snackbar.component';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ import { ProductService } from './product.service';
 export class AuthService {
   authApiUrl = environment.apiurl + 'auth';
   loginApiUrl = environment.apiurl + environment.endPoint.login;
-  resetPasswordApiUrl = this.authApiUrl + '/reset-pass'
+  resetPasswordApiUrl = this.authApiUrl + '/reset-pass';
+  userLoginData;
 
   //if this updated, also update value in index.html
   storageKey = {
@@ -29,7 +31,8 @@ export class AuthService {
   constructor(private http: HttpClient,
     private dialog: MatDialog,
     private router: Router,
-    private productService: ProductService) { }
+    private productService: ProductService,
+    private snackBar: MatSnackBar) { }
 
   //used to hit login API
   login(auth: Auth) {
@@ -79,6 +82,7 @@ export class AuthService {
   logout() {
     console.log('AuthService | logout');
     sessionStorage.clear();
+    this.userLoginData = null;
     localStorage.setItem(this.storageKey.logout, this.productService.setProduct('logout'))
   }
 
@@ -86,6 +90,101 @@ export class AuthService {
   syncSessionStorage() {
     console.log('AuthService | syncSessionStorage');
     localStorage.setItem(this.storageKey.syncStorage, JSON.stringify(sessionStorage));
+  }
+
+  // go to landing page
+  blockOpenPage(){
+    console.log('AuthService | blockOpenPage');
+    let errorSB = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+      data: {
+        title: 'pageBlockedError.title',
+        content: {
+          text: 'pageBlockedError.content',
+          data: null
+        }
+      }
+    })
+    this.router.navigate(['/']);
+  }
+
+  // show error for unauthorized action
+  blockPageAction(){
+    console.log('AuthService | blockPageAction');
+    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+      data: {
+        title: 'actionBlockedError.title',
+        content: {
+          text: 'actionBlockedError.content',
+          data: null
+        }
+      }
+    })
+  }
+
+  // get feature privilege
+  getFeaturePrivilege(featureName){
+    console.log('AuthService | getFeaturePrivilege');
+    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+      this.userLoginData = JSON.parse(this.getUserLogin())
+    }
+    let feature = this.userLoginData.akses.find(el => {
+      return el.features.trim().toLowerCase() === featureName
+    })
+    return feature
+  }
+
+  // get a feature view flag privilege by feature name
+  getViewPrvg(featureName){
+    console.log('AuthService | getViewPrvg');
+    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+      this.userLoginData = JSON.parse(this.getUserLogin())
+    }
+    let feature = this.userLoginData.akses.find(el => {
+      return el.features.trim().toLowerCase() === featureName
+    })
+    return feature && feature.view
+  }
+
+  // get a feature create flag privilege by feature name
+  getCreatePrvg(featureName){
+    console.log('AuthService | getViewPrvg');
+    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+      this.userLoginData = JSON.parse(this.getUserLogin())
+    }
+    let feature = this.userLoginData.akses.find(el => {
+      return el.features.trim().toLowerCase() === featureName
+    })
+    return feature && feature.view && feature.create
+  }
+
+  // get feature create flag privilege
+  getFeatureViewPrvg(feature){
+    return feature && feature.view
+  }
+
+  // get feature create flag privilege
+  getFeatureCreatePrvg(feature){
+    return feature && feature.view && feature.create
+  }
+
+  // get feature edit flag privilege
+  getFeatureEditPrvg(feature){
+    return feature && feature.view && feature.edit
+  }
+
+  // get feature delete flag privilege
+  getFeatureDeletePrvg(feature){
+    return feature && feature.view && feature.delete
+  }
+
+  // get feature download flag privilege
+  getFeatureDownloadPrvg(feature){
+    return feature && feature.view && feature.download
+  }
+
+  // get feature download flag privilege
+  getFeaturePublishPrvg(feature){
+    return feature && feature.view && feature.publish
   }
 
   //append authorization access token to header

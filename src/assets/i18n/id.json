@@ -624,6 +624,14 @@
         "title": "Perubahan Baru Belum Disimpan",
         "content": "Klik tombol ‘simpan’ terlebih dahulu untuk menyimpan perubahan baru yang anda lakukan"
     },
+    "pageBlockedError": {
+        "title": "akses ditolak",
+        "content": "anda tidak memiliki izin untuk mengakses halaman ini"
+    },
+    "actionBlockedError": {
+        "title": "action ditolak",
+        "content": "anda tidak memiliki izin untuk melakukan action ini"
+    },
     "userListScreen": {
         "title": "Data User",
         "createUser": "tambahkan user baru",
@@ -842,7 +850,7 @@
         "title": "Laporan Transaksi",
         "dateFilter": "Filter Tanggal",
         "downloadReport": "download laporan",
-        "dateFilterNotSet": "Filter Tanggal Belum Diatur",
+        "filterNotSet": "Filter Belum Diatur",
         "loadFailed": "gagal mendapatkan laporan transaksi",
         "downloadFailed": "gagal mendownload laporan transaksi"
     },

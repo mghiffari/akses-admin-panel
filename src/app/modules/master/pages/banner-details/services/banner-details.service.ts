@@ -11,6 +11,8 @@ import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snac
 import { BannerService } from 'src/app/modules/master/services/banner.service';
 import { LovService } from 'src/app/shared/services/lov.service';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Injectable()
 export class BannerDetailsService {
@@ -45,6 +47,7 @@ export class BannerDetailsService {
   vLoadingFormStatus: boolean;
 
   vRegexURL: any = /^(http?|https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|io|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
+  vPrivilege = null
 
   constructor(
     private _ng2ImgToolsService: Ng2ImgToolsService,
@@ -53,8 +56,38 @@ export class BannerDetailsService {
     private _translateService: TranslateService,
     private _snackBarService: MatSnackBar,
     private _routerService: Router,
-    private _fileMgtService: FileManagementService
+    private _fileMgtService: FileManagementService,
+    private _authService: AuthService
   ) { }
+
+  // get feature privilege
+  getFeaturePrvg(){
+    console.log('BannerDetailService | getFeaturePrvg');
+    this.vPrivilege = this._authService.getFeaturePrivilege(constants.features.banner)
+  }
+
+  // get view privilege flag
+  getViewPrvg(){
+    console.log('BannerDetailService | getFeaturePrvg');
+    return this._authService.getFeatureViewPrvg(this.vPrivilege)
+  }
+
+  // get create privilege flag
+  getCreatePrvg(){
+    console.log('BannerDetailService | getCreatePrvg');
+    return this._authService.getFeatureCreatePrvg(this.vPrivilege)
+  }
+
+  // get edit privilege flag
+  getEditPrvg(){
+    console.log('BannerDetailService | getEditPrvg');
+    return this._authService.getFeatureEditPrvg(this.vPrivilege)
+  }
+
+  showNoAccessSnackbar(){
+    console.log('ArticleDetailsService | showNoAccessSnackbar');
+    this._authService.blockOpenPage()
+  }
 
   //get title for page (create or update)
   getPageTitle(page: string) {

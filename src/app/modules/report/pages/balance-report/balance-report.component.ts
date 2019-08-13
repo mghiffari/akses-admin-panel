@@ -12,6 +12,8 @@ import { BalanceData, TransBalanceData } from '../../models/balance-data';
 
 // Services
 import { ReportService } from '../../services/report.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-balance-report',
@@ -60,6 +62,7 @@ export class BalanceReportComponent implements OnInit {
     private translateService: TranslateService,
     private snackBar: MatSnackBar,
     private reportService: ReportService,
+    private authService: AuthService
   ) {
     console.log('BalanceReportComponent | constructor');
   }
@@ -70,6 +73,9 @@ export class BalanceReportComponent implements OnInit {
     this.translateService.get('angularLocale').subscribe(res => {
       this.locale = res;
     });
+    if(!this.authService.getViewPrvg(constants.features.balanceReport)){
+      this.authService.blockOpenPage()
+    }
   }
 
   // call api to load data by search

@@ -58,7 +58,7 @@
   <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" class="padding-left-16">
     <div fxFlex="40%" fxFlex.lt-md="100%">
       <a [href]="getDownloadLink()" target="_blank" class="top-action-text" fxLayoutAlign="start center"
-        *ngIf="!loading && filterForm.valid && transactions.length > 0; else disabledLink">
+        *ngIf="allowDownload && !loading && filterForm.valid && transactions.length > 0; else disabledLink">
         <mat-icon class="font-sub-content-icon margin-right-5">cloud_download</mat-icon>
         <span>
           {{'transactionReport.downloadReport' | translate}}
@@ -254,19 +254,16 @@
     </div>
   </div>
   <div fxFlex="grow" style="min-height:150px" fxLayout="row wrap" fxLayoutAlign="center center" 
-  *ngIf="!loading && (startDate.invalid || endDate.invalid || (filterForm.errors && filterForm.errors.dateRange))">
+  *ngIf="!loading && filterForm.invalid">
       <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
         <mat-icon class="error-icon text-gray">error</mat-icon>
       </div>
       <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-sub-content text-medium-gray">
-        {{'transactionReport.dateFilterNotSet' | translate}}
+        {{'transactionReport.filterNotSet' | translate}}
       </div>
     </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top-10 padding-left-16"
-    *ngIf="transactions.length === 0 && !loading && startDate.valid 
-    && endDate.invalid && !(filterForm.errors && filterForm.errors.dateRange)
-    && search.invalid
-    ">
+    *ngIf="transactions.length === 0 && !loading && filterForm.valid">
     <div class="font-gotham-light">
       {{'table.noRecordsFound' | translate}}
     </div>

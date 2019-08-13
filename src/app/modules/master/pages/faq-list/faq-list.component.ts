@@ -5,6 +5,8 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
 import { FAQ } from '../../models/faq';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-faq-list',
@@ -36,6 +38,9 @@ export class FAQListComponent implements OnInit {
   closeText = '';
   loading = false;
   isFocusedInput = false;
+  allowCreate = false;
+  allowEdit = false;
+  allowDelete = false;
 
   private table: any;
   @ViewChild('faqsTable') set tabl(table: ElementRef) {
@@ -50,72 +55,88 @@ export class FAQListComponent implements OnInit {
   constructor(
     private faqService: FAQService,
     private snackBar: MatSnackBar,
-    private modalConfirmation: MatDialog
+    private modalConfirmation: MatDialog,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     console.log('FAQListComponent | ngOnInit');
-    this.lazyLoadData()
+    this.allowCreate = false;
+    this.allowEdit = false;
+    this.allowDelete = false;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.faq)
+    if(this.authService.getFeatureViewPrvg(prvg)){
+      this.lazyLoadData()
+      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
+      this.allowDelete = this.authService.getFeatureDeletePrvg(prvg)
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   //delete
   onDelete(faq) {
     console.log("FAQListComponent | onDelete")
-    const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
-      width: '260px',
-      data: {
-        title: 'deleteConfirmation',
-        content: {
-          string: 'faqListScreen.deleteConfirmation',
-          data: {
-            title: faq.title
+    if(this.allowDelete){
+      const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+        width: '260px',
+        data: {
+          title: 'deleteConfirmation',
+          content: {
+            string: 'faqListScreen.deleteConfirmation',
+            data: {
+              title: faq.title
+            }
           }
         }
-      }
-    })
-    modalRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.loading = true;
-        let delFAQ: FAQ = Object.assign(new FAQ(), faq);
-        delFAQ.is_deleted = true;
-        this.faqService.updateFaq(delFAQ).subscribe(
-          (data: any) => {
-            try {
-              console.table(data);
-              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                data: {
-                  title: 'success',
-                  content: {
-                    text: 'dataDeleted',
-                    data: null
+      })
+      modalRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.loading = true;
+          let delFAQ: FAQ = Object.assign(new FAQ(), faq);
+          delFAQ.is_deleted = true;
+          this.faqService.updateFaq(delFAQ).subscribe(
+            (data: any) => {
+              try {
+                console.table(data);
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'dataDeleted',
+                      data: null
+                    }
                   }
-                }
-              })
-              this.lazyLoadData()
-            } catch (error) {
-              console.table(error)
-            }
-          },
-          error => {
-            try {
-              console.table(error);
-              this.loading = false;
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'failedToDelete',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                })
+                this.lazyLoadData()
+              } catch (error) {
+                console.table(error)
+              }
+            },
+            error => {
+              try {
+                console.table(error);
+                this.loading = false;
+                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'failedToDelete',
+                    content: {
+                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
                   }
-                }
-              })
-            } catch (error) {
-              console.table(error)
+                })
+              } catch (error) {
+                console.table(error)
+              }
             }
-          }
-        )
-      }
-    })
+          )
+        }
+      })
+    } else {
+      this.authService.blockPageAction()
+    }
   }
 
   // event handling paginator value changed (page index and page size)

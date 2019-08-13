@@ -15,6 +15,8 @@ import { ConfirmationModalComponent } from 'src/app/shared/components/confirmati
 import { MaskedInputFormat, MaskedInputType } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-cs-product',
@@ -42,6 +44,7 @@ export class CSProductComponent implements OnInit {
   };
   maxDecimalLength;
   onSubmittingForm = false;
+  allowEdit = false;
 
   private table: any;
   @ViewChild('areaTenureTable') set tabl(table: ElementRef) {
@@ -55,6 +58,7 @@ export class CSProductComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private translateService: TranslateService,
     private creditSimulationService: CreditSimulationService,
     private snackBar: MatSnackBar,
@@ -85,64 +89,48 @@ export class CSProductComponent implements OnInit {
   //on init
   ngOnInit() {
     console.log('CreditSimulationProductComponent | ngOnInit')
-    this.route.params.subscribe(params => {
-      try {
-        console.table(params);
-        this.productId = params.productId;
-        this.components = [];
-        this.product = new CSProduct();
-        this.edit = false;
-        this.tabs._handleClick = this.interceptTabChange.bind(this)
-        this.tableColumns = ['area']
-        this.loading = true;
-        this.selectedIndex = -1;
-        this.csFormGroup = new FormGroup({
-          areaForms: new FormArray([])
-        });
-        this.inputMaskType = {
-          percentage: MaskedInputType.Percentage,
-          currency: MaskedInputType.Currency
-        };
-        this.tenureMonths.forEach(month => {
-          this.tableColumns.push('tnr' + month)
-        })
-
-        this.translateService.get('angularLocale').subscribe(res => {
-          this.locale = res;
-        });
-
-        let tasks = [
-          this.creditSimulationService.getProductById(this.productId).pipe(map(res => res), catchError(e => of(e))),
-          this.creditSimulationService.getProductComponents(this.productId).pipe(map(res => res), catchError(e => of(e)))
-        ]
-
-        forkJoin(tasks).subscribe((response: any) => {
-          try {
-            console.table(response[0])
-            const error = response[0];
-            if (response[0] instanceof HttpErrorResponse) {
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'productCreditSimulationScreen.getProductFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } else {
-              this.product = response[0].data;
-            }
-          } catch (error) {
-            console.table(error)
-          } finally {
+    let prvg = this.authService.getFeaturePrivilege(constants.features.creditSimulation)
+    if(prvg && this.authService.getFeatureViewPrvg(prvg)){
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
+      this.route.params.subscribe(params => {
+        try {
+          console.table(params);
+          this.productId = params.productId;
+          this.components = [];
+          this.product = new CSProduct();
+          this.edit = false;
+          this.tabs._handleClick = this.interceptTabChange.bind(this)
+          this.tableColumns = ['area']
+          this.loading = true;
+          this.selectedIndex = -1;
+          this.csFormGroup = new FormGroup({
+            areaForms: new FormArray([])
+          });
+          this.inputMaskType = {
+            percentage: MaskedInputType.Percentage,
+            currency: MaskedInputType.Currency
+          };
+          this.tenureMonths.forEach(month => {
+            this.tableColumns.push('tnr' + month)
+          })
+  
+          this.translateService.get('angularLocale').subscribe(res => {
+            this.locale = res;
+          });
+  
+          let tasks = [
+            this.creditSimulationService.getProductById(this.productId).pipe(map(res => res), catchError(e => of(e))),
+            this.creditSimulationService.getProductComponents(this.productId).pipe(map(res => res), catchError(e => of(e)))
+          ]
+  
+          forkJoin(tasks).subscribe((response: any) => {
             try {
-              console.table(response[1])
-              const error = response[1];
-              if (response[1] instanceof HttpErrorResponse) {
+              console.table(response[0])
+              const error = response[0];
+              if (response[0] instanceof HttpErrorResponse) {
                 this.snackBar.openFromComponent(ErrorSnackbarComponent, {
                   data: {
-                    title: 'productCreditSimulationScreen.getProdCompFailed',
+                    title: 'productCreditSimulationScreen.getProductFailed',
                     content: {
                       text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                       data: null
@@ -150,22 +138,44 @@ export class CSProductComponent implements OnInit {
                   }
                 })
               } else {
-                this.components = response[1].data;
-                if (this.components.length > 0) {
-                  this.selectedIndex = 0;
-                }
+                this.product = response[0].data;
               }
             } catch (error) {
               console.table(error)
             } finally {
-              this.loading = false;
+              try {
+                console.table(response[1])
+                const error = response[1];
+                if (response[1] instanceof HttpErrorResponse) {
+                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                    data: {
+                      title: 'productCreditSimulationScreen.getProdCompFailed',
+                      content: {
+                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                        data: null
+                      }
+                    }
+                  })
+                } else {
+                  this.components = response[1].data;
+                  if (this.components.length > 0) {
+                    this.selectedIndex = 0;
+                  }
+                }
+              } catch (error) {
+                console.table(error)
+              } finally {
+                this.loading = false;
+              }
             }
-          }
-        })
-      } catch (error) {
-        console.table(error)
-      }
-    })
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      })
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   // method to intercept tab click event, to verify when editing
@@ -273,65 +283,69 @@ export class CSProductComponent implements OnInit {
   //call api to save updated value 
   onSaveEdit() {
     console.log('CreditSimulationProductComponent | onSaveEdit')
-    this.onSubmittingForm = true;
-    const dataParam = this.csFormGroup.get('areaForms').value
-    this.creditSimulationService.updateProdCompCS(dataParam).subscribe(
-      response => {
-        try {
-          console.table(response)
-          const result = {
-            total: dataParam.length,
-            successCount: response.data.success_count
-          }
-          if (result.total == result.successCount) {
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'productCreditSimulationScreen.updateSuccess',
-                  data: null
+    if(this.allowEdit){
+      this.onSubmittingForm = true;
+      const dataParam = this.csFormGroup.get('areaForms').value
+      this.creditSimulationService.updateProdCompCS(dataParam).subscribe(
+        response => {
+          try {
+            console.table(response)
+            const result = {
+              total: dataParam.length,
+              successCount: response.data.success_count
+            }
+            if (result.total == result.successCount) {
+              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                data: {
+                  title: 'success',
+                  content: {
+                    text: 'productCreditSimulationScreen.updateSuccess',
+                    data: null
+                  }
                 }
-              }
-            })
-          } else {
+              })
+            } else {
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'fail',
+                  content: {
+                    text: 'productCreditSimulationScreen.updateFailed',
+                    data: null
+                  }
+                }
+              })
+            }
+            if (result.successCount > 0) {
+              this.edit = false;
+              this.loadData()
+            }
+          } catch (error) {
+            console.table(error)
+          } finally {
+            this.onSubmittingForm = false;
+          }
+        }, error => {
+          try {
+            console.table(error)
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
-                title: 'fail',
+                title: 'productCreditSimulationScreen.updateFailed',
                 content: {
-                  text: 'productCreditSimulationScreen.updateFailed',
+                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                   data: null
                 }
               }
             })
+          } catch (error) {
+            console.table(error)
+          } finally {
+            this.onSubmittingForm = false;
           }
-          if (result.successCount > 0) {
-            this.edit = false;
-            this.loadData()
-          }
-        } catch (error) {
-          console.table(error)
-        } finally {
-          this.onSubmittingForm = false;
         }
-      }, error => {
-        try {
-          console.table(error)
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'productCreditSimulationScreen.updateFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        } finally {
-          this.onSubmittingForm = false;
-        }
-      }
-    )
+      )
+    } else {
+      this.authService.blockPageAction()
+    }
   }
 
   // call api to load table data base on product id and component id

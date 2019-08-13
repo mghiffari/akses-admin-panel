@@ -624,6 +624,14 @@
         "title": "New Changes Have Not been Saved",
         "content": "Click 'save' to save the changes"
     },
+    "pageBlockedError": {
+        "title": "access is blocked",
+        "content": "you don't have permission to access this page"
+    },
+    "actionBlockedError": {
+        "title": "action is blocked",
+        "content": "you don't have permission to do this action"
+    },
     "userListScreen": {
         "title": "Users Data",
         "createUser": "create user",
@@ -843,7 +851,7 @@
         "title": "Transaction Report",
         "dateFilter": "Date Filter",
         "downloadReport": "download report",
-        "dateFilterNotSet": "Date Filter Not Set",
+        "filterNotSet": "Filter Not Set",
         "loadFailed": "failed to get transaction report",
         "downloadFailed": "failed to download transaction report"
     },

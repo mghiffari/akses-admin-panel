@@ -12,6 +12,8 @@ import { InstructionList } from '../../models/instruction-list';
 import { PayInstService } from '../../services/pay-inst.service';
 import { InstructionDetails } from '../../models/instruction-details';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-pi-details',
@@ -25,6 +27,8 @@ export class PIDetailsComponent implements OnInit {
   instructionForm = new FormGroup({});
   actionSuccess = false;
   instructionValidation = CustomValidation.instructionSteps;
+  allowCreate = false;
+  allowEdit = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,7 +37,8 @@ export class PIDetailsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private modalConfirmation: MatDialog,
     private payInstService: PayInstService,
-    private fileMgtService: FileManagementService
+    private fileMgtService: FileManagementService,
+    private authService: AuthService
   ) { }
 
   // show prompt when routing to another page in edit mode
@@ -111,39 +116,52 @@ export class PIDetailsComponent implements OnInit {
 
   ngOnInit() {
     console.log('PIDetailsComponent | ngOnInit')
-    this.loading = true;
-    this.route.params.subscribe(params => {
-      try {
-        this.instructionForm = new FormGroup({
-          id: new FormControl(''),
-          icon: new FormControl('', Validators.required),
-          // validate file size, file type
-          iconFile: new FormControl(null, [
-            CustomValidation.type(['jpg', 'jpeg', 'png'])
-          ]),
-          oldIcon: new FormControl(''),
-          grpTitle: new FormControl('', Validators.required),
-          instructions: new FormArray([], [
-            Validators.required,
-            Validators.maxLength(this.instructionValidation.maxLength)]),
-          order: new FormControl(null),
-          instructionType: new FormControl(null)
-        })
-        if (this.router.url.includes('update')) {
-          this.isCreate = false;
-          let id = params.id;
-          this.getInstructionById(id);
-        } else {
-          this.isCreate = true;
-          let paymentType = params.paymentType;
-          this.checkPaymentType(paymentType)
-        }
-      } catch (error) {
-        console.table(error)
-        this.loading = false;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.paymentInstruction)
+      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
+      let allowPage = false
+      if(this.router.url.includes('update')){
+        this.isCreate = false;
+        allowPage = this.allowEdit
+      } else {
+        this.isCreate = true;
+        allowPage = this.allowCreate
       }
-
-    })
+      if(allowPage){
+        this.loading = true;
+        this.route.params.subscribe(params => {
+          try {
+            this.instructionForm = new FormGroup({
+              id: new FormControl(''),
+              icon: new FormControl('', Validators.required),
+              // validate file size, file type
+              iconFile: new FormControl(null, [
+                CustomValidation.type(['jpg', 'jpeg', 'png'])
+              ]),
+              oldIcon: new FormControl(''),
+              grpTitle: new FormControl('', Validators.required),
+              instructions: new FormArray([], [
+                Validators.required,
+                Validators.maxLength(this.instructionValidation.maxLength)]),
+              order: new FormControl(null),
+              instructionType: new FormControl(null)
+            })
+            if (!this.isCreate) {
+              let id = params.id;
+              this.getInstructionById(id);
+            } else {
+              let paymentType = params.paymentType;
+              this.checkPaymentType(paymentType)
+            }
+          } catch (error) {
+            console.table(error)
+            this.loading = false;
+          }
+    
+        })
+      } else {
+        this.authService.blockOpenPage()
+      }
   }
 
   // call get payment types api to check payment type param
@@ -372,27 +390,35 @@ export class PIDetailsComponent implements OnInit {
   save() {
     console.log('PIDetailsComponent | save')
     if (this.isCreate) {
-      this.onSubmittingForm = true;
-      this.uploadIcon();
-    } else {
-      if (this.oldIcon.value === this.icon.value) {
-        let instructionDetails = [];
-        let stepsForm = this.instructions.value;
-        let instObject = {
-          grp_title: this.grpTitle.value,
-          icon: this.icon.value
-        }
-        for (let i = 0; i < stepsForm.length; i++) {
-          let form = stepsForm[i]
-          let step = new InstructionDetails();
-          step.list_id = this.id.value;
-          step.content = form.content;
-          step.order = i + 1;
-          instructionDetails.push(Object.assign(step, instObject))
-        }
-        this.updateInstructionDetails(instructionDetails, false)
-      } else {
+      if(this.allowCreate){
+        this.onSubmittingForm = true;
         this.uploadIcon();
+      } else {
+        this.authService.blockPageAction()
+      }
+    } else {
+      if(this.allowEdit){
+        if (this.oldIcon.value === this.icon.value) {
+          let instructionDetails = [];
+          let stepsForm = this.instructions.value;
+          let instObject = {
+            grp_title: this.grpTitle.value,
+            icon: this.icon.value
+          }
+          for (let i = 0; i < stepsForm.length; i++) {
+            let form = stepsForm[i]
+            let step = new InstructionDetails();
+            step.list_id = this.id.value;
+            step.content = form.content;
+            step.order = i + 1;
+            instructionDetails.push(Object.assign(step, instObject))
+          }
+          this.updateInstructionDetails(instructionDetails, false)
+        } else {
+          this.uploadIcon();
+        }
+      } else {
+        this.authService.blockPageAction()
       }
     }
   }

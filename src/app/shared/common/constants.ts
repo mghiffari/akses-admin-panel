@@ -38,5 +38,20 @@ export const constants = {
         topUp: 'TO',
         payment: 'PM',
         withdrawal: 'WT'
+    },
+    features: {
+        banner: 'home banner',
+        article: 'artikel',
+        specialOffer: 'special offer',
+        faq: 'faq',
+        branchLocation: 'lokasi cabang',
+        changePhoneNumber: 'ubah nomor handphone',
+        creditSimulation: 'simulasi kredit',
+        paymentInstruction: 'instruksi pembayaran',
+        notification: 'notifikasi',
+        user: 'user',
+        role: 'role',
+        transactionReport: 'laporan transaksi',
+        balanceReport: 'laporan saldo'
     }
 }

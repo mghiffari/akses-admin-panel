@@ -13,14 +13,14 @@
             <form [formGroup]="csFormGroup">
               <div fxLayout="row" style="width: 100%; min-height: 64px;" fxLayoutAlign="end center" class="padding-16">
                 <div *ngIf="!edit">
-                  <button mat-raised-button color="primary" (click)="onEdit()">{{'edit' | translate}}</button>
+                  <button mat-raised-button color="primary" (click)="onEdit()" [disabled]="!allowEdit">{{'edit' | translate}}</button>
                 </div>
                 <div *ngIf="edit" fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10px">
                   <button mat-raised-button color="accent" (click)="onResetForm()"
                     *ngIf="!onSubmittingForm">{{'reset' | translate}}</button>
                   <button mat-raised-button color="accent" (click)="onCloseEdit()"
                     *ngIf="!onSubmittingForm">{{'cancel' | translate}}</button>
-                  <button mat-raised-button color="primary" (click)="onSaveEdit()" [disabled]="!csFormGroup?.valid"
+                  <button mat-raised-button color="primary" (click)="onSaveEdit()" [disabled]="!allowEdit || !csFormGroup?.valid"
                     *ngIf="!onSubmittingForm">{{'save' | translate}}</button>
                   <button mat-raised-button color="primary" disabled *ngIf="onSubmittingForm">
                     <div fxLayout="row" fxLayoutAlign="center center">

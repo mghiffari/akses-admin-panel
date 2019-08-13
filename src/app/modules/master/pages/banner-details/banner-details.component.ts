@@ -43,27 +43,43 @@ export class BannerDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCurrentPage();
-    this._bannerDetailService.resetErrorMessage();
-    this._bannerDetailService.loadOrders();
-    this._bannerDetailService.loadModuls();
+    this.getCurrentPage(); 
   }
 
   //get current page (create or update)
   getCurrentPage() {
     console.log('BannerDetailComponent | getCurrentPage');
+    this._bannerDetailService.getFeaturePrvg();
     this.vCurrentPage = this._routerService.url;
     if(this.vCurrentPage.includes("create")) {
-      this._bannerDetailService.resetCreateBannerData();
-      this.resetCheckBox();
+      if(this._bannerDetailService.getCreatePrvg()){
+        this._bannerDetailService.resetCreateBannerData();
+        this.resetCheckBox();
+        this.initData()
+      } else {
+        this._bannerDetailService.showNoAccessSnackbar()
+      }
     } else if(this.vCurrentPage.includes("update")){
-      this.vId = this._activatedRouteService.snapshot.params['id'];
-      this._bannerDetailService.loadBannerById(this.vId).then(response => {
-        this.initiateCheckBox();
-      }).catch( err =>{
-        console.table(err);
-      });
+      if(this._bannerDetailService.getEditPrvg()){
+        this.vId = this._activatedRouteService.snapshot.params['id'];
+        this._bannerDetailService.loadBannerById(this.vId).then(response => {
+          this.initiateCheckBox();
+        }).catch( err =>{
+          console.table(err);
+        });
+        this.initData()
+      } else {
+        this._bannerDetailService.showNoAccessSnackbar()
+      }
     }
+  }
+
+  // init page form and data
+  initData(){
+    console.log('BannerDetailComponent | initData');
+    this._bannerDetailService.resetErrorMessage();
+    this._bannerDetailService.loadOrders();
+    this._bannerDetailService.loadModuls();
   }
 
   //get title of the page (create or update) from services

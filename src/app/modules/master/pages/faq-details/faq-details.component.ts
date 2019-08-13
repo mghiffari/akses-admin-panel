@@ -9,6 +9,7 @@ import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snac
 import { LovData } from 'src/app/shared/models/lov';
 import { LovService } from 'src/app/shared/services/lov.service';
 import { constants } from 'src/app/shared/common/constants';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-faq-details',
@@ -24,6 +25,8 @@ export class FAQDetailsComponent implements OnInit {
   isCreate = true;
   loading = true;
   tinyMceSettings = constants.tinyMceSettings;
+  allowCreate = false;
+  allowEdit = false;
 
   //constructor
   constructor(
@@ -31,7 +34,8 @@ export class FAQDetailsComponent implements OnInit {
     private lovService: LovService,
     private router: Router,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {
     console.log("FAQDetailsComponent | constructor")
   }
@@ -70,54 +74,65 @@ export class FAQDetailsComponent implements OnInit {
   ngOnInit() {
     console.log("FAQDetailsComponent | OnInit")
     this.loading = true;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.faq)
+    this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
+    this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
     if (this.router.url.includes('update')) {
-      this.isCreate = false;
-      this.id = this.route.snapshot.params['id'];
-      this.faqService.getFaqById(this.id).subscribe(
-        data => {
-          try {
-            let editedFAQ: FAQ = data.data;
-            this.faqForm = new FormGroup({
-              category: new FormControl(editedFAQ.category, [Validators.required]),
-              title: new FormControl(editedFAQ.title, [Validators.required]),
-              titleOrder: new FormControl(editedFAQ.title_order, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
-              uniqueTag: new FormControl(editedFAQ.unique_tag, [Validators.required]),
-              content: new FormControl(editedFAQ.content, [Validators.required]),
-              bookmark: new FormControl(editedFAQ.bookmark)
-            })
-            this.getCategories();
-          } catch (error) {
-            console.table(error)
-          }
-        }, error => {
-          try {
-            console.table(error);
-            let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'faqDetailsScreen.getFaqFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+      if(this.allowEdit){
+        this.isCreate = false;
+        this.id = this.route.snapshot.params['id'];
+        this.faqService.getFaqById(this.id).subscribe(
+          data => {
+            try {
+              let editedFAQ: FAQ = data.data;
+              this.faqForm = new FormGroup({
+                category: new FormControl(editedFAQ.category, [Validators.required]),
+                title: new FormControl(editedFAQ.title, [Validators.required]),
+                titleOrder: new FormControl(editedFAQ.title_order, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
+                uniqueTag: new FormControl(editedFAQ.unique_tag, [Validators.required]),
+                content: new FormControl(editedFAQ.content, [Validators.required]),
+                bookmark: new FormControl(editedFAQ.bookmark)
+              })
+              this.getCategories();
+            } catch (error) {
+              console.table(error)
+            }
+          }, error => {
+            try {
+              console.table(error);
+              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'faqDetailsScreen.getFaqFailed',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
                 }
-              }
-            })
-            errorSnackbar.afterDismissed().subscribe(() => {
-              this.goToListScreen()
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        })
+              })
+              errorSnackbar.afterDismissed().subscribe(() => {
+                this.goToListScreen()
+              })
+            } catch (error) {
+              console.log(error)
+            }
+          })
+      } else {
+        this.authService.blockOpenPage()
+      }
     } else {
-      this.faqForm = new FormGroup({
-        category: new FormControl('', [Validators.required]),
-        title: new FormControl('', [Validators.required]),
-        titleOrder: new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
-        uniqueTag: new FormControl(''),
-        content: new FormControl('', [Validators.required]),
-        bookmark: new FormControl(false)
-      })
-      this.getCategories()
+      if(this.allowCreate){
+        this.faqForm = new FormGroup({
+          category: new FormControl('', [Validators.required]),
+          title: new FormControl('', [Validators.required]),
+          titleOrder: new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")]),
+          uniqueTag: new FormControl('', [Validators.required]),
+          content: new FormControl('', [Validators.required]),
+          bookmark: new FormControl(false)
+        })
+        this.getCategories()
+      } else {
+        this.authService.blockOpenPage()
+      }
     }
   }
 
@@ -168,8 +183,55 @@ export class FAQDetailsComponent implements OnInit {
     this.faqModel.content = form.content;
     this.faqModel.bookmark = form.bookmark;
     if (this.isCreate) {
-      this.faqService.createFaq(this.faqModel)
-        .subscribe(
+      if(this.allowCreate){
+        this.faqService.createFaq(this.faqModel)
+          .subscribe(
+            (data: any) => {
+              try {
+                console.table(data);
+                this.onSubmittingForm = false;
+                let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'faqDetailsScreen.succesCreated',
+                      data: null
+                    }
+                  }
+                })
+                snackbarSucess.afterDismissed().subscribe(() => {
+                  this.goToListScreen();
+                })
+              } catch (error) {
+                console.log(error)
+              }
+            },
+            error => {
+              try {
+                console.table(error);
+                this.onSubmittingForm = false;
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'faqDetailsScreen.createFailed',
+                    content: {
+                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
+                  }
+                })
+              } catch (error) {
+                console.log(error)
+              }
+            }
+          )
+      } else {
+        this.authService.blockPageAction()
+      }
+    } else {
+      if(this.allowEdit){
+        this.faqModel.id = this.id;
+        this.onSubmittingForm = true;
+        this.faqService.updateFaq(this.faqModel).subscribe(
           (data: any) => {
             try {
               console.table(data);
@@ -178,7 +240,7 @@ export class FAQDetailsComponent implements OnInit {
                 data: {
                   title: 'success',
                   content: {
-                    text: 'faqDetailsScreen.succesCreated',
+                    text: 'faqDetailsScreen.succesUpdated',
                     data: null
                   }
                 }
@@ -196,7 +258,7 @@ export class FAQDetailsComponent implements OnInit {
               this.onSubmittingForm = false;
               this.snackBar.openFromComponent(ErrorSnackbarComponent, {
                 data: {
-                  title: 'faqDetailsScreen.createFailed',
+                  title: 'faqDetailsScreen.updateFailed',
                   content: {
                     text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                     data: null
@@ -208,48 +270,9 @@ export class FAQDetailsComponent implements OnInit {
             }
           }
         )
-    } else {
-      this.faqModel.id = this.id;
-      this.onSubmittingForm = true;
-      this.faqService.updateFaq(this.faqModel).subscribe(
-        (data: any) => {
-          try {
-            console.table(data);
-            this.onSubmittingForm = false;
-            let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'faqDetailsScreen.succesUpdated',
-                  data: null
-                }
-              }
-            })
-            snackbarSucess.afterDismissed().subscribe(() => {
-              this.goToListScreen();
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        },
-        error => {
-          try {
-            console.table(error);
-            this.onSubmittingForm = false;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'faqDetailsScreen.updateFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.log(error)
-          }
-        }
-      )
+      } else {
+        this.authService.blockPageAction()
+      }
     }
 
   }

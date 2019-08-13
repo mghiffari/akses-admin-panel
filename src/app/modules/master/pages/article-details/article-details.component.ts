@@ -33,26 +33,42 @@ export class ArticleDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentPage();
-    this._articleDetailsService.resetErrorMessage();
-    this._articleDetailsService.loadModuls();
-    this._articleDetailsService.loadCategoryData();
   }
 
   //get current page (create or update)
   getCurrentPage() {
     console.log('ArticleDetailComponent | getCurrentPage');
     this.vCurrentPage = this._routerService.url;
+    this._articleDetailsService.getFeaturePrvg()
     if(this.vCurrentPage.includes("create")) {
-      this._articleDetailsService.resetArticleData();
-      this.resetCheckBox();
+      if(this._articleDetailsService.getCreatePrvg()){
+        this._articleDetailsService.resetArticleData();
+        this.resetCheckBox();
+        this.initData();
+      } else {
+        this._articleDetailsService.showNoAccessSnackbar()
+      }
     } else if(this.vCurrentPage.includes("update")){
-      this.vId = this._activatedRouteService.snapshot.params['id'];
-      this._articleDetailsService.loadArticleById(this.vId).then(response => {
-        this.initiateCheckBox();
-      }).catch( err =>{
-        console.table(err);
-      });
+      if(this._articleDetailsService.getEditPrvg()){
+        this.vId = this._activatedRouteService.snapshot.params['id'];
+        this._articleDetailsService.loadArticleById(this.vId).then(response => {
+          this.initiateCheckBox();
+        }).catch( err =>{
+          console.table(err);
+        });
+        this.initData()
+      } else {
+        this._articleDetailsService.showNoAccessSnackbar()
+      }
     }
+  }
+
+  // initialize form and data
+  initData(){
+    console.log('ArticleDetailComponent | initData');
+    this._articleDetailsService.resetErrorMessage();
+    this._articleDetailsService.loadModuls();
+    this._articleDetailsService.loadCategoryData();
   }
 
   //get title of the page (create or update) from services

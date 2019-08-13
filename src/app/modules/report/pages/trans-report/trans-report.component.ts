@@ -8,6 +8,7 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
 import { MatSnackBar } from '@angular/material';
 import { ReportService } from '../../services/report.service';
 import { DatePipe } from '@angular/common';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-trans-report',
@@ -53,6 +54,7 @@ export class TransReportComponent implements OnInit {
   isFocusedStartDate = false;
   isFocusedEndDate = false;
   isFocusedSearch = false;
+  allowDownload = false;
   filterForm: FormGroup;
   searchValidation = CustomValidation.transactionSearch
 
@@ -81,7 +83,8 @@ export class TransReportComponent implements OnInit {
     private translateService: TranslateService,
     private snackBar: MatSnackBar,
     private reportService: ReportService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private authService: AuthService
   ) {
     console.log('TransReportComponent | constructor')
   }
@@ -107,37 +110,44 @@ export class TransReportComponent implements OnInit {
     this.translateService.get('angularLocale').subscribe(res => {
       this.locale = res;
     });
-    this.filterForm = new FormGroup({
-      startDate: new FormControl(null, Validators.required),
-      endDate: new FormControl(null, Validators.required),
-      search: new FormControl('', [Validators.required, Validators.minLength(this.searchValidation.minLength)])
-    }, {
-        validators: CustomValidation.dateRangeValidaton
-      })
-
-    this.filterForm.valueChanges.subscribe(value => {
-      if (this.filterForm.valid) {
-        this.loadData()
-      } else {
-        this.resetPage()
-        this.resetTable()
-        let errorText = ''
-        if (this.startDate.invalid) {
-          if (this.startDate.errors && this.startDate.errors.required) {
-            errorText = 'forms.transactionStartDate.errorRequired'
-          }
+    let prvg = this.authService.getFeaturePrivilege(constants.features.transactionReport)
+    if(this.authService.getFeatureViewPrvg(prvg)){
+      this.allowDownload = this.authService.getFeatureDownloadPrvg(prvg)
+      this.filterForm = new FormGroup({
+        startDate: new FormControl(null, Validators.required),
+        endDate: new FormControl(null, Validators.required),
+        search: new FormControl('', [Validators.required, Validators.minLength(this.searchValidation.minLength)])
+      }, {
+          validators: CustomValidation.dateRangeValidaton
+        })
+  
+      this.filterForm.valueChanges.subscribe(value => {
+        if (this.filterForm.valid) {
+          this.loadData()
         } else {
-          if (this.endDate.invalid) {
-            errorText = 'forms.transactionEndDate.errorRequired'
-          } else if (this.filterForm.errors && this.filterForm.errors.dateRange) {
-            errorText = 'forms.transactionStartDate.errorMax'
-          } else if (this.search.errors && this.search.errors.required) {
-            errorText = 'forms.transactionSearch.errorRequired'
+          this.resetPage()
+          this.resetTable()
+          let errorText = ''
+          if (this.startDate.invalid) {
+            if (this.startDate.errors && this.startDate.errors.required) {
+              errorText = 'forms.transactionStartDate.errorRequired'
+            }
+            this.showFormError(errorText)
+          } else if (this.endDate.invalid){
+            if (this.endDate.errors && this.endDate.errors.required) {
+              errorText = 'forms.transactionEndDate.errorRequired'
+            } else if (this.filterForm.errors && this.filterForm.errors.dateRange) {
+              errorText = 'forms.transactionStartDate.errorMax'
+            } else if (this.search.errors && this.search.errors.required) {
+              errorText = 'forms.transactionSearch.errorRequired'
+            }
+            this.showFormError(errorText)
           }
         }
-        this.showFormError(errorText)
-      }
-    })
+      })
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   // event handling paginator value changed (page index and page size)

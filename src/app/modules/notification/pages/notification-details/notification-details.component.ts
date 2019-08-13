@@ -17,6 +17,8 @@ import { of, forkJoin } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
 import { constants } from 'src/app/shared/common/constants';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { FAQListComponent } from 'src/app/modules/master/pages/faq-list/faq-list.component';
 
 @Component({
   selector: 'app-notification-details',
@@ -30,6 +32,8 @@ export class NotificationDetailsComponent implements OnInit {
   id;
   isCreate = true;
   loading = true;
+  allowCreate = false;
+  allowEdit = false;
   selectedLinkTitle = '';
   articles = [];
   displayArticles = [];
@@ -60,7 +64,8 @@ export class NotificationDetailsComponent implements OnInit {
     private articleService: ArticleService,
     private offerService: SpecialOfferService,
     private fileService: FileManagementService,
-    private ng2ImgToolsService: Ng2ImgToolsService
+    private ng2ImgToolsService: Ng2ImgToolsService,
+    private authService: AuthService
   ) { }
 
   //component on init
@@ -68,7 +73,6 @@ export class NotificationDetailsComponent implements OnInit {
     console.log("NotificationDetailsComponent | OnInit");
     this.route.params.subscribe(
       params => {
-        this.loading = true;
         this.notifForm = new FormGroup({
           id: new FormControl(null),
           recipientAllFlag: new FormControl(true, Validators.required),
@@ -96,153 +100,167 @@ export class NotificationDetailsComponent implements OnInit {
         }, {
             validators: CustomValidation.notifSchedule
           })
-        this.articleService.getArticlesByCategory(this.linkCategory.value).subscribe(
-          response => {
-            console.log(response)
-            try {
-              this.articles = response.data;
-              this.displayArticles = response.data;
-              this.offerService.getActiveOfferList().subscribe(
-                response => {
-                  try {
-                    console.table(response);
-                    this.specialOffers = response.data;
-                    this.displaySpecialOffers = response.data;
-                    if (this.router.url.includes('update')) {
-                      this.isCreate = false;
-                      this.id = params.id;
-                      this.notifService.getNotifById(this.id).subscribe(
-                        response => {
-                          try {
-                            console.table(response)
-                            let editedNotif: Notification = response.data;
-                            if (!editedNotif.scheduled_flg) {
-                              this.editNotifError('notificationDetailsScreen.cantUpdate.immediate')
-                            } else if (!CustomValidation.durationFromNowValidation(new Date(editedNotif.schedule_sending))) {
-                              this.editNotifError('notificationDetailsScreen.cantUpdate.minDuration')
-                            } else {
-                              let scheduleDate = null;
-                              let scheduleTime = ''
-                              if (editedNotif.schedule_sending) {
-                                scheduleDate = new Date(editedNotif.schedule_sending)
-                                let scheduleHours = scheduleDate.getHours();
-                                let scheduleMin = scheduleDate.getMinutes();
-                                scheduleTime = (scheduleHours > 9 ? '' : '0') + scheduleHours + ':'
-                                  + (scheduleMin > 9 ? '' : '0') + scheduleMin
-                              }
-                              let selectedLink = null;
-                              if (editedNotif.link_type.includes(this.notificationLinkType.specialOffer)) {
-                                selectedLink = this.specialOffers.find(el => {
-                                  return el.id === editedNotif.link_id;
-                                })
+        let prvg = this.authService.getFeaturePrivilege(constants.features.notification)
+        this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
+        this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
+        let allowPage = false;
+        if (this.router.url.includes('update')) {
+          this.isCreate = false;
+          allowPage = this.allowEdit;
+        } else {
+          this.isCreate = true;
+          allowPage = this.allowCreate;
+        }
+        if (allowPage) {
+          this.loading = true;
+          this.articleService.getArticlesByCategory(this.linkCategory.value).subscribe(
+            response => {
+              console.log(response)
+              try {
+                this.articles = response.data;
+                this.displayArticles = response.data;
+                this.offerService.getActiveOfferList().subscribe(
+                  response => {
+                    try {
+                      console.table(response);
+                      this.specialOffers = response.data;
+                      this.displaySpecialOffers = response.data;
+                      if (!this.isCreate) {
+                        this.id = params.id;
+                        this.notifService.getNotifById(this.id).subscribe(
+                          response => {
+                            try {
+                              console.table(response)
+                              let editedNotif: Notification = response.data;
+                              if (!editedNotif.scheduled_flg) {
+                                this.editNotifError('notificationDetailsScreen.cantUpdate.immediate')
+                              } else if (!CustomValidation.durationFromNowValidation(new Date(editedNotif.schedule_sending))) {
+                                this.editNotifError('notificationDetailsScreen.cantUpdate.minDuration')
                               } else {
-                                selectedLink = this.articles.find((el) => {
-                                  return el.id === editedNotif.link_id;
-                                })
-                              }
-                              this.selectedLinkTitle = selectedLink ? selectedLink.title : '';
-                              this.notifForm.patchValue({
-                                id: editedNotif.id,
-                                recipientAllFlag: editedNotif.recipient_all_flg,
-                                oldRecipientAllFlag: editedNotif.recipient_all_flg,
-                                recipient: editedNotif.recipient_list,
-                                oldRecipient: editedNotif.recipient_list,
-                                title: editedNotif.title,
-                                content: editedNotif.content,
-                                icon: editedNotif.large_icon,
-                                oldIcon: editedNotif.large_icon,
-                                image: editedNotif.large_image,
-                                oldImage: editedNotif.large_image,
-                                linkType: editedNotif.link_type,
-                                linkId: selectedLink ? selectedLink.id : '',
-                                linkCategory: selectedLink ? selectedLink.category : '',
-                                scheduledFlag: editedNotif.scheduled_flg,
-                                scheduleDate: scheduleDate,
-                                scheduleTime: scheduleTime,
-                                oldScheduleSending: new Date(editedNotif.schedule_sending)
-                              })
-                              this.handleLinkTypeChange()
-                              this.handleRecipientAllFlagChange()
-                            }
-                          } catch (error) {
-                            console.log(error)
-                          }
-                        }, error => {
-                          try {
-                            console.table(error);
-                            let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                              data: {
-                                title: 'notificationDetailsScreen.getNotificationFailed',
-                                content: {
-                                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                                  data: null
+                                let scheduleDate = null;
+                                let scheduleTime = ''
+                                if (editedNotif.schedule_sending) {
+                                  scheduleDate = new Date(editedNotif.schedule_sending)
+                                  let scheduleHours = scheduleDate.getHours();
+                                  let scheduleMin = scheduleDate.getMinutes();
+                                  scheduleTime = (scheduleHours > 9 ? '' : '0') + scheduleHours + ':'
+                                    + (scheduleMin > 9 ? '' : '0') + scheduleMin
                                 }
+                                let selectedLink = null;
+                                if (editedNotif.link_type.includes(this.notificationLinkType.specialOffer)) {
+                                  selectedLink = this.specialOffers.find(el => {
+                                    return el.id === editedNotif.link_id;
+                                  })
+                                } else {
+                                  selectedLink = this.articles.find((el) => {
+                                    return el.id === editedNotif.link_id;
+                                  })
+                                }
+                                this.selectedLinkTitle = selectedLink ? selectedLink.title : '';
+                                this.notifForm.patchValue({
+                                  id: editedNotif.id,
+                                  recipientAllFlag: editedNotif.recipient_all_flg,
+                                  oldRecipientAllFlag: editedNotif.recipient_all_flg,
+                                  recipient: editedNotif.recipient_list,
+                                  oldRecipient: editedNotif.recipient_list,
+                                  title: editedNotif.title,
+                                  content: editedNotif.content,
+                                  icon: editedNotif.large_icon,
+                                  oldIcon: editedNotif.large_icon,
+                                  image: editedNotif.large_image,
+                                  oldImage: editedNotif.large_image,
+                                  linkType: editedNotif.link_type,
+                                  linkId: selectedLink ? selectedLink.id : '',
+                                  linkCategory: selectedLink ? selectedLink.category : '',
+                                  scheduledFlag: editedNotif.scheduled_flg,
+                                  scheduleDate: scheduleDate,
+                                  scheduleTime: scheduleTime,
+                                  oldScheduleSending: new Date(editedNotif.schedule_sending)
+                                })
+                                this.handleLinkTypeChange()
+                                this.handleRecipientAllFlagChange()
                               }
-                            })
-                            errorSnackbar.afterDismissed().subscribe(() => {
-                              this.goToListScreen()
-                            })
-                          } catch (error) {
-                            console.log(error)
-                          }
-                        }).add(() => {
-                          this.loading = false;
-                        })
+                            } catch (error) {
+                              console.log(error)
+                            }
+                          }, error => {
+                            try {
+                              console.table(error);
+                              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                                data: {
+                                  title: 'notificationDetailsScreen.getNotificationFailed',
+                                  content: {
+                                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                                    data: null
+                                  }
+                                }
+                              })
+                              errorSnackbar.afterDismissed().subscribe(() => {
+                                this.goToListScreen()
+                              })
+                            } catch (error) {
+                              console.log(error)
+                            }
+                          }).add(() => {
+                            this.loading = false;
+                          })
 
-                    } else {
-                      this.isCreate = true;
-                      this.loading = false;
-                      this.handleLinkTypeChange()
-                      this.handleRecipientAllFlagChange()
-                    }
-
-                  } catch (error) {
-                    console.log(error)
-                  }
-                },
-                error => {
-                  try {
-                    console.table(error);
-                    let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                      data: {
-                        title: 'specialOfferListScreen.loadFailed',
-                        content: {
-                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                          data: null
-                        }
+                      } else {
+                        this.loading = false;
+                        this.handleLinkTypeChange()
+                        this.handleRecipientAllFlagChange()
                       }
-                    })
-                    errorSnackbar.afterDismissed().subscribe(() => {
-                      this.goToListScreen()
-                    })
-                  } catch (error) {
-                    console.log(error)
-                  }
-                }
-              )
 
-            } catch (error) {
-              console.log(error)
-            }
-          }, error => {
-            try {
-              console.table(error);
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'articleListScreen.loadFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                    } catch (error) {
+                      console.log(error)
+                    }
+                  },
+                  error => {
+                    try {
+                      console.table(error);
+                      let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                        data: {
+                          title: 'specialOfferListScreen.loadFailed',
+                          content: {
+                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                            data: null
+                          }
+                        }
+                      })
+                      errorSnackbar.afterDismissed().subscribe(() => {
+                        this.goToListScreen()
+                      })
+                    } catch (error) {
+                      console.log(error)
+                    }
                   }
-                }
-              })
-              errorSnackbar.afterDismissed().subscribe(() => {
-                this.goToListScreen()
-              })
-            } catch (error) {
-              console.log(error)
-            }
-          })
+                )
+
+              } catch (error) {
+                console.log(error)
+              }
+            }, error => {
+              try {
+                console.table(error);
+                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'articleListScreen.loadFailed',
+                    content: {
+                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
+                  }
+                })
+                errorSnackbar.afterDismissed().subscribe(() => {
+                  this.goToListScreen()
+                })
+              } catch (error) {
+                console.log(error)
+              }
+            })
+        } else {
+          this.authService.blockOpenPage()
+        }
       }
     )
   }
@@ -250,7 +268,7 @@ export class NotificationDetailsComponent implements OnInit {
   // Method to display the array of Articles based on search text
   filterArticles(e) {
     console.log("NotificationDetailsComponent | filterArticles");
-    if(e.target.value) {
+    if (e.target.value) {
       this.displayArticles = [];
       this.articles.map((article) => {
         if (article.title.toLowerCase().includes(e.target.value.toLowerCase())) {
@@ -265,7 +283,7 @@ export class NotificationDetailsComponent implements OnInit {
   // Method to display the array of Special Offers based on search text
   filterSpecialOffers(e) {
     console.log("NotificationDetailsComponent | filterSpecialOffers");
-    if(e.target.value) {
+    if (e.target.value) {
       this.displaySpecialOffers = [];
       this.specialOffers.map((specialOffer) => {
         if (specialOffer.title.toLowerCase().includes(e.target.value.toLowerCase())) {
@@ -315,9 +333,9 @@ export class NotificationDetailsComponent implements OnInit {
   }
 
   // Handle when selecting special offer
-  handleSelectSpecialOffer(specialOffer = null){
+  handleSelectSpecialOffer(specialOffer = null) {
     console.log('NotificationDetailsComponent | handleSelectSpecialOffer');
-    if(specialOffer){
+    if (specialOffer) {
       this.linkCategory.setValue(specialOffer.category)
       this.selectedLinkTitle = specialOffer.title
     } else {
@@ -512,28 +530,26 @@ export class NotificationDetailsComponent implements OnInit {
   //save button click event handler
   save() {
     console.log('NotificationDetailsComponent | save')
-    const modalRef = this.modal.open(NotifConfirmModalComponent, {
-      width: '80%',
-      maxHeight: '100%',
-      maxWidth: '500px',
-      scrollStrategy: this.overlay.scrollStrategies.reposition(),
-      data: {
-        notification: Object.assign({ linkTitle: this.selectedLinkTitle }, this.notifForm.getRawValue())
-      }
-    })
-    modalRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.onSubmittingForm = true;
-        if (this.isCreate) {
-          if (!this.scheduledFlag.value || CustomValidation.durationFromNowValidation(this.scheduleDate.value)) {
-            this.uploadFiles()
-          } else {
-            this.onSubmittingForm = false;
-            this.showFormError()
-            this.notifForm.updateValueAndValidity()
-          }
-        } else {
-          if (CustomValidation.durationFromNowValidation(this.oldScheduleSending.value)) {
+    let allowSave = false;
+    if (this.isCreate) {
+      allowSave = this.allowCreate
+    } else {
+      allowSave = this.allowEdit
+    }
+    if (allowSave) {
+      const modalRef = this.modal.open(NotifConfirmModalComponent, {
+        width: '80%',
+        maxHeight: '100%',
+        maxWidth: '500px',
+        scrollStrategy: this.overlay.scrollStrategies.reposition(),
+        data: {
+          notification: Object.assign({ linkTitle: this.selectedLinkTitle }, this.notifForm.getRawValue())
+        }
+      })
+      modalRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.onSubmittingForm = true;
+          if (this.isCreate) {
             if (!this.scheduledFlag.value || CustomValidation.durationFromNowValidation(this.scheduleDate.value)) {
               this.uploadFiles()
             } else {
@@ -542,12 +558,24 @@ export class NotificationDetailsComponent implements OnInit {
               this.notifForm.updateValueAndValidity()
             }
           } else {
-            this.onSubmittingForm = false;
-            this.editNotifError('notificationDetailsScreen.cantUpdate.minDuration')
+            if (CustomValidation.durationFromNowValidation(this.oldScheduleSending.value)) {
+              if (!this.scheduledFlag.value || CustomValidation.durationFromNowValidation(this.scheduleDate.value)) {
+                this.uploadFiles()
+              } else {
+                this.onSubmittingForm = false;
+                this.showFormError()
+                this.notifForm.updateValueAndValidity()
+              }
+            } else {
+              this.onSubmittingForm = false;
+              this.editNotifError('notificationDetailsScreen.cantUpdate.minDuration')
+            }
           }
         }
-      }
-    })
+      })
+    } else {
+      this.authService.blockPageAction()
+    }
 
   }
 
@@ -572,8 +600,8 @@ export class NotificationDetailsComponent implements OnInit {
     notification.large_icon = formValue.icon
     notification.large_image = formValue.image
     notification.recipient_list = formValue.recipient
-    if(formValue.linkType === this.notificationLinkType.specialOffer){
-      if(formValue.linkCategory.toLowerCase().includes(constants.specialOfferCategory.durable)){
+    if (formValue.linkType === this.notificationLinkType.specialOffer) {
+      if (formValue.linkCategory.toLowerCase().includes(constants.specialOfferCategory.durable)) {
         notification.link_type = this.notificationLinkType.specialOfferLinkCategory.durable
       } else {
         notification.link_type = this.notificationLinkType.specialOfferLinkCategory.oneclick
@@ -751,7 +779,7 @@ export class NotificationDetailsComponent implements OnInit {
             try {
               let uploadUrl = response.data.signurl;
               notification.recipient_list = uploadUrl.split('?')[0]
-              tasks.push(this.fileService.uploadFile(uploadUrl, this.csvFile.value).pipe(catchError(e => of(e))))              
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.csvFile.value).pipe(catchError(e => of(e))))
             } catch (error) {
               console.error(error)
               this.onSubmittingForm = false
@@ -780,7 +808,7 @@ export class NotificationDetailsComponent implements OnInit {
             try {
               let uploadUrl = response.data.signurl;
               notification.large_icon = uploadUrl.split('?')[0]
-              tasks.push(this.fileService.uploadFile(uploadUrl, this.iconFile.value).pipe(catchError(e => of(e))))              
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.iconFile.value).pipe(catchError(e => of(e))))
             } catch (error) {
               console.error(error)
               this.onSubmittingForm = false
@@ -809,7 +837,7 @@ export class NotificationDetailsComponent implements OnInit {
             try {
               let uploadUrl = response.data.signurl;
               notification.large_image = uploadUrl.split('?')[0]
-              tasks.push(this.fileService.uploadFile(uploadUrl, this.imageFile.value).pipe(catchError(e => of(e))))              
+              tasks.push(this.fileService.uploadFile(uploadUrl, this.imageFile.value).pipe(catchError(e => of(e))))
             } catch (error) {
               console.error(error)
               this.onSubmittingForm = false
