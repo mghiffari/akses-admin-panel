@@ -28,6 +28,8 @@ export class SpecialOfferListComponent implements OnInit {
     'preview',
     'endDate',
     'lastEdited',
+    'status',
+    'approval',
     'action'
   ]
 
@@ -38,6 +40,7 @@ export class SpecialOfferListComponent implements OnInit {
   isFocusedInput = false;
   allowCreate = false;
   allowEdit = false;
+  approvalStatus = constants.approvalStatus;
 
   private table: any;
   @ViewChild('offersTable') set tabl(table: ElementRef) {

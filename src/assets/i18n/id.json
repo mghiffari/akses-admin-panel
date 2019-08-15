@@ -460,18 +460,21 @@
         "numbers": "No.",
         "status": {
             "title": "Status",
+            "approvalTitle": "Persetujuan",
             "active": "Aktif",
             "inactive": "Non-aktif",
             "approved": "Approved",
             "rejected": "Rejected",
             "delivered": "Terkirim",
-            "pending": "Pending"
+            "pending": "Pending",
+            "waitingForApproval": "Waiting for Approval"
         },
         "uniqueTag": "Unique Tag",
         "title": "Judul",
         "category": "Kategori",
         "order": "Urutan",
         "lastUpdated": "Terakhir Diubah & Oleh",
+        "createdDate": "Tanggal Dibuat",
         "bannersTable": {
             "preview": "Preview",
             "startDate": "Tanggal Mulai",
@@ -481,7 +484,6 @@
             "firstName": "Nama Depan",
             "lastName": "Nama Belakang",
             "email": "Email",
-            "createdDate": "Tanggal Dibuat",
             "role": "Role"
         },
         "branchTable": {
@@ -813,7 +815,8 @@
     "specialOfferListScreen": {
         "title": "Data Special Offer",
         "createOffer": "tambahkan special offer baru",
-        "loadFailed": "gagal mendapatkan list special offer"
+        "loadFailed": "gagal mendapatkan list special offer",
+        "approvalBy": "by"
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "gagal mendapatkan data Special Offer",
