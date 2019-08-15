@@ -356,7 +356,8 @@
         "notifSpecialOffer": {
             "fieldTitle": "Special Offer",
             "placeholder": "Pilih Special Offer",
-            "errorRequired": "Special Offer wajib diisi"
+            "errorRequired": "Special Offer wajib diisi",
+            "searchPlaceholder": "Cari special offer"
         },
         "articleCategory": {
             "fieldTitle": "Kategori Artikel",
@@ -366,7 +367,8 @@
         "notifArticle": {
             "fieldTitle": "Artikel",
             "placeholder": "Pilih Artikel",
-            "errorRequired": "Artikel wajib diisi"
+            "errorRequired": "Artikel wajib diisi",
+            "searchPlaceholder": "Cari artikel"
         },
         "schedule": {
             "fieldTitle": "Jadwal",

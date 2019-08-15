@@ -356,7 +356,8 @@
         "notifSpecialOffer": {
             "fieldTitle": "Special Offer",
             "placeholder": "Select a Special Offer",
-            "errorRequired": "Special Offer is required"
+            "errorRequired": "Special Offer is required",
+            "searchPlaceholder": "Search special offer"
         },
         "articleCategory": {
             "fieldTitle": "Article Category",
@@ -366,7 +367,8 @@
         "notifArticle": {
             "fieldTitle": "Article",
             "placeholder": "Select an Article",
-            "errorRequired": "Article is required"
+            "errorRequired": "Article is required",
+            "searchPlaceholder": "Search article"
         },
         "schedule": {
             "fieldTitle": "Schedule",
