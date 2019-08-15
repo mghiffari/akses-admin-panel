@@ -16,12 +16,18 @@
   </div>
   <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" class="padding-left-16">
     <div fxFlex="40%" fxFlex.lt-md="100%">
-      <a routerLink="/notifications/create" class="top-action-text" fxLayoutAlign="start center">
+      <a *ngIf="allowCreate" routerLink="/notifications/create" class="top-action-text" fxLayoutAlign="start center">
         <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
         <span>
           {{'notificationListScreen.createNotification' | translate}}
         </span>
       </a>
+      <div *ngIf="!allowCreate" class="top-action-text disabled" fxLayoutAlign="start center">
+        <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
+        <span>
+          {{'notificationListScreen.createNotification' | translate}}
+        </span>
+      </div>
     </div>
     <div fxFlex="60%" fxFlex.lt-md="100%">
       <mat-paginator [disabled]="loading" [length]="paginatorProps.length" [pageSize]="paginatorProps.pageSize"
@@ -30,7 +36,7 @@
       </mat-paginator>
     </div>
   </div>
-  <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: scroll">
+  <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: auto">
     <table mat-table [dataSource]="notifications" class="table-min-100" #notifsTable>
       <ng-container matColumnDef="number">
         <th mat-header-cell *matHeaderCellDef class="font-th th-width-25"> {{'table.numbers' | translate}} </th>
@@ -87,8 +93,10 @@
           {{'table.actions' | translate}} </th>
         <td mat-cell *matCellDef="let element" class="text-right">
           <span *ngIf="isEditableNotif(element)">
-              <mat-icon class="cursor-pointer" (click)="onDelete(element)">delete</mat-icon>
-              <mat-icon color="primary" class="cursor-pointer" (click)="onEdit(element)">edit</mat-icon>
+              <mat-icon *ngIf="allowDelete" class="cursor-pointer" (click)="onDelete(element)">delete</mat-icon>
+              <mat-icon *ngIf="!allowDelete" class="cursor-not-allowed text-medium-gray">delete</mat-icon>
+              <mat-icon *ngIf="allowEdit" color="primary" class="cursor-pointer" (click)="onEdit(element)">edit</mat-icon>
+              <mat-icon *ngIf="!allowEdit" class="cursor-not-allowed text-medium-gray">edit</mat-icon>
           </span>
           <span *ngIf="!isEditableNotif(element)" class="text-medium-gray">
               <mat-icon class="cursor-not-allowed">delete</mat-icon>

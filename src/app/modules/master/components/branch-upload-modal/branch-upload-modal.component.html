@@ -4,7 +4,7 @@
   </div>
   <div mat-dialog-content>
     <div fxFlex="grow" style="height: 100%; width: 100%">
-      <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%" class="text-gray">
+      <div fxLayout="column" fxLayoutAlign="center center" style="width: 100%" class="text-dark-gray">
         <div>
           <input type="file" (change)="onChangeFile($event)" accept=".csv">
           <mat-error class="bottom-error" *ngIf="!isValidFile && isTouchedInput">

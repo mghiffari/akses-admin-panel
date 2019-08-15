@@ -1,0 +1,15 @@
+@import '~src/assets/styles/colors';
+
+$medium-gray: map-get($colors, medium-gray);
+
+.table-border {
+    overflow-x: auto; 
+    border: solid black 1px;
+}
+.search-disabled {
+    color: $medium-gray;
+}
+
+.bottom-hint.mat-hint.no-padding {
+    padding: 0;
+}

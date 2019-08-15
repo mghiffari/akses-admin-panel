@@ -4,7 +4,6 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banner",
-                "users": "User",
                 "articles": "Artikel",
                 "specialOffers": "Special Offer",
                 "faqs": "FAQ",
@@ -21,6 +20,20 @@
         },
         "notification": {
             "title": "Notifikasi"
+        },
+        "userManagement": {
+            "title": "User Management",
+            "children": {
+                "users": "User",
+                "roles": "Role"
+            }
+        },
+        "report": {
+            "title": "Laporan",
+            "children": {
+                "balanceReport": "Laporan Saldo",
+                "transReport": "Laporan Transaksi"
+            }
         }
     },
     "userAction": {
@@ -78,6 +91,11 @@
             "errorMaxLength": "Jumlah karakter maksimum untuk Nama Belakang adalah {{maxLength}}",
             "errorFormat": "Nama Belakang hanya boleh mengandung huruf, spasi, dan karakter sebagai berikut ,.'- tanpa spasi di awal dan akhir huruf",
             "placeholder": "Nama belakang"
+        },
+        "role": {
+            "fieldTitle": "Role",
+            "errorRequired": "Role wajib diisi",
+            "placeholder": "Pilih Role"
         },
         "bannerTitle": {
             "fieldTitle": "Judul Home Banner",
@@ -359,7 +377,7 @@
                 "immediate": "Langsung",
                 "certainTime": "Terjadwal"
             },
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
         },
         "offerImage": {
             "fieldTitle": "Gambar",
@@ -388,11 +406,38 @@
             "fieldTitle": "Tanggal Selesai",
             "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid",
             "errorMin": "Tanggal Selesai harus lebih dari 1 jam sejak saat ini",
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
+        },
+        "roleName": {
+            "fieldTitle": "Nama Role",
+            "placeholder": "Nama role",
+            "errorRequired": "Nama Role wajib diisi"
+        },
+        "privilege": {
+            "options": {
+                "create": "Create",
+                "view": "View",
+                "edit": "Edit",
+                "delete": "Delete",
+                "publish": "Publish",
+                "download": "Download"
+            }
         },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
+        },
+        "transactionStartDate": {
+            "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid",
+            "errorMax": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai"
+        },
+        "transactionEndDate": {
+            "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid"
+        },
+        "transactionSearch":{
+            "placeholder": "Cari OID / VA / Nomor Handphone",
+            "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}",
+            "errorRequired": "Keyword pencarian wajib diisi"
         }
     },
     "loginScreen": {
@@ -436,7 +481,8 @@
             "firstName": "Nama Depan",
             "lastName": "Nama Belakang",
             "email": "Email",
-            "createdDate": "Tanggal Dibuat"
+            "createdDate": "Tanggal Dibuat",
+            "role": "Role"
         },
         "branchTable": {
             "branchName": "Nama Cabang",
@@ -475,6 +521,33 @@
             "sent": "Jumlah Penerima",
             "clicked": "Telah Diklik",
             "scheduleType": "Tipe"
+        },
+        "roleTable": {
+            "roleName": "Nama Role"
+        },
+        "transactionTable": {
+            "oid": "OID",
+            "vaNumber": "Nomor VA",
+            "name": "Nama",
+            "phNumber": "Nomor Handphone",
+            "aksesPay": "Saldo Akses pay",
+            "timestamp": "Timestamp",
+            "transCode": "Kode Transaksi",
+            "transDesc": "Deskripsi Transaksi",
+            "amount": "Jumlah",
+            "destVANumber": "Nomor VA Tujuan",
+            "sourceVANumber": "Nomor VA Sumber",
+            "transDate": "Tanggal Transaksi",
+            "transSeq": "Urutan Transaksi",
+            "installmentAmount": "Besar Angsuran",
+            "withdrawalAmount": "Jumlah Penarikan",
+            "topUpAmount": "Jumlah Top Up",
+            "penaltyFee": "Denda Dibayar",
+            "fee": "Biaya Transaksi",
+            "withdrawalFee": "Biaya Penarikan",
+            "bankTransferFee": "Biaya Transfer Bank",
+            "ppn": "PPN",
+            "vaName": "Nama Bank"
         }
     },
     "bannerListScreen": {
@@ -507,6 +580,7 @@
     "yesContinue": "yakin",
     "reset": "reset",
     "cancel": "batal",
+    "skip": "skip",
     "success": "berhasil",
     "fail": "gagal",
     "error": "error",
@@ -518,6 +592,7 @@
     "approve": "approve",
     "reject": "reject",
     "add": "tambah",
+    "to": "ke",
     "by": "by",
     "edit": "edit",
     "example": "contoh",
@@ -545,10 +620,24 @@
         "title": "Konfirmasi Data",
         "content": "Apakah Anda yakin bahwa semua data dan konten yang terisi sudah benar?"
     },
+    "saveConfirmationModal": {
+        "title": "Perubahan Baru Belum Disimpan",
+        "content": "Klik tombol ‘simpan’ terlebih dahulu untuk menyimpan perubahan baru yang anda lakukan"
+    },
+    "pageBlockedError": {
+        "title": "akses ditolak",
+        "content": "anda tidak memiliki izin untuk mengakses halaman ini"
+    },
+    "actionBlockedError": {
+        "title": "action ditolak",
+        "content": "anda tidak memiliki izin untuk melakukan action ini"
+    },
     "userListScreen": {
         "title": "Data User",
         "createUser": "tambahkan user baru",
-        "loadFailed": "gagal mendapatkan list user"
+        "loadFailed": "gagal mendapatkan list user",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus user {{name}}?",
+        "failedToGetRoles": "Gagal mendapatkan list role"
     },
     "userDetailsScreen": {
         "getUserFailed": "gagal mendapatkan data user",
@@ -707,7 +796,7 @@
         "updateTitle": "Ubah Notifikasi",
         "succesCreated": "notifikasi berhasil ditambahkan",
         "succesUpdated": "notifikasi berhasil diubah",
-        "updateFailed": "gagal mengubah data",
+        "updateFailed": "gagal mengubah data notifikasi",
         "createFailed": "gagal menambahkan notifikasi baru",
         "notifSaveConfirm": "Konfirmasi Simpan Notifikasi",
         "deleteCSVFailed": "gagal menghapus file csv",
@@ -733,14 +822,41 @@
         "updateTitle": "Ubah Special Offer",
         "succesCreated": "Special Offer berhasil ditambahkan",
         "succesUpdated": "Special Offer berhasil diubah",
-        "updateFailed": "gagal mengubah data",
-        "createFailed": "gagal menambahkan Special Offer baru",
+        "updateFailed": "gagal mengubah data special offer",
+        "createFailed": "gagal menambahkan special offer baru",
         "cantUpdate": {
             "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini"
         },
         "uploadImageFailed": "upload gambar gagal",
         "uploadCSVFailed": "upload file csv gagal",
         "deleteImageFailed": "gagal menghapus gambar"
+    },
+    "roleListScreen": {
+        "title": "Data Role",
+        "createRole": "tambahkan role baru",
+        "loadFailed": "gagal mendapatkan list role",
+        "deleteConfirmation": "Apakah anda yakin untuk menghapus role {{name}}?",
+        "succesCreated": "role berhasil ditambahkan",
+        "succesUpdated": "role berhasil diubah",
+        "updateFailed": "gagal mengubah data role",
+        "createFailed": "gagal menambahkan role baru"
+    },
+    "balanceReport": {
+        "title": "Laporan Saldo dan Transaksi",
+        "loadFailed": "gagal mendapatkan laporan saldo dan transaksi"
+    },
+    "transactionReport": {
+        "title": "Laporan Transaksi",
+        "dateFilter": "Filter Tanggal",
+        "downloadReport": "download laporan",
+        "filterNotSet": "Filter Belum Diatur",
+        "loadFailed": "gagal mendapatkan laporan transaksi",
+        "downloadFailed": "gagal mendownload laporan transaksi"
+    },
+    "homeScreen": {
+        "welcome": "Selamat datang,",
+        "lastLogin": "TERAKHIR LOGIN",
+        "addEntry": "Tambah Entri Baru"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
@@ -856,6 +972,20 @@
         "01109": "token expired",
         "01110": "oid tidak terdaftar",
         "01111": "data user tidak ditemukan",
-        "01112" : "notifikasi telah dikirim ke semua user"
+        "01112" : "notifikasi telah dikirim ke semua user",
+        "01113": "nama role wajib diisi",
+        "01114": "gagal menambahkan role baru",
+        "01115": "gagal mengubah data role",
+        "01116": "gagal mendapatkan list role",
+        "01117": "id role wajib diisi",
+        "01118": "gagal menghapus role, role digunakan oleh user aktif",
+        "ms-payment": {
+            "07069": "tanggal mulai harus diisi",
+            "07070": "tanggal selesai harus diisi",
+            "07071": "keyword pencarian harus diisi",
+            "07072": "data tidak ditemukan",
+            "07073": "data tidak bisa dididownload",
+            "07075" : "transaksi tidak ditemukan"
+        }
     }
 }

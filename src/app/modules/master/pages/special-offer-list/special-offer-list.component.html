@@ -16,12 +16,18 @@
   </div>
   <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" class="padding-left-16">
     <div fxFlex="40%" fxFlex.lt-md="100%">
-      <a routerLink="/master/special-offers/create" class="top-action-text" fxLayoutAlign="start center">
+      <a *ngIf="allowCreate" routerLink="/master/special-offers/create" class="top-action-text" fxLayoutAlign="start center">
         <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
         <span>
           {{'specialOfferListScreen.createOffer' | translate}}
         </span>
       </a>
+      <div *ngIf="!allowCreate" class="top-action-text disabled" fxLayoutAlign="start center">
+        <mat-icon class="font-description-icon margin-right-10">add</mat-icon>
+        <span>
+          {{'specialOfferListScreen.createOffer' | translate}}
+        </span>
+      </div>
     </div>
     <div fxFlex="60%" fxFlex.lt-md="100%">
       <mat-paginator [disabled]="loading" [length]="paginatorProps.length" [pageSize]="paginatorProps.pageSize"
@@ -30,7 +36,7 @@
       </mat-paginator>
     </div>
   </div>
-  <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: scroll">
+  <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: auto">
     <table mat-table [dataSource]="offers" class="table-min-100" #offersTable>
       <ng-container matColumnDef="number">
         <th mat-header-cell *matHeaderCellDef class="font-th th-width-25"> {{'table.numbers' | translate}} </th>
@@ -77,9 +83,9 @@
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
           {{'table.actions' | translate}} </th>
         <td mat-cell *matCellDef="let element" class="text-center">
-          <mat-icon *ngIf="isEditableOffer(element)" color="primary" class="cursor-pointer" (click)="onEdit(element)">
+          <mat-icon *ngIf="allowEdit && isEditableOffer(element)" color="primary" class="cursor-pointer" (click)="onEdit(element)">
             edit</mat-icon>
-          <mat-icon *ngIf="!isEditableOffer(element)" class="cursor-not-allowed text-medium-gray">edit</mat-icon>
+          <mat-icon *ngIf="!allowEdit || !isEditableOffer(element)" class="cursor-not-allowed text-medium-gray">edit</mat-icon>
         </td>
       </ng-container>
       <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="offerColumns; sticky: true"></tr>

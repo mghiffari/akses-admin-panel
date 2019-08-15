@@ -15,7 +15,58 @@
       </a>
     </div>
   </div>
-  <form [formGroup]="notifForm" *ngIf="!loading">
+  <form [formGroup]="notifForm" *ngIf="!loading" #formContainer >
+    <div class="floating-preview-container" [style.min-height]="formContainer.offsetHeight+'px'">
+        <div fxLayout="row wrap" class="padding-16" style="position: sticky; top: 0">
+          <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutGap="16px">
+          </div>
+          <div fxFlex="40%" fxFlex.lt-lg="30%" fxFlex.lt-md="100%" fxLayout="row" fxLayoutAlign="end center">
+            <div fxFlex="65%" fxFlex.lt-lg="80%" fxFlex-lt.md="100%" fxLayout="column" fxLayoutAlign="start end">
+              <div class="padding-bottom-10" fxHide.md fxHide.gt-md>
+                <button class="pointer-auto" color="accent" mat-mini-fab (click)="showPreview = !showPreview">
+                  <mat-icon>{{showPreview ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </button>
+              </div>
+              <mat-card class="pointer-auto" style="width: 100%" [fxShow.lt-md]="showPreview">
+                <mat-card-content fxLayout="column" fxLayoutGap="5px">
+                  <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
+                    <div>
+                      <img width="16px" height="16px" src="../../../../../assets/img/akses-icon.svg"
+                        alt="{{'imageNotExist' | translate}}">
+                    </div>
+                    <div class="font-sub-tag">{{appName}}</div>
+                  </div>
+                  <div fxLayout="row" fxLayoutAlign="start center">
+                    <div fxFlex="grow">
+                      <div class="font-roboto-bold font-tag">{{title.value}}</div>
+                      <div class="margin-top-5 font-tag">{{content.value}}</div>
+                    </div>
+                    <div fxFlex="64px" fxFlexAlign="start" fxLayout="row" fxLayoutAlign="end start">
+                      <mat-icon class="icon-42" *ngIf="(!icon.value || icon.value===''); else iconPreviewExist">collections
+                      </mat-icon>
+                      <ng-template #iconPreviewExist>
+                        <img height="42px" widht="42px" [src]="icon.value" alt="{{'imageNotExist' | translate}}" />
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div fxLayout="row">
+                    <div style="width: 100%;" [style.height]="imgContainer.offsetWidth * (notifImageRatioPercentage) + 'px'"
+                      #imgContainer>
+                      <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
+                        *ngIf="(!image.value || image.value===''); else imgPreviewExist" class="bg-medium-gray">
+                        <mat-icon class="icon-42">collections</mat-icon>
+                      </div>
+                      <ng-template #imgPreviewExist>
+                        <img width="100%" height="100%" [src]="image.value" alt="{{'imageNotExist' | translate}}">
+                      </ng-template>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+    </div>
     <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
       <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
         <div fxFlex="30%">
@@ -184,46 +235,6 @@
           </div>
         </div>
       </div>
-      <div fxFlex="40%" fxFlex.lt-lg="30%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
-        <div fxFlex="65%" fxFlex.lt-lg="80%" fxFlex-lt.md="100%">
-          <mat-card style="width: 100%">
-            <mat-card-content fxLayout="column" fxLayoutGap="5px">
-              <div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center">
-                <div>
-                  <img width="16px" height="16px" src="../../../../../assets/img/akses-icon.svg"
-                    alt="{{'imageNotExist' | translate}}">
-                </div>
-                <div class="font-sub-tag">{{appName}}</div>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="start center">
-                <div fxFlex="grow">
-                  <div class="font-roboto-bold font-tag">{{title.value}}</div>
-                  <div class="margin-top-5 font-tag">{{content.value}}</div>
-                </div>
-                <div fxFlex="64px" fxFlexAlign="start" fxLayout="row" fxLayoutAlign="end start">
-                  <mat-icon class="icon-42" *ngIf="(!icon.value || icon.value===''); else iconPreviewExist">collections
-                  </mat-icon>
-                  <ng-template #iconPreviewExist>
-                    <img height="42px" widht="42px" [src]="icon.value" alt="{{'imageNotExist' | translate}}" />
-                  </ng-template>
-                </div>
-              </div>
-              <div fxLayout="row">
-                <div style="width: 100%;" [style.height]="imgContainer.offsetWidth * (notifImageRatioPercentage) + 'px'"
-                  #imgContainer>
-                  <div style="height: 100%" fxLayout="column" fxLayoutAlign="center center"
-                    *ngIf="(!image.value || image.value===''); else imgPreviewExist" class="bg-medium-gray">
-                    <mat-icon class="icon-42">collections</mat-icon>
-                  </div>
-                  <ng-template #imgPreviewExist>
-                    <img width="100%" height="100%" [src]="image.value" alt="{{'imageNotExist' | translate}}">
-                  </ng-template>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </div>
     </div>
     <div fxLayout="row" class="padding-16 border-bottom-gray" fxLayoutGap="10px">
       <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutGap="16px">
@@ -257,7 +268,8 @@
               </mat-form-field>
               <mat-error class="bottom-error"
                 *ngIf="linkCategory.invalid && (linkCategory.dirty || linkCategory.touched)">
-                <span *ngIf="linkCategory.errors.required">{{'forms.specialOfferCategory.errorRequired' | translate}}</span>
+                <span
+                  *ngIf="linkCategory.errors.required">{{'forms.specialOfferCategory.errorRequired' | translate}}</span>
               </mat-error>
             </div>
           </div>
@@ -268,9 +280,11 @@
             <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
+                  <ngx-mat-select-search (keyup)="filterSpecialOffers($event)" formControlName="searchSpecialOffer"
+                    [placeholderLabel]="''"></ngx-mat-select-search>
                   <mat-option value="" (click)="handleSelectSpecialOffer()">
                     {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
-                  <mat-option *ngFor="let offer of specialOffers" [value]="offer.id"
+                  <mat-option *ngFor="let offer of displaySpecialOffers" [value]="offer.id"
                     (click)="handleSelectSpecialOffer(offer)">{{offer.title}}</mat-option>
                 </mat-select>
               </mat-form-field>
@@ -303,9 +317,11 @@
             <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
+                  <ngx-mat-select-search (keyup)="filterArticles($event)" formControlName="searchArticle"
+                    [placeholderLabel]="''"></ngx-mat-select-search>
                   <mat-option value="" (click)="selectedLinkTitle=''">
                     {{'forms.notifArticle.placeholder' | translate}}</mat-option>
-                  <mat-option *ngFor="let article of articles" [value]="article.id"
+                  <mat-option *ngFor="let article of displayArticles" [value]="article.id"
                     (click)="selectedLinkTitle=article.title">{{article.title}}</mat-option>
                 </mat-select>
               </mat-form-field>

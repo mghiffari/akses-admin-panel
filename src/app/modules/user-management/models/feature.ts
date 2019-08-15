@@ -1,11 +1,10 @@
-export class User {
+export class Feature {
     id: string;
-    firstname: string;
-    lastname: string;
+    name: string;
+    description: string;
     created_dt: Date;
     created_by: string;
     modified_dt: Date;
     modified_by: string;
-    status: string;
-    is_deleted: boolean;
+    is_deleted: boolean
 }

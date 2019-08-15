@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleDetailsService } from 'src/app/modules/master/pages/article-details/services/article-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-article-details',
@@ -23,7 +23,7 @@ export class ArticleDetailsComponent implements OnInit {
   vShowFooterButtonModul: boolean = false;
   vShowFooterButtonURL: boolean = false;
 
-  tinyMceSettings = environment.tinyMceSettings;
+  tinyMceSettings = constants.tinyMceSettings;
 
   constructor(
     private _articleDetailsService: ArticleDetailsService,
@@ -33,26 +33,42 @@ export class ArticleDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentPage();
-    this._articleDetailsService.resetErrorMessage();
-    this._articleDetailsService.loadModuls();
-    this._articleDetailsService.loadCategoryData();
   }
 
   //get current page (create or update)
   getCurrentPage() {
     console.log('ArticleDetailComponent | getCurrentPage');
     this.vCurrentPage = this._routerService.url;
+    this._articleDetailsService.getFeaturePrvg()
     if(this.vCurrentPage.includes("create")) {
-      this._articleDetailsService.resetArticleData();
-      this.resetCheckBox();
+      if(this._articleDetailsService.getCreatePrvg()){
+        this._articleDetailsService.resetArticleData();
+        this.resetCheckBox();
+        this.initData();
+      } else {
+        this._articleDetailsService.showNoAccessSnackbar()
+      }
     } else if(this.vCurrentPage.includes("update")){
-      this.vId = this._activatedRouteService.snapshot.params['id'];
-      this._articleDetailsService.loadArticleById(this.vId).then(response => {
-        this.initiateCheckBox();
-      }).catch( err =>{
-        console.table(err);
-      });
+      if(this._articleDetailsService.getEditPrvg()){
+        this.vId = this._activatedRouteService.snapshot.params['id'];
+        this._articleDetailsService.loadArticleById(this.vId).then(response => {
+          this.initiateCheckBox();
+        }).catch( err =>{
+          console.table(err);
+        });
+        this.initData()
+      } else {
+        this._articleDetailsService.showNoAccessSnackbar()
+      }
     }
+  }
+
+  // initialize form and data
+  initData(){
+    console.log('ArticleDetailComponent | initData');
+    this._articleDetailsService.resetErrorMessage();
+    this._articleDetailsService.loadModuls();
+    this._articleDetailsService.loadCategoryData();
   }
 
   //get title of the page (create or update) from services

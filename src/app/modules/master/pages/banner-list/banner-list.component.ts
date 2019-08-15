@@ -5,6 +5,8 @@ import { ConfirmationModalComponent } from 'src/app/shared/components/confirmati
 import { Banner } from '../../models/banner';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-banner-list',
@@ -38,6 +40,9 @@ export class BannerListComponent implements OnInit {
   closeText = '';
   loading = false;
   isFocusedInput = false;
+  allowCreate = false;
+  allowEdit = false;
+  allowDelete = false;
 
   private table: any;
   @ViewChild('bannersTable') set tabl(table: ElementRef) {
@@ -52,72 +57,88 @@ export class BannerListComponent implements OnInit {
   constructor(
     private bannerService: BannerService,
     private snackBar: MatSnackBar,
-    private modalConfirmation: MatDialog
+    private modalConfirmation: MatDialog,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     console.log('BannerListComponent | ngOnInit');
-    this.lazyLoadData()
+    this.allowCreate = false;
+    this.allowEdit = false;
+    this.allowDelete = false;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.banner)
+    if(this.authService.getFeatureViewPrvg(prvg)){
+      this.lazyLoadData()
+      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
+      this.allowDelete = this.authService.getFeatureDeletePrvg(prvg)
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   //delete
   onDelete(banner){
     console.log("BannerListComponent | onDelete")
-    const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
-      width: '260px',
-      data: {
-        title: 'deleteConfirmation',
-        content: {
-          string: 'bannerListScreen.deleteConfirmation',
-          data: {
-            title: banner.title
+    if(this.allowDelete){
+      const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
+        width: '260px',
+        data: {
+          title: 'deleteConfirmation',
+          content: {
+            string: 'bannerListScreen.deleteConfirmation',
+            data: {
+              title: banner.title
+            }
           }
         }
-      }
-    })
-    modalRef.afterClosed().subscribe(result => {
-      if(result){
-        this.loading = true;
-        let bannerDel: Banner = Object.assign(new Banner(), banner);
-        bannerDel.is_deleted = true;
-        this.bannerService.updateBanner(bannerDel).subscribe(
-          (data: any) => {
-            try {
-              console.table(data);
-              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                data: {
-                  title: 'success',
-                  content: {
-                    text: 'dataDeleted',
-                    data: null
+      })
+      modalRef.afterClosed().subscribe(result => {
+        if(result){
+          this.loading = true;
+          let bannerDel: Banner = Object.assign(new Banner(), banner);
+          bannerDel.is_deleted = true;
+          this.bannerService.updateBanner(bannerDel).subscribe(
+            (data: any) => {
+              try {
+                console.table(data);
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'dataDeleted',
+                      data: null
+                    }
                   }
-                }
-              })
-              this.lazyLoadData()              
-            } catch (error) {
-              console.table(error)
-            }
-          },
-          error => {
-            try {
-              console.table(error);
-              this.loading = false;
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'failedToDelete',
-                  content: {
-                    text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                })
+                this.lazyLoadData()              
+              } catch (error) {
+                console.table(error)
+              }
+            },
+            error => {
+              try {
+                console.table(error);
+                this.loading = false;
+                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'failedToDelete',
+                    content: {
+                      text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
                   }
-                }
-              })              
-            } catch (error) {
-              console.table(error)
+                })              
+              } catch (error) {
+                console.table(error)
+              }
             }
-          }
-        )
-      }
-    })
+          )
+        }
+      })
+    } else {
+      this.authService.blockPageAction()
+    }
   }
 
   // event handling paginator value changed (page index and page size)
@@ -162,16 +183,19 @@ export class BannerListComponent implements OnInit {
             console.table(data);
             this.banners = data.data;
             this.paginatorProps.length = data.count;
-            if (this.table) {
-              this.table.renderRows();
-            }
           } catch (error) {
             console.table(error);
-          }
+            this.banners = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
+          } 
         },
         error => {
           try {            
             console.table(error);
+            this.banners = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'bannerListScreen.loadFailed',
@@ -187,6 +211,9 @@ export class BannerListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if ( this.searchInput && isFocusedInput){
             setTimeout(() => {

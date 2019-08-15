@@ -4,7 +4,6 @@
             "title": "Master",
             "children": {
                 "banners": "Home Banners",
-                "users": "Users",
                 "articles": "Articles",
                 "specialOffers": "Special Offers",
                 "faqs": "FAQs",
@@ -21,6 +20,20 @@
         },
         "notification": {
             "title": "Notification"
+        },
+        "userManagement": {
+            "title": "User Management",
+            "children": {
+                "users": "Users",
+                "roles": "Roles"
+            }
+        },
+        "report": {
+            "title": "Report",
+            "children": {
+                "balanceReport": "Balance Report",
+                "transReport": "Transaction Report"
+            }
         }
     },
     "userAction": {
@@ -78,6 +91,11 @@
             "errorMaxLength": "Max. length of Last Name is {{maxLength}}",
             "errorFormat": "Last Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
             "placeholder": "Last name"
+        },
+        "role": {
+            "fieldTitle": "Role",
+            "errorRequired": "Role is required",
+            "placeholder": "Select a Role"
         },
         "bannerTitle": {
             "fieldTitle": "Home Banner Title",
@@ -359,7 +377,7 @@
                 "immediate": "Immediate",
                 "certainTime": "Scheduled"
             },
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
         },
         "offerImage": {
             "fieldTitle": "Image",
@@ -388,7 +406,34 @@
             "fieldTitle": "End Date",
             "errorRequired": "End Date must have date and time format value",
             "errorMin": "End Date should be more than 1 hr from now",
-            "datePlaceholder": "MM/dd/yyyy"
+            "datePlaceholder": "mm/dd/yyyy"
+        },
+        "roleName": {
+            "fieldTitle": "Role Name",
+            "placeholder": "Role name",
+            "errorRequired": "Role Name is required"
+        },
+        "privilege": {
+            "options": {
+                "create": "Create",
+                "view": "View",
+                "edit": "Edit",
+                "delete": "Delete",
+                "publish": "Publish",
+                "download": "Download"
+            }
+        },
+        "transactionStartDate": {
+            "errorRequired": "Start Date must have valid date format value",
+            "errorMax": "Start Date must be less than or equal than End Date"
+        },
+        "transactionEndDate": {
+            "errorRequired": "End Date must have valid date format value"
+        },
+        "transactionSearch": {
+            "placeholder": "Search OID / VA / Phone Number",
+            "hint": "Min. length of search text is {{minLength}}",
+            "errorRequired": "Search is required"
         },
         "buttonText": {
             "save": "Save",
@@ -436,7 +481,8 @@
             "firstName": "First Name",
             "lastName": "Last Name",
             "email": "Email",
-            "createdDate": "Created Date"
+            "createdDate": "Created Date",
+            "role": "Role"
         },
         "branchTable": {
             "branchName": "Branch Name",
@@ -475,6 +521,33 @@
             "sent": "Total Recipient",
             "clicked": "Clicked",
             "scheduleType": "Type"
+        },
+        "roleTable": {
+            "roleName": "Role Name"
+        },
+        "transactionTable": {
+            "oid": "OID",
+            "vaNumber": "VA Number",
+            "name": "Name",
+            "phNumber": "Phone Number",
+            "aksesPay": "Akses pay Balance",
+            "timestamp": "Timestamp",
+            "transCode": "Transaction Code",
+            "transDesc": "Transaction Description",
+            "amount": "Amount",
+            "destVANumber": "Destination VA Number",
+            "sourceVANumber": "Source VA Number",
+            "transDate": "Transaction Date",
+            "transSeq": "Transaction Sequence",
+            "installmentAmount": "Installment Amount",
+            "withdrawalAmount": "Withdrawal Amount",
+            "topUpAmount": "Top Up Amount",
+            "penaltyFee": "Penalty Paid",
+            "fee": "Transaction Fee",
+            "withdrawalFee": "Withdrawal Fee",
+            "bankTransferFee": "Bank Transfer Fee",
+            "ppn": "PPN",
+            "vaName": "Bank Name"
         }
     },
     "bannerListScreen": {
@@ -507,6 +580,7 @@
     "yesContinue": "yes, continue!",
     "reset": "reset",
     "cancel": "cancel",
+    "skip": "skip",
     "success": "success",
     "fail": "fail",
     "error": "error",
@@ -519,6 +593,7 @@
     "reject": "reject",
     "add": "add",
     "by": "by",
+    "to": "to",
     "edit": "edit",
     "example": "example",
     "invalidForm": "invalid form",
@@ -545,10 +620,24 @@
         "title": "Data Confirmation",
         "content": "Are you sure that all the data and content are correct?"
     },
+    "saveConfirmationModal": {
+        "title": "New Changes Have Not been Saved",
+        "content": "Click 'save' to save the changes"
+    },
+    "pageBlockedError": {
+        "title": "access is blocked",
+        "content": "you don't have permission to access this page"
+    },
+    "actionBlockedError": {
+        "title": "action is blocked",
+        "content": "you don't have permission to do this action"
+    },
     "userListScreen": {
         "title": "Users Data",
         "createUser": "create user",
-        "loadFailed": "failed to get list of users"
+        "loadFailed": "failed to get list of users",
+        "deleteConfirmation": "Are you sure you want to delete user {{name}}?",
+        "failedToGetRoles": "Failed top get list of roles"
     },
     "userDetailsScreen": {
         "getUserFailed": "failed to get user data",
@@ -732,16 +821,43 @@
         "getCategoryFailed": "failed to get Special Offer categories",
         "createTitle": "Create New Special Offer",
         "updateTitle": "Update Special Offer",
-        "succesCreated": "new Special Offer successfully created",
+        "succesCreated": "Special Offer successfully created",
         "succesUpdated": "Special Offer successfully updated",
-        "updateFailed": "failed to update data",
+        "updateFailed": "failed to update special offer",
         "createFailed": "failed to create new Special Offer",
         "cantUpdate": {
             "minDuration": "can't update special offer which expiry date is less than one hour"
-        }, 
+        },
         "uploadImageFailed": "failed to upload image",
         "uploadCSVFailed": "failed to upload csv file",
         "deleteImageFailed": "failed to delete image"
+    },
+    "roleListScreen": {
+        "title": "Roles Data",
+        "createRole": "create new role",
+        "loadFailed": "failed to get list of roles",
+        "deleteConfirmation": "Are you sure you want to delete role {{name}}?",
+        "succesCreated": "role successfully created",
+        "succesUpdated": "role successfully updated",
+        "updateFailed": "failed to update role",
+        "createFailed": "failed to create new role"
+    },
+    "balanceReport": {
+        "title": "Balance and Transaction Report",
+        "loadFailed": "failed to get balance and transaction report"
+    },
+    "transactionReport": {
+        "title": "Transaction Report",
+        "dateFilter": "Date Filter",
+        "downloadReport": "download report",
+        "filterNotSet": "Filter Not Set",
+        "loadFailed": "failed to get transaction report",
+        "downloadFailed": "failed to download transaction report"
+    },
+    "homeScreen": {
+        "welcome": "Welcome,",
+        "lastLogin": "LAST LOGIN",
+        "addEntry": "Add a New Entry"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -857,6 +973,20 @@
         "01109": "token expired",
         "01110": "oid not registered",
         "01111": "user data not found",
-        "01112" : "notification has already been sent to all recipients"
+        "01112": "notification has already been sent to all recipients",
+        "01113": "role name is required",
+        "01114": "failed to create role",
+        "01115": "failed to update role",
+        "01116": "failed to get role list",
+        "01117": "role id is required",
+        "01118": "failed to delete role, role is used by some active users",
+        "ms-payment": {
+            "07069": "missing start date parameter",
+            "07070": "missing end date parameter",
+            "07071": "missing search key parameter",
+            "07072": "no data found",
+            "07073": "data cannot be downloaded",
+            "07075" : "transaction not found"
+        }
     }
 }

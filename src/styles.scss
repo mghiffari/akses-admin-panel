@@ -133,6 +133,18 @@ body {
     position: absolute;
 }
 
+.search-right
+.mat-form-field-infix {
+    margin-right: 24px;
+    border-top: none !important;
+}
+
+.search-right
+.mat-form-field-suffix {
+    right: 12px;
+    position: absolute;
+}
+
 .custom .mat-form-field-suffix {
     position: absolute !important;
     right: 0.75em;
@@ -179,6 +191,10 @@ body {
     font-size: 75%;
 }
 
+.border-gray{
+    border: 1px solid map-get($colors, gray);
+}
+
 .border-bottom-gray{
     border-bottom: 1px solid map-get($colors, gray);
 }
@@ -203,6 +219,10 @@ body {
     background-color: map-get($colors, medium-gray);
 }
 
+.bg-gray {
+    background-color: map-get($colors, gray);
+}
+
 .icon-42 {
     width: 42px !important;
     height: 42px !important;
@@ -215,7 +235,6 @@ body {
 
 .cursor-not-allowed{
     cursor: not-allowed;
-    pointer-events: none;
 }
 
 .page-title{
@@ -238,6 +257,10 @@ body {
 
 .text-purple{
     color: map-get($colors, purple);
+}
+
+.text-gray{
+    color: map-get($colors, gray);
 }
 
 .text-medium-gray{
@@ -285,6 +308,11 @@ body {
     text-transform: uppercase;
 }
 
+.top-action-text.disabled{
+    @extend .text-medium-gray;
+    @extend .cursor-not-allowed;
+}
+
 .mat-simple-snackbar-action .mat-button{
     @extend .top-action-text;
     color: map-get($colors, white);
@@ -300,12 +328,22 @@ button[block-button]{
     height: 16px !important;
 }
 
+.font-sub-content-icon {
+    font-size: map-get($font-sizes, 'sub-content') !important;
+    width: map-get($font-sizes, 'sub-content') !important; 
+    height: map-get($font-sizes, 'sub-content') !important;
+}
+
 .th-min-width-150 {
     min-width: 150px;
 }
 
 .th-min-width {
     min-width: 100px;
+}
+
+.th-min-width-75{
+    min-width: 75px;
 }
 
 .th-min-width-50{
@@ -403,3 +441,16 @@ a.top-action-text {
 .table-min-100{
     min-width: 100%;
 }
+
+.pointer-auto {
+    pointer-events: auto;
+}
+
+.floating-preview-container {
+    width: 100%; 
+    position: absolute;  
+    z-index: 1; 
+    pointer-events: none
+}
+
+

@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { Notification } from '../../models/notification';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-notification-list',
@@ -37,9 +39,11 @@ export class NotificationListComponent implements OnInit {
 
   notifications: Notification[] = [];
   search = '';
-  closeText = '';
   loading = false;
   isFocusedInput = false;
+  allowCreate = false;
+  allowEdit = false;
+  allowDelete = false;
 
   private table: any;
   @ViewChild('notifsTable') set tabl(table: ElementRef) {
@@ -55,84 +59,104 @@ export class NotificationListComponent implements OnInit {
     private notifService: NotificationService,
     private snackBar: MatSnackBar,
     private modal: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     console.log('NotificationListComponent | ngOnInit');
-    this.lazyLoadData()
+    this.allowCreate = false;
+    this.allowEdit = false;
+    this.allowDelete = false;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.notification)
+    if(this.authService.getFeatureViewPrvg(prvg)){
+      this.lazyLoadData()
+      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
+      this.allowDelete = this.authService.getFeatureDeletePrvg(prvg)
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   //delete
   onDelete(notif) {
     console.log("NotificationListComponent | onDelete")
-    if(this.isEditableNotif(notif)){
-      const modalRef = this.modal.open(ConfirmationModalComponent, {
-        width: '260px',
-        data: {
-          title: 'deleteConfirmation',
-          content: {
-            string: 'notificationListScreen.deleteConfirmation',
-            data: {
-              title: notif.title
+    if(this.allowDelete){
+      if(this.isEditableNotif(notif)){
+        const modalRef = this.modal.open(ConfirmationModalComponent, {
+          width: '260px',
+          data: {
+            title: 'deleteConfirmation',
+            content: {
+              string: 'notificationListScreen.deleteConfirmation',
+              data: {
+                title: notif.title
+              }
             }
           }
-        }
-      })
-      modalRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.loading = true;
-          this.notifService.deleteNotif(notif.id).subscribe(
-            (data: any) => {
-              try {
-                console.table(data);
-                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                  data: {
-                    title: 'success',
-                    content: {
-                      text: 'dataDeleted',
-                      data: null
+        })
+        modalRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.loading = true;
+            this.notifService.deleteNotif(notif.id).subscribe(
+              (data: any) => {
+                try {
+                  console.table(data);
+                  this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                    data: {
+                      title: 'success',
+                      content: {
+                        text: 'dataDeleted',
+                        data: null
+                      }
                     }
-                  }
-                })
-                this.lazyLoadData()
-              } catch (error) {
-                console.table(error)
-              }
-            },
-            error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'failedToDelete',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
+                  })
+                  this.lazyLoadData()
+                } catch (error) {
+                  console.table(error)
+                }
+              },
+              error => {
+                try {
+                  console.table(error);
+                  this.loading = false;
+                  let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                    data: {
+                      title: 'failedToDelete',
+                      content: {
+                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                        data: null
+                      }
                     }
-                  }
-                })
-              } catch (error) {
-                console.table(error)
+                  })
+                } catch (error) {
+                  console.table(error)
+                }
               }
-            }
-          )
-        }
-      })
+            )
+          }
+        })
+      } else {
+        this.table.renderRows()
+      }
     } else {
-      this.table.renderRows()
+      this.authService.blockPageAction()
     }
   }
 
   // edit button handler
   onEdit(notif){
     console.log('NotificationListComponent | onEdit')
-    if(this.isEditableNotif(notif)){
-      this.router.navigate(['/notifications/update', notif.id])
+    if(this.allowEdit){
+      if(this.isEditableNotif(notif)){
+        this.router.navigate(['/notifications/update', notif.id])
+      } else {
+        this.table.renderRows();
+        this.editNotifError();
+      }
     } else {
-      this.table.renderRows();
-      this.editNotifError();
+      this.authService.blockPageAction()
     }
   }
 
@@ -230,16 +254,26 @@ export class NotificationListComponent implements OnInit {
             this.notifications = data.data;
             this.paginatorProps.length = data.count;
             this.now = new Date()
+          } catch (error) {
+            console.table(error);
+            this.notifications = [];
+            this.paginatorProps.pageIndex = 0;
+            this.paginatorProps.length = 0;
+          } finally {
             if (this.table) {
               this.table.renderRows();
             }
-          } catch (error) {
-            console.table(error);
           }
         },
         error => {
           try {
             console.table(error);
+            this.paginatorProps.pageIndex = 0;
+            this.paginatorProps.length = 0;
+            this.notifications = [];
+            if (this.table) {
+              this.table.renderRows();
+            }
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'notificationListScreen.loadFailed',

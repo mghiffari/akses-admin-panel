@@ -4,6 +4,8 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
+import { constants } from 'src/app/shared/common/constants';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-special-offer-list',
@@ -34,6 +36,8 @@ export class SpecialOfferListComponent implements OnInit {
   closeText = '';
   loading = false;
   isFocusedInput = false;
+  allowCreate = false;
+  allowEdit = false;
 
   private table: any;
   @ViewChild('offersTable') set tabl(table: ElementRef) {
@@ -48,23 +52,36 @@ export class SpecialOfferListComponent implements OnInit {
   constructor(
     private offerService: SpecialOfferService,
     private snackBar: MatSnackBar,
-    private modal: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     console.log('SpecialOfferListComponent | ngOnInit');
-    this.lazyLoadData()
+    this.allowCreate = false;
+    this.allowEdit = false;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.specialOffer)
+    if(this.authService.getFeatureViewPrvg(prvg)){
+      this.lazyLoadData()
+      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   // edit button handler
   onEdit(offer) {
     console.log('SpecialOfferListComponent | onEdit')
-    if (this.isEditableOffer(offer)) {
-      this.router.navigate(['/master/special-offers/update', offer.id])
+    if(this.allowEdit){
+      if (this.isEditableOffer(offer)) {
+        this.router.navigate(['/master/special-offers/update', offer.id])
+      } else {
+        this.lazyLoadData()
+        this.editOfferError();
+      }
     } else {
-      this.lazyLoadData()
-      this.editOfferError();
+      this.authService.blockPageAction()
     }
   }
 
@@ -121,16 +138,19 @@ export class SpecialOfferListComponent implements OnInit {
             this.offers = response.data;
             this.paginatorProps.length = response.count;
             this.now = new Date()
-            if (this.table) {
-              this.table.renderRows();
-            }
           } catch (error) {
             console.table(error);
+            this.offers = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0
           }
         },
         error => {
           try {
             console.table(error);
+            this.offers = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'specialOfferListScreen.loadFailed',
@@ -146,6 +166,9 @@ export class SpecialOfferListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if (this.searchInput && isFocusedInput) {
             setTimeout(() => {

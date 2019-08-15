@@ -15,8 +15,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/login',
-        pathMatch: 'full'
+        loadChildren: './modules/home/home.module#HomeModule',
       },
       {
         path: 'master',
@@ -37,6 +36,14 @@ const routes: Routes = [
       {
         path: 'notifications',
         loadChildren: './modules/notification/notification.module#NotificationModule'
+      },
+      {
+        path: 'user-management',
+        loadChildren: './modules/user-management/user-management.module#UserManagementModule'
+      },
+      {
+        path: 'report',
+        loadChildren: './modules/report/report.module#ReportModule'
       }
     ]
   },
@@ -46,7 +53,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/login',
+    redirectTo: '/',
   }
 ];
 

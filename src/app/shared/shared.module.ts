@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AngularMaterialModule } from './modules/angular-material.module';
 import { AuthService } from './services/auth.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +22,9 @@ import { ArticleService } from './services/article.service';
 import { SpecialOfferService } from './services/special-offer.service';
 import { TinymceEditorComponent } from './components/tinymce-editor/tinymce-editor.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+
+import { PageService } from './services/page.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     HttpClientModule,
     TranslateModule,
     ReactiveFormsModule,
-    EditorModule
+    EditorModule,
+    NgxMatSelectSearchModule
   ], 
   exports: [
     AngularMaterialModule,
@@ -53,7 +57,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     MaskedNumInputComponent,
     BoldRendererPipe,
     TinymceEditorComponent,
-    EditorModule
+    EditorModule,
+    NgxMatSelectSearchModule
   ],
   providers:[
     AuthService,
@@ -67,7 +72,9 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     CreditSimulationService,
     FileManagementService,
     ArticleService,
-    SpecialOfferService
+    SpecialOfferService,
+    PageService,
+    DatePipe
   ],
   entryComponents: [
     ErrorModalComponent,

@@ -7,6 +7,8 @@ import { BranchUploadModalComponent } from '../../components/branch-upload-modal
 import { Overlay } from '@angular/cdk/overlay';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { Branch } from '../../models/branch';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-branch-list',
@@ -37,6 +39,9 @@ export class BranchListComponent implements OnInit {
   closeText = '';
   loading = false;
   isFocusedInput = false;
+  allowEdit = false;
+  allowCreate = false;
+  allowDelete = false;
 
   private table: any;
   @ViewChild('branchesTable') set tabl(table: ElementRef) {
@@ -52,72 +57,88 @@ export class BranchListComponent implements OnInit {
     private branchService: BranchService,
     private snackBar: MatSnackBar,
     private modal: MatDialog,
-    private overlay: Overlay
+    private overlay: Overlay,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     console.log('BranchListComponent | ngOnInit');
-    this.lazyLoadData()
+    this.allowCreate = false;
+    this.allowEdit = false;
+    this.allowDelete = false;
+    let prvg = this.authService.getFeaturePrivilege(constants.features.branchLocation)
+    if(this.authService.getFeatureViewPrvg(prvg)){
+      this.lazyLoadData()
+      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
+      this.allowDelete = this.authService.getFeatureDeletePrvg(prvg)
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   //delete
   onDelete(branch) {
     console.log("BranchListComponent | onDelete")
-    const modalRef = this.modal.open(ConfirmationModalComponent, {
-      width: '260px',
-      data: {
-        title: 'deleteConfirmation',
-        content: {
-          string: 'branchListScreen.deleteConfirmation',
-          data: {
-            name: branch.name
+    if(this.allowDelete){
+      const modalRef = this.modal.open(ConfirmationModalComponent, {
+        width: '260px',
+        data: {
+          title: 'deleteConfirmation',
+          content: {
+            string: 'branchListScreen.deleteConfirmation',
+            data: {
+              name: branch.name
+            }
           }
         }
-      }
-    })
-    modalRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.loading = true;
-        let delBranch = Object.assign({}, branch);
-        delBranch.is_deleted = true;
-        this.branchService.updateBranch(delBranch).subscribe(
-          (data: any) => {
-            try {
-              console.table(data);
-              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                data: {
-                  title: 'success',
-                  content: {
-                    text: 'dataDeleted',
-                    data: null
+      })
+      modalRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.loading = true;
+          let delBranch = Object.assign({}, branch);
+          delBranch.is_deleted = true;
+          this.branchService.updateBranch(delBranch).subscribe(
+            (data: any) => {
+              try {
+                console.table(data);
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'dataDeleted',
+                      data: null
+                    }
                   }
-                }
-              })
-              this.lazyLoadData()
-            } catch (error) {
-              console.table(error)
-            }
-          },
-          error => {
-            try {
-              console.table(error);
-              this.loading = false;
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'failedToDelete',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
+                })
+                this.lazyLoadData()
+              } catch (error) {
+                console.table(error)
+              }
+            },
+            error => {
+              try {
+                console.table(error);
+                this.loading = false;
+                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'failedToDelete',
+                    content: {
+                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                      data: null
+                    }
                   }
-                }
-              })
-            } catch (error) {
-              console.table(error)
+                })
+              } catch (error) {
+                console.table(error)
+              }
             }
-          }
-        )
-      }
-    })
+          )
+        }
+      })
+    } else {
+      this.authService.blockPageAction()
+    }
   }
 
   // event handling paginator value changed (page index and page size)
@@ -141,17 +162,21 @@ export class BranchListComponent implements OnInit {
   // handle upload modal
   onUpload() {
     console.log('BranchListComponent | onUpload');
-    const modalRef = this.modal.open(BranchUploadModalComponent, {
-      width: '80%',
-      maxHeight: '100%',
-      maxWidth: '500px',
-      scrollStrategy: this.overlay.scrollStrategies.reposition()
-    })
-    modalRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.onSearch()
-      }
-    })
+    if(this.allowCreate){
+      const modalRef = this.modal.open(BranchUploadModalComponent, {
+        width: '80%',
+        maxHeight: '100%',
+        maxWidth: '500px',
+        scrollStrategy: this.overlay.scrollStrategies.reposition()
+      })
+      modalRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.onSearch()
+        }
+      })
+    } else {
+      this.authService.blockPageAction()
+    }
   }
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
@@ -167,16 +192,19 @@ export class BranchListComponent implements OnInit {
             console.table(data);
             this.branches = data.data;
             this.paginatorProps.length = data.count;
-            if (this.table) {
-              this.table.renderRows();
-            }
           } catch (error) {
             console.table(error);
-          }
+            this.branches = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
+          } 
         },
         error => {
           try {
             console.table(error);
+            this.branches = [];
+            this.paginatorProps.length = 0;
+            this.paginatorProps.pageIndex = 0;
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'branchListScreen.loadFailed',
@@ -192,6 +220,9 @@ export class BranchListComponent implements OnInit {
         }
       ).add(
         () => {
+          if (this.table) {
+            this.table.renderRows();
+          }
           this.loading = false;
           if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
