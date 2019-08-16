@@ -356,7 +356,8 @@
         "notifSpecialOffer": {
             "fieldTitle": "Special Offer",
             "placeholder": "Select a Special Offer",
-            "errorRequired": "Special Offer is required"
+            "errorRequired": "Special Offer is required",
+            "searchPlaceholder": "Search special offer"
         },
         "articleCategory": {
             "fieldTitle": "Article Category",
@@ -366,7 +367,8 @@
         "notifArticle": {
             "fieldTitle": "Article",
             "placeholder": "Select an Article",
-            "errorRequired": "Article is required"
+            "errorRequired": "Article is required",
+            "searchPlaceholder": "Search article"
         },
         "schedule": {
             "fieldTitle": "Schedule",
@@ -460,18 +462,21 @@
         "numbers": "No.",
         "status": {
             "title": "Status",
+            "approvalTitle": "Approval",
             "active": "Active",
             "inactive": "Inactive",
             "approved": "Approved",
             "rejected": "Rejected",
             "delivered": "Delivered",
-            "pending": "Pending"
+            "pending": "Pending",
+            "waitingForApproval": "Waiting for Approval"
         },
         "uniqueTag": "Unique Tag",
         "title": "Title",
         "category": "Category",
         "order": "Order",
         "lastUpdated": "Last Updated Date & By",
+        "createdDate": "Created Date",
         "bannersTable": {
             "preview": "Preview",
             "startDate": "Start Date",
@@ -481,7 +486,6 @@
             "firstName": "First Name",
             "lastName": "Last Name",
             "email": "Email",
-            "createdDate": "Created Date",
             "role": "Role"
         },
         "branchTable": {
@@ -814,7 +818,8 @@
     "specialOfferListScreen": {
         "title": "Special Offers Data",
         "createOffer": "create new special offer",
-        "loadFailed": "failed to get list of special offers"
+        "loadFailed": "failed to get list of special offers",
+        "approvalBy": "by"
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "failed to get Special Offer data",

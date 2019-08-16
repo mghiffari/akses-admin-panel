@@ -53,5 +53,10 @@ export const constants = {
         role: 'role',
         transactionReport: 'laporan transaksi',
         balanceReport: 'laporan saldo'
+    }, 
+    approvalStatus: {
+        approved: "1",
+        rejected: "2",
+        waitingForApproval: "0"
     }
 }
