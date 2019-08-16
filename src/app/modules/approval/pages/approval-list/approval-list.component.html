@@ -73,7 +73,7 @@
               <table mat-table [dataSource]="data" class="table-min-100" #table *ngIf="isSelectedTabSpecialOffer()">
                 <ng-container matColumnDef="checkbox">
                   <th mat-header-cell *matHeaderCellDef class="font-th th-width-25">
-                    <mat-checkbox [disabled]="!allowPublish" color="primary" (change)="onChangeSelectAll($event)"
+                    <mat-checkbox [disabled]="!allowPublish || loading || data.length === 0" color="primary" (change)="onChangeSelectAll($event)"
                       [indeterminate]="data.length > 0 && selectedRows.length > 0 && selectedRows.length < data.length"
                       [checked]="data.length > 0 && selectedRows.length === data.length">
                     </mat-checkbox>
