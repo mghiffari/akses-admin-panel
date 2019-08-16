@@ -34,6 +34,9 @@
                 "balanceReport": "Balance Report",
                 "transReport": "Transaction Report"
             }
+        },
+        "approval": {
+            "title": "Approvals"
         }
     },
     "userAction": {
@@ -425,9 +428,11 @@
                 "download": "Download"
             }
         },
+        "date": {
+            "errorRange": "Start Date must be less than or equal than End Date"
+        },
         "transactionStartDate": {
-            "errorRequired": "Start Date must have valid date format value",
-            "errorMax": "Start Date must be less than or equal than End Date"
+            "errorRequired": "Start Date must have valid date format value"
         },
         "transactionEndDate": {
             "errorRequired": "End Date must have valid date format value"
@@ -436,6 +441,9 @@
             "placeholder": "Search OID / VA / Phone Number",
             "hint": "Min. length of search text is {{minLength}}",
             "errorRequired": "Search is required"
+        },
+        "approvalSearch": {
+            "placeholder": "Search Title"
         },
         "buttonText": {
             "save": "Save",
@@ -605,6 +613,7 @@
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data failed",
     "failedToProcessFile": "failed to process file",
+    "seeDetails": "See Details",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -863,6 +872,13 @@
         "welcome": "Welcome,",
         "lastLogin": "LAST LOGIN",
         "addEntry": "Add a New Entry"
+    },
+    "approvalListScreen": {
+        "title": "Approval",
+        "tabsTitle": {
+            "specialoffer": "Sp. Offer"
+        },
+        "totalRowsSelected": "{{totalRows}} title are selected"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

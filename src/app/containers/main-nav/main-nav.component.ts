@@ -39,32 +39,32 @@ export class MainNavComponent {
         {
           title: 'navMenus.master.children.banners',
           link: '/banners',
-          featureName: this.featureNames.banner
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.banner)}
         },
         {
           title: 'navMenus.master.children.articles',
           link: '/articles',
-          featureName: this.featureNames.article
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.article)}
         },
         {
           title: 'navMenus.master.children.specialOffers',
           link: '/special-offers',
-          featureName: this.featureNames.specialOffer
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.specialOffer)}
         },
         {
           title: 'navMenus.master.children.faqs',
           link: '/faqs',
-          featureName: this.featureNames.faq
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.faq)}
         },
         {
           title: 'navMenus.master.children.branches',
           link: '/branches',
-          featureName: this.featureNames.branchLocation
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.branchLocation)}
         },
         {
           title: 'navMenus.master.children.changePhonenumberRequests',
           link: '/change-phonenumber-requests',
-          featureName: this.featureNames.changePhoneNumber
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.changePhoneNumber)}
         }
       ]
     },
@@ -72,17 +72,18 @@ export class MainNavComponent {
       title: 'navMenus.creditSimulation.title',
       link: '/credit-simulation',
       featureName: this.featureNames.creditSimulation,
+      getShowFlag: () => {return this.getViewPrivilege(this.featureNames.creditSimulation)},
       children: []
     },
     {
       title: 'navMenus.paymentInstruction.title',
       link: '/payment-instructions',
-      featureName: this.featureNames.paymentInstruction
+      getShowFlag: () => {return this.getViewPrivilege(this.featureNames.paymentInstruction)}
     },
     {
       title: 'navMenus.notification.title',
       link: '/notifications',
-      featureName: this.featureNames.notification
+      getShowFlag: () => {return this.getViewPrivilege(this.featureNames.notification)}
     },
     {
       title: 'navMenus.userManagement.title',
@@ -91,12 +92,12 @@ export class MainNavComponent {
         {
           title: 'navMenus.userManagement.children.users',
           link: '/users',
-          featureName: this.featureNames.user
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.user)}
         },
         {
           title: 'navMenus.userManagement.children.roles',
           link: '/roles',
-          featureName: this.featureNames.role
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.role)}
         }
       ]
     },
@@ -107,14 +108,19 @@ export class MainNavComponent {
         {
           title: 'navMenus.report.children.transReport',
           link: '/transaction-report',
-          featureName: this.featureNames.transactionReport
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.transactionReport)}
         },
         {
           title: 'navMenus.report.children.balanceReport',
           link: '/balance-report',
-          featureName: this.featureNames.balanceReport
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.balanceReport)}
         },
       ]
+    },
+    {
+      title: 'navMenus.approval.title',
+      link: '/approvals',
+      getShowFlag: () => {return this.getPublishPrivilege()}
     },
   ]
 
@@ -130,6 +136,19 @@ export class MainNavComponent {
     private creditSimulationService: CreditSimulationService,
     private snackBar: MatSnackBar) {
     console.log('MainNavComponent | constructor')
+  }
+
+  // get view privilege of feature
+  getViewPrivilege(featureName){
+    console.log('MainNavComponent | getViewPrivilege')
+    return this.authService.getViewPrvg(featureName)
+  }
+
+  // get publish privilege
+  getPublishPrivilege(){
+    console.log('MainNavComponent | getViewPrivilege')
+    let feature = this.authService.getFeaturePrivilege(this.featureNames.specialOffer)
+    return this.authService.getFeaturePublishPrvg(feature)
   }
 
   //ngOnInit get logged in user name, date locale, and credit simulation products
@@ -197,19 +216,19 @@ export class MainNavComponent {
         link: nav.link,
         children: nav.children ? nav.children : null
       }
-      if(nav.featureName){
+      if(nav.getShowFlag){
         if(showCreditSimulation && nav.featureName === this.featureNames.creditSimulation){
           addNav.children = csChildMenus
           this.navList.push(addNav)
         } else {
-          if(this.authService.getViewPrvg(nav.featureName)){
+          if(nav.getShowFlag()){
             this.navList.push(addNav)
           }
         }
       } else {
         if(addNav.children){
           for(let child of addNav.children){
-            if(child.featureName && this.authService.getViewPrvg(child.featureName)) {
+            if(child.getShowFlag && child.getShowFlag()) {
               let addChild = {
                 title: child.title,
                 link: child.link,

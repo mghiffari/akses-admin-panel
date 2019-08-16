@@ -34,6 +34,9 @@
                 "balanceReport": "Laporan Saldo",
                 "transReport": "Laporan Transaksi"
             }
+        },
+        "approval": {
+            "title": "Approval"
         }
     },
     "userAction": {
@@ -425,13 +428,11 @@
                 "download": "Download"
             }
         },
-        "buttonText": {
-            "save": "Simpan",
-            "back": "Kembali"
+        "date": {
+            "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai"
         },
         "transactionStartDate": {
-            "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid",
-            "errorMax": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai"
+            "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid"
         },
         "transactionEndDate": {
             "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid"
@@ -440,6 +441,13 @@
             "placeholder": "Cari OID / VA / Nomor Handphone",
             "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}",
             "errorRequired": "Keyword pencarian wajib diisi"
+        },
+        "approvalSearch": {
+            "placeholder": "Cari Judul"
+        },
+        "buttonText": {
+            "save": "Simpan",
+            "back": "Kembali"
         }
     },
     "loginScreen": {
@@ -605,6 +613,7 @@
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data gagal",
     "failedToProcessFile": "proses file gagal",
+    "seeDetails": "Lihat Detail",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -862,6 +871,13 @@
         "welcome": "Selamat datang,",
         "lastLogin": "TERAKHIR LOGIN",
         "addEntry": "Tambah Entri Baru"
+    },
+    "approvalListScreen": {
+        "title": "Approval",
+        "tabsTitle": {
+            "specialoffer": "Sp. Offer"
+        },
+        "totalRowsSelected": "{{totalRows}} judul dipilih"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
