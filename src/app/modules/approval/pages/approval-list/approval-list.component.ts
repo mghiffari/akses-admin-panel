@@ -128,6 +128,13 @@ export class ApprovalListComponent implements OnInit {
     }
   }
 
+  // event handling paginator value changed (page index and page size)
+  onPaginatorChange(e) {
+    console.log('ApprovalListComponent | onPaginatorChange');
+    this.paginatorProps = Object.assign(this.paginatorProps, e)
+    this.loadData()
+  }
+
   onChangeTabIndex(index) {
     console.log('ApprovalListComponent | onChangeTabIndex');
     this.loading = true
