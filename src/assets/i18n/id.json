@@ -834,6 +834,8 @@
         "getCategoryFailed": "gagal mendapatkan kategori Special Offer",
         "createTitle": "Tambahkan Special Offer Baru",
         "updateTitle": "Ubah Special Offer",
+        "viewTitle": "Detail Special Offer",
+        "recipientUrlLabel": "Penerima Special Offer",
         "succesCreated": "Special Offer berhasil ditambahkan",
         "succesUpdated": "Special Offer berhasil diubah",
         "updateFailed": "gagal mengubah data special offer",

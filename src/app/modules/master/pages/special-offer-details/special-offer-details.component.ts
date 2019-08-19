@@ -181,7 +181,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
         allowPage = this.allowCreate
       }
       if(allowPage){
-        this.loading = false;
+        this.loading = true;
         this.onSubmittingForm = false;
         this.activateRouting = false;
         this.lovService.getSpecialOfferCategory().subscribe(
@@ -251,13 +251,17 @@ export class SpecialOfferDetailsComponent implements OnInit {
                 } catch (error) {
                   console.table(error)
                 }
+              } else {
+                this.loading = false
               }
             } catch (error) {
               console.table(error)
+              this.loading = false
             }
           }, error => {
             try {
               console.table(error);
+              this.loading = false
               let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
                 data: {
                   title: 'specialOfferDetailsScreen.getCategoryFailed',

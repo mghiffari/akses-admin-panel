@@ -835,6 +835,8 @@
         "getCategoryFailed": "failed to get Special Offer categories",
         "createTitle": "Create New Special Offer",
         "updateTitle": "Update Special Offer",
+        "viewTitle": "Special Offer Details",
+        "recipientUrlLabel": "Special Offer Recipient",
         "succesCreated": "Special Offer successfully created",
         "succesUpdated": "Special Offer successfully updated",
         "updateFailed": "failed to update special offer",
