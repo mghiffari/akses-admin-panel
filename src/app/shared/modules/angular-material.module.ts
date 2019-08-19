@@ -26,9 +26,9 @@ import {
   MatDialogModule,
   MatTooltipModule,
   MatTabsModule,
-  MatCardModule
+  MatCardModule,
+  MatBadgeModule
 } from '@angular/material';
-
 
 @NgModule({
   declarations: [],
@@ -61,7 +61,8 @@ import {
     MatTooltipModule,
     MatSortModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatBadgeModule
   ],
   exports: [
     FlexLayoutModule,
@@ -90,7 +91,8 @@ import {
     MatTooltipModule,
     MatSortModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatBadgeModule
   ]
 })
 export class AngularMaterialModule { }

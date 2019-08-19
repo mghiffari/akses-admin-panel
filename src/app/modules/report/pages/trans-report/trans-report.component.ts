@@ -133,15 +133,17 @@ export class TransReportComponent implements OnInit {
               errorText = 'forms.transactionStartDate.errorRequired'
             }
             this.showFormError(errorText)
-          } else if (this.endDate.invalid){
+          } else {
             if (this.endDate.errors && this.endDate.errors.required) {
               errorText = 'forms.transactionEndDate.errorRequired'
             } else if (this.filterForm.errors && this.filterForm.errors.dateRange) {
-              errorText = 'forms.transactionStartDate.errorMax'
+              errorText = 'forms.date.errorRange'
             } else if (this.search.errors && this.search.errors.required) {
               errorText = 'forms.transactionSearch.errorRequired'
             }
-            this.showFormError(errorText)
+            if (!this.search.errors || !this.search.errors.minlength){
+              this.showFormError(errorText)
+            }
           }
         }
       })
