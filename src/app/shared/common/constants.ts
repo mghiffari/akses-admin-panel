@@ -52,7 +52,8 @@ export const constants = {
         user: 'user',
         role: 'role',
         transactionReport: 'laporan transaksi',
-        balanceReport: 'laporan saldo'
+        balanceReport: 'laporan saldo',
+        gamificationRule: 'gamification rule'
     }, 
     approvalStatus: {
         approved: "1",

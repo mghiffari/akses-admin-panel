@@ -48,6 +48,10 @@ const routes: Routes = [
       {
         path: 'approvals',
         loadChildren: './modules/approval/approval.module#ApprovalModule'
+      },
+      {
+        path: 'gamification',
+        loadChildren: './modules/gamification/gamification.module#GamificationModule'
       }
     ]
   },

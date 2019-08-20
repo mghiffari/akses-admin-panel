@@ -37,6 +37,12 @@
         },
         "approval": {
             "title": "Approval"
+        },
+        "gamification": {
+            "title": "Gamification",
+            "children": {
+                "rule": "Rule"
+            }
         }
     },
     "userAction": {
@@ -560,6 +566,12 @@
             "bankTransferFee": "Biaya Transfer Bank",
             "ppn": "PPN",
             "vaName": "Nama Bank"
+        },
+        "gamificationTable": {
+            "reward": "Reward",
+            "probability": "Probability",
+            "blended": "Blended",
+            "runningNumber": "Running Number"
         }
     },
     "bannerListScreen": {
@@ -880,6 +892,15 @@
             "specialoffer": "Sp. Offer"
         },
         "totalRowsSelected": "{{totalRows}} judul dipilih"
+    },
+    "gamificationRuleScreen": {
+        "title": "Gamification Rule",
+        "activeRule": "Active Rule",
+        "upcomingRule": "Upcoming Rule",
+        "sampleSize": "Sample Size",
+        "activeSince": "Aktif sejak",
+        "replaceText": "Akan mengubah rule aktif pada",
+        "newRule": "Rule Baru"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

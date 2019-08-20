@@ -37,6 +37,12 @@
         },
         "approval": {
             "title": "Approvals"
+        },
+        "gamification": {
+            "title": "Gamification",
+            "children": {
+                "rule": "Rule"
+            }
         }
     },
     "userAction": {
@@ -560,6 +566,12 @@
             "bankTransferFee": "Bank Transfer Fee",
             "ppn": "PPN",
             "vaName": "Bank Name"
+        },
+        "gamificationTable": {
+            "reward": "Reward",
+            "probability": "Probability",
+            "blended": "Blended",
+            "runningNumber": "Running Number"
         }
     },
     "bannerListScreen": {
@@ -881,6 +893,15 @@
             "specialoffer": "Sp. Offer"
         },
         "totalRowsSelected": "{{totalRows}} title are selected"
+    },
+    "gamificationRuleScreen": {
+        "title": "Gamification Rule",
+        "activeRule": "Active Rule",
+        "upcomingRule": "Upcoming Rule",
+        "sampleSize": "Sample Size",
+        "activeSince": "Active since",
+        "replaceText": "Will replace the active rule at",
+        "newRule": "New Rule"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
