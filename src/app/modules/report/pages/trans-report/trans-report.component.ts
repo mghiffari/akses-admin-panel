@@ -16,13 +16,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./trans-report.component.scss']
 })
 export class TransReportComponent implements OnInit {
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
 
   transactionColumns: string[] = [
     'oid',

@@ -18,13 +18,7 @@ import { constants } from 'src/app/shared/common/constants';
 })
 export class NotificationListComponent implements OnInit {
   now = new Date();
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
 
   notifColumns: string[] = [
     'number',

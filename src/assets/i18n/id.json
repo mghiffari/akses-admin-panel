@@ -41,7 +41,8 @@
         "gamification": {
             "title": "Gamification",
             "children": {
-                "rule": "Rule"
+                "rule": "Rule",
+                "cashbackReward": "Cashback Reward"
             }
         }
     },
@@ -591,6 +592,19 @@
             "probability": "Probability",
             "blended": "Blended",
             "runningNumber": "Running Number"
+        },
+        "cashbackRewardTable": {
+            "vaNumber": "Nomor VA",
+            "rewardDate": "Tanggal Reward",
+            "custName": "Nama Customer",
+            "grossValue": "Nilai Gros",
+            "pphValue": "Nilai Pph",
+            "cashbackReceive": "Total Cashback Diterima",
+            "installmentVal": "Nilai Angsuran",
+            "paymentDate": "Tanggal Pembayaran",
+            "npwpNumber": "Nomor NPWP",
+            "npwpName": "Nama NPWP",
+            "npwpAddress": "Alamat NPWP"
         }
     },
     "bannerListScreen": {
@@ -932,6 +946,13 @@
                 "content": "Apakah anda yakin untuk menambahkan rule baru? Rule baru akan diterapkan di hari selanjutnya pada pukul 00.01"
             }
         }
+    },
+    "cashbackRewardScreen": {
+        "title": "Cashback Reward",
+        "dateFilter": "Filter Tanggal",
+        "nameFilter": "Filter Nama",
+        "downloadReport": "download laporan",
+        "filterNotSet": "Filter Belum Diatur"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

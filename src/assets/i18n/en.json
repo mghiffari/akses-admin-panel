@@ -41,7 +41,8 @@
         "gamification": {
             "title": "Gamification",
             "children": {
-                "rule": "Rule"
+                "rule": "Rule",
+                "cashbackReward": "Cashback Reward"
             }
         }
     },
@@ -591,6 +592,19 @@
             "probability": "Probability",
             "blended": "Blended",
             "runningNumber": "Running Number"
+        },
+        "cashbackRewardTable": {
+            "vaNumber": "VA Number",
+            "rewardDate": "Reward Date",
+            "custName": "Customer Name",
+            "grossValue": "Gross Value",
+            "pphValue": "Pph Value",
+            "cashbackReceive": "Total Cashback Received",
+            "installmentVal": "Installment Value",
+            "paymentDate": "Payment Date",
+            "npwpNumber": "NPWP Number",
+            "npwpName": "NPWP Name",
+            "npwpAddress": "NPWP Address"
         }
     },
     "bannerListScreen": {
@@ -933,6 +947,13 @@
                 "content": "Are you sure you want to create new rule? New rule will be applied on next day at 00.01 WIB"
             }
         }
+    },
+    "cashbackRewardScreen": {
+        "title": "Cashback Reward",
+        "dateFilter": "Date Filter",
+        "nameFilter": "Name Filter",
+        "downloadReport": "download report",
+        "filterNotSet": "Filter Not Set"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
