@@ -17,6 +17,13 @@ export const constants = {
             table: { title: 'Table', items: 'inserttable tableprops deletetable row column cell' }
         }
     },
+    paginatorProps: {
+        pageSizeOptions: [10, 25, 50, 100],
+        pageSize: 10,
+        showFirstLastButtons: true,
+        length: 0,
+        pageIndex: 0
+    },
     branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
     productScreen: {
         productName: '@dr_ymh_lndmrk_kslns'

@@ -23,13 +23,7 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
   styleUrls: ['./cashback-reward.component.scss']
 })
 export class CashbackRewardComponent implements OnInit {
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  };
+  paginatorProps = { ...constants.paginatorProps};
 
   cashbackRewardColumns: string[] = [
     'number',

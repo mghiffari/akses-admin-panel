@@ -15,13 +15,7 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: ['./change-phone-list.component.scss']
 })
 export class ChangePhoneListComponent implements OnInit {
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
   action = {
     approved: 'Accepted',
     rejected: 'Rejected'
