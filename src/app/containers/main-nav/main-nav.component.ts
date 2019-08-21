@@ -131,6 +131,11 @@ export class MainNavComponent {
           link: '/rule',
           getShowFlag: () => {return this.getViewPrivilege(this.featureNames.gamificationRule)}
         },
+        {
+          title: 'navMenus.gamification.children.cashbackReward',
+          link: '/cashback-reward',
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.cashbackReward)}
+        },
       ]
     },
   ]
