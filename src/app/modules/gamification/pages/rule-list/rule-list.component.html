@@ -8,51 +8,55 @@
     <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" ngClass.md="padding-right-16"
       ngClass.gt-md="padding-right-16" ngClass.lt-md="padding-bottom-16">
       <div fxLayout="row wrap" fxLayoutAlign="center center">
-        <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="start center" 
+        <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="start center"
           class="font-gotham-bold font-sub-content padding-bottom-5">
           {{'gamificationRuleScreen.activeRule' | translate}}
         </div>
         <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="end center"
-        class="font-gotham-bold font-sub-description padding-bottom-5">
-          {{'gamificationRuleScreen.sampleSize' | translate}} : 1000
+          class="font-gotham-bold font-sub-description padding-bottom-5">
+          {{'gamificationRuleScreen.sampleSize' | translate}} : {{activeRule.length === 0 ? '-' : activeRuleSampleSize}}
         </div>
       </div>
       <div fxFlex="grow" fxLayout="column">
-        <div fxFlex="100%"  class="border-gray position-relative"  fxLayoutAlign="center center">
+        <div fxFlex="100%" class="border-gray position-relative" fxLayoutAlign="center center">
           <div class="table-wrapper">
             <table mat-table [dataSource]="activeRule" #activeRuleTable class="table-min-100">
               <ng-container matColumnDef="reward">
                 <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
                   {{'table.gamificationTable.reward' | translate}}
                 </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element" class="text-right">
+                  {{element &&  element.reward ? (element.reward | percent: '1.1-4' : locale) : ''}}
                 </td>
               </ng-container>
-  
+
               <ng-container matColumnDef="probability">
                 <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
                   {{'table.gamificationTable.probability' | translate}}
                 </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element" class="text-right">
+                  {{element &&  element.probability ? (element.probability | percent: '1.1-4' : locale) : ''}}
                 </td>
               </ng-container>
-  
+
               <ng-container matColumnDef="blended">
                 <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
                   {{'table.gamificationTable.blended' | translate}}
                 </th>
-                <td mat-cell *matCellDef="let element">
+                <td mat-cell *matCellDef="let element" class="text-right">
+                  {{element &&  element.blended ? (element.blended | percent: '1.1-4' : locale) : ''}}
                 </td>
               </ng-container>
-  
+
               <ng-container matColumnDef="runningNumber">
                 <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
                   {{'table.gamificationTable.runningNumber' | translate}}
                 </th>
                 <td mat-cell *matCellDef="let element">
+                  {{element.running_number}}
                 </td>
               </ng-container>
-  
+
               <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="ruleColumns; sticky: true"></tr>
               <tr mat-row *matRowDef="let row; columns: ruleColumns" [hidden]="loading"></tr>
             </table>
@@ -68,84 +72,93 @@
           </div>
         </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="start center" class="font-tag text-medium-gray padding-top-5 padding-bottom-5">
-        <div>{{'gamificationRuleScreen.activeSince' | translate}} : {{activeSince ? (activeSince | date: 'dd/MM/yyyy HH:mm') : '-'}} </div>
+      <div [fxFlex]="bottomTable.offsetHeight + 'px'" fxLayout="row" fxLayoutAlign="start start" class="font-tag text-medium-gray padding-top-5 padding-bottom-5">
+        <div>{{'gamificationRuleScreen.activeSince' | translate}} :
+          {{activeSince ? (activeSince | date: 'dd/MM/yyyy HH:mm') : '-'}} </div>
       </div>
     </div>
-    <!-- <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" class="border-gray">
+    <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="column" ngClass.md="padding-right-16"
+      ngClass.gt-md="padding-right-16" ngClass.lt-md="padding-bottom-16">
+      <div fxLayout="row wrap" fxLayoutAlign="center center">
+        <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="start center"
+          class="font-gotham-bold font-sub-content padding-bottom-5">
+          {{'gamificationRuleScreen.upcomingRule' | translate}}
+        </div>
+        <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="end center"
+          class="font-gotham-bold font-sub-description padding-bottom-5">
+          {{'gamificationRuleScreen.sampleSize' | translate}} : {{upcomingRule.length === 0 ? '-' : upcomingRuleSampleSize}}
+        </div>
+      </div>
+      <div fxFlex="grow" #bottomTable fxLayout="column">
         <div fxFlex="100%" class="border-gray position-relative" fxLayoutAlign="center center">
           <div class="table-wrapper">
-            <table *ngIf="selectedRowIndex >= 0" mat-table [dataSource]="getPrivilegesFormArray()?.controls" #featureTable
-              class="table-min-100">
-              <ng-container matColumnDef="featureName">
-                <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="feature">
-                  <div class="padding-top-10 padding-bottom-10">
-                    {{getElementFeatureName(element).value}}
-                  </div>
+            <table mat-table [dataSource]="upcomingRule" #upcomingRuleTable class="table-min-100">
+              <ng-container matColumnDef="reward">
+                <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
+                  {{'table.gamificationTable.reward' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-right">
+                  {{element &&  element.reward ? (element.reward | percent: '1.1-4' : locale) : ''}}
                 </td>
               </ng-container>
-              <ng-container matColumnDef="privileges">
-                <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="privileges-min-width">
-                  <div style="width: 100%" class="padding-top-10 padding-bottom-10">
-                    <div fxLayout="row">
-                      <div fxFlex="40%" fxFlex.lt-lg="60%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column">
-                        <div fxLayout="row wrap">
-                          <div fxFlex="50%" fxFlex.lt-md="100%">
-                            <mat-checkbox color="primary" formControlName="view"
-                              (change)="onChangeViewPrivilege(element)">
-                              {{'forms.privilege.options.view' | translate}}
-                            </mat-checkbox>
-                          </div>
-                          <div fxFlex="50%" fxFlex.lt-md="100%">
-                            <mat-checkbox color="primary" formControlName="create" (change)="onChangePrivilege(element)">
-                              {{'forms.privilege.options.create' | translate}}
-                            </mat-checkbox>
-                          </div>
-                        </div>
-                        <div fxLayout="row wrap">
-                          <div fxFlex="50%" fxFlex.lt-md="100%">
-                            <mat-checkbox color="primary" formControlName="edit" (change)="onChangePrivilege(element)">
-                              {{'forms.privilege.options.edit' | translate}}
-                            </mat-checkbox>
-                          </div>
-                          <div fxFlex="50%" fxFlex.lt-md="100%">
-                            <mat-checkbox color="primary" formControlName="delete" (change)="onChangePrivilege(element)">
-                              {{'forms.privilege.options.delete' | translate}}
-                            </mat-checkbox>
-                          </div>
-                        </div>
-                        <div fxLayout="row wrap">
-                          <div fxFlex="50%" fxFlex.lt-md="100%">
-                            <mat-checkbox color="primary" formControlName="publish" (change)="onChangePrivilege(element)">
-                              {{'forms.privilege.options.publish' | translate}}
-                            </mat-checkbox>
-                          </div>
-                          <div fxFlex="50%" fxFlex.lt-md="100%">
-                            <mat-checkbox color="primary" formControlName="download"
-                              (change)="onChangePrivilege(element)">
-                              {{'forms.privilege.options.download' | translate}}
-                            </mat-checkbox>
-                          </div>
-                        </div>
-                      </div>
-  
-                    </div>
-                  </div>
+
+              <ng-container matColumnDef="probability">
+                <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
+                  {{'table.gamificationTable.probability' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-right">
+                  {{element &&  element.probability ? (element.probability | percent: '1.1-4' : locale) : ''}}
                 </td>
               </ng-container>
-              <tr mat-row *matRowDef="let row; columns: featureColumns" [hidden]="loading"></tr>
+
+              <ng-container matColumnDef="blended">
+                <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
+                  {{'table.gamificationTable.blended' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let element" class="text-right">
+                  {{element &&  element.blended ? (element.blended | percent: '1.1-4' : locale) : ''}}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="runningNumber">
+                <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width">
+                  {{'table.gamificationTable.runningNumber' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{element.running_number}}
+                </td>
+              </ng-container>
+
+              <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="ruleColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: ruleColumns" [hidden]="loading"></tr>
             </table>
           </div>
           <div fxLayout="row" fxLayoutAlign="center center" *ngIf="loading" style="min-height:100px">
             <mat-spinner diameter="50"></mat-spinner>
           </div>
-          <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top-10 padding-left-16"
-            *ngIf="(getPrivilegesFormArray() && getPrivilegesFormArray().controls.length === 0) && !loading">
+          <div fxLayout="row wrap" fxLayoutAlign="start start" class="margin-top-10 padding-left-16"
+            *ngIf="upcomingRule.length === 0 && !loading">
             <div class="font-gotham-light">
               {{'table.noRecordsFound' | translate}}
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
+      <div fxLayout="row" #bottomTable fxLayoutAlign="start center" class="font-tag text-medium-gray padding-top-5">
+        <div fxFlex="50%" fxFlex.lt-sm="100%" class="padding-bottom-5">
+          <div>{{'gamificationRuleScreen.replaceText' | translate}} : </div>
+          <div>{{ replaceTime ? (replaceTime | date : 'dd/MM/yyyy HH:mm') : '-'}}</div>
+        </div>
+        <div fxFlex="50%" fxFlex.lt-sm="100%" fxLayout="row wrap" fxLayoutAlign="end center" class="padding-bottom-5">
+          <div class="margin-right-10">
+            <button mat-raised-button color="accent"
+              [disabled]="upcomingRule.length <= 0 || !allowEdit" routerLink="/gamification/rule/update">{{'edit' | translate}}</button>
+          </div>
+          <div class="margin-right-10">
+            <button [disabled]="!allowCreate" mat-raised-button color="primary" routerLink="/gamification/rule/create">{{'gamificationRuleScreen.newRule' | translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

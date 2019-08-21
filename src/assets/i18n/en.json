@@ -451,6 +451,24 @@
         "approvalSearch": {
             "placeholder": "Search Title"
         },
+        "sampleSize": {
+            "errorRequired": "Sample Size must have numeric value",
+            "errorMin": "Min. value of sample size is {{minValue}}",
+            "errorFormat": "Sample Size must be an integer number"
+        },
+        "rangeSize": {
+            "errorRequired": "Range Size must have numeric value",
+            "errorMin": "Range Size must have a positive number",
+            "errorFormat": "Range Size must be an integer number"
+        },
+        "reward": {
+            "errorRequired": "Reward must have numeric value",
+            "errorMin": "Reward must have a positive number"
+        }, 
+        "probability": {
+            "errorRequired": "Probability must have numeric value",
+            "errorMin": "Probability must have a positive number"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -569,6 +587,7 @@
         },
         "gamificationTable": {
             "reward": "Reward",
+            "rangeSize": "Range Size",
             "probability": "Probability",
             "blended": "Blended",
             "runningNumber": "Running Number"
@@ -901,7 +920,19 @@
         "sampleSize": "Sample Size",
         "activeSince": "Active since",
         "replaceText": "Will replace the active rule at",
-        "newRule": "New Rule"
+        "newRule": "New Rule",
+        "totalRangeSize": "total range size",
+        "rangeSizeTotalError": "Range Size is not equal with Sample Size",
+        "confirmationModal": {
+            "edit": {
+                "title": "Update Confirmation",
+                "content": "Are you sure you want to update rule? The update will be applied on next day at 00.01 WIB"
+            },
+            "newRule": {
+                "title": "New Rule Confirmation",
+                "content": "Are you sure you want to create new rule? New rule will be applied on next day at 00.01 WIB"
+            }
+        }
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -1030,7 +1061,7 @@
             "07071": "missing search key parameter",
             "07072": "no data found",
             "07073": "data cannot be downloaded",
-            "07075" : "transaction not found"
+            "07075": "transaction not found"
         }
     }
 }

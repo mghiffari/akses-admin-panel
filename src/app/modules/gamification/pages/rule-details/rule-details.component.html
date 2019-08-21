@@ -1,0 +1,135 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16 border-bottom-gray">
+    <div class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      {{'gamificationRuleScreen.title' | translate}}
+    </div>
+  </div>
+  <div fxLayout="row" class="padding-left-16 padding-right-16 padding-top-10 padding-bottom-10 border-bottom-gray">
+    <div fxFlex="50%" fxLayout="column" class="font-gotham-bold">
+      <div class="font-tag text-medium-gray">
+        {{'gamificationRuleScreen.totalRangeSize' | translate | uppercase}}
+      </div>
+      <div class="font-sub-description" [class.text-warning]="totalRangeSize !== sampleSize.value"
+        [class.text-success]="totalRangeSize === sampleSize.value">
+        {{totalRangeSize | number : '1.0-4' : locale}}
+      </div>
+    </div>
+    <div fxFlex="50%" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+      <button mat-raised-button color="accent" *ngIf="!onSubmittingForm" [disabled]="loading"
+        (click)="goToListScreen()">{{'cancel' | translate}}</button>
+      <button mat-raised-button color="primary" *ngIf="!onSubmittingForm" [disabled]="loading || ruleForm.invalid"
+        (click)="save()">{{'save' | translate}}</button>
+      <button mat-raised-button color="primary" disabled *ngIf="onSubmittingForm">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <div>
+            <mat-spinner diameter="16"></mat-spinner>
+          </div>
+          <div class="margin-left-5">{{'loading' | translate}}</div>
+        </div>
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="ruleForm">
+    <div fxLayout="row wrap"
+      class="padding-left-16 padding-right-16 padding-top-10 padding-bottom-10 border-bottom-gray" fxLayoutGap="10px">
+      <div fxFlexAlign="center" class="font-gotham-bold font-sub-description">
+        {{'gamificationRuleScreen.sampleSize' | translate}} :
+      </div>
+      <div fxFlex="150px">
+        <app-masked-num-input formControlName="sampleSize" (change)="calculateRule()" (keyup)="calculateRule()">
+        </app-masked-num-input>
+        <mat-error class="bottom-error" *ngIf="sampleSize.invalid && (sampleSize.dirty || sampleSize.touched)">
+          <span *ngIf="sampleSize.errors.required">{{'forms.sampleSize.errorRequired' | translate}}</span>
+          <span *ngIf="sampleSize.errors.pattern">{{'forms.sampleSize.errorFormat' | translate }}</span>
+          <span
+            *ngIf="!sampleSize.errors.pattern && sampleSize.errors.min">{{'forms.sampleSize.errorMin' | translate : sampleSearchValidation}}</span>
+        </mat-error>
+      </div>
+    </div>
+    <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" style="overflow-x: auto">
+      <table mat-table [dataSource]="rule.controls" class="table-min-100" #ruleTable formArrayName="rule">
+        <ng-container matColumnDef="reward">
+          <th mat-header-cell *matHeaderCellDef class="font-th  th-width-150">
+            {{'table.gamificationTable.reward' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <div [formGroupName]="i" class="padding-top-5 padding-bottom-5">
+              <app-masked-num-input formControlName="reward" [type]="inputMaskType.percentage"
+                (change)="calculateRule()" (keyup)="calculateRule()">
+              </app-masked-num-input>
+              <mat-error class="bottom-error text-left"
+                *ngIf="getReward(element).invalid && (getReward(element).dirty || getReward(element).touched)">
+                <span *ngIf="getReward(element).errors.required">{{'forms.reward.errorRequired' | translate}}</span>
+                <span *ngIf="getReward(element).errors.min">{{'forms.reward.errorMin' | translate}}</span>
+              </mat-error>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="rangeSize">
+          <th mat-header-cell *matHeaderCellDef class="font-th  th-width-150">
+            {{'table.gamificationTable.rangeSize' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <div [formGroupName]="i" class="padding-top-5 padding-bottom-5">
+              <app-masked-num-input formControlName="rangeSize" (change)="calculateRule()" (keyup)="calculateRule()">
+              </app-masked-num-input>
+              <mat-error class="bottom-error text-left"
+                *ngIf="getRangeSize(element).invalid && (getRangeSize(element).dirty || getRangeSize(element).touched)">
+                <span
+                  *ngIf="getRangeSize(element).errors.required">{{'forms.rangeSize.errorRequired' | translate}}</span>
+                <span *ngIf="!getRangeSize(element).errors.pattern && getRangeSize(element).errors.min">{{'forms.rangeSize.errorMin' | translate}}</span>
+                <span *ngIf="getRangeSize(element).errors.pattern">{{'forms.rangeSize.errorFormat' | translate}}</span>
+              </mat-error>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="probability">
+          <th mat-header-cell *matHeaderCellDef class="font-th  th-width-150">
+            {{'table.gamificationTable.probability' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{getProbability(element).value ? (getProbability(element).value | percent: '1.0-4' : locale) : ''}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="blended">
+          <th mat-header-cell *matHeaderCellDef class="font-th  th-width-150">
+            {{'table.gamificationTable.blended' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element" class="text-right">
+            {{getBlended(element).value ? (getBlended(element).value | percent: '1.0-4' : locale) : ''}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="runningNumber">
+          <th mat-header-cell *matHeaderCellDef class="font-th  th-width-150">
+            {{'table.gamificationTable.runningNumber' | translate}}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{getRunningFloor(element).value && getRunningCeil(element).value ? 
+                getRunningFloor(element).value + '-' + getRunningCeil(element).value
+                  : ''}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="empty">
+          <th mat-header-cell *matHeaderCellDef>
+          </th>
+          <td mat-cell *matCellDef="let element">
+          </td>
+        </ng-container>
+
+        <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="ruleColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: ruleColumns" [hidden]="loading"></tr>
+      </table>
+    </div>
+  </form>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+</div>
