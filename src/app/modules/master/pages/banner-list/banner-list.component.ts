@@ -14,13 +14,8 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: []
 })
 export class BannerListComponent implements OnInit {
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
+  
   orderObject = {};
   today = new Date();
 

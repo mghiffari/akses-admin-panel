@@ -14,13 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class SpecialOfferListComponent implements OnInit {
   now = new Date();
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
 
   offerColumns: string[] = [
     'number',

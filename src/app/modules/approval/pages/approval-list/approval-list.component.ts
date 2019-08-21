@@ -11,13 +11,7 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
   styleUrls: ['./approval-list.component.scss']
 })
 export class ApprovalListComponent implements OnInit {
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
   loading = false;
   filterForm: FormGroup = new FormGroup({
     startDate: new FormControl(null),

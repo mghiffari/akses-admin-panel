@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
@@ -121,6 +121,22 @@ export class MainNavComponent {
       title: 'navMenus.approval.title',
       link: '/approvals',
       getShowFlag: () => {return this.getPublishPrivilege()}
+    },
+    {
+      title: 'navMenus.gamification.title',
+      link: '/gamification',
+      children: [
+        {
+          title: 'navMenus.gamification.children.rule',
+          link: '/rule',
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.gamificationRule)}
+        },
+        {
+          title: 'navMenus.gamification.children.cashbackReward',
+          link: '/cashback-reward',
+          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.cashbackReward)}
+        },
+      ]
     },
   ]
 
