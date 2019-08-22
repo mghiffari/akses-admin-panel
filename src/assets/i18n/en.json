@@ -465,10 +465,6 @@
         "reward": {
             "errorRequired": "Reward must have numeric value",
             "errorMin": "Reward must have a positive number"
-        }, 
-        "probability": {
-            "errorRequired": "Probability must have numeric value",
-            "errorMin": "Probability must have a positive number"
         },
         "buttonText": {
             "save": "Save",
@@ -830,7 +826,6 @@
         "typeNotFound": "payment type {{type}} not found",
         "succesCreated": "Payment Instruction successfully created",
         "succesUpdated": "Payment Instruction successfully updated",
-        "createFailed": "failed to create new instruction",
         "addNewStep": "add new step",
         "uploadIconFailed": "failed to upload icon",
         "insertInstructionFailed": "failed to create instruction",

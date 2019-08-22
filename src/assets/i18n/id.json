@@ -465,10 +465,6 @@
         "reward": {
             "errorRequired": "Reward wajib diisi dengan angka",
             "errorMin": "Reward harus terdiri dari bilangan positif"
-        }, 
-        "probability": {
-            "errorRequired": "Probability wajib diisi dengan angka",
-            "errorMin": "Probability harus terdiri dari bilangan positif"
         },
         "buttonText": {
             "save": "Simpan",
