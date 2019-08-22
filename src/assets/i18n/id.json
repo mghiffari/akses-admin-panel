@@ -452,6 +452,20 @@
         "approvalSearch": {
             "placeholder": "Cari Judul"
         },
+        "sampleSize": {
+            "errorRequired": "Sample Size wajib diisi dengan angka",
+            "errorMin": "Nilai minimum untuk Sample Size adalah {{minValue}}",
+            "errorFormat": "Sample Size wajib diisi dengan bilangan bulat"
+        },
+        "rangeSize": {
+            "errorRequired": "Range Size wajib diisi dengan angka",
+            "errorMin": "Range Size harus terdiri dari bilangan positif",
+            "errorFormat": "Range Size wajib diisi dengan bilangan bulat"
+        },
+        "reward": {
+            "errorRequired": "Reward wajib diisi dengan angka",
+            "errorMin": "Reward harus terdiri dari bilangan positif"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -570,6 +584,7 @@
         },
         "gamificationTable": {
             "reward": "Reward",
+            "rangeSize": "Range Size",
             "probability": "Probability",
             "blended": "Blended",
             "runningNumber": "Running Number"
@@ -914,7 +929,19 @@
         "sampleSize": "Sample Size",
         "activeSince": "Aktif sejak",
         "replaceText": "Akan mengubah rule aktif pada",
-        "newRule": "Rule Baru"
+        "newRule": "Rule Baru",
+        "totalRangeSize": "total range size",
+        "rangeSizeTotalError": "jumlah Range Size tidak sama dengan Sample Size",
+        "confirmationModal": {
+            "edit": {
+                "title": "Konfirmasi Perubahan",
+                "content": "Apakah anda yakin untuk melakukan perubahan? Perubahan akan diterapkan di hari selanjutnya pada pukul 00.01"
+            },
+            "newRule": {
+                "title": "Konfirmasi Rule Baru",
+                "content": "Apakah anda yakin untuk menambahkan rule baru? Rule baru akan diterapkan di hari selanjutnya pada pukul 00.01"
+            }
+        }
     },
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
