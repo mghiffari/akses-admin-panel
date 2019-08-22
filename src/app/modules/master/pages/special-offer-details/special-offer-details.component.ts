@@ -36,6 +36,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
   imageRatio = CustomValidation.specialOfferImg.ratio;
   imageRatioPercentage = CustomValidation.specialOfferImg.ratio.height / CustomValidation.specialOfferImg.ratio.width;
   showPreview = false
+  approvalStatus = constants.approvalStatus
   private imageInput: ElementRef;
   @ViewChild('imageInput') set imgInput(imageInput: ElementRef) {
     this.imageInput = imageInput;
@@ -173,14 +174,14 @@ export class SpecialOfferDetailsComponent implements OnInit {
       }, {
           validators: CustomValidation.offerEndDate
         })
-      if(this.router.url.includes('update')){
+      if (this.router.url.includes('update')) {
         this.isCreate = false;
         allowPage = this.allowEdit
       } else {
         this.isCreate = true;
         allowPage = this.allowCreate
       }
-      if(allowPage){
+      if (allowPage) {
         this.loading = true;
         this.onSubmittingForm = false;
         this.activateRouting = false;
@@ -201,27 +202,32 @@ export class SpecialOfferDetailsComponent implements OnInit {
                         let editedOffer: SpecialOffer = Object.assign(new SpecialOffer(), response.data);
                         let oldEndDate = new Date(editedOffer.end_date);
                         let date = new Date(editedOffer.end_date)
-                        if (!CustomValidation.durationFromNowValidation(date)) {
-                          this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
+                        if (editedOffer.status !== this.approvalStatus.approved) {
+                          if (!CustomValidation.durationFromNowValidation(date)) {
+                            this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
+                          } else {
+                            let hour = date.getHours();
+                            let minute = date.getMinutes();
+                            let time = (hour > 9 ? '' : '0') + hour + ':'
+                              + (minute > 9 ? '' : '0') + minute
+                            this.offerForm.patchValue({
+                              id: id,
+                              image: editedOffer.sp_offer_image,
+                              imageFile: null,
+                              oldImage: editedOffer.sp_offer_image,
+                              title: editedOffer.title,
+                              description: editedOffer.description,
+                              termsAndConds: editedOffer.terms_and_conditions,
+                              instructions: editedOffer.instructions,
+                              endDate: date,
+                              endTime: time,
+                              oldEndDate: oldEndDate,
+                              category: editedOffer.category,
+                              recipient: editedOffer.url
+                            })
+                          }
                         } else {
-                          let hour = date.getHours();
-                          let minute = date.getMinutes();
-                          let time = (hour > 9 ? '' : '0') + hour + ':'
-                            + (minute > 9 ? '' : '0') + minute
-                          this.offerForm.patchValue({
-                            id: id,
-                            image: editedOffer.sp_offer_image,
-                            imageFile: null,
-                            oldImage: editedOffer.sp_offer_image,
-                            title: editedOffer.title,
-                            description: editedOffer.description,
-                            termsAndConds: editedOffer.terms_and_conditions,
-                            instructions: editedOffer.instructions,
-                            endDate: date,
-                            endTime: time,
-                            oldEndDate: oldEndDate,
-                            category: editedOffer.category
-                          })
+                          this.editOfferError('specialOfferDetailsScreen.cantUpdate.approvedOffer')
                         }
                       } catch (error) {
                         console.table(error)
@@ -351,7 +357,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
     } else {
       allowSave = this.allowEdit
     }
-    if(allowSave){
+    if (allowSave) {
       const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
         width: '260px',
         restoreFocus: false,
@@ -393,6 +399,10 @@ export class SpecialOfferDetailsComponent implements OnInit {
                   offer.instructions = formValue.instructions;
                   offer.end_date = endDate;
                   offer.category = formValue.category;
+                  offer.status = this.approvalStatus.waitingForApproval
+                  offer.status_by = null
+                  offer.status_dt = null
+                  offer.url = formValue.recipient
                   this.updateOffer(offer)
                 } else {
                   this.uploadFiles()
@@ -511,6 +521,10 @@ export class SpecialOfferDetailsComponent implements OnInit {
                       offer.instructions = formValue.instructions;
                       offer.end_date = endDate;
                       offer.category = formValue.category
+                      offer.status = this.approvalStatus.waitingForApproval
+                      offer.status = this.approvalStatus.waitingForApproval
+                      offer.status_by = null
+                      offer.status_dt = null
                       this.insertOffer(offer);
                     }
                   } catch (error) {
@@ -541,6 +555,10 @@ export class SpecialOfferDetailsComponent implements OnInit {
                     offer.instructions = formValue.instructions;
                     offer.end_date = endDate;
                     offer.category = formValue.category
+                    offer.status = this.approvalStatus.waitingForApproval
+                    offer.status_by = null
+                    offer.status_dt = null
+                    offer.url = formValue.recipient
                     this.updateOffer(offer, true)
                   }, error => {
                     console.table(error)
@@ -651,7 +669,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
           this.onSubmittingForm = false;
           this.snackBar.openFromComponent(ErrorSnackbarComponent, {
             data: {
-              title: 'specialOfferDetailsScreen.createFailed',
+              title: 'specialOfferDetailsScreen.updateFailed',
               content: {
                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                 data: null

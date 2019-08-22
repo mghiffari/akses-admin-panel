@@ -8,6 +8,7 @@ import Utils from '../common/utils';
 })
 export class SpecialOfferService {
   specialOfferApiUrl = environment.apiurl + 'specialoffer';
+  saveApiUrl = this.specialOfferApiUrl + '/save'
 
   constructor(
     private authService: AuthService
@@ -28,9 +29,9 @@ export class SpecialOfferService {
 
   //used to hit update special offer API
   updateOffer(data){
-    let url = this.specialOfferApiUrl;
+    let url = this.saveApiUrl;
     console.log("SpecialOfferService | updateOffer ", url);
-    return this.authService.wrapTokenPutApi(url, data)
+    return this.authService.wrapTokenPostApi(url, data)
   }
 
   //get offer by id
@@ -42,7 +43,7 @@ export class SpecialOfferService {
 
   //create offer
   createOffer(data) {
-    let url = this.specialOfferApiUrl;
+    let url = this.saveApiUrl;
     console.log("SpecialOfferService | createOffer " + url);
     return this.authService.wrapTokenPostApi(url, data);
   }

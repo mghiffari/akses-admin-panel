@@ -882,7 +882,8 @@
         "updateFailed": "failed to update special offer",
         "createFailed": "failed to create new Special Offer",
         "cantUpdate": {
-            "minDuration": "can't update special offer which expiry date is less than one hour"
+            "minDuration": "can't update special offer which expiry date is less than one hour",
+            "approvedOffer": "can't update special offer that has been approved"
         },
         "uploadImageFailed": "failed to upload image",
         "uploadCSVFailed": "failed to upload csv file",

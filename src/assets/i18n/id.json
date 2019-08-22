@@ -882,7 +882,8 @@
         "updateFailed": "gagal mengubah data special offer",
         "createFailed": "gagal menambahkan special offer baru",
         "cantUpdate": {
-            "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini"
+            "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini",
+            "approvedOffer": "tidak dapat mengubah special offer yang telah diapprove"
         },
         "uploadImageFailed": "upload gambar gagal",
         "uploadCSVFailed": "upload file csv gagal",
