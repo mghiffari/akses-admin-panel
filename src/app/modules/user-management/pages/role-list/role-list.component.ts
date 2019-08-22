@@ -144,7 +144,7 @@ export class RoleListComponent implements OnInit {
 
   // method to get a form control from table element form group
   getElementFormControl(element, formControlName) {
-    console.log('RoleListComponent | getElementFormControl')
+    console.log('RoleListComponent | getElementFormControl');
     return element.get(formControlName);
   }
 
@@ -157,7 +157,7 @@ export class RoleListComponent implements OnInit {
   // method to get feature name form control from table element form group
   getElementFeatureName(element) {
     console.log('RoleListComponent | getElementFeatureName')
-    return this.getElementFormControl(element, 'name');
+    return 'features.' + this.getElementFormControl(element, 'unique_tag').value;
   }
 
   // method to get features
@@ -223,6 +223,7 @@ export class RoleListComponent implements OnInit {
                   pageId: feature.id,
                   groupId: new FormControl(prevRole.id),
                   name: feature.name,
+                  unique_tag: feature.unique_tag,
                   view: featurePrivilege.view,
                   create: featurePrivilege.create,
                   edit: featurePrivilege.edit,
@@ -236,6 +237,7 @@ export class RoleListComponent implements OnInit {
                   pageId: feature.id,
                   groupId: new FormControl(prevRole.id),
                   name: feature.name,
+                  unique_tag: feature.unique_tag,
                   view: false,
                   create: false,
                   edit: false,
@@ -614,6 +616,7 @@ export class RoleListComponent implements OnInit {
                   pageId: new FormControl(feature.id),
                   groupId: new FormControl(id),
                   name: new FormControl(feature.name),
+                  unique_tag: new FormControl(feature.unique_tag),
                   view: new FormControl(featurePrivilege.view),
                   create: new FormControl(featurePrivilege.create),
                   edit: new FormControl(featurePrivilege.edit),
@@ -627,6 +630,7 @@ export class RoleListComponent implements OnInit {
                   pageId: new FormControl(feature.id),
                   groupId: new FormControl(id),
                   name: new FormControl(feature.name),
+                  unique_tag: new FormControl(feature.unique_tag),
                   view: new FormControl(false),
                   create: new FormControl(false),
                   edit: new FormControl(false),
