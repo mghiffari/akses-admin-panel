@@ -28,7 +28,7 @@
         </div>
         <div fxFlex="70%" class="padding-left-16">
           <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
-            <a class="text-purple font-description" [href]="offer?.url" style="text-decoration: none">
+            <a *ngIf="offer.url" class="text-purple font-description" [href]="offer.url" style="text-decoration: none">
               {{'specialOfferDetailsScreen.recipientUrlLabel' | translate}}.csv</a>
           </div>
         </div>
@@ -80,7 +80,7 @@
             {{'forms.termsAndConditions.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" class="padding-left-16">
-            <div class="border-gray" [innerHTML]="offer?.terms_and_conditions"></div>
+            <div class="border-gray" style="min-height: 50px" [innerHTML]="offer?.terms_and_conditions"></div>
           </div>
         </div>
         <div fxLayout="row wrap">
@@ -88,7 +88,7 @@
             {{'forms.redeemVoucherInstructions.fieldTitle' | translate}}
           </div>
           <div fxFlex="70%" class="padding-left-16">
-            <div class="border-gray" [innerHTML]="offer?.instructions"></div>
+            <div class="border-gray" style="min-height: 50px" [innerHTML]="offer?.instructions"></div>
           </div>
         </div>
       </div>

@@ -117,7 +117,8 @@ export class SpecialOfferListComponent implements OnInit {
   //check whether offer is editable
   isEditableOffer(offer) {
     console.log('SpecialOfferListComponent | isEditableOffer');
-    return CustomValidation.durationFromNowValidation(new Date(offer.end_date))
+    return CustomValidation.durationFromNowValidation(new Date(offer.end_date)) 
+      && offer.status !== this.approvalStatus.approved
   }
 
   // call api to get data based on table page, page size, and search keyword

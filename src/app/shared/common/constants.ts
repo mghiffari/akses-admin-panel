@@ -65,8 +65,8 @@ export const constants = {
     }, 
     approvalStatus: {
         approved: "1",
-        rejected: "2",
-        waitingForApproval: "0"
+        rejected: "0",
+        waitingForApproval: "2"
     },
     approvalType: {
         speciaOffer: "specialoffer"

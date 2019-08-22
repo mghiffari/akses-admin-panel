@@ -10,8 +10,11 @@ export class SpecialOffer {
     created_by: string;
     modified_dt: Date;
     modified_by: string;
-    status: boolean;
+    active_status: boolean;
     is_deleted: boolean;
     category: string;
     url: string;
+    status: string;
+    status_by: string;
+    status_dt: Date;
 }
