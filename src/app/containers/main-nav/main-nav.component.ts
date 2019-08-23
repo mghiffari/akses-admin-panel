@@ -72,7 +72,6 @@ export class MainNavComponent {
       title: 'navMenus.creditSimulation.title',
       link: '/credit-simulation',
       featureName: this.featureNames.creditSimulation,
-      getShowFlag: () => {return this.getViewPrivilege(this.featureNames.creditSimulation)},
       children: []
     },
     {
@@ -140,7 +139,6 @@ export class MainNavComponent {
     },
   ]
 
-
   navList = []
 
   //constructor
@@ -178,54 +176,57 @@ export class MainNavComponent {
       this.role = JSON.parse(this.authService.getUserLogin()).group_name
     }
     this.navList = []
-    if(this.authService.getViewPrvg(this.featureNames.creditSimulation)){
-      this.loading = true;
-      let creditSimulationProducts: CSProduct[] = [];
-      let prodNavList = []
-      this.creditSimulationService.getProductList().subscribe(
-        response => {
-          try {
-            console.table(response)
-            creditSimulationProducts = response.data;
-            prodNavList = creditSimulationProducts.map(el => {
-              return {
-                title: el.name,
-                link: '/product/' + el.id
-              }
-            })
-            
-          } catch (error) {
-            console.table(error)
-          } 
-        }, error => {
-          try {
-            console.table(error)
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'navMenus.creditSimulation.failedGetProducts',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+    this.loading = true;
+    let creditSimulationProducts: CSProduct[] = [];
+    let prodNavList = [];
+    this.creditSimulationService.getProductList().subscribe(
+      response => {
+        try {
+          console.table(response)
+          creditSimulationProducts = response.data;
+          creditSimulationProducts.map(el => {
+            if(this.authService.getViewPrvg(el.unique_tag)) {
+              prodNavList.push(
+                {
+                  title: el.name,
+                  link: '/product/' + el.id,
+                  getShowFlag: () => {return this.getViewPrivilege(el.unique_tag)}
                 }
+              );
+            }              
+          });
+        } catch (error) {
+          console.table(error)
+        } 
+      }, error => {
+        try {
+          console.table(error)
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'navMenus.creditSimulation.failedGetProducts',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
               }
-            })
-          } catch (error) {
-            console.table(error)
-          } 
-        }
-      ).add(() => {
-        this.loading = false;
-        this.showAuthMenus(true, prodNavList)
-      })
-    } else {
-      this.showAuthMenus()
-    }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        } 
+      }
+    ).add(() => {
+      this.loading = false;
+      this.showAuthMenus(prodNavList);
+    })
   }
 
   // show authorized menus only
-  showAuthMenus(showCreditSimulation = false, csChildMenus = []){
+  showAuthMenus(csChildMenus = []){
     console.log('MainNavComponent | showAuthMenus')
     for(let nav of this.allNav){
+      if(nav.featureName === this.featureNames.creditSimulation) {
+        nav.children = csChildMenus;
+      }
       let children = []
       let addNav = {
         title: nav.title,
@@ -233,13 +234,8 @@ export class MainNavComponent {
         children: nav.children ? nav.children : null
       }
       if(nav.getShowFlag){
-        if(showCreditSimulation && nav.featureName === this.featureNames.creditSimulation){
-          addNav.children = csChildMenus
+        if(nav.getShowFlag()){
           this.navList.push(addNav)
-        } else {
-          if(nav.getShowFlag()){
-            this.navList.push(addNav)
-          }
         }
       } else {
         if(addNav.children){
