@@ -128,7 +128,7 @@ export class AuthService {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
-      return el.features.trim().toLowerCase() === featureName
+      return el.unique_tag.trim().toLowerCase() === featureName
     })
     return feature
   }
@@ -140,7 +140,7 @@ export class AuthService {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
-      return el.features.trim().toLowerCase() === featureName
+      return el.unique_tag.trim().toLowerCase() === featureName
     })
     return feature && feature.view
   }
@@ -152,7 +152,7 @@ export class AuthService {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
-      return el.features.trim().toLowerCase() === featureName
+      return el.unique_tag.trim().toLowerCase() === featureName
     })
     return feature && feature.view && feature.create
   }

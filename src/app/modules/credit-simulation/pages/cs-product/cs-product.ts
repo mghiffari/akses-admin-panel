@@ -88,94 +88,114 @@ export class CSProductComponent implements OnInit {
 
   //on init
   ngOnInit() {
-    console.log('CreditSimulationProductComponent | ngOnInit')
-    let prvg = this.authService.getFeaturePrivilege(constants.features.creditSimulation)
-    if(prvg && this.authService.getFeatureViewPrvg(prvg)){
-      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
-      this.route.params.subscribe(params => {
-        try {
-          console.table(params);
-          this.productId = params.productId;
-          this.components = [];
-          this.product = new CSProduct();
-          this.edit = false;
-          this.tabs._handleClick = this.interceptTabChange.bind(this)
-          this.tableColumns = ['area']
-          this.loading = true;
-          this.selectedIndex = -1;
-          this.csFormGroup = new FormGroup({
-            areaForms: new FormArray([])
-          });
-          this.inputMaskType = {
-            percentage: MaskedInputType.Percentage,
-            currency: MaskedInputType.Currency
-          };
-          this.tenureMonths.forEach(month => {
-            this.tableColumns.push('tnr' + month)
-          })
-  
-          this.translateService.get('angularLocale').subscribe(res => {
-            this.locale = res;
-          });
-  
-          let tasks = [
-            this.creditSimulationService.getProductById(this.productId).pipe(map(res => res), catchError(e => of(e))),
-            this.creditSimulationService.getProductComponents(this.productId).pipe(map(res => res), catchError(e => of(e)))
-          ]
-  
-          forkJoin(tasks).subscribe((response: any) => {
-            try {
-              console.table(response[0])
-              const error = response[0];
-              if (response[0] instanceof HttpErrorResponse) {
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'productCreditSimulationScreen.getProductFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
+    console.log('CreditSimulationProductComponent | ngOnInit');
+    this.route.params.subscribe(params => {
+      try {
+        console.table(params);
+        this.productId = params.productId;
+        this.components = [];
+        this.product = new CSProduct();
+        this.edit = false;
+        this.tabs._handleClick = this.interceptTabChange.bind(this)
+        this.tableColumns = ['area']
+        this.loading = true;
+        this.selectedIndex = -1;
+        this.csFormGroup = new FormGroup({
+          areaForms: new FormArray([])
+        });
+        this.inputMaskType = {
+          percentage: MaskedInputType.Percentage,
+          currency: MaskedInputType.Currency
+        };
+        this.tenureMonths.forEach(month => {
+          this.tableColumns.push('tnr' + month)
+        })
+
+        this.translateService.get('angularLocale').subscribe(res => {
+          this.locale = res;
+        });
+
+        this.creditSimulationService.getProductById(this.productId).subscribe(
+          resp => {
+            let prvg = this.authService.getFeaturePrivilege(resp.data.unique_tag);
+            if(prvg && this.authService.getFeatureViewPrvg(prvg)) {
+              this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
+              console.log('allow edit: ', this.allowEdit);
+              let tasks = [
+                this.creditSimulationService.getProductById(this.productId).pipe(map(res => res), catchError(e => of(e))),
+                this.creditSimulationService.getProductComponents(this.productId).pipe(map(res => res), catchError(e => of(e)))
+              ]
+      
+              forkJoin(tasks).subscribe((response: any) => {
+                try {
+                  console.table(response[0])
+                  const error = response[0];
+                  if (response[0] instanceof HttpErrorResponse) {
+                    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'productCreditSimulationScreen.getProductFailed',
+                        content: {
+                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                          data: null
+                        }
+                      }
+                    })
+                  } else {
+                    this.product = response[0].data;
                   }
-                })
-              } else {
-                this.product = response[0].data;
-              }
-            } catch (error) {
-              console.table(error)
-            } finally {
-              try {
-                console.table(response[1])
-                const error = response[1];
-                if (response[1] instanceof HttpErrorResponse) {
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'productCreditSimulationScreen.getProdCompFailed',
-                      content: {
-                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                        data: null
+                } catch (error) {
+                  console.table(error)
+                } finally {
+                  try {
+                    console.table(response[1])
+                    const error = response[1];
+                    if (response[1] instanceof HttpErrorResponse) {
+                      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                        data: {
+                          title: 'productCreditSimulationScreen.getProdCompFailed',
+                          content: {
+                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                            data: null
+                          }
+                        }
+                      })
+                    } else {
+                      this.components = response[1].data;
+                      if (this.components.length > 0) {
+                        this.selectedIndex = 0;
                       }
                     }
-                  })
-                } else {
-                  this.components = response[1].data;
-                  if (this.components.length > 0) {
-                    this.selectedIndex = 0;
+                  } catch (error) {
+                    console.table(error)
+                  } finally {
+                    this.loading = false;
                   }
                 }
-              } catch (error) {
-                console.table(error)
-              } finally {
-                this.loading = false;
-              }
+              })
+            } else {
+              this.authService.blockOpenPage()
             }
-          })
-        } catch (error) {
-          console.table(error)
-        }
-      })
-    } else {
-      this.authService.blockOpenPage()
-    }
+          }, error => {
+            try {
+              console.table(error)
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'productCreditSimulationScreen.getProductFailed',
+                  content: {
+                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
+                }
+              })
+            } catch (error) {
+              console.table(error)
+            }
+          }
+        );
+      } catch (error) {
+        console.table(error)
+      }
+    });
   }
 
   // method to intercept tab click event, to verify when editing
