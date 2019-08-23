@@ -466,6 +466,10 @@
             "errorRequired": "Reward must have numeric value",
             "errorMin": "Reward must have a positive number"
         },
+        "probability": {
+            "errorRequired": "Probability must have numeric value",
+            "errorMin": "Probability must have a positive number"
+        },
         "buttonText": {
             "save": "Save",
             "back": "Back"
@@ -584,7 +588,7 @@
         },
         "gamificationTable": {
             "reward": "Reward",
-            "rangeSize": "Range Size",
+            "totalPerson": "Total Person",
             "probability": "Probability",
             "blended": "Blended",
             "runningNumber": "Running Number"
@@ -931,8 +935,6 @@
         "activeSince": "Active since",
         "replaceText": "Will replace the active rule at",
         "newRule": "New Rule",
-        "totalRangeSize": "total range size",
-        "rangeSizeTotalError": "Range Size is not equal with Sample Size",
         "confirmationModal": {
             "edit": {
                 "title": "Update Confirmation",
@@ -942,7 +944,16 @@
                 "title": "New Rule Confirmation",
                 "content": "Are you sure you want to create new rule? New rule will be applied on next day at 00.01 WIB"
             }
-        }
+        },
+        "loadFailed": "failed to get rule list",
+        "totalPersonFormula": "probability x sample size (rounded down)",
+        "lastRowDisclaimer": "This row will be automatically calculated with formula of probability: 100% - total probability row 1-8. Probability should be a positive number",
+        "cantEditRule": "Can't edit rule",
+        "upcomingRuleNotFound": "No upcoming rule found to be edited",
+        "succesCreated": "upcoming rule successfully created",
+        "succesUpdated": "upcoming rule successfully updated",
+        "updateFailed": "failed to update upcoming rule",
+        "createFailed": "failed to create upcoming rule"
     },
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
@@ -1072,6 +1083,18 @@
         "01116": "failed to get role list",
         "01117": "role id is required",
         "01118": "failed to delete role, role is used by some active users",
+        "01119": "error sending email notification to change role",
+        "01120": "email already registered",
+        "01121": "status value for approve is wrong",
+        "01122": "status value for reject is wrong",
+        "01123": "missing cycle number parameter",
+        "01124": "missing reward parameter",
+        "01125": "missing probability parameter",
+        "01126": "missing blended parameter",
+        "01127": "missing floor parameter",
+        "01128": "missing ceiling parameter",
+        "01129": "special offer category not found",
+        "01130": "csv url invalid",
         "ms-payment": {
             "07069": "missing start date parameter",
             "07070": "missing end date parameter",
