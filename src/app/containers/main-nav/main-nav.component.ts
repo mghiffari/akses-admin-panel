@@ -193,7 +193,6 @@ export class MainNavComponent {
                   getShowFlag: () => {return this.getViewPrivilege(el.unique_tag)}
                 }
               );
-              // prvgProduct.push(el);
             }              
           });
         } catch (error) {
