@@ -11,6 +11,8 @@ import { CSProduct } from 'src/app/shared/models/cs-product';
 import { MatSnackBar } from '@angular/material';
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { constants } from 'src/app/shared/common/constants';
+import { ApprovalService } from 'src/app/shared/services/approval.service';
+import { ApprovalTab } from 'src/app/shared/models/approval-tab';
 
 @Component({
   selector: 'app-main-nav',
@@ -25,6 +27,7 @@ export class MainNavComponent {
   versionNo = environment.version;
   versionDate = environment.versionDate;
   featureNames = constants.features;
+  approvalTabs: ApprovalTab[] = []
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -148,6 +151,7 @@ export class MainNavComponent {
     private router: Router,
     private translateService: TranslateService,
     private creditSimulationService: CreditSimulationService,
+    private approvalService: ApprovalService,
     private snackBar: MatSnackBar) {
     console.log('MainNavComponent | constructor')
   }
@@ -161,8 +165,14 @@ export class MainNavComponent {
   // get publish privilege
   getPublishPrivilege(){
     console.log('MainNavComponent | getViewPrivilege')
-    let feature = this.authService.getFeaturePrivilege(this.featureNames.specialOffer)
-    return this.authService.getFeaturePublishPrvg(feature)
+    let canApprove = false
+    for(let tab of this.approvalTabs){
+      canApprove = (canApprove || this.authService.getPublishPrvg(tab.unique_tag))
+      if(canApprove){
+        break;
+      }
+    }
+    return canApprove
   }
 
   //ngOnInit get logged in user name, date locale, and credit simulation products
@@ -171,6 +181,7 @@ export class MainNavComponent {
     this.translateService.get('angularLocale').subscribe(res => {
       this.dateLocale = res;
     });
+    this.approvalTabs = []
     if (this.authService.isUserLoggedIn()) {
       this.userName = JSON.parse(this.authService.getUserLogin()).firstname
       this.role = JSON.parse(this.authService.getUserLogin()).group_name
@@ -179,6 +190,7 @@ export class MainNavComponent {
     this.loading = true;
     let creditSimulationProducts: CSProduct[] = [];
     let prodNavList = [];
+
     this.creditSimulationService.getProductList().subscribe(
       response => {
         try {
@@ -204,6 +216,38 @@ export class MainNavComponent {
           this.snackBar.openFromComponent(ErrorSnackbarComponent, {
             data: {
               title: 'navMenus.creditSimulation.failedGetProducts',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        } 
+      }
+    ).add(() => {
+      this.getApprovalTabs(prodNavList)
+    })
+  }
+
+  // get approval tabs to check publish privilege
+  getApprovalTabs(prodNavList){
+    console.log('MainNavComponent | getApprovalTabs')
+    this.approvalService.getApprovalTabs().subscribe(
+      response => {
+        try {
+          console.table(response)
+          this.approvalTabs = response.data
+        } catch (error) {
+          console.table(error)
+        } 
+      }, error => {
+        try {
+          console.table(error)
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'navMenus.approval.failedGetFeatures',
               content: {
                 text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                 data: null

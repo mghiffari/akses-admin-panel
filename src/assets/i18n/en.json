@@ -36,7 +36,8 @@
             }
         },
         "approval": {
-            "title": "Approvals"
+            "title": "Approvals",
+            "failedGetFeatures": "failed to get list of approval features"
         },
         "gamification": {
             "title": "Gamification",
@@ -436,7 +437,8 @@
             }
         },
         "date": {
-            "errorRange": "Start Date must be less than or equal than End Date"
+            "errorRange": "Start Date must be less than or equal than End Date",
+            "errorRangeRequired": "Both start date should be filled or not at all"
         },
         "transactionStartDate": {
             "errorRequired": "Start Date must have valid date format value"
@@ -922,8 +924,13 @@
     },
     "approvalListScreen": {
         "title": "Approval",
+        "getTabsFailed": "failed to get list of approval features",
+        "refreshCountFailed": "failed to refresh approval data count",
+        "loadFailed": {
+            "specialOffer": "failed to get special offer approval list"
+        },
         "tabsTitle": {
-            "specialoffer": "Sp. Offer"
+            "specialOffer": "Sp. Offer"
         },
         "totalRowsSelected": "{{totalRows}} title are selected"
     },

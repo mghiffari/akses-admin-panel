@@ -36,7 +36,8 @@
             }
         },
         "approval": {
-            "title": "Approval"
+            "title": "Approval",
+            "failedGetFeatures": "gagal mendapatkan list fitur approval"
         },
         "gamification": {
             "title": "Gamification",
@@ -436,7 +437,8 @@
             }
         },
         "date": {
-            "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai"
+            "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai",
+            "errorRangeRequired": "Kedua Tanggal Mulai dan Tanggal Selesai harus diisi atau tidak sama sekali"
         },
         "transactionStartDate": {
             "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid"
@@ -922,8 +924,13 @@
     },
     "approvalListScreen": {
         "title": "Approval",
+        "getTabsFailed": "gagal mendapatkan list fitur approval",
+        "refreshCountFailed": "refresh jumlah data approval gagal",
+        "loadFailed": {
+            "specialOffer": "gagal mendapatkan list approval special offer"
+        },
         "tabsTitle": {
-            "specialoffer": "Sp. Offer"
+            "specialOffer": "Sp. Offer"
         },
         "totalRowsSelected": "{{totalRows}} judul dipilih"
     },
