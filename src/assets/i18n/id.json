@@ -466,6 +466,10 @@
             "errorRequired": "Reward wajib diisi dengan angka",
             "errorMin": "Reward harus terdiri dari bilangan positif"
         },
+        "probability": {
+            "errorRequired": "Probability wajib diisi dengan angka",
+            "errorMin": "Probability harus terdiri dari bilangan positif"
+        },
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
@@ -584,7 +588,7 @@
         },
         "gamificationTable": {
             "reward": "Reward",
-            "rangeSize": "Range Size",
+            "totalPerson": "Jumlah Orang",
             "probability": "Probability",
             "blended": "Blended",
             "runningNumber": "Running Number"
@@ -931,8 +935,6 @@
         "activeSince": "Aktif sejak",
         "replaceText": "Akan mengubah rule aktif pada",
         "newRule": "Rule Baru",
-        "totalRangeSize": "total range size",
-        "rangeSizeTotalError": "jumlah Range Size tidak sama dengan Sample Size",
         "confirmationModal": {
             "edit": {
                 "title": "Konfirmasi Perubahan",
@@ -942,7 +944,16 @@
                 "title": "Konfirmasi Rule Baru",
                 "content": "Apakah anda yakin untuk menambahkan rule baru? Rule baru akan diterapkan di hari selanjutnya pada pukul 00.01"
             }
-        }
+        },
+        "loadFailed": "gagal mendapatkan list rule",
+        "totalPersonFormula": "probability x sample size (dibulatkan ke bawah)",
+        "lastRowDisclaimer": "Baris ini akan terisi secara otomatis dengan rumus probability 100% - total probability baris 1-8. Probability tidak boleh minus",
+        "cantEditRule": "tidak dapat mengubah rule",
+        "upcomingRuleNotFound": "Upcoming Rule tidak ditemukan",
+        "succesCreated": "upcoming rule baru berhasil ditambahkan",
+        "succesUpdated": "upcoming rule berhasil diubah",
+        "updateFailed": "gagal mengubah upcoming rule",
+        "createFailed": "gagal menambahkan upcoming rule baru"
     },
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
@@ -1100,6 +1111,18 @@
         "01116": "gagal mendapatkan list role",
         "01117": "id role wajib diisi",
         "01118": "gagal menghapus role, role digunakan oleh user aktif",
+        "01119": "gagal mengirim email notifikasi penggantian role",
+        "01120": "email telah terdaftar",
+        "01121": "status untuk approve salah",
+        "01122": "status untuk reject salah",
+        "01123": "sample size wajib diisi",
+        "01124": "reward wajib diisi",
+        "01125": "probability wajib diisi",
+        "01126": "blended wajib diiisi",
+        "01127": "floor wajib diisi",
+        "01128": "ceiling wajib parameter",
+        "01129": "kategori special offer tidak ditemukan",
+        "01130": "invalid url csv",
         "ms-payment": {
             "07069": "tanggal mulai harus diisi",
             "07070": "tanggal selesai harus diisi",

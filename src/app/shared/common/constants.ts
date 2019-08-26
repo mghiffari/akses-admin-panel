@@ -72,5 +72,17 @@ export const constants = {
     },
     approvalType: {
         speciaOffer: "specialoffer"
+    },
+    gamification: {
+        upcoming: {
+            status: false,
+            cycleNum: 'game_cycle_num_draft',
+            timestamp: 'game_timestamp_draft'
+        },
+        active: {
+            status: true,
+            cycleNum: 'game_cycle_num',
+            timestamp:'game_timestamp_release'
+        }
     }
 }
