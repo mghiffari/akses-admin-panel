@@ -52,7 +52,7 @@
     </div>
   </div>
   <div class="border-bottom-gray" fxLayout="row wrap" fxLayoutAlign="start center" class="padding-left-16">
-    <div fxFlex="40%" fxFlex.lt-md="100%">
+    <!-- <div fxFlex="40%" fxFlex.lt-md="100%">
       <a [href]="getDownloadLink()" target="_blank" class="top-action-text" fxLayoutAlign="start center"
         *ngIf="allowDownload && !loading && filterForm.valid && cashbackReward.length > 0; else disabledLink">
         <mat-icon class="font-sub-content-icon margin-right-5">cloud_download</mat-icon>
@@ -68,8 +68,8 @@
           </span>
         </div>
       </ng-template>
-    </div>
-    <div fxFlex="60%" fxFlex.lt-md="100%">
+    </div> -->
+    <div fxFlex="100%" fxFlex.lt-md="100%">
       <mat-paginator [disabled]="loading" [length]="paginatorProps.length" [pageSize]="paginatorProps.pageSize"
         [pageSizeOptions]="paginatorProps.pageSizeOptions" [showFirstLastButtons]="paginatorProps.showFirstLastButtons"
         [pageIndex]="paginatorProps.pageIndex" (page)="onPaginatorChange($event)">
