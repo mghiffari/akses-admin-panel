@@ -597,8 +597,8 @@
             "vaNumber": "Nomor VA",
             "rewardDate": "Tanggal Reward",
             "custName": "Nama Customer",
-            "grossValue": "Nilai Gros",
-            "pphValue": "Nilai Pph",
+            "grossValue": "Nilai Gross",
+            "pphValue": "Nilai PPh",
             "cashbackReceive": "Total Cashback Diterima",
             "installmentVal": "Nilai Angsuran",
             "paymentDate": "Tanggal Pembayaran",
@@ -958,7 +958,7 @@
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
         "dateFilter": "Filter Tanggal",
-        "nameFilter": "Filter Nama",
+        "nameFilter": "Cari Nama",
         "downloadReport": "download laporan",
         "filterNotSet": "Filter Belum Diatur"
     },

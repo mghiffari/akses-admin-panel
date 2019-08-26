@@ -1,13 +1,13 @@
 export class CashbackRewardData {
-    vaNumber: string;
-    rewardDate: Date;
-    custName: string;
-    grossValue: number;
-    pphValue: number;
-    cashbackReceive: number;
-    installmentVal: number;
-    paymentDate: Date;
-    npwpNumber: string;
-    npwpName: string;
-    npwpAddress: string;
+    va_number: string;
+    reward_date: Date;
+    customer_name: string;
+    gross_amt: number;
+    pph_amt: number;
+    nett_amt: number;
+    instalment_amt: number;
+    payment_date: Date;
+    npwp_no: string;
+    npwp_name: string;
+    npwp_address: string;
 }
