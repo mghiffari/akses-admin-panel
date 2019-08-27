@@ -199,6 +199,7 @@ export class CashbackRewardComponent implements OnInit {
     let isFocusedSearch = this.isFocusedSearch
     let isFocusedStartDate =this.isFocusedStartDate
     this.loading = true
+    this.filterForm.disable({emitEvent: false})
     this.gamificationService.getCashbackReward(
       this.paginatorProps.pageIndex + 1,
       this.paginatorProps.pageSize,
@@ -217,7 +218,6 @@ export class CashbackRewardComponent implements OnInit {
         } catch (error) {
           console.error(error)
         }
-        console.log('cashback reward: ', response);
       }, error => {
         try {
           console.table(error);
@@ -239,6 +239,7 @@ export class CashbackRewardComponent implements OnInit {
     ).add(
       () => {
         this.loading = false;
+        this.filterForm.enable({emitEvent: false})
         if (isFocusedStartDate && this.startDateInput) {
           setTimeout(() => {
             this.startDateInput.nativeElement.focus();

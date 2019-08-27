@@ -17,7 +17,7 @@
             <mat-form-field appearance="fill">
               <input matInput #startDateInput [matDatepicker]="startDatepicker" formControlName="startDate"
                 placeholder="{{'forms.schedule.datePlaceholder' | translate}}" (focus)="isFocusedStartDate = true"
-                (blur)="isFocusedStartDate = false" [disabled]="loading">
+                (blur)="isFocusedStartDate = false">
               <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #startDatepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
@@ -32,7 +32,7 @@
             <mat-form-field appearance="fill">
               <input matInput #endDateInput [matDatepicker]="endDatepicker" formControlName="endDate"
                 placeholder="{{'forms.schedule.datePlaceholder' | translate}}" (focus)="isFocusedEndDate = true"
-                (blur)="isFocusedEndDate = false" [disabled]="loading">
+                (blur)="isFocusedEndDate = false">
               <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #endDatepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
@@ -45,7 +45,7 @@
         <mat-form-field appearance="fill" class="font-description search">
           <mat-icon matPrefix>search</mat-icon>
           <input formControlName="search" #searchInput matInput
-            placeholder="{{'cashbackRewardScreen.nameFilter' | translate}}" [disabled]="loading"
+            placeholder="{{'cashbackRewardScreen.nameFilter' | translate}}"
             (focus)="isFocusedSearch = true" (blur)="isFocusedSearch = false">
         </mat-form-field>
       </div>
