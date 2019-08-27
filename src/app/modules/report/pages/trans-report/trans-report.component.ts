@@ -203,6 +203,7 @@ export class TransReportComponent implements OnInit {
     let isFocusedSearch = this.isFocusedSearch
     let isFocusedStartDate =this.isFocusedStartDate
     this.loading = true
+    this.filterForm.disable({emitEvent: false})
     this.reportService.getTransactionReport(
       this.paginatorProps.pageIndex + 1,
       this.paginatorProps.pageSize,
@@ -242,6 +243,7 @@ export class TransReportComponent implements OnInit {
     ).add(
       () => {
         this.loading = false;
+        this.filterForm.enable({emitEvent: false})
         if (isFocusedStartDate && this.startDateInput) {
           setTimeout(() => {
             this.startDateInput.nativeElement.focus();

@@ -1164,6 +1164,7 @@
         "01128": "missing ceiling parameter",
         "01129": "special offer category not found",
         "01130": "csv url invalid",
+        "01131": "failed to approve special offer",
         "ms-payment": {
             "07069": "missing start date parameter",
             "07070": "missing end date parameter",

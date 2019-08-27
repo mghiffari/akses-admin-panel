@@ -1164,6 +1164,7 @@
         "01128": "ceiling wajib parameter",
         "01129": "kategori special offer tidak ditemukan",
         "01130": "invalid url csv",
+        "01131": "approve special offer gagal",
         "ms-payment": {
             "07069": "tanggal mulai harus diisi",
             "07070": "tanggal selesai harus diisi",
