@@ -9,6 +9,8 @@ import Utils from '../common/utils';
 export class SpecialOfferService {
   specialOfferApiUrl = environment.apiurl + 'specialoffer';
   saveApiUrl = this.specialOfferApiUrl + '/save'
+  bulkApproveApiUrl = this.specialOfferApiUrl + '/approve'
+  bulkRejectApiUrl = this.specialOfferApiUrl + '/reject'
 
   constructor(
     private authService: AuthService
@@ -46,5 +48,19 @@ export class SpecialOfferService {
     let url = this.saveApiUrl;
     console.log("SpecialOfferService | createOffer " + url);
     return this.authService.wrapTokenPostApi(url, data);
+  }
+
+  // approve an array of special offer
+  bulkApproveSpecialOffer(data){
+    let url = this.bulkApproveApiUrl
+    console.log("SpecialOfferService | bulkApproveSpecialOffer ", url);
+    return this.authService.wrapTokenPostApi(url, data)
+  }
+
+  // reject an array of special offer
+  bulkRejectSpecialOffer(data){
+    let url = this.bulkRejectApiUrl
+    console.log("SpecialOfferService | bulkRejectSpecialOffer ", url);
+    return this.authService.wrapTokenPostApi(url, data)
   }
 }

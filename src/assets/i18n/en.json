@@ -36,7 +36,8 @@
             }
         },
         "approval": {
-            "title": "Approvals"
+            "title": "Approvals",
+            "failedGetFeatures": "failed to get list of approval features"
         },
         "gamification": {
             "title": "Gamification",
@@ -436,7 +437,8 @@
             }
         },
         "date": {
-            "errorRange": "Start Date must be less than or equal than End Date"
+            "errorRange": "Start Date must be less than or equal than End Date",
+            "errorRangeRequired": "Both start date should be filled or not at all"
         },
         "transactionStartDate": {
             "errorRequired": "Start Date must have valid date format value"
@@ -922,10 +924,49 @@
     },
     "approvalListScreen": {
         "title": "Approval",
-        "tabsTitle": {
-            "specialoffer": "Sp. Offer"
+        "getTabsFailed": "failed to get list of approval features",
+        "refreshCountFailed": "failed to refresh approval data count",
+        "loadFailed": {
+            "specialOffer": "failed to get special offer approval list"
         },
-        "totalRowsSelected": "{{totalRows}} title are selected"
+        "tabsTitle": {
+            "specialOffer": "Sp. Offer"
+        },
+        "successBulkApprove": {
+            "specialOffer": "selected special offers successfully approved"
+        },
+        "successBulkReject": {
+            "specialOffer": "selected special offers successfully rejected"
+        },
+        "bulkApproveFailed": {
+            "specialOffer": "failed to approve selected special offers"
+        },
+        "bulkRejectFailed": {
+            "specialOffer": "failed to reject selected special offers"
+        },
+        "totalFailed": {
+            "specialOffer": "{{totalFailed}} special offers failed"
+        },
+        "successApprove": {
+            "specialOffer": "special offer successfully approved"
+        },
+        "successReject": {
+            "specialOffer": "special offer successfully rejected"
+        },
+        "approveFailed": {
+            "specialOffer": "failed to approve special offer"
+        },
+        "rejectFailed": {
+            "specialOffer": "failed to reject special offer"
+        },
+        "totalRowsSelected": "{{totalRows}} title are selected",
+        "specialOfferNotActive": {
+            "title": {
+                "bulk": "some special offers has passed their end date",
+                "single": "special offer has passed its end date"
+            },
+            "content": "changes on inactive special offer will not affect the application"
+        }
     },
     "gamificationRuleScreen": {
         "title": "Gamification Rule",

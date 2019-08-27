@@ -36,7 +36,8 @@
             }
         },
         "approval": {
-            "title": "Approval"
+            "title": "Approval",
+            "failedGetFeatures": "gagal mendapatkan list fitur approval"
         },
         "gamification": {
             "title": "Gamification",
@@ -436,7 +437,8 @@
             }
         },
         "date": {
-            "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai"
+            "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai",
+            "errorRangeRequired": "Kedua Tanggal Mulai dan Tanggal Selesai harus diisi atau tidak sama sekali"
         },
         "transactionStartDate": {
             "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid"
@@ -922,10 +924,49 @@
     },
     "approvalListScreen": {
         "title": "Approval",
-        "tabsTitle": {
-            "specialoffer": "Sp. Offer"
+        "getTabsFailed": "gagal mendapatkan list fitur approval",
+        "refreshCountFailed": "refresh jumlah data approval gagal",
+        "loadFailed": {
+            "specialOffer": "gagal mendapatkan list approval special offer"
         },
-        "totalRowsSelected": "{{totalRows}} judul dipilih"
+        "tabsTitle": {
+            "specialOffer": "Sp. Offer"
+        },
+        "successBulkApprove": {
+            "specialOffer": "approve special offer yang dipilih berhasil"
+        },
+        "successBulkReject": {
+            "specialOffer": "reject special offers yang dipilih berhasil"
+        },
+        "bulkApproveFailed": {
+            "specialOffer": "approve special offer yang dipilih gagal"
+        },
+        "bulkRejectFailed": {
+            "specialOffer": "reject special offers yang dipilih gagal"
+        },
+        "totalFailed": {
+            "specialOffer": "{{totalFailed}} special offer gagal"
+        },
+        "successApprove": {
+            "specialOffer": "approve special offer berhasil"
+        },
+        "successReject": {
+            "specialOffer": "reject special offers berhasil"
+        },
+        "approveFailed": {
+            "specialOffer": "approve special offer gagal"
+        },
+        "rejectFailed": {
+            "specialOffer": "reject special offers gagal"
+        },
+        "totalRowsSelected": "{{totalRows}} judul dipilih",
+        "specialOfferNotActive": {
+            "title": {
+                "bulk": "beberapa special offer yang dipilih sudah melewati tanggal selesainya",
+                "single": "special offer yang dipilih sudah melewati tanggal selesainya"
+            },
+            "content": "perubahan pada non-aktif special offer tidak akan berdampak pada aplikasi"
+        }
     },
     "gamificationRuleScreen": {
         "title": "Gamification Rule",

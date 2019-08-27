@@ -202,8 +202,8 @@ export class CashbackRewardComponent implements OnInit {
     this.gamificationService.getCashbackReward(
       this.paginatorProps.pageIndex + 1,
       this.paginatorProps.pageSize,
-      this.datePipe.transform(this.startDate.value, 'yyyy-MM-dd'),
-      this.datePipe.transform(this.endDate.value, 'yyyy-MM-dd'),
+      this.startDate.value,
+      this.endDate.value.setHours(23, 59, 59),
       this.search.value
     ).subscribe(
       response => {

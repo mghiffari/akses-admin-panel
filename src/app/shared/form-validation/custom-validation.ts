@@ -369,4 +369,16 @@ export class CustomValidation {
         return null
       }
   };
+
+  //used to check whether start date and end date is filled both or not at all
+  static dateRangeRequiredValidaton: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+    console.log('CustomValidation | dateRangeRequiredValidaton')
+      let endDate = formGroup.get('endDate').value;
+      let startDate = formGroup.get('startDate').value;
+      if ((!endDate || endDate === '') && (!startDate || startDate === '') || (startDate && endDate)) {
+        return null
+      } else {
+        return { 'dateRangeRequired': true }
+      }
+  };
 }
