@@ -932,7 +932,41 @@
         "tabsTitle": {
             "specialOffer": "Sp. Offer"
         },
-        "totalRowsSelected": "{{totalRows}} judul dipilih"
+        "successBulkApprove": {
+            "specialOffer": "approve special offer yang dipilih berhasil"
+        },
+        "successBulkReject": {
+            "specialOffer": "reject special offers yang dipilih berhasil"
+        },
+        "bulkApproveFailed": {
+            "specialOffer": "approve special offer yang dipilih gagal"
+        },
+        "bulkRejectFailed": {
+            "specialOffer": "reject special offers yang dipilih gagal"
+        },
+        "totalFailed": {
+            "specialOffer": "{{totalFailed}} special offer gagal"
+        },
+        "successApprove": {
+            "specialOffer": "approve special offer berhasil"
+        },
+        "successReject": {
+            "specialOffer": "reject special offers berhasil"
+        },
+        "approveFailed": {
+            "specialOffer": "approve special offer gagal"
+        },
+        "rejectFailed": {
+            "specialOffer": "reject special offers gagal"
+        },
+        "totalRowsSelected": "{{totalRows}} judul dipilih",
+        "specialOfferNotActive": {
+            "title": {
+                "bulk": "beberapa special offer yang dipilih sudah melewati tanggal selesainya",
+                "single": "special offer yang dipilih sudah melewati tanggal selesainya"
+            },
+            "content": "perubahan pada non-aktif special offer tidak akan berdampak pada aplikasi"
+        }
     },
     "gamificationRuleScreen": {
         "title": "Gamification Rule",

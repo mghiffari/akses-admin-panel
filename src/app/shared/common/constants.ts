@@ -71,7 +71,7 @@ export const constants = {
         waitingForApproval: "2"
     },
     approvalType: {
-        speciaOffer: "specialoffer"
+        specialOffer: "specialoffer"
     },
     gamification: {
         upcoming: {

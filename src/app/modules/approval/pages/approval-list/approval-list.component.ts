@@ -7,6 +7,9 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
 import { ApprovalService } from 'src/app/shared/services/approval.service';
 import { ApprovalTab } from 'src/app/shared/models/approval-tab';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
+import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { WarningSnackbarComponent } from 'src/app/shared/components/warning-snackbar/warning-snackbar.component';
 
 @Component({
   selector: 'app-approval-list',
@@ -27,9 +30,10 @@ export class ApprovalListComponent implements OnInit {
   allowPublish = true;
   approvalType = constants.approvalType
   featureTags = constants.features
+  approvalStatus = constants.approvalStatus
   tabs = [
     {
-      type: this.approvalType.speciaOffer,
+      type: this.approvalType.specialOffer,
       featureName: this.featureTags.specialOffer,
       title: 'approvalListScreen.tabsTitle.specialOffer',
       count: null,
@@ -78,7 +82,8 @@ export class ApprovalListComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private authService: AuthService,
-    private approvalService: ApprovalService
+    private approvalService: ApprovalService,
+    private specialOfferService: SpecialOfferService
   ) { }
 
   ngOnInit() {
@@ -114,7 +119,7 @@ export class ApprovalListComponent implements OnInit {
         this.resetPage()
         this.resetTable()
         if (this.filterForm.errors) {
-          if(this.filterForm.errors.dateRange){
+          if (this.filterForm.errors.dateRange) {
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'invalidForm',
@@ -124,7 +129,7 @@ export class ApprovalListComponent implements OnInit {
                 }
               }
             })
-          } else if (this.filterForm.errors.dateRangeRequired){
+          } else if (this.filterForm.errors.dateRangeRequired) {
             this.snackBar.openFromComponent(ErrorSnackbarComponent, {
               data: {
                 title: 'invalidForm',
@@ -276,13 +281,264 @@ export class ApprovalListComponent implements OnInit {
     }
   }
 
-  approveData(data) { }
+  // approve selected rows
+  approveSelectedData() {
+    console.log('ApprovalListComponent | approveSelectedData')
+    if (this.isSelectedTabSpecialOffer()) {
+      this.approveSelectedSpecialOffer()
+    }
+  }
 
-  rejectData(data) { }
+  // reject selected rows
+  rejectSelectedData() {
+    console.log('ApprovalListComponent | rejectSelectedData')
+    if (this.isSelectedTabSpecialOffer()) {
+      this.rejectSelectedSpecialOffer()
+    }
+  }
 
-  bulkApproveData() { }
+  // check special offer active status before reject
+  rejectSpecialOffer(offer) {
+    console.log('ApprovalListComponent | rejectSpecialOffer')
+    if (this.isActiveSpecialOffer(offer)) {
+      this.bulkRejectSpecialOffer([offer],
+        'approvalListScreen.successReject.specialOffer',
+        'approvalListScreen.rejectFailed.specialOffer',
+        '')
+    } else {
+      const warnSnackbar = this.snackBar.openFromComponent(WarningSnackbarComponent, {
+        data: {
+          title: 'approvalListScreen.specialOfferNotActive.title.single',
+          content: {
+            text: 'approvalListScreen.specialOfferNotActive.content'
+          }
+        }
+      })
+      warnSnackbar.afterDismissed().subscribe(() => {
+        this.bulkRejectSpecialOffer([offer],
+          'approvalListScreen.successReject.specialOffer',
+          'approvalListScreen.rejectFailed.specialOffer',
+          '')
+      })
+    }
+  }
 
-  bulkRejectData() { }
+  // check all special offer active status before approving
+  rejectSelectedSpecialOffer() {
+    console.log('ApprovalListComponent | approveSelectedSpecialOffer')
+    let isAllActive = true
+    for (let row of this.selectedRows) {
+      isAllActive = (isAllActive && this.isActiveSpecialOffer(row))
+      if (!isAllActive) {
+        break
+      }
+    }
+    if (isAllActive) {
+      this.bulkRejectSpecialOffer(this.selectedRows,
+        'approvalListScreen.successBulkReject.specialOffer',
+        'approvalListScreen.bulkRejectFailed.specialOffer',
+        'approvalListScreen.totalFailed.specialOffer')
+    } else {
+      const warnSnackbar = this.snackBar.openFromComponent(WarningSnackbarComponent, {
+        data: {
+          title: 'approvalListScreen.specialOfferNotActive.title.bulk',
+          content: {
+            text: 'approvalListScreen.specialOfferNotActive.content'
+          }
+        }
+      })
+      warnSnackbar.afterDismissed().subscribe(() => {
+        this.bulkRejectSpecialOffer(this.selectedRows,
+          'approvalListScreen.successBulkReject.specialOffer',
+          'approvalListScreen.bulkRejectFailed.specialOffer',
+          'approvalListScreen.totalFailed.specialOffer')
+      })
+    }
+  }
+
+  // call bulk approve special offer api
+  bulkRejectSpecialOffer(data, successText, errorText, totalFailedText) {
+    console.log('ApprovalListComponent | bulkRejectSpecialOffer')
+    this.loading = true
+    data = data.map(el => {
+      return {...el, status: this.approvalStatus.rejected}
+    })
+    this.specialOfferService.bulkRejectSpecialOffer(data).subscribe(
+      response => {
+        try {
+          console.table(response)
+          if (response.data.rowUpdated < data.length) {
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: errorText,
+                content: {
+                  text: totalFailedText,
+                  data: {
+                    totalFailed: data.length
+                  }
+                }
+              }
+            })
+          } else {
+            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+              data: {
+                title: 'success',
+                content: {
+                  text: successText,
+                  data: null
+                }
+              }
+            })
+          }
+          this.loadData()
+        } catch (error) {
+          console.error(error)
+          this.loading = false;
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.loading = false
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: errorText,
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    )
+  }
+
+  // check special offer active status before approving
+  approveSpecialOffer(offer) {
+    console.log('ApprovalListComponent | rejectSpecialOffer')
+    if (this.isActiveSpecialOffer(offer)) {
+      this.bulkApproveSpecialOffer([offer],
+        'approvalListScreen.successApprove.specialOffer',
+        'approvalListScreen.approveFailed.specialOffer',
+        '')
+    } else {
+      const warnSnackbar = this.snackBar.openFromComponent(WarningSnackbarComponent, {
+        data: {
+          title: 'approvalListScreen.specialOfferNotActive.title.single',
+          content: {
+            text: 'approvalListScreen.specialOfferNotActive.content'
+          }
+        }
+      })
+      warnSnackbar.afterDismissed().subscribe(() => {
+        this.bulkApproveSpecialOffer([offer],
+          'approvalListScreen.successApprove.specialOffer',
+          'approvalListScreen.approveFailed.specialOffer',
+          '')
+      })
+    }
+  }
+
+  // check all special offer active status before approving
+  approveSelectedSpecialOffer() {
+    console.log('ApprovalListComponent | approveSelectedSpecialOffer')
+    let isAllActive = true
+    for (let row of this.selectedRows) {
+      isAllActive = (isAllActive && this.isActiveSpecialOffer(row))
+      if (!isAllActive) {
+        break
+      }
+    }
+    if (isAllActive) {
+      this.bulkApproveSpecialOffer(this.selectedRows,
+        'approvalListScreen.successBulkApprove.specialOffer',
+        'approvalListScreen.bulkApproveFailed.specialOffer',
+        'approvalListScreen.totalFailed.specialOffer')
+    } else {
+      const warnSnackbar = this.snackBar.openFromComponent(WarningSnackbarComponent, {
+        data: {
+          title: 'approvalListScreen.specialOfferNotActive.title.bulk',
+          content: {
+            text: 'approvalListScreen.specialOfferNotActive.content'
+          }
+        }
+      })
+      warnSnackbar.afterDismissed().subscribe(() => {
+        this.bulkApproveSpecialOffer(this.selectedRows,
+          'approvalListScreen.successBulkApprove.specialOffer',
+          'approvalListScreen.bulkApproveFailed.specialOffer',
+          'approvalListScreen.totalFailed.specialOffer')
+      })
+    }
+  }
+
+  // call bulk approve special offer api
+  bulkApproveSpecialOffer(data, successText, errorText, totalFailedText) {
+    console.log('ApprovalListComponent | bulkApproveSpecialOffer')
+    this.loading = true
+    data = data.map(el => {
+      return {...el, status: this.approvalStatus.approved}
+    })
+    this.specialOfferService.bulkApproveSpecialOffer(data).subscribe(
+      response => {
+        try {
+          console.table(response)
+          if (response.data.rowUpdated < data.length) {
+            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+              data: {
+                title: errorText,
+                content: {
+                  text: totalFailedText,
+                  data: {
+                    totalFailed: data.length
+                  }
+                }
+              }
+            })
+          } else {
+            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+              data: {
+                title: 'success',
+                content: {
+                  text: successText,
+                  data: null
+                }
+              }
+            })
+          }
+          this.loadData()
+        } catch (error) {
+          console.error(error)
+          this.loading = false;
+        }
+      }, error => {
+        try {
+          console.table(error)
+          this.loading = false
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: errorText,
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    )
+  }
+
+  // method to check whether special offer is active before approval
+  isActiveSpecialOffer(specialOffer) {
+    let now = new Date()
+    now.setSeconds(0, 0)
+    return new Date(specialOffer.end_date).getTime() > now.getTime()
+  }
 
   // conditioning load data based on selected tab type
   loadData(shouldRefreshCount = true) {
@@ -404,6 +660,7 @@ export class ApprovalListComponent implements OnInit {
   // method to off the loading and restore focus to input
   afterLoad() {
     console.log('ApprovalListComponent | afterLoad')
+    this.selectedRows = []
     this.loading = false
     this.filterForm.enable({ emitEvent: false })
     if (this.shouldFocusStartDate && this.startDateInput) {
@@ -424,7 +681,7 @@ export class ApprovalListComponent implements OnInit {
   // method to check whether the current selected tab is a specialoffer tab or not
   isSelectedTabSpecialOffer() {
     console.log('ApprovalListComponent | isSelectedTabSpecialOffer');
-    return this.isSelectedTab(this.approvalType.speciaOffer)
+    return this.isSelectedTab(this.approvalType.specialOffer)
   }
 
   // method to check whether the current selected tab type is a passed argument type

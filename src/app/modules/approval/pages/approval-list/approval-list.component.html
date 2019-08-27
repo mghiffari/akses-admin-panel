@@ -124,11 +124,11 @@
                     <div *ngIf="allowPublish" class="padding-top-10 padding-bottom-10 success-error-theme">
                       <div style="width: 100%">
                         <button block-button mat-raised-button color="primary"
-                          (click)="approveData(element)">{{'approve' | translate}}</button>
+                          (click)="approveSpecialOffer(element)">{{'approve' | translate}}</button>
                       </div>
                       <div style="width: 100%" class="margin-top-5">
                         <button block-button mat-raised-button color="accent"
-                          (click)="rejectData(element)">{{'reject' | translate}}</button>
+                          (click)="rejectSpecialOffer(element)">{{'reject' | translate}}</button>
                       </div>
                     </div>
                     <div *ngIf="!allowPublish" class="padding-top-10 padding-bottom-10">
@@ -183,10 +183,10 @@
       </div>
       <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="end center" class="success-error-theme" *ngIf="allowPublish">
         <div class="margin-right-10">
-          <button mat-raised-button color="accent" (click)="bulkRejectData()">{{'reject' | translate}}</button>
+          <button mat-raised-button color="accent" (click)="rejectSelectedData()">{{'reject' | translate}}</button>
         </div>
         <div class="margin-right-10">
-          <button mat-raised-button color="primary" (click)="bulkApproveData()">{{'approve' | translate}}</button>
+          <button mat-raised-button color="primary" (click)="approveSelectedData()">{{'approve' | translate}}</button>
         </div>
       </div>
       <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="end center" *ngIf="!allowPublish">

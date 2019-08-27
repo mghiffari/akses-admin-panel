@@ -932,7 +932,41 @@
         "tabsTitle": {
             "specialOffer": "Sp. Offer"
         },
-        "totalRowsSelected": "{{totalRows}} title are selected"
+        "successBulkApprove": {
+            "specialOffer": "selected special offers successfully approved"
+        },
+        "successBulkReject": {
+            "specialOffer": "selected special offers successfully rejected"
+        },
+        "bulkApproveFailed": {
+            "specialOffer": "failed to approve selected special offers"
+        },
+        "bulkRejectFailed": {
+            "specialOffer": "failed to reject selected special offers"
+        },
+        "totalFailed": {
+            "specialOffer": "{{totalFailed}} special offers failed"
+        },
+        "successApprove": {
+            "specialOffer": "special offer successfully approved"
+        },
+        "successReject": {
+            "specialOffer": "special offer successfully rejected"
+        },
+        "approveFailed": {
+            "specialOffer": "failed to approve special offer"
+        },
+        "rejectFailed": {
+            "specialOffer": "failed to reject special offer"
+        },
+        "totalRowsSelected": "{{totalRows}} title are selected",
+        "specialOfferNotActive": {
+            "title": {
+                "bulk": "some special offers has passed their end date",
+                "single": "special offer has passed its end date"
+            },
+            "content": "changes on inactive special offer will not affect the application"
+        }
     },
     "gamificationRuleScreen": {
         "title": "Gamification Rule",
