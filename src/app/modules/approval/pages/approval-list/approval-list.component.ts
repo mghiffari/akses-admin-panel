@@ -611,7 +611,7 @@ export class ApprovalListComponent implements OnInit {
       this.paginatorProps.pageSize,
       formDataValue.search,
       formDataValue.startDate,
-      formDataValue.endDate
+      formDataValue.endDate ? new Date(formDataValue.endDate).setHours(23, 59, 59) : null
     ).subscribe(
       response => {
         try {
