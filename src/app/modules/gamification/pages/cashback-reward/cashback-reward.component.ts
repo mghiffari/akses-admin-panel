@@ -109,7 +109,7 @@ export class CashbackRewardComponent implements OnInit {
       this.filterForm = new FormGroup({
         startDate: new FormControl(null, Validators.required),
         endDate: new FormControl(null, Validators.required),
-        search: new FormControl('', Validators.required)
+        search: new FormControl('')
       }, {
         validators: CustomValidation.dateRangeValidaton
       });
