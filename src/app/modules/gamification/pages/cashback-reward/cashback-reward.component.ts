@@ -16,6 +16,7 @@ import { CustomValidation } from 'src/app/shared/form-validation/custom-validati
 
 // components
 import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
+import { GamificationService } from '../../services/gamification.service';
 
 @Component({
   selector: 'app-cashback-reward',
@@ -74,7 +75,9 @@ export class CashbackRewardComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private snackBar: MatSnackBar,
-    private authService: AuthService
+    private authService: AuthService,
+    private datePipe: DatePipe,
+    private gamificationService: GamificationService
   ) { 
     console.log('CashbackRewardComponent | constructor');
   }
@@ -106,7 +109,7 @@ export class CashbackRewardComponent implements OnInit {
       this.filterForm = new FormGroup({
         startDate: new FormControl(null, Validators.required),
         endDate: new FormControl(null, Validators.required),
-        search: new FormControl('', Validators.required)
+        search: new FormControl('')
       }, {
         validators: CustomValidation.dateRangeValidaton
       });
@@ -191,61 +194,65 @@ export class CashbackRewardComponent implements OnInit {
 
   // Method to load data from API
   loadData() {
-    // Will remove when Integration (dummy data only)
     console.log('CashbackRewardComponent | loadData');
-    this.cashbackReward = [
-      {
-        vaNumber: "00000000000000",
-        rewardDate: new Date(),
-        custName: "Nama Depan Nama Belakang",
-        grossValue: 10000000,
-        pphValue: 10000000,
-        cashbackReceive: 10000000,
-        installmentVal: 10000000,
-        paymentDate: new Date(),
-        npwpNumber: "123456789012345",
-        npwpName: "Nama Depan Nama Belakang",
-        npwpAddress: "Jl. ABC No. 22, Jakarta Selatan, Kemang Raya, DKI Jakarta 41102"
-      },
-      {
-        vaNumber: "00000000000000",
-        rewardDate: new Date(),
-        custName: "Nama Depan Nama Belakang",
-        grossValue: 10000000,
-        pphValue: 10000000,
-        cashbackReceive: 10000000,
-        installmentVal: 10000000,
-        paymentDate: new Date(),
-        npwpNumber: "123456789012345",
-        npwpName: "Nama Depan Nama Belakang",
-        npwpAddress: "Jl. ABC No. 22, Jakarta Selatan, Kemang Raya, DKI Jakarta 41102"
-      },
-      {
-        vaNumber: "00000000000000",
-        rewardDate: new Date(),
-        custName: "Nama Depan Nama Belakang",
-        grossValue: 10000000,
-        pphValue: 10000000,
-        cashbackReceive: 10000000,
-        installmentVal: 10000000,
-        paymentDate: new Date(),
-        npwpNumber: "123456789012345",
-        npwpName: "Nama Depan Nama Belakang",
-        npwpAddress: "Jl. ABC No. 22, Jakarta Selatan, Kemang Raya, DKI Jakarta 41102"
-      },
-      {
-        vaNumber: "00000000000000",
-        rewardDate: new Date(),
-        custName: "Nama Depan Nama Belakang",
-        grossValue: 10000000,
-        pphValue: 10000000,
-        cashbackReceive: 10000000,
-        installmentVal: 10000000,
-        paymentDate: new Date(),
-        npwpNumber: "123456789012345",
-        npwpName: "Nama Depan Nama Belakang",
-        npwpAddress: "Jl. ABC No. 22, Jakarta Selatan, Kemang Raya, DKI Jakarta 41102"
-      },
-    ]
+    let isFocusedEndDate = this.isFocusedEndDate
+    let isFocusedSearch = this.isFocusedSearch
+    let isFocusedStartDate =this.isFocusedStartDate
+    this.loading = true
+    this.gamificationService.getCashbackReward(
+      this.paginatorProps.pageIndex + 1,
+      this.paginatorProps.pageSize,
+      this.datePipe.transform(this.startDate.value, 'yyyy-MM-dd'),
+      this.datePipe.transform(this.endDate.value, 'yyyy-MM-dd'),
+      this.search.value
+    ).subscribe(
+      response => {
+        try {
+          console.table(response)
+          this.cashbackReward = response.data.data
+          this.paginatorProps.length = response.data.count;
+          if (this.table) {
+            this.table.renderRows();
+          }
+        } catch (error) {
+          console.error(error)
+        }
+        console.log('cashback reward: ', response);
+      }, error => {
+        try {
+          console.table(error);
+          this.resetPage()
+          this.resetTable()
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'transactionReport.loadFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? 'ms-payment.' + error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    ).add(
+      () => {
+        this.loading = false;
+        if (isFocusedStartDate && this.startDateInput) {
+          setTimeout(() => {
+            this.startDateInput.nativeElement.focus();
+          });
+        } else if (isFocusedEndDate && this.endDateInput) {
+          setTimeout(() => {
+            this.endDateInput.nativeElement.focus();
+          });
+        } else if (isFocusedSearch && this.searchInput) {
+          setTimeout(() => {
+            this.searchInput.nativeElement.focus();
+          });
+        }
+      }
+    )
   }
 }
