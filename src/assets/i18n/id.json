@@ -936,13 +936,13 @@
             "specialOffer": "approve special offer yang dipilih berhasil"
         },
         "successBulkReject": {
-            "specialOffer": "reject special offers yang dipilih berhasil"
+            "specialOffer": "reject special offer yang dipilih berhasil"
         },
         "bulkApproveFailed": {
             "specialOffer": "approve special offer yang dipilih gagal"
         },
         "bulkRejectFailed": {
-            "specialOffer": "reject special offers yang dipilih gagal"
+            "specialOffer": "reject special offer yang dipilih gagal"
         },
         "totalFailed": {
             "specialOffer": "{{totalFailed}} special offer gagal"
@@ -951,19 +951,19 @@
             "specialOffer": "approve special offer berhasil"
         },
         "successReject": {
-            "specialOffer": "reject special offers berhasil"
+            "specialOffer": "reject special offer berhasil"
         },
         "approveFailed": {
             "specialOffer": "approve special offer gagal"
         },
         "rejectFailed": {
-            "specialOffer": "reject special offers gagal"
+            "specialOffer": "reject special offer gagal"
         },
         "totalRowsSelected": "{{totalRows}} judul dipilih",
         "specialOfferNotActive": {
             "title": {
-                "bulk": "beberapa special offer yang dipilih sudah melewati tanggal selesainya",
-                "single": "special offer yang dipilih sudah melewati tanggal selesainya"
+                "bulk": "beberapa special offer sudah melewati tanggal selesainya",
+                "single": "special offer sudah melewati tanggal selesainya"
             },
             "content": "perubahan pada non-aktif special offer tidak akan berdampak pada aplikasi"
         }
