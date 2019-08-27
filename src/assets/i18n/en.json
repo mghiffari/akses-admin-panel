@@ -622,6 +622,7 @@
         "fileExample": "Example File",
         "uploadFailed": "Upload Failed",
         "uploadSuccess": "Upload Success",
+        "totalFailed": "{{totalFailed}} branches failed to be created",
         "instructions": {
             "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
             "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",

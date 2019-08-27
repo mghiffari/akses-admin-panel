@@ -622,6 +622,7 @@
         "fileExample": "Contoh File",
         "uploadFailed": "gagal upload file",
         "uploadSuccess": "berhasil upload file",
+        "totalFailed": "{{totalFailed}} lokasi cabang gagal ditambahkan",
         "instructions":{
             "format": "Format file upload harus csv dengan delimiter titik koma (;), pastikan tidak ada titik koma (;) pada setiap data kolom",
             "numberFormat": "Gunakan titik (.) bukan (,) dalam penanda desimal di longitude/latitude dan hanya boleh ada satu titik di setiap longitude/latitude",
