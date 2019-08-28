@@ -68,17 +68,40 @@ export class BranchUploadModalComponent implements OnInit {
       base64String => {
         this.branchService.uploadCSV(base64String.split(',').pop()).subscribe(
           response => {
-            console.table(response)
-            this.onSubmittingForm = false;
-            let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'uploadCSVModal.uploadSuccess'
+            try {
+              console.table(response)
+              this.onSubmittingForm = false;
+              let failedCount = response.data.insert_failed.length
+              let successCount = response.data.insert_success.length
+              if (failedCount && failedCount > 0) {
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'uploadCSVModal.uploadFailed',
+                    content: {
+                      text: 'uploadCSVModal.totalFailed',
+                      data: {
+                        totalFailed: failedCount
+                      }
+                    }
+                  }
+                })
+                if (successCount > 0) {
+                  this.dialogRef.close(true)
                 }
+              } else {
+                let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                  data: {
+                    title: 'success',
+                    content: {
+                      text: 'uploadCSVModal.uploadSuccess'
+                    }
+                  }
+                })
+                this.dialogRef.close(true)
               }
-            })
-            this.dialogRef.close(true)
+            } catch (error) {
+              console.error(error)
+            }
           },
           error => {
             try {
