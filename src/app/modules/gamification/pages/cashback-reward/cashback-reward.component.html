@@ -21,6 +21,9 @@
               <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #startDatepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="startDate.invalid && (filterForm.dirty || filterForm.touched)">
+              <span *ngIf="startDate.errors.required">{{'forms.transactionStartDate.errorRequired' | translate}}</span>
+            </mat-error>
           </div>
         </div>
         <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="row" fxLayoutAlign="start center"
@@ -36,6 +39,9 @@
               <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #endDatepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="endDate.invalid && (filterForm.dirty || filterForm.touched)">
+              <span *ngIf="endDate.errors.required">{{'forms.transactionEndDate.errorRequired' | translate}}</span>
+            </mat-error>
           </div>
         </div>
       </div>
@@ -45,8 +51,8 @@
         <mat-form-field appearance="fill" class="font-description search">
           <mat-icon matPrefix>search</mat-icon>
           <input formControlName="search" #searchInput matInput
-            placeholder="{{'cashbackRewardScreen.nameFilter' | translate}}"
-            (focus)="isFocusedSearch = true" (blur)="isFocusedSearch = false">
+            placeholder="{{'cashbackRewardScreen.nameFilter' | translate}}" (focus)="isFocusedSearch = true"
+            (blur)="isFocusedSearch = false">
         </mat-form-field>
       </div>
     </div>
@@ -109,7 +115,7 @@
         <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-150">
           {{'table.cashbackRewardTable.grossValue' | translate}} </th>
         <td mat-cell *matCellDef="let element" class="text-right">
-            {{element.gross_amt | currency:'IDR':'symbol-narrow':'1.2-2': locale}}
+          {{element.gross_amt | currency:'IDR':'symbol-narrow':'1.2-2': locale}}
         </td>
       </ng-container>
       <ng-container matColumnDef="pphValue">
@@ -177,15 +183,16 @@
       {{'loading' | translate}}...
     </div>
   </div>
-  <div fxFlex="grow" style="min-height:150px" fxLayout="row wrap" fxLayoutAlign="center center" 
-  *ngIf="!loading && filterForm.invalid">
-      <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
-        <mat-icon class="error-icon text-gray">error</mat-icon>
-      </div>
-      <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-sub-content text-medium-gray">
-        {{'cashbackRewardScreen.filterNotSet' | translate}}
-      </div>
+  <div fxFlex="grow" style="min-height:150px" fxLayout="row wrap" fxLayoutAlign="center center"
+    *ngIf="!loading && filterForm.invalid">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-icon class="error-icon text-gray">error</mat-icon>
     </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center"
+      class="margin-top-10 font-sub-content text-medium-gray">
+      {{'cashbackRewardScreen.filterNotSet' | translate}}
+    </div>
+  </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top-10 padding-left-16"
     *ngIf="cashbackReward.length === 0 && !loading && filterForm.valid">
     <div class="font-gotham-light">

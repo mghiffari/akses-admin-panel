@@ -29,6 +29,35 @@ export class BranchDetailsComponent implements OnInit {
   onCheckCode = false;
   duplicateBranchId = '';
   branchTypes = [];
+  regions = [
+    {
+      name: "Aceh, Sumatera Utara, Riau, Kep. Riau"
+    }, 
+    {
+      name: "Bali & Nusa Tenggara"
+    }, 
+    {
+      name: "Jabar"
+    }, 
+    {
+      name: "Jabotabek"
+    }, 
+    {
+      name: "Jateng"
+    }, 
+    {
+      name: "Jatim"
+    }, 
+    {
+      name: "Kalimantan"
+    }, 
+    {
+      name: "Sulawesi, Maluku, Papua"
+    }, 
+    {
+      name: "Sumatera Barat, Sumatera Selatan, Bangka Belitung, Jambi, Lampung, Bengkulu"
+    }, 
+  ]
   provinces = [];
   cities = [];
   subDistricts = [];
@@ -90,6 +119,11 @@ export class BranchDetailsComponent implements OnInit {
   // region formControl getter
   get region() {
     return this.branchForm.get('region');
+  }
+
+  // csRegion formControl getter
+  get csRegion() {
+    return this.branchForm.get('csRegion');
   }
 
   // province formControl getter
@@ -155,6 +189,8 @@ export class BranchDetailsComponent implements OnInit {
                 ]),
                 updatedBy: new FormControl(username),
                 region: new FormControl(editedBranch.region, [Validators.required]),
+                // region for credit simulation
+                csRegion: new FormControl('', [Validators.required]),
                 province: new FormControl(editedBranch.province, [Validators.required]),
                 city: new FormControl(editedBranch.city, [Validators.required]),
                 subDistrict: new FormControl(editedBranch.sub_district, [Validators.required]),
@@ -193,7 +229,7 @@ export class BranchDetailsComponent implements OnInit {
         this.authService.blockOpenPage()
       }
     } else {
-      if(this.allowCreate){
+      if (this.allowCreate) {
         this.branchForm = new FormGroup({
           name: new FormControl('', [Validators.required]),
           type: new FormControl('', [Validators.required]),
@@ -208,6 +244,7 @@ export class BranchDetailsComponent implements OnInit {
           ]),
           createdBy: new FormControl(username),
           region: new FormControl('', [Validators.required]),
+          csRegion: new FormControl('', [Validators.required]),
           province: new FormControl('', [Validators.required]),
           city: new FormControl('', [Validators.required]),
           subDistrict: new FormControl('', [Validators.required]),

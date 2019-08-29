@@ -239,8 +239,12 @@
             "errorRequired": "Latitude wajib diisi dengan angka",
             "errorMaxDecimalLength": "Latitude hanya bisa terdiri dari maksimum {{integerDigitLength}} digit di depan (.) dan {{fractionDigitLength}} digit di belakang (.)"
         },
+        "csRegion": {
+            "fieldTitle": "Region (untuk simulasi kredit)",
+            "placeholder": "Pilih Region"
+        },
         "region": {
-            "fieldTitle": "Region",
+            "fieldTitle": "Region (untuk lokasi cabang)",
             "placeholder": "Region",
             "errorRequired": "Region wajib diisi"
         },

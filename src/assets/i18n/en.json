@@ -239,8 +239,12 @@
             "errorRequired": "Latitude must have numeric value",
             "errorMaxDecimalLength": "Latitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
         },
+        "csRegion": {
+            "fieldTitle": "Region (for credit simulation)",
+            "placeholder": "Select a Region"
+        },
         "region": {
-            "fieldTitle": "Region",
+            "fieldTitle": "Region (for branch location)",
             "placeholder": "Region",
             "errorRequired": "Region is required"
         },

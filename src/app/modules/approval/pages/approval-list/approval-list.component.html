@@ -10,8 +10,12 @@
         [(selectedIndex)]="selectedTabIndex">
         <mat-tab *ngFor="let tab of shownTabs" [disabled]="loading">
           <ng-template mat-tab-label>
-            <span [matBadge]="tab.count"
-              matBadgeOverlap="false">{{tab.title | translate }}</span>
+            <span *ngIf="tab.count && tab.count > 0">
+              <span [matBadge]="tab.count" matBadgeOverlap="false">{{tab.title | translate }}</span>
+            </span>
+            <span *ngIf="!tab.count || tab.count <= 0">
+              {{tab.title | translate }}
+            </span>
           </ng-template>
           <ng-template matTabContent style="min-height: 100%">
             <div [formGroup]="filterForm" fxLayout="row wrap" fxLayoutAlign="start start"
@@ -31,6 +35,11 @@
                         <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
                         <mat-datepicker #startDatepicker class="calendar-mat-icon-button"></mat-datepicker>
                       </mat-form-field>
+                      <mat-error class="bottom-error"
+                        *ngIf="filterForm.invalid && (filterForm.dirty || filterForm.touched)">
+                        <span
+                          *ngIf="filterForm.errors.dateRangeRequired">{{'forms.date.errorRangeRequired' | translate}}</span>
+                      </mat-error>
                     </div>
                   </div>
                   <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="row" fxLayoutAlign="start center"
@@ -46,6 +55,11 @@
                         <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
                         <mat-datepicker #endDatepicker class="calendar-mat-icon-button"></mat-datepicker>
                       </mat-form-field>
+                      <mat-error class="bottom-error"
+                        *ngIf="filterForm.invalid && (filterForm.dirty || filterForm.touched)">
+                        <span
+                          *ngIf="filterForm.errors.dateRangeRequired">{{'forms.date.errorRangeRequired' | translate}}</span>
+                      </mat-error>
                     </div>
                   </div>
                 </div>
@@ -55,8 +69,8 @@
                   <mat-form-field appearance="fill" class="font-description search">
                     <mat-icon matPrefix>search</mat-icon>
                     <input formControlName="search" #searchInput matInput
-                      placeholder="{{'forms.approvalSearch.placeholder' | translate}}"
-                      (focus)="isFocusedSearch = true" (blur)="isFocusedSearch = false">
+                      placeholder="{{'forms.approvalSearch.placeholder' | translate}}" (focus)="isFocusedSearch = true"
+                      (blur)="isFocusedSearch = false">
                   </mat-form-field>
                 </div>
 
@@ -73,7 +87,8 @@
               <table mat-table [dataSource]="data" class="table-min-100" #table *ngIf="isSelectedTabSpecialOffer()">
                 <ng-container matColumnDef="checkbox">
                   <th mat-header-cell *matHeaderCellDef class="font-th th-width-25">
-                    <mat-checkbox [disabled]="!allowPublish || loading || data.length === 0" color="primary" (change)="onChangeSelectAll($event)"
+                    <mat-checkbox [disabled]="!allowPublish || loading || data.length === 0" color="primary"
+                      (change)="onChangeSelectAll($event)"
                       [indeterminate]="data.length > 0 && selectedRows.length > 0 && selectedRows.length < data.length"
                       [checked]="data.length > 0 && selectedRows.length === data.length">
                     </mat-checkbox>
@@ -99,11 +114,11 @@
                   </td>
                 </ng-container>
                 <ng-container matColumnDef="endDate">
-                    <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width text-center-important">
-                      {{'table.bannersTable.endDate' | translate}} </th>
-                    <td mat-cell *matCellDef="let element">
-                      <div>{{element.end_date | date: 'dd/MM/yyyy HH:mm'}}</div>
-                    </td>
+                  <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width text-center-important">
+                    {{'table.bannersTable.endDate' | translate}} </th>
+                  <td mat-cell *matCellDef="let element">
+                    <div>{{element.end_date | date: 'dd/MM/yyyy HH:mm'}}</div>
+                  </td>
                 </ng-container>
                 <ng-container matColumnDef="createdDate">
                   <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
@@ -145,7 +160,8 @@
                   <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-50 text-center-important">
                   </th>
                   <td mat-cell *matCellDef="let element" class="text-center">
-                    <a [routerLink]="['/approvals/special-offers', element.id]" class="link-purple cursor-pointer">{{'seeDetails' | translate}}</a>
+                    <a [routerLink]="['/approvals/special-offers', element.id]"
+                      class="link-purple cursor-pointer">{{'seeDetails' | translate}}</a>
                   </td>
                 </ng-container>
                 <tr class="bg-light-gray" mat-header-row *matHeaderRowDef="tab.tableColumns; sticky: true"></tr>
@@ -172,30 +188,30 @@
     </div>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="start center" *ngIf="selectedRows.length > 0 && !loading"
-      class="padding-16 padding-top-10 padding-bottom-10 border-top-gray bottom-sticky-toolbar">
-      <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="start center" class="font-gotham-bold font-sub-content">
-        <div flexAlign="center" fxLayout="column" fxLayoutAlign="center center">
-          <mat-icon class="cursor-pointer" (click)="deselectAll()">clear</mat-icon>
-        </div>
-        <div flexAlign="center" class="margin-left-10">
-          {{'approvalListScreen.totalRowsSelected' | translate: {totalRows: this.selectedRows.length} }}
-        </div>
+    class="padding-16 padding-top-10 padding-bottom-10 border-top-gray bottom-sticky-toolbar">
+    <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="start center" class="font-gotham-bold font-sub-content">
+      <div flexAlign="center" fxLayout="column" fxLayoutAlign="center center">
+        <mat-icon class="cursor-pointer" (click)="deselectAll()">clear</mat-icon>
       </div>
-      <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="end center" class="success-error-theme" *ngIf="allowPublish">
-        <div class="margin-right-10">
-          <button mat-raised-button color="accent" (click)="rejectSelectedData()">{{'reject' | translate}}</button>
-        </div>
-        <div class="margin-right-10">
-          <button mat-raised-button color="primary" (click)="approveSelectedData()">{{'approve' | translate}}</button>
-        </div>
+      <div flexAlign="center" class="margin-left-10">
+        {{'approvalListScreen.totalRowsSelected' | translate: {totalRows: this.selectedRows.length} }}
       </div>
-      <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="end center" *ngIf="!allowPublish">
-          <div class="margin-right-10">
-            <button mat-raised-button disabled>{{'reject' | translate}}</button>
-          </div>
-          <div class="margin-right-10">
-            <button mat-raised-button disabled>{{'approve' | translate}}</button>
-          </div>
-        </div>
     </div>
+    <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="end center" class="success-error-theme" *ngIf="allowPublish">
+      <div class="margin-right-10">
+        <button mat-raised-button color="accent" (click)="rejectSelectedData()">{{'reject' | translate}}</button>
+      </div>
+      <div class="margin-right-10">
+        <button mat-raised-button color="primary" (click)="approveSelectedData()">{{'approve' | translate}}</button>
+      </div>
+    </div>
+    <div fxFlex="50%" fxLayout="row wrap" fxLayoutAlign="end center" *ngIf="!allowPublish">
+      <div class="margin-right-10">
+        <button mat-raised-button disabled>{{'reject' | translate}}</button>
+      </div>
+      <div class="margin-right-10">
+        <button mat-raised-button disabled>{{'approve' | translate}}</button>
+      </div>
+    </div>
+  </div>
 </div>
