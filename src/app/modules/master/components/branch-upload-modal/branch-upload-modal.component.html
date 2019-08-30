@@ -11,10 +11,10 @@
             <span>{{'uploadCSVModal.errorFormat' | translate}}</span>
           </mat-error>
         </div>
-        <div fxLayout="row" fxLayoutAlign="start start" style="width: 100%" *ngFor="let el of instructions"
+        <div fxLayout="row" fxLayoutAlign="start start" style="width: 100%" *ngFor="let el of instructions; let i = index"
           class="padding-10">
           <div class="margin-right-10">
-            <mat-icon color="primary">check_box</mat-icon>
+            {{i + 1}}.
           </div>
           <div fxFlex="grow" fxLayout="row wrap">
             {{el | translate}}
