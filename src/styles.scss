@@ -275,6 +275,7 @@ body {
     font-weight: normal;
     line-height: normal;
     letter-spacing: 0.4px;
+    text-decoration: none
 }
 
 .text-danger{
@@ -334,12 +335,24 @@ button[block-button]{
     height: map-get($font-sizes, 'sub-content') !important;
 }
 
+.th-width-250 {
+    width: 250px;
+}
+
 .th-min-width-150 {
     min-width: 150px;
 }
 
+.th-min-width-200 {
+    min-width: 200px;
+}
+
 .th-min-width {
     min-width: 100px;
+}
+
+.th-width-150 {
+    width: 150px;
 }
 
 .th-min-width-75{

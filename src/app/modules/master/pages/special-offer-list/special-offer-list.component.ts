@@ -14,13 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class SpecialOfferListComponent implements OnInit {
   now = new Date();
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
 
   offerColumns: string[] = [
     'number',
@@ -28,6 +22,8 @@ export class SpecialOfferListComponent implements OnInit {
     'preview',
     'endDate',
     'lastEdited',
+    'status',
+    'approval',
     'action'
   ]
 
@@ -38,6 +34,7 @@ export class SpecialOfferListComponent implements OnInit {
   isFocusedInput = false;
   allowCreate = false;
   allowEdit = false;
+  approvalStatus = constants.approvalStatus;
 
   private table: any;
   @ViewChild('offersTable') set tabl(table: ElementRef) {
@@ -120,7 +117,8 @@ export class SpecialOfferListComponent implements OnInit {
   //check whether offer is editable
   isEditableOffer(offer) {
     console.log('SpecialOfferListComponent | isEditableOffer');
-    return CustomValidation.durationFromNowValidation(new Date(offer.end_date))
+    return CustomValidation.durationFromNowValidation(new Date(offer.end_date)) 
+      && offer.status !== this.approvalStatus.approved
   }
 
   // call api to get data based on table page, page size, and search keyword

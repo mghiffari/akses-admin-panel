@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, forwardRef, OnInit, ElementRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as numeral from 'numeral';
 
@@ -33,6 +33,9 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
   @Input() prefix?: string = null;
   @Input() suffix?: string = null;
   @ViewChild('textInput') textInput: ElementRef;
+  @Output() keyup = new EventEmitter<any>();
+  @Output() change = new EventEmitter<any>();
+
   maskedValue = '';
 
   ngOnInit(): void {
@@ -55,8 +58,8 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
   onTouch: Function = () => { };
   disabled: boolean = false;
 
-  handleChange(event) {
-    console.log('MaskedNumInputComponent | handleChange')
+  // method to get the real value of masked input
+  getNumberValue(event){
     let value = null;
     if (event.target.value && event.target.value.toString().trim() !== '') {
       value = numeral(event.target.value).value()
@@ -81,7 +84,29 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
         }
       }
     }
+    return value
+  }
+
+  // handle keyup
+  handleKeyup(event) {
+    console.log('MaskedNumInputComponent | handleKeyup')
+    let value = this.getNumberValue(event)
     this.writeValue(value)
+    this.keyup.emit(value)
+  }
+
+  // handle on change
+  handleChange(event) {
+    console.log('MaskedNumInputComponent | handleChange')
+    let value = this.getNumberValue(event)
+    this.writeValue(value)
+    this.change.emit(value)
+  }
+
+  // handle blur
+  handleBlur(event) {
+    console.log('MaskedNumInputComponent | handleBlur')
+    this.writeValue(this.getNumberValue(event))
   }
 
   // Allow Angular to set the value on the component

@@ -1,6 +1,7 @@
 //credit simulation product
 export class CSProduct{
     id: string;
+    unique_tag: string;
     name: string;
     description: string;
     created_by: string;

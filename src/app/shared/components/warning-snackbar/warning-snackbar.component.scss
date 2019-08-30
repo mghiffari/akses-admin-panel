@@ -1,0 +1,56 @@
+@import "~src/assets/styles/colors";
+@import '~src/assets/styles/fonts';
+
+.background-warn{
+    background-color:  map-get($colors, warn);
+    color: map-get($colors, white);
+    border-radius: 5px;
+    height: 100%; 
+    min-height: 50px; 
+    min-width: 250px;
+    max-width: 100%;
+}
+
+.background-warn-light{
+    background-color: map-get($colors, yellow);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.title{
+    @extend .font-roboto-bold;
+    @extend .font-sub-content;
+    line-height: normal;
+    letter-spacing: 1.25px;
+    text-transform: capitalize;
+}
+
+.description{
+    @extend .font-roboto;
+    @extend .font-tag;
+    line-height: normal;
+    letter-spacing: 1.25px;
+}
+
+.description-text::first-letter {
+    text-transform: uppercase;
+}   
+
+.icon-left{
+    font-size: map-get($font-sizes, super-headline);
+    width: map-get($font-sizes, super-headline) !important;
+    height: map-get($font-sizes, super-headline) !important;
+}
+
+.close-icon{
+    position: absolute;
+    right: 9px;
+    top: 9px;
+}
+
+.content{
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+}

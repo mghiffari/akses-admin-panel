@@ -25,6 +25,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 import { PageService } from './services/page.service';
+import { WarningSnackbarComponent } from './components/warning-snackbar/warning-snackbar.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PageService } from './services/page.service';
     PasswordToggleInputComponent, 
     MaskedNumInputComponent, 
     BoldRendererPipe, 
-    TinymceEditorComponent
+    TinymceEditorComponent, 
+    WarningSnackbarComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +82,8 @@ import { PageService } from './services/page.service';
     ErrorModalComponent,
     ConfirmationModalComponent,
     ErrorSnackbarComponent,
-    SuccessSnackbarComponent
+    SuccessSnackbarComponent,
+    WarningSnackbarComponent
   ]
 })
 export class SharedModule { }

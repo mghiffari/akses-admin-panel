@@ -16,13 +16,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./trans-report.component.scss']
 })
 export class TransReportComponent implements OnInit {
-  paginatorProps = {
-    pageSizeOptions: [10, 25, 50, 100],
-    pageSize: 10,
-    showFirstLastButtons: true,
-    length: 0,
-    pageIndex: 0
-  }
+  paginatorProps = { ...constants.paginatorProps};
 
   transactionColumns: string[] = [
     'oid',
@@ -133,15 +127,17 @@ export class TransReportComponent implements OnInit {
               errorText = 'forms.transactionStartDate.errorRequired'
             }
             this.showFormError(errorText)
-          } else if (this.endDate.invalid){
+          } else {
             if (this.endDate.errors && this.endDate.errors.required) {
               errorText = 'forms.transactionEndDate.errorRequired'
             } else if (this.filterForm.errors && this.filterForm.errors.dateRange) {
-              errorText = 'forms.transactionStartDate.errorMax'
+              errorText = 'forms.date.errorRange'
             } else if (this.search.errors && this.search.errors.required) {
               errorText = 'forms.transactionSearch.errorRequired'
             }
-            this.showFormError(errorText)
+            if (!this.search.errors || !this.search.errors.minlength){
+              this.showFormError(errorText)
+            }
           }
         }
       })
@@ -207,6 +203,7 @@ export class TransReportComponent implements OnInit {
     let isFocusedSearch = this.isFocusedSearch
     let isFocusedStartDate =this.isFocusedStartDate
     this.loading = true
+    this.filterForm.disable({emitEvent: false})
     this.reportService.getTransactionReport(
       this.paginatorProps.pageIndex + 1,
       this.paginatorProps.pageSize,
@@ -246,6 +243,7 @@ export class TransReportComponent implements OnInit {
     ).add(
       () => {
         this.loading = false;
+        this.filterForm.enable({emitEvent: false})
         if (isFocusedStartDate && this.startDateInput) {
           setTimeout(() => {
             this.startDateInput.nativeElement.focus();

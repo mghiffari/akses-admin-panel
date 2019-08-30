@@ -34,6 +34,17 @@
                 "balanceReport": "Balance Report",
                 "transReport": "Transaction Report"
             }
+        },
+        "approval": {
+            "title": "Approvals",
+            "failedGetFeatures": "failed to get list of approval features"
+        },
+        "gamification": {
+            "title": "Gamification",
+            "children": {
+                "rule": "Rule",
+                "cashbackReward": "Cashback Reward"
+            }
         }
     },
     "userAction": {
@@ -356,7 +367,8 @@
         "notifSpecialOffer": {
             "fieldTitle": "Special Offer",
             "placeholder": "Select a Special Offer",
-            "errorRequired": "Special Offer is required"
+            "errorRequired": "Special Offer is required",
+            "searchPlaceholder": "Search special offer"
         },
         "articleCategory": {
             "fieldTitle": "Article Category",
@@ -366,7 +378,8 @@
         "notifArticle": {
             "fieldTitle": "Article",
             "placeholder": "Select an Article",
-            "errorRequired": "Article is required"
+            "errorRequired": "Article is required",
+            "searchPlaceholder": "Search article"
         },
         "schedule": {
             "fieldTitle": "Schedule",
@@ -423,9 +436,12 @@
                 "download": "Download"
             }
         },
+        "date": {
+            "errorRange": "Start Date must be less than or equal than End Date",
+            "errorRangeRequired": "Both start date should be filled or not at all"
+        },
         "transactionStartDate": {
-            "errorRequired": "Start Date must have valid date format value",
-            "errorMax": "Start Date must be less than or equal than End Date"
+            "errorRequired": "Start Date must have valid date format value"
         },
         "transactionEndDate": {
             "errorRequired": "End Date must have valid date format value"
@@ -434,6 +450,27 @@
             "placeholder": "Search OID / VA / Phone Number",
             "hint": "Min. length of search text is {{minLength}}",
             "errorRequired": "Search is required"
+        },
+        "approvalSearch": {
+            "placeholder": "Search Title"
+        },
+        "sampleSize": {
+            "errorRequired": "Sample Size must have numeric value",
+            "errorMin": "Min. value of sample size is {{minValue}}",
+            "errorFormat": "Sample Size must be an integer number"
+        },
+        "rangeSize": {
+            "errorRequired": "Range Size must have numeric value",
+            "errorMin": "Range Size must have a positive number",
+            "errorFormat": "Range Size must be an integer number"
+        },
+        "reward": {
+            "errorRequired": "Reward must have numeric value",
+            "errorMin": "Reward must have a positive number"
+        },
+        "probability": {
+            "errorRequired": "Probability must have numeric value",
+            "errorMin": "Probability must have a positive number"
         },
         "buttonText": {
             "save": "Save",
@@ -460,18 +497,21 @@
         "numbers": "No.",
         "status": {
             "title": "Status",
+            "approvalTitle": "Approval",
             "active": "Active",
             "inactive": "Inactive",
             "approved": "Approved",
             "rejected": "Rejected",
             "delivered": "Delivered",
-            "pending": "Pending"
+            "pending": "Pending",
+            "waitingForApproval": "Waiting for Approval"
         },
         "uniqueTag": "Unique Tag",
         "title": "Title",
         "category": "Category",
         "order": "Order",
         "lastUpdated": "Last Updated Date & By",
+        "createdDate": "Created Date",
         "bannersTable": {
             "preview": "Preview",
             "startDate": "Start Date",
@@ -481,7 +521,6 @@
             "firstName": "First Name",
             "lastName": "Last Name",
             "email": "Email",
-            "createdDate": "Created Date",
             "role": "Role"
         },
         "branchTable": {
@@ -548,6 +587,26 @@
             "bankTransferFee": "Bank Transfer Fee",
             "ppn": "PPN",
             "vaName": "Bank Name"
+        },
+        "gamificationTable": {
+            "reward": "Reward",
+            "totalPerson": "Total Person",
+            "probability": "Probability",
+            "blended": "Blended",
+            "runningNumber": "Running Number"
+        },
+        "cashbackRewardTable": {
+            "vaNumber": "VA Number",
+            "rewardDate": "Reward Date",
+            "custName": "Customer Name",
+            "grossValue": "Gross Value",
+            "pphValue": "Pph Value",
+            "cashbackReceive": "Total Cashback Received",
+            "installmentVal": "Installment Value",
+            "paymentDate": "Payment Date",
+            "npwpNumber": "NPWP Number",
+            "npwpName": "NPWP Name",
+            "npwpAddress": "NPWP Address"
         }
     },
     "bannerListScreen": {
@@ -601,6 +660,7 @@
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data failed",
     "failedToProcessFile": "failed to process file",
+    "seeDetails": "See Details",
     "duration": {
         "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
         "fromHourToSec": "{{hour}} hour {{min}} minute",
@@ -716,6 +776,7 @@
         "fileExample": "Example File",
         "uploadFailed": "Upload Failed",
         "uploadSuccess": "Upload Success",
+        "totalFailed": "{{totalFailed}} branches failed to be created",
         "instructions": {
             "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
             "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
@@ -772,7 +833,6 @@
         "typeNotFound": "payment type {{type}} not found",
         "succesCreated": "Payment Instruction successfully created",
         "succesUpdated": "Payment Instruction successfully updated",
-        "createFailed": "failed to create new instruction",
         "addNewStep": "add new step",
         "uploadIconFailed": "failed to upload icon",
         "insertInstructionFailed": "failed to create instruction",
@@ -814,19 +874,23 @@
     "specialOfferListScreen": {
         "title": "Special Offers Data",
         "createOffer": "create new special offer",
-        "loadFailed": "failed to get list of special offers"
+        "loadFailed": "failed to get list of special offers",
+        "approvalBy": "by"
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "failed to get Special Offer data",
         "getCategoryFailed": "failed to get Special Offer categories",
         "createTitle": "Create New Special Offer",
         "updateTitle": "Update Special Offer",
+        "viewTitle": "Special Offer Details",
+        "recipientUrlLabel": "Special Offer Recipient",
         "succesCreated": "Special Offer successfully created",
         "succesUpdated": "Special Offer successfully updated",
         "updateFailed": "failed to update special offer",
         "createFailed": "failed to create new Special Offer",
         "cantUpdate": {
-            "minDuration": "can't update special offer which expiry date is less than one hour"
+            "minDuration": "can't update special offer which expiry date is less than one hour",
+            "approvedOffer": "can't update special offer that has been approved"
         },
         "uploadImageFailed": "failed to upload image",
         "uploadCSVFailed": "failed to upload csv file",
@@ -858,6 +922,115 @@
         "welcome": "Welcome,",
         "lastLogin": "LAST LOGIN",
         "addEntry": "Add a New Entry"
+    },
+    "approvalListScreen": {
+        "title": "Approval",
+        "getTabsFailed": "failed to get list of approval features",
+        "refreshCountFailed": "failed to refresh approval data count",
+        "loadFailed": {
+            "specialOffer": "failed to get special offer approval list"
+        },
+        "tabsTitle": {
+            "specialOffer": "Sp. Offer"
+        },
+        "successBulkApprove": {
+            "specialOffer": "selected special offers successfully approved"
+        },
+        "successBulkReject": {
+            "specialOffer": "selected special offers successfully rejected"
+        },
+        "bulkApproveFailed": {
+            "specialOffer": "failed to approve selected special offers"
+        },
+        "bulkRejectFailed": {
+            "specialOffer": "failed to reject selected special offers"
+        },
+        "totalFailed": {
+            "specialOffer": "{{totalFailed}} special offers failed"
+        },
+        "successApprove": {
+            "specialOffer": "special offer successfully approved"
+        },
+        "successReject": {
+            "specialOffer": "special offer successfully rejected"
+        },
+        "approveFailed": {
+            "specialOffer": "failed to approve special offer"
+        },
+        "rejectFailed": {
+            "specialOffer": "failed to reject special offer"
+        },
+        "totalRowsSelected": "{{totalRows}} title are selected",
+        "specialOfferNotActive": {
+            "title": {
+                "bulk": "some special offers has passed their end date",
+                "single": "special offer has passed its end date"
+            },
+            "content": "changes on inactive special offer will not affect the application"
+        }
+    },
+    "gamificationRuleScreen": {
+        "title": "Gamification Rule",
+        "activeRule": "Active Rule",
+        "upcomingRule": "Upcoming Rule",
+        "sampleSize": "Sample Size",
+        "activeSince": "Active since",
+        "replaceText": "Will replace the active rule at",
+        "newRule": "New Rule",
+        "confirmationModal": {
+            "edit": {
+                "title": "Update Confirmation",
+                "content": "Are you sure you want to update rule? The update will be applied on next day at 00.01 WIB"
+            },
+            "newRule": {
+                "title": "New Rule Confirmation",
+                "content": "Are you sure you want to create new rule? New rule will be applied on next day at 00.01 WIB"
+            }
+        },
+        "loadFailed": "failed to get rule list",
+        "totalPersonFormula": "probability x sample size (rounded down)",
+        "lastRowDisclaimer": "This row will be automatically calculated with formula of probability: 100% - total probability row 1-8. Probability should be a positive number",
+        "cantEditRule": "Can't edit rule",
+        "upcomingRuleNotFound": "No upcoming rule found to be edited",
+        "succesCreated": "upcoming rule successfully created",
+        "succesUpdated": "upcoming rule successfully updated",
+        "updateFailed": "failed to update upcoming rule",
+        "createFailed": "failed to create upcoming rule"
+    },
+    "cashbackRewardScreen": {
+        "title": "Cashback Reward",
+        "dateFilter": "Date Filter",
+        "nameFilter": "Name Filter",
+        "downloadReport": "download report",
+        "filterNotSet": "Filter Not Set"
+    },
+    "features": {
+        "homebanner": "Home Banner",
+        "artikel": "Article",
+        "specialoffer": "Special Offer",
+        "oneclicknmcy": "One Click NMCY",
+        "durablespecialoffer": "Durable Special Offer",
+        "faq": "FAQ",
+        "lokasicabang": "Branch Locator",
+        "ubahnomorhandphone": "Change Phone Number",
+        "simulasikredit": "Credit Simulation",
+        "instruksipembayaran": "Payment Instructions",
+        "notifikasi": "Notifications",
+        "user": "User",
+        "role": "Role",
+        "laporantransaksi": "Transaction Report",
+        "laporansaldo": "Balance Report",
+        "gamificationrule": "Gamification Rule",
+        "cashbackreward": "Cashback Reward",
+        "mobilbaru": "New Car",
+        "mobilbekas": "Secondhand Car",
+        "motorbaru": "New Motorcycle",
+        "motorbekas": "Secondhand Motorcycle",
+        "elektronik": "Electronic",
+        "furnitur": "Furniture",
+        "gadget": "Gadget",
+        "multigunamotor": "Multipurpose Motorcycle",
+        "multigunamobil": "Multipurpose Car"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
@@ -980,13 +1153,26 @@
         "01116": "failed to get role list",
         "01117": "role id is required",
         "01118": "failed to delete role, role is used by some active users",
+        "01119": "error sending email notification to change role",
+        "01120": "email already registered",
+        "01121": "status value for approve is wrong",
+        "01122": "status value for reject is wrong",
+        "01123": "missing cycle number parameter",
+        "01124": "missing reward parameter",
+        "01125": "missing probability parameter",
+        "01126": "missing blended parameter",
+        "01127": "missing floor parameter",
+        "01128": "missing ceiling parameter",
+        "01129": "special offer category not found",
+        "01130": "csv url invalid",
+        "01131": "failed to approve special offer",
         "ms-payment": {
             "07069": "missing start date parameter",
             "07070": "missing end date parameter",
             "07071": "missing search key parameter",
             "07072": "no data found",
             "07073": "data cannot be downloaded",
-            "07075" : "transaction not found"
+            "07075": "transaction not found"
         }
     }
 }

@@ -8,6 +8,9 @@ import Utils from '../common/utils';
 })
 export class SpecialOfferService {
   specialOfferApiUrl = environment.apiurl + 'specialoffer';
+  saveApiUrl = this.specialOfferApiUrl + '/save'
+  bulkApproveApiUrl = this.specialOfferApiUrl + '/approve'
+  bulkRejectApiUrl = this.specialOfferApiUrl + '/reject'
 
   constructor(
     private authService: AuthService
@@ -28,9 +31,9 @@ export class SpecialOfferService {
 
   //used to hit update special offer API
   updateOffer(data){
-    let url = this.specialOfferApiUrl;
+    let url = this.saveApiUrl;
     console.log("SpecialOfferService | updateOffer ", url);
-    return this.authService.wrapTokenPutApi(url, data)
+    return this.authService.wrapTokenPostApi(url, data)
   }
 
   //get offer by id
@@ -42,8 +45,22 @@ export class SpecialOfferService {
 
   //create offer
   createOffer(data) {
-    let url = this.specialOfferApiUrl;
+    let url = this.saveApiUrl;
     console.log("SpecialOfferService | createOffer " + url);
     return this.authService.wrapTokenPostApi(url, data);
+  }
+
+  // approve an array of special offer
+  bulkApproveSpecialOffer(data){
+    let url = this.bulkApproveApiUrl
+    console.log("SpecialOfferService | bulkApproveSpecialOffer ", url);
+    return this.authService.wrapTokenPostApi(url, data)
+  }
+
+  // reject an array of special offer
+  bulkRejectSpecialOffer(data){
+    let url = this.bulkRejectApiUrl
+    console.log("SpecialOfferService | bulkRejectSpecialOffer ", url);
+    return this.authService.wrapTokenPostApi(url, data)
   }
 }

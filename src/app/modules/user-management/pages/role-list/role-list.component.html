@@ -95,7 +95,7 @@
             <ng-container matColumnDef="featureName">
               <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="feature">
                 <div class="padding-top-10 padding-bottom-10">
-                  {{getElementFeatureName(element).value}}
+                  {{getElementFeatureName(element) | translate}}
                 </div>
               </td>
             </ng-container>

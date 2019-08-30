@@ -34,6 +34,17 @@
                 "balanceReport": "Laporan Saldo",
                 "transReport": "Laporan Transaksi"
             }
+        },
+        "approval": {
+            "title": "Approval",
+            "failedGetFeatures": "gagal mendapatkan list fitur approval"
+        },
+        "gamification": {
+            "title": "Gamification",
+            "children": {
+                "rule": "Rule",
+                "cashbackReward": "Cashback Reward"
+            }
         }
     },
     "userAction": {
@@ -356,7 +367,8 @@
         "notifSpecialOffer": {
             "fieldTitle": "Special Offer",
             "placeholder": "Pilih Special Offer",
-            "errorRequired": "Special Offer wajib diisi"
+            "errorRequired": "Special Offer wajib diisi",
+            "searchPlaceholder": "Cari special offer"
         },
         "articleCategory": {
             "fieldTitle": "Kategori Artikel",
@@ -366,7 +378,8 @@
         "notifArticle": {
             "fieldTitle": "Artikel",
             "placeholder": "Pilih Artikel",
-            "errorRequired": "Artikel wajib diisi"
+            "errorRequired": "Artikel wajib diisi",
+            "searchPlaceholder": "Cari artikel"
         },
         "schedule": {
             "fieldTitle": "Jadwal",
@@ -423,13 +436,12 @@
                 "download": "Download"
             }
         },
-        "buttonText": {
-            "save": "Simpan",
-            "back": "Kembali"
+        "date": {
+            "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai",
+            "errorRangeRequired": "Kedua Tanggal Mulai dan Tanggal Selesai harus diisi atau tidak sama sekali"
         },
         "transactionStartDate": {
-            "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid",
-            "errorMax": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai"
+            "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid"
         },
         "transactionEndDate": {
             "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid"
@@ -438,6 +450,31 @@
             "placeholder": "Cari OID / VA / Nomor Handphone",
             "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}",
             "errorRequired": "Keyword pencarian wajib diisi"
+        },
+        "approvalSearch": {
+            "placeholder": "Cari Judul"
+        },
+        "sampleSize": {
+            "errorRequired": "Sample Size wajib diisi dengan angka",
+            "errorMin": "Nilai minimum untuk Sample Size adalah {{minValue}}",
+            "errorFormat": "Sample Size wajib diisi dengan bilangan bulat"
+        },
+        "rangeSize": {
+            "errorRequired": "Range Size wajib diisi dengan angka",
+            "errorMin": "Range Size harus terdiri dari bilangan positif",
+            "errorFormat": "Range Size wajib diisi dengan bilangan bulat"
+        },
+        "reward": {
+            "errorRequired": "Reward wajib diisi dengan angka",
+            "errorMin": "Reward harus terdiri dari bilangan positif"
+        },
+        "probability": {
+            "errorRequired": "Probability wajib diisi dengan angka",
+            "errorMin": "Probability harus terdiri dari bilangan positif"
+        },
+        "buttonText": {
+            "save": "Simpan",
+            "back": "Kembali"
         }
     },
     "loginScreen": {
@@ -460,18 +497,21 @@
         "numbers": "No.",
         "status": {
             "title": "Status",
+            "approvalTitle": "Persetujuan",
             "active": "Aktif",
             "inactive": "Non-aktif",
             "approved": "Approved",
             "rejected": "Rejected",
             "delivered": "Terkirim",
-            "pending": "Pending"
+            "pending": "Pending",
+            "waitingForApproval": "Waiting for Approval"
         },
         "uniqueTag": "Unique Tag",
         "title": "Judul",
         "category": "Kategori",
         "order": "Urutan",
         "lastUpdated": "Terakhir Diubah & Oleh",
+        "createdDate": "Tanggal Dibuat",
         "bannersTable": {
             "preview": "Preview",
             "startDate": "Tanggal Mulai",
@@ -481,7 +521,6 @@
             "firstName": "Nama Depan",
             "lastName": "Nama Belakang",
             "email": "Email",
-            "createdDate": "Tanggal Dibuat",
             "role": "Role"
         },
         "branchTable": {
@@ -548,6 +587,26 @@
             "bankTransferFee": "Biaya Transfer Bank",
             "ppn": "PPN",
             "vaName": "Nama Bank"
+        },
+        "gamificationTable": {
+            "reward": "Reward",
+            "totalPerson": "Jumlah Orang",
+            "probability": "Probability",
+            "blended": "Blended",
+            "runningNumber": "Running Number"
+        },
+        "cashbackRewardTable": {
+            "vaNumber": "Nomor VA",
+            "rewardDate": "Tanggal Reward",
+            "custName": "Nama Customer",
+            "grossValue": "Nilai Gross",
+            "pphValue": "Nilai PPh",
+            "cashbackReceive": "Total Cashback Diterima",
+            "installmentVal": "Nilai Angsuran",
+            "paymentDate": "Tanggal Pembayaran",
+            "npwpNumber": "Nomor NPWP",
+            "npwpName": "Nama NPWP",
+            "npwpAddress": "Alamat NPWP"
         }
     },
     "bannerListScreen": {
@@ -601,6 +660,7 @@
     "uploadCSV": "upload csv",
     "failedToRefreshData": "refresh data gagal",
     "failedToProcessFile": "proses file gagal",
+    "seeDetails": "Lihat Detail",
     "duration": {
         "fromDayToMin": "{{day}} hari {{hour}} jam {{min}} menit",
         "fromHourToMin": "{{hour}} jam {{min}} menit",
@@ -716,6 +776,7 @@
         "fileExample": "Contoh File",
         "uploadFailed": "gagal upload file",
         "uploadSuccess": "berhasil upload file",
+        "totalFailed": "{{totalFailed}} lokasi cabang gagal ditambahkan",
         "instructions":{
             "format": "Format file upload harus csv dengan delimiter titik koma (;), pastikan tidak ada titik koma (;) pada setiap data kolom",
             "numberFormat": "Gunakan titik (.) bukan (,) dalam penanda desimal di longitude/latitude dan hanya boleh ada satu titik di setiap longitude/latitude",
@@ -813,19 +874,23 @@
     "specialOfferListScreen": {
         "title": "Data Special Offer",
         "createOffer": "tambahkan special offer baru",
-        "loadFailed": "gagal mendapatkan list special offer"
+        "loadFailed": "gagal mendapatkan list special offer",
+        "approvalBy": "by"
     },
     "specialOfferDetailsScreen": {
         "getOfferFailed": "gagal mendapatkan data Special Offer",
         "getCategoryFailed": "gagal mendapatkan kategori Special Offer",
         "createTitle": "Tambahkan Special Offer Baru",
         "updateTitle": "Ubah Special Offer",
+        "viewTitle": "Detail Special Offer",
+        "recipientUrlLabel": "Penerima Special Offer",
         "succesCreated": "Special Offer berhasil ditambahkan",
         "succesUpdated": "Special Offer berhasil diubah",
         "updateFailed": "gagal mengubah data special offer",
         "createFailed": "gagal menambahkan special offer baru",
         "cantUpdate": {
-            "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini"
+            "minDuration": "tidak dapat mengubah special offer dengan tanggal selesai kurang dari 1 jam sejak saat ini",
+            "approvedOffer": "tidak dapat mengubah special offer yang telah diapprove"
         },
         "uploadImageFailed": "upload gambar gagal",
         "uploadCSVFailed": "upload file csv gagal",
@@ -857,6 +922,115 @@
         "welcome": "Selamat datang,",
         "lastLogin": "TERAKHIR LOGIN",
         "addEntry": "Tambah Entri Baru"
+    },
+    "approvalListScreen": {
+        "title": "Approval",
+        "getTabsFailed": "gagal mendapatkan list fitur approval",
+        "refreshCountFailed": "refresh jumlah data approval gagal",
+        "loadFailed": {
+            "specialOffer": "gagal mendapatkan list approval special offer"
+        },
+        "tabsTitle": {
+            "specialOffer": "Sp. Offer"
+        },
+        "successBulkApprove": {
+            "specialOffer": "approve special offer yang dipilih berhasil"
+        },
+        "successBulkReject": {
+            "specialOffer": "reject special offer yang dipilih berhasil"
+        },
+        "bulkApproveFailed": {
+            "specialOffer": "approve special offer yang dipilih gagal"
+        },
+        "bulkRejectFailed": {
+            "specialOffer": "reject special offer yang dipilih gagal"
+        },
+        "totalFailed": {
+            "specialOffer": "{{totalFailed}} special offer gagal"
+        },
+        "successApprove": {
+            "specialOffer": "approve special offer berhasil"
+        },
+        "successReject": {
+            "specialOffer": "reject special offer berhasil"
+        },
+        "approveFailed": {
+            "specialOffer": "approve special offer gagal"
+        },
+        "rejectFailed": {
+            "specialOffer": "reject special offer gagal"
+        },
+        "totalRowsSelected": "{{totalRows}} judul dipilih",
+        "specialOfferNotActive": {
+            "title": {
+                "bulk": "beberapa special offer sudah melewati tanggal selesainya",
+                "single": "special offer sudah melewati tanggal selesainya"
+            },
+            "content": "perubahan pada non-aktif special offer tidak akan berdampak pada aplikasi"
+        }
+    },
+    "gamificationRuleScreen": {
+        "title": "Gamification Rule",
+        "activeRule": "Active Rule",
+        "upcomingRule": "Upcoming Rule",
+        "sampleSize": "Sample Size",
+        "activeSince": "Aktif sejak",
+        "replaceText": "Akan mengubah rule aktif pada",
+        "newRule": "Rule Baru",
+        "confirmationModal": {
+            "edit": {
+                "title": "Konfirmasi Perubahan",
+                "content": "Apakah anda yakin untuk melakukan perubahan? Perubahan akan diterapkan di hari selanjutnya pada pukul 00.01"
+            },
+            "newRule": {
+                "title": "Konfirmasi Rule Baru",
+                "content": "Apakah anda yakin untuk menambahkan rule baru? Rule baru akan diterapkan di hari selanjutnya pada pukul 00.01"
+            }
+        },
+        "loadFailed": "gagal mendapatkan list rule",
+        "totalPersonFormula": "probability x sample size (dibulatkan ke bawah)",
+        "lastRowDisclaimer": "Baris ini akan terisi secara otomatis dengan rumus probability 100% - total probability baris 1-8. Probability tidak boleh minus",
+        "cantEditRule": "tidak dapat mengubah rule",
+        "upcomingRuleNotFound": "Upcoming Rule tidak ditemukan",
+        "succesCreated": "upcoming rule baru berhasil ditambahkan",
+        "succesUpdated": "upcoming rule berhasil diubah",
+        "updateFailed": "gagal mengubah upcoming rule",
+        "createFailed": "gagal menambahkan upcoming rule baru"
+    },
+    "cashbackRewardScreen": {
+        "title": "Cashback Reward",
+        "dateFilter": "Filter Tanggal",
+        "nameFilter": "Cari Nama",
+        "downloadReport": "download laporan",
+        "filterNotSet": "Filter Belum Diatur"
+    },
+    "features": {
+        "homebanner": "Home Banner",
+        "artikel": "Artikel",
+        "specialoffer": "Penawaran Special",
+        "oneclicknmcy": "One Click NMCY",
+        "durablespecialoffer": "Penawaran Special Durable",
+        "faq": "FAQ",
+        "lokasicabang": "Lokasi Cabang",
+        "ubahnomorhandphone": "Ubah Nomor Handphone",
+        "simulasikredit": "Simulasi Kredit",
+        "instruksipembayaran": "Instruksi Pembayaran",
+        "notifikasi": "Notifikasi",
+        "user": "User",
+        "role": "Role",
+        "laporantransaksi": "Laporan Transaksi",
+        "laporansaldo": "Laporan Saldo",
+        "gamificationrule": "Rule Gamification",
+        "cashbackreward": "Reward Cashback",
+        "mobilbaru": "Mobil Baru",
+        "mobilbekas": "Mobil Bekas",
+        "motorbaru": "Motor Baru",
+        "motorbekas": "Motor Bekas",
+        "elektronik": "Elektronik",
+        "furnitur": "Furnitur",
+        "gadget": "Gadget",
+        "multigunamotor": "Multiguna Motor",
+        "multigunamobil": "Multiguna Mobil"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
@@ -979,6 +1153,19 @@
         "01116": "gagal mendapatkan list role",
         "01117": "id role wajib diisi",
         "01118": "gagal menghapus role, role digunakan oleh user aktif",
+        "01119": "gagal mengirim email notifikasi penggantian role",
+        "01120": "email telah terdaftar",
+        "01121": "status untuk approve salah",
+        "01122": "status untuk reject salah",
+        "01123": "sample size wajib diisi",
+        "01124": "reward wajib diisi",
+        "01125": "probability wajib diisi",
+        "01126": "blended wajib diiisi",
+        "01127": "floor wajib diisi",
+        "01128": "ceiling wajib parameter",
+        "01129": "kategori special offer tidak ditemukan",
+        "01130": "invalid url csv",
+        "01131": "approve special offer gagal",
         "ms-payment": {
             "07069": "tanggal mulai harus diisi",
             "07070": "tanggal selesai harus diisi",

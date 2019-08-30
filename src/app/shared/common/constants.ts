@@ -17,6 +17,13 @@ export const constants = {
             table: { title: 'Table', items: 'inserttable tableprops deletetable row column cell' }
         }
     },
+    paginatorProps: {
+        pageSizeOptions: [10, 25, 50, 100],
+        pageSize: 10,
+        showFirstLastButtons: true,
+        length: 0,
+        pageIndex: 0
+    },
     branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
     productScreen: {
         productName: '@dr_ymh_lndmrk_kslns'
@@ -40,18 +47,42 @@ export const constants = {
         withdrawal: 'WT'
     },
     features: {
-        banner: 'home banner',
+        banner: 'homebanner',
         article: 'artikel',
-        specialOffer: 'special offer',
+        specialOffer: 'specialoffer',
+        oneClickNMCY: 'oneclicknmcy',
+        durableSpecialOffer: 'durablespecialoffer',
         faq: 'faq',
-        branchLocation: 'lokasi cabang',
-        changePhoneNumber: 'ubah nomor handphone',
-        creditSimulation: 'simulasi kredit',
-        paymentInstruction: 'instruksi pembayaran',
+        branchLocation: 'lokasicabang',
+        changePhoneNumber: 'ubahnomorhandphone',
+        creditSimulation: 'simulasikredit',
+        paymentInstruction: 'instruksipembayaran',
         notification: 'notifikasi',
         user: 'user',
         role: 'role',
-        transactionReport: 'laporan transaksi',
-        balanceReport: 'laporan saldo'
+        transactionReport: 'laporantransaksi',
+        balanceReport: 'laporansaldo',
+        gamificationRule: 'gamificationrule',
+        cashbackReward: 'cashbackreward',
+    },
+    approvalStatus: {
+        approved: "1",
+        rejected: "0",
+        waitingForApproval: "2"
+    },
+    approvalType: {
+        specialOffer: "specialoffer"
+    },
+    gamification: {
+        upcoming: {
+            status: false,
+            cycleNum: 'game_cycle_num_draft',
+            timestamp: 'game_timestamp_draft'
+        },
+        active: {
+            status: true,
+            cycleNum: 'game_cycle_num',
+            timestamp:'game_timestamp_release'
+        }
     }
 }

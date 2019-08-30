@@ -63,8 +63,6 @@
           {{'table.bannersTable.endDate' | translate}} </th>
         <td mat-cell *matCellDef="let element">
           <div>{{element.end_date | date: 'dd/MM/yyyy HH:mm'}}</div>
-          <div *ngIf="!element.status" class="text-warning">{{'table.status.inactive' | translate}}</div>
-          <div *ngIf="element.status" class="text-success">{{'table.status.active' | translate}}</div>
         </td>
       </ng-container>
       <ng-container matColumnDef="lastEdited">
@@ -77,6 +75,41 @@
           <ng-template #created>
             {{element.created_dt | date : 'dd/MM/yyyy HH:mm'}} {{'by' | translate}} {{element.created_by}}
           </ng-template>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-150">
+          {{'table.status.title' | translate}} </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="!element.active_status" class="text-warning">{{'table.status.inactive' | translate}}</div>
+          <div *ngIf="element.active_status" class="text-success">{{'table.status.active' | translate}}</div>
+          <div>
+            {{'table.createdDate' | translate}} : {{element.created_dt | date : 'dd/MM/yyyy'}}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="approval">
+        <th mat-header-cell *matHeaderCellDef class="font-th  th-min-width-150">
+          {{'table.status.approvalTitle' | translate}} </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.status">
+            <div *ngIf="element.status === approvalStatus.waitingForApproval; else notWaiting" class="text-warning">
+                {{'table.status.waitingForApproval' | translate}}
+            </div>
+            <ng-template #notWaiting>
+              <div>
+                <span *ngIf="element.status === approvalStatus.rejected" class="text-danger">
+                    {{'table.status.rejected' | translate}}
+                </span>
+                <span *ngIf="element.status === approvalStatus.approved" class="text-success">
+                    {{'table.status.approved' | translate}}
+                </span> {{'specialOfferListScreen.approvalBy' | translate }} {{element.status_by}}
+              </div>
+              <div>
+                {{element.status_dt | date : 'dd/MM/yyyy HH:mm'}}
+              </div>
+            </ng-template>
+          </div>
         </td>
       </ng-container>
       <ng-container matColumnDef="action">

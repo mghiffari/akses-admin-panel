@@ -128,7 +128,7 @@ export class AuthService {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
-      return el.features.trim().toLowerCase() === featureName
+      return el.unique_tag.trim().toLowerCase() === featureName
     })
     return feature
   }
@@ -140,21 +140,33 @@ export class AuthService {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
-      return el.features.trim().toLowerCase() === featureName
+      return el.unique_tag.trim().toLowerCase() === featureName
     })
     return feature && feature.view
   }
 
   // get a feature create flag privilege by feature name
   getCreatePrvg(featureName){
-    console.log('AuthService | getViewPrvg');
+    console.log('AuthService | getCreatePrvg');
     if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
-      return el.features.trim().toLowerCase() === featureName
+      return el.unique_tag.trim().toLowerCase() === featureName
     })
     return feature && feature.view && feature.create
+  }
+
+  // get a feature publish flag privilege by feature name
+  getPublishPrvg(featureName){
+    console.log('AuthService | getPublishPrvg');
+    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+      this.userLoginData = JSON.parse(this.getUserLogin())
+    }
+    let feature = this.userLoginData.akses.find(el => {
+      return el.unique_tag.trim().toLowerCase() === featureName
+    })
+    return feature && feature.view && feature.publish
   }
 
   // get feature create flag privilege

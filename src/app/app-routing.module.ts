@@ -44,6 +44,14 @@ const routes: Routes = [
       {
         path: 'report',
         loadChildren: './modules/report/report.module#ReportModule'
+      },
+      {
+        path: 'approvals',
+        loadChildren: './modules/approval/approval.module#ApprovalModule'
+      },
+      {
+        path: 'gamification',
+        loadChildren: './modules/gamification/gamification.module#GamificationModule'
       }
     ]
   },

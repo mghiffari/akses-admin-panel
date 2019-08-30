@@ -3,9 +3,9 @@
   placeholder="{{placeholder}}" 
   [value]="maskedValue"
   [disabled]="disabled" 
-  (keyup)="handleChange($event)" 
+  (keyup)="handleKeyup($event)" 
   (change)="handleChange($event)" 
-  (blur)="handleChange($event)">
+  (blur)="handleBlur($event)">
   <div matSuffix *ngIf="suffix">{{suffix}}</div>
   <div matPrefix *ngIf="prefix">{{prefix}}</div>
   <input matInput 

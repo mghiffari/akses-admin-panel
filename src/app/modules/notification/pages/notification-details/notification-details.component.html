@@ -281,7 +281,7 @@
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
                   <ngx-mat-select-search (keyup)="filterSpecialOffers($event)" formControlName="searchSpecialOffer"
-                    [placeholderLabel]="''"></ngx-mat-select-search>
+                    placeholderLabel="{{'forms.notifSpecialOffer.searchPlaceholder'| translate}}"></ngx-mat-select-search>
                   <mat-option value="" (click)="handleSelectSpecialOffer()">
                     {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
                   <mat-option *ngFor="let offer of displaySpecialOffers" [value]="offer.id"
@@ -318,7 +318,7 @@
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
                   <ngx-mat-select-search (keyup)="filterArticles($event)" formControlName="searchArticle"
-                    [placeholderLabel]="''"></ngx-mat-select-search>
+                    placeholderLabel="{{'forms.notifArticle.searchPlaceholder'| translate}}"></ngx-mat-select-search>
                   <mat-option value="" (click)="selectedLinkTitle=''">
                     {{'forms.notifArticle.placeholder' | translate}}</mat-option>
                   <mat-option *ngFor="let article of displayArticles" [value]="article.id"

@@ -1,0 +1,115 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      <span>{{'specialOfferDetailsScreen.viewTitle' | translate}}</span>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
+    <div fxFlex="100%">
+      <a *ngIf="allowPublish" class="top-action-text" routerLink="/approvals" fxLayoutAlign="start center">
+        <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
+        <div>
+          {{'backToList' | translate}}
+        </div>
+      </a>
+      <div *ngIf="!allowPublish" class="top-action-text disabled" fxLayoutAlign="start center">
+        <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
+        <div>
+          {{'backToList' | translate}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!loading">
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="border-bottom-gray padding-16">
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
+        <div fxFlexAlign="center" fxFlex="30%">
+          {{'forms.recipient.fieldTitle' | translate}}
+        </div>
+        <div fxFlex="70%" class="padding-left-16">
+          <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+            <a *ngIf="offer.url" class="text-purple font-description" [href]="offer.url" style="text-decoration: none">
+              {{'specialOfferDetailsScreen.recipientUrlLabel' | translate}}.csv</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="border-bottom-gray padding-16">
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" fxLayoutGap="16px">
+        <div fxLayout="row wrap">
+          <div fxFlex="30%">
+            {{'forms.offerImage.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" class="padding-left-16">
+            <div fxLayout="row wrap" fxLayoutGap="10px">
+              <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%">
+                <div style="width: 100%;" [style.height]="imgContainer.offsetWidth * (imageRatioPercentage) + 'px'"
+                  #imgContainer>
+                  <img width="100%" height="100%" [src]="offer?.sp_offer_image" alt="{{'imageNotExist' | translate}}">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="30%" fxFlexAlign="center">
+            {{'forms.category.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" class="padding-left-16">
+            {{offer?.category}}
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="30%" fxFlexAlign="center">
+            {{'forms.title.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" class="padding-left-16">
+            {{offer?.title}}
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="30%">
+            {{'forms.description.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" class="padding-left-16">
+            {{offer?.description}}
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="30%">
+            {{'forms.termsAndConditions.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" class="padding-left-16">
+            <div class="border-gray" style="min-height: 50px" [innerHTML]="offer?.terms_and_conditions"></div>
+          </div>
+        </div>
+        <div fxLayout="row wrap">
+          <div fxFlex="30%">
+            {{'forms.redeemVoucherInstructions.fieldTitle' | translate}}
+          </div>
+          <div fxFlex="70%" class="padding-left-16">
+            <div class="border-gray" style="min-height: 50px" [innerHTML]="offer?.instructions"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" class="border-bottom-gray padding-16">
+      <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="row">
+        <div fxFlex="30%">
+          {{'forms.endDatetime.fieldTitle' | translate}}
+        </div>
+        <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" class="padding-left-16">
+          {{offer?.end_date | date: 'dd/MM/yyyy HH:mm'}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+</div>
