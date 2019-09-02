@@ -6,7 +6,7 @@
   </div>
   <div [formGroup]="filterForm" fxLayout="row wrap" fxLayoutAlign="start start"
     class="border-bottom-gray padding-left-16 padding-right-16 padding-bottom-16">
-    <div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row wrap" fxLayoutAlign="start center" ngClass.md="padding-right-16"
+    <div fxFlex="60%" fxFlex.lt-md="100%" fxLayout="row wrap" fxLayoutAlign="start start" ngClass.md="padding-right-16"
       ngClass.gt-md="padding-right-16">
       <div fxFlex="80%" fxFlex.lt-md="60%" fxFlex.lt-sm="100%" fxLayout="row wrap">
         <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="row" fxLayoutAlign="start center">
@@ -21,6 +21,9 @@
               <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #startDatepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="startDate.invalid && (filterForm.dirty || filterForm.touched)">
+                <span *ngIf="startDate.errors.required">{{'forms.transactionStartDate.errorRequired' | translate}}</span>
+            </mat-error>
           </div>
         </div>
         <div fxFlex="50%" fxFlex.lt-md="100%" fxLayout="row" fxLayoutAlign="start center"
@@ -36,6 +39,9 @@
               <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
               <mat-datepicker #endDatepicker class="calendar-mat-icon-button"></mat-datepicker>
             </mat-form-field>
+            <mat-error class="bottom-error" *ngIf="endDate.invalid && (filterForm.dirty || filterForm.touched)">
+                <span *ngIf="endDate.errors.required">{{'forms.transactionEndDate.errorRequired' | translate}}</span>
+            </mat-error>
           </div>
         </div>
       </div>
@@ -48,9 +54,15 @@
             placeholder="{{'forms.transactionSearch.placeholder' | translate}}"
             (focus)="isFocusedSearch = true" (blur)="isFocusedSearch = false">
         </mat-form-field>
-        <mat-hint class="bottom-hint">
-          {{'forms.transactionSearch.hint' | translate : searchValidation}}
-        </mat-hint>
+        <mat-error class="bottom-error" *ngIf="search.invalid && (filterForm.dirty || filterForm.touched); else searchHint">
+            <span *ngIf="search.errors.required">{{'forms.transactionSearch.errorRequired' | translate}}</span>
+            <span *ngIf="search.errors.minlength">{{'forms.transactionSearch.hint' | translate: searchValidation}}</span>
+        </mat-error>
+        <ng-template #searchHint>
+          <mat-hint class="bottom-hint">
+            {{'forms.transactionSearch.hint' | translate : searchValidation}}
+          </mat-hint>
+        </ng-template>
       </div>
 
     </div>
