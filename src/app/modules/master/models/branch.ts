@@ -3,6 +3,7 @@ export class Branch {
     name: string;
     type: string;
     branch_code: string;
+    cr_sim_area_code
     region: string;
     province: string;
     city: string;

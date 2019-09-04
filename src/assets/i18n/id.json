@@ -765,7 +765,8 @@
         "getCitiesFailed": "gagal mendapatkan list kota / kabupaten",
         "getDistrictsFailed": "gagal mendapatkan list kecamatan",
         "getSubDistrictsFailed": "gagal mendapatkan list kelurahan",
-        "duplicateBranchCode": "Kode Cabang sudah tersedia"
+        "duplicateBranchCode": "Kode Cabang sudah tersedia",
+        "getCSRegionFailed": "gagal mendapatkan list region untuk simulasi kredit"
     },
     "branchListScreen": {
         "title": "Data Lokasi Cabang",
@@ -785,7 +786,7 @@
             "format": "Format file upload harus csv dengan delimiter titik koma (;), pastikan tidak ada titik koma (;) pada setiap data kolom",
             "numberFormat": "Gunakan titik (.) bukan (,) dalam penanda desimal di longitude/latitude dan hanya boleh ada satu titik di setiap longitude/latitude",
             "precise": "Pastikan longitude dan latitude sudah sesuai. Sedikit kesalahan pada longitude dan latitiude akan berpengaruh pada lokasi cabang terdekat di app",
-            "columnSequence": "Urutan kolom file upload harus sesuai dengan contoh file: nama cabang, tipe cabang, region, provinsi, kota / kabupaten, kecamatan, kelurahan, kode pos, alamat, latitude, longitude, kode cabang",
+            "columnSequence": "Urutan kolom file upload harus sesuai dengan contoh file: nama cabang, tipe cabang, region, provinsi, kota / kabupaten, kecamatan, kelurahan, kode pos, alamat, latitude, longitude, kode cabang, kode area",
             "branchCode": "Kode Cabang harus terdiri 4 angka"
         }
     },
