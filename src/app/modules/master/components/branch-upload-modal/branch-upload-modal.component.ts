@@ -57,6 +57,8 @@ export class BranchUploadModalComponent implements OnInit {
       } else {
         this.isValidFile = false;
       }
+    } else {
+      this.isValidFile = false
     }
   }
 
