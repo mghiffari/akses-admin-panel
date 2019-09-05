@@ -51,14 +51,14 @@
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <mat-select formControlName="csRegion">
+            <mat-select formControlName="areaCode">
               <mat-option value="">{{'forms.csRegion.placeholder' | translate}}</mat-option>
-              <mat-option *ngFor="let reg of regions" [value]="reg.name">{{reg.name}}
+              <mat-option *ngFor="let reg of regions" [value]="reg.area_code">{{reg.area_code + ' - ' + reg.description}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <mat-error class="bottom-error" *ngIf="csRegion.invalid && (csRegion.dirty || csRegion.touched)">
-            <span *ngIf="csRegion.errors.required">{{'forms.region.errorRequired' | translate}}</span>
+          <mat-error class="bottom-error" *ngIf="areaCode.invalid && (areaCode.dirty || areaCode.touched)">
+            <span *ngIf="areaCode.errors.required">{{'forms.region.errorRequired' | translate}}</span>
           </mat-error>
         </div>
       </div>

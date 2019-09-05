@@ -24,7 +24,7 @@ export const constants = {
         length: 0,
         pageIndex: 0
     },
-    branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
+    branchCSVFileExampleUrl: 'https://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019020911400583.csv',
     productScreen: {
         productName: '@dr_ymh_lndmrk_kslns'
     },

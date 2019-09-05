@@ -13,6 +13,8 @@ import { Branch } from '../../models/branch';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { constants } from 'src/app/shared/common/constants';
+import { CreditSimulationService } from 'src/app/shared/services/credit-simulation.service';
+import { CSRegions } from 'src/app/shared/models/cs-regions';
 
 @Component({
   selector: 'app-branch-details',
@@ -29,35 +31,7 @@ export class BranchDetailsComponent implements OnInit {
   onCheckCode = false;
   duplicateBranchId = '';
   branchTypes = [];
-  regions = [
-    {
-      name: "Aceh, Sumatera Utara, Riau, Kep. Riau"
-    }, 
-    {
-      name: "Bali & Nusa Tenggara"
-    }, 
-    {
-      name: "Jabar"
-    }, 
-    {
-      name: "Jabotabek"
-    }, 
-    {
-      name: "Jateng"
-    }, 
-    {
-      name: "Jatim"
-    }, 
-    {
-      name: "Kalimantan"
-    }, 
-    {
-      name: "Sulawesi, Maluku, Papua"
-    }, 
-    {
-      name: "Sumatera Barat, Sumatera Selatan, Bangka Belitung, Jambi, Lampung, Bengkulu"
-    }, 
-  ]
+  regions: CSRegions[] = []
   provinces = [];
   cities = [];
   subDistricts = [];
@@ -73,6 +47,7 @@ export class BranchDetailsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private branchService: BranchService,
+    private csService: CreditSimulationService,
     private lovService: LovService,
     private router: Router,
     private snackBar: MatSnackBar,
@@ -121,9 +96,9 @@ export class BranchDetailsComponent implements OnInit {
     return this.branchForm.get('region');
   }
 
-  // csRegion formControl getter
-  get csRegion() {
-    return this.branchForm.get('csRegion');
+  // areaCode formControl getter
+  get areaCode() {
+    return this.branchForm.get('areaCode');
   }
 
   // province formControl getter
@@ -190,7 +165,7 @@ export class BranchDetailsComponent implements OnInit {
                 updatedBy: new FormControl(username),
                 region: new FormControl(editedBranch.region, [Validators.required]),
                 // region for credit simulation
-                csRegion: new FormControl('', [Validators.required]),
+                areaCode: new FormControl(editedBranch.cr_sim_area_code, [Validators.required]),
                 province: new FormControl(editedBranch.province, [Validators.required]),
                 city: new FormControl(editedBranch.city, [Validators.required]),
                 subDistrict: new FormControl(editedBranch.sub_district, [Validators.required]),
@@ -244,7 +219,7 @@ export class BranchDetailsComponent implements OnInit {
           ]),
           createdBy: new FormControl(username),
           region: new FormControl('', [Validators.required]),
-          csRegion: new FormControl('', [Validators.required]),
+          areaCode: new FormControl('', [Validators.required]),
           province: new FormControl('', [Validators.required]),
           city: new FormControl('', [Validators.required]),
           subDistrict: new FormControl('', [Validators.required]),
@@ -275,10 +250,11 @@ export class BranchDetailsComponent implements OnInit {
     let lovTasks = [
       this.lovService.getBranchType().pipe(map(res => res), catchError(e => of(e))),
       this.lovService.getIndonesiaProvince().pipe(map(res => res), catchError(e => of(e))),
+      this.csService.getRegionList().pipe(map(res => res), catchError(e => of(e)))
     ]
     forkJoin(lovTasks).subscribe((response: any) => {
       this.loading = false;
-      if (response[0] instanceof HttpErrorResponse) {
+      if (response[0] instanceof Error) {
         const error = response[0];
         try {
           console.table(error);
@@ -303,7 +279,7 @@ export class BranchDetailsComponent implements OnInit {
         }
       }
 
-      if (response[1] instanceof HttpErrorResponse) {
+      if (response[1] instanceof Error) {
         const error = response[1];
         try {
           console.table(error);
@@ -334,6 +310,31 @@ export class BranchDetailsComponent implements OnInit {
               this.setCities(null)
             }
           }
+        } catch (error) {
+          console.table(error)
+        }
+      }
+
+      if (response[2] instanceof Error) {
+        const error = response[2];
+        try {
+          console.table(error);
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'branchDetailsScreen.getCSRegionFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.table(error)
+        }
+      } else {
+        try {
+          console.table(response[2]);
+          this.regions = response[2].data
         } catch (error) {
           console.table(error)
         }
@@ -522,6 +523,7 @@ export class BranchDetailsComponent implements OnInit {
       this.branchModel.address = form.address;
       this.branchModel.postal_code = form.postalCode;
       this.branchModel.id = this.id;
+      this.branchModel.cr_sim_area_code = form.areaCode;
       this.branchService.updateBranch(this.branchModel).subscribe(
         (data: any) => {
           try {
@@ -624,6 +626,7 @@ export class BranchDetailsComponent implements OnInit {
     this.branchModel.district = form.district;
     this.branchModel.address = form.address;
     this.branchModel.postal_code = form.postalCode;
+    this.branchModel.cr_sim_area_code = form.areaCode;
     this.branchService.createBranch(this.branchModel)
       .subscribe(
         (data: any) => {
