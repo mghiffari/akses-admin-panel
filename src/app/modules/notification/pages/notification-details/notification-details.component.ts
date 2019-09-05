@@ -147,10 +147,12 @@ export class NotificationDetailsComponent implements OnInit {
                                     + (scheduleMin > 9 ? '' : '0') + scheduleMin
                                 }
                                 let selectedLink = null;
+                                let linkType = this.notificationLinkType.article
                                 if (editedNotif.link_type.includes(this.notificationLinkType.specialOffer)) {
                                   selectedLink = this.specialOffers.find(el => {
                                     return el.id === editedNotif.link_id;
                                   })
+                                  linkType = this.notificationLinkType.specialOffer
                                 } else {
                                   selectedLink = this.articles.find((el) => {
                                     return el.id === editedNotif.link_id;
@@ -169,7 +171,7 @@ export class NotificationDetailsComponent implements OnInit {
                                   oldIcon: editedNotif.large_icon,
                                   image: editedNotif.large_image,
                                   oldImage: editedNotif.large_image,
-                                  linkType: editedNotif.link_type,
+                                  linkType: linkType,
                                   linkId: selectedLink ? selectedLink.id : '',
                                   linkCategory: selectedLink ? selectedLink.category : '',
                                   scheduledFlag: editedNotif.scheduled_flg,
@@ -601,8 +603,11 @@ export class NotificationDetailsComponent implements OnInit {
     notification.large_image = formValue.image
     notification.recipient_list = formValue.recipient
     if (formValue.linkType === this.notificationLinkType.specialOffer) {
-      if (formValue.linkCategory.toLowerCase().includes(constants.specialOfferCategory.durable)) {
+      const linkCategory = formValue.linkCategory.toLowerCase()
+      if (linkCategory.includes(constants.specialOfferCategory.durable)) {
         notification.link_type = this.notificationLinkType.specialOfferLinkCategory.durable
+      } else if (linkCategory.includes(constants.specialOfferCategory.mpl)){
+        notification.link_type = this.notificationLinkType.specialOfferLinkCategory.mpl
       } else {
         notification.link_type = this.notificationLinkType.specialOfferLinkCategory.oneclick
       }

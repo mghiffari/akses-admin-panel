@@ -112,7 +112,7 @@ export class BalanceReportComponent implements OnInit {
               data: {
                 title: 'balanceReport.loadFailed',
                 content: {
-                  text: 'apiErrors.'+ (error.status ? 'ms-payment.' + error.error.err_code : 'noInternet'),
+                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
                   data: null
                 }
               }

@@ -217,7 +217,7 @@
             "errorFormat": "Kode Cabang hanya harus dalam angka",
             "errorLength": "Kode Cabang harus terdiri {{minLength}} angka",
             "errorDuplicate": {
-                "preText": "Kode Cabang telah digunakan, klik ", 
+                "preText": "Kode Cabang telah digunakan, klik ",
                 "here": "disini",
                 "endText": " untuk melihat kode cabang tersebut"
             }
@@ -450,7 +450,7 @@
         "transactionEndDate": {
             "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid"
         },
-        "transactionSearch":{
+        "transactionSearch": {
             "placeholder": "Cari OID / VA / Nomor Handphone",
             "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}",
             "errorRequired": "Keyword pencarian wajib diisi"
@@ -782,7 +782,7 @@
         "uploadFailed": "gagal upload file",
         "uploadSuccess": "berhasil upload file",
         "totalFailed": "{{totalFailed}} lokasi cabang gagal ditambahkan",
-        "instructions":{
+        "instructions": {
             "format": "Format file upload harus csv dengan delimiter titik koma (;), pastikan tidak ada titik koma (;) pada setiap data kolom",
             "numberFormat": "Gunakan titik (.) bukan (,) dalam penanda desimal di longitude/latitude dan hanya boleh ada satu titik di setiap longitude/latitude",
             "precise": "Pastikan longitude dan latitude sudah sesuai. Sedikit kesalahan pada longitude dan latitiude akan berpengaruh pada lokasi cabang terdekat di app",
@@ -1151,7 +1151,7 @@
         "01109": "token expired",
         "01110": "oid tidak terdaftar",
         "01111": "data user tidak ditemukan",
-        "01112" : "notifikasi telah dikirim ke semua user",
+        "01112": "notifikasi telah dikirim ke semua user",
         "01113": "nama role wajib diisi",
         "01114": "gagal menambahkan role baru",
         "01115": "gagal mengubah data role",
@@ -1171,13 +1171,12 @@
         "01129": "kategori special offer tidak ditemukan",
         "01130": "invalid url csv",
         "01131": "approve special offer gagal",
-        "ms-payment": {
-            "07069": "tanggal mulai harus diisi",
-            "07070": "tanggal selesai harus diisi",
-            "07071": "keyword pencarian harus diisi",
-            "07072": "data tidak ditemukan",
-            "07073": "data tidak bisa dididownload",
-            "07075" : "transaksi tidak ditemukan"
-        }
+        "07069": "tanggal mulai harus diisi",
+        "07070": "tanggal selesai harus diisi",
+        "07071": "keyword pencarian harus diisi",
+        "07072": "data tidak ditemukan",
+        "07073": "data tidak bisa dididownload",
+        "07075": "transaksi tidak ditemukan",
+        "07078": "transaksi tidak ditemukan"
     }
 }

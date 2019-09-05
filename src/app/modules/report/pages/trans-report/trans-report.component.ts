@@ -216,7 +216,7 @@ export class TransReportComponent implements OnInit {
             data: {
               title: 'transactionReport.loadFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? 'ms-payment.' + error.error.err_code : 'noInternet'),
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                 data: null
               }
             }
