@@ -1171,13 +1171,12 @@
         "01129": "special offer category not found",
         "01130": "csv url invalid",
         "01131": "failed to approve special offer",
-        "ms-payment": {
-            "07069": "missing start date parameter",
-            "07070": "missing end date parameter",
-            "07071": "missing search key parameter",
-            "07072": "no data found",
-            "07073": "data cannot be downloaded",
-            "07075": "transaction not found"
-        }
+        "07069": "missing start date parameter",
+        "07070": "missing end date parameter",
+        "07071": "missing search key parameter",
+        "07072": "no data found",
+        "07073": "data cannot be downloaded",
+        "07075": "transaction not found",
+        "07078": "transaction not found"
     }
 }

@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   providedIn: 'root'
 })
 export class ReportService {
-  reportApiUrl = environment.msPaymentApiUrl + 'history/transaction';
+  reportApiUrl = environment.apiurl + 'history/transaction';
   balanceReportApiUrl = this.reportApiUrl + '/search';
   downloadTransReporApiUrl = this.reportApiUrl + '/download';
 
@@ -39,6 +39,10 @@ export class ReportService {
   // return download link parsed with needed parameter
   parseDownloadLink(fromDate, toDate, search) {
     console.log("Report Service | parseDownloadLink");
-    return this.downloadTransReporApiUrl + '?from_date=' + fromDate + '&to_date='+ toDate + '&search_key=' + encodeURIComponent(search)
+    return this.downloadTransReporApiUrl 
+      + '?from_date=' + fromDate 
+      + '&to_date='+ toDate 
+      + '&search_key=' + encodeURIComponent(search)
+      + '&token=' + this.authService.getAccessToken()
   }
 }
