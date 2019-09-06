@@ -5,7 +5,6 @@
 export const environment = {
   production: true,
   apiurl: '//sit.aksesadirafinance.com/',
-  msPaymentApiUrl: 'http://149.129.250.31:30011/api/v1/',
   endPoint: {
     updateAccount: 'msa-account',
     login: 'msap-login',

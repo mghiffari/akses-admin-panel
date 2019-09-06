@@ -34,12 +34,14 @@ export const constants = {
         specialOffer: 'specialoffer',
         specialOfferLinkCategory: {
             durable: 'specialoffer_durable',
-            oneclick: 'specialoffer_oneclick'
+            oneclick: 'specialoffer_oneclick',
+            mpl: 'specialoffer_mpl'
         }
     },
     specialOfferCategory: {
         oneclick: 'one click',
-        durable: 'durable'
+        durable: 'durable',
+        mpl: 'mpl'
     },
     transactionType: {
         topUp: 'TO',
