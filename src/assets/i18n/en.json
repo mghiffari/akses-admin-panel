@@ -431,6 +431,7 @@
             "errorRequired": "Role Name is required"
         },
         "privilege": {
+            "selectAll": "Select All",
             "options": {
                 "create": "Create",
                 "view": "View",
