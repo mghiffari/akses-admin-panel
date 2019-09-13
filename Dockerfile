@@ -2,8 +2,7 @@ FROM nginx:1.14.2-alpine
 ## Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 COPY dist2/AdiraAksesAdminPanel /usr/share/nginx/html
-RUN echo "user  www-data;\
-    worker_processes auto;\
+RUN echo "worker_processes auto;\
     worker_rlimit_nofile 100000;\
     pid        /var/run/nginx.pid;\
     error_log  /var/log/nginx/error.log error;\
