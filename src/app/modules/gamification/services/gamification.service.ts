@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { environment } from 'src/environments/environment';
-
+import Utils from '../../../shared/common/utils';
 @Injectable({
   providedIn: 'root'
 })
@@ -30,7 +30,7 @@ export class GamificationService {
 
   // get cashback reward list with pagination and filter
   getCashbackReward(page, pageSize, fromDate, toDate, name) {
-    let url = this.cashbackRewardApiUrl + '/' + page + '/' + pageSize + '/' + name;
+    let url = this.cashbackRewardApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(name);
     console.log("Gamification Service | getCashbackReward", url);
     let data = {
       from_date: fromDate,
