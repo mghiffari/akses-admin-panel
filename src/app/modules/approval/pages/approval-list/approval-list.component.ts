@@ -118,28 +118,16 @@ export class ApprovalListComponent implements OnInit {
       } else {
         this.resetPage()
         this.resetTable()
-        if (this.filterForm.errors) {
-          if (this.filterForm.errors.dateRange) {
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'invalidForm',
-                content: {
-                  text: 'forms.date.errorRange',
-                  data: null
-                }
+        if (this.filterForm.errors && this.filterForm.errors.dateRange) {
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'invalidForm',
+              content: {
+                text: 'forms.date.errorRange',
+                data: null
               }
-            })
-          } else if (this.filterForm.errors.dateRangeRequired) {
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'invalidForm',
-                content: {
-                  text: 'forms.date.errorRangeRequired',
-                  data: null
-                }
-              }
-            })
-          }
+            }
+          })
         }
       }
     })
@@ -361,7 +349,7 @@ export class ApprovalListComponent implements OnInit {
     console.log('ApprovalListComponent | bulkRejectSpecialOffer')
     this.loading = true
     data = data.map(el => {
-      return {...el, status: this.approvalStatus.rejected}
+      return { ...el, status: this.approvalStatus.rejected }
     })
     this.specialOfferService.bulkRejectSpecialOffer(data).subscribe(
       response => {
@@ -479,7 +467,7 @@ export class ApprovalListComponent implements OnInit {
     console.log('ApprovalListComponent | bulkApproveSpecialOffer')
     this.loading = true
     data = data.map(el => {
-      return {...el, status: this.approvalStatus.approved}
+      return { ...el, status: this.approvalStatus.approved }
     })
     this.specialOfferService.bulkApproveSpecialOffer(data).subscribe(
       response => {

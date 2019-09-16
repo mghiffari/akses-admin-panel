@@ -239,8 +239,12 @@
             "errorRequired": "Latitude must have numeric value",
             "errorMaxDecimalLength": "Latitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
         },
+        "csRegion": {
+            "fieldTitle": "Region (for credit simulation)",
+            "placeholder": "Select a Region"
+        },
         "region": {
-            "fieldTitle": "Region",
+            "fieldTitle": "Region (for branch location)",
             "placeholder": "Region",
             "errorRequired": "Region is required"
         },
@@ -761,7 +765,8 @@
         "getCitiesFailed": "failed to get city list",
         "getDistrictsFailed": "failed to get district list",
         "getSubDistrictsFailed": "failed to get sub-district list",
-        "duplicateBranchCode": "Branch Code already exist"
+        "duplicateBranchCode": "Branch Code already exist",
+        "getCSRegionFailed": "failed to get region list for credit simulation"
     },
     "branchListScreen": {
         "title": "Branch Locations Data",
@@ -781,7 +786,7 @@
             "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
             "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
             "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the nearest branch location on the app",
-            "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, latitude, longitude, branch code",
+            "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, latitude, longitude, branch code, area code",
             "branchCode": "Each branch code should contain 4 numbers"
         }
     },
@@ -1166,13 +1171,12 @@
         "01129": "special offer category not found",
         "01130": "csv url invalid",
         "01131": "failed to approve special offer",
-        "ms-payment": {
-            "07069": "missing start date parameter",
-            "07070": "missing end date parameter",
-            "07071": "missing search key parameter",
-            "07072": "no data found",
-            "07073": "data cannot be downloaded",
-            "07075": "transaction not found"
-        }
+        "07069": "missing start date parameter",
+        "07070": "missing end date parameter",
+        "07071": "missing search key parameter",
+        "07072": "no data found",
+        "07073": "data cannot be downloaded",
+        "07075": "transaction not found",
+        "07078": "transaction not found"
     }
 }

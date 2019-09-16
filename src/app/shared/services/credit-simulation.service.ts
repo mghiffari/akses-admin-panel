@@ -9,6 +9,7 @@ export class CreditSimulationService {
   creditSimulationApiUrl = environment.apiurl + 'creditsimulation';
   productApiUrl = this.creditSimulationApiUrl + '/products';
   componentApiUrl = this.creditSimulationApiUrl + '/components';
+  regionApiUrl = this.creditSimulationApiUrl + '/cra'
 
   constructor(
     private authService: AuthService
@@ -45,5 +46,12 @@ export class CreditSimulationService {
   updateProdCompCS(data: Array<any>){
     console.log('CreditSimulationService | updateProdCompCS ', this.creditSimulationApiUrl)
     return this.authService.wrapTokenPutApi(this.creditSimulationApiUrl, data);
+  }
+
+  // get list of region
+  getRegionList(){
+    let url =  this.regionApiUrl;
+    console.log('CreditSimulationService | getRegionList ', url)
+    return this.authService.wrapTokenGetApi(url)
   }
 }

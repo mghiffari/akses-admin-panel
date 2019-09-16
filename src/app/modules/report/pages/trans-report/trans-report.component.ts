@@ -121,23 +121,8 @@ export class TransReportComponent implements OnInit {
         } else {
           this.resetPage()
           this.resetTable()
-          let errorText = ''
-          if (this.startDate.invalid) {
-            if (this.startDate.errors && this.startDate.errors.required) {
-              errorText = 'forms.transactionStartDate.errorRequired'
-            }
-            this.showFormError(errorText)
-          } else {
-            if (this.endDate.errors && this.endDate.errors.required) {
-              errorText = 'forms.transactionEndDate.errorRequired'
-            } else if (this.filterForm.errors && this.filterForm.errors.dateRange) {
-              errorText = 'forms.date.errorRange'
-            } else if (this.search.errors && this.search.errors.required) {
-              errorText = 'forms.transactionSearch.errorRequired'
-            }
-            if (!this.search.errors || !this.search.errors.minlength){
-              this.showFormError(errorText)
-            }
+          if (this.filterForm.errors && this.filterForm.errors.dateRange) {
+            this.showFormError('forms.date.errorRange')
           }
         }
       })
@@ -231,7 +216,7 @@ export class TransReportComponent implements OnInit {
             data: {
               title: 'transactionReport.loadFailed',
               content: {
-                text: 'apiErrors.' + (error.status ? 'ms-payment.' + error.error.err_code : 'noInternet'),
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
                 data: null
               }
             }
