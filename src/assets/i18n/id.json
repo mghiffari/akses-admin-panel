@@ -431,6 +431,7 @@
             "errorRequired": "Nama Role wajib diisi"
         },
         "privilege": {
+            "selectAll": "Select All",
             "options": {
                 "create": "Create",
                 "view": "View",
