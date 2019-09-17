@@ -442,7 +442,8 @@
         },
         "date": {
             "errorRange": "Start Date must be less than or equal than End Date",
-            "errorRangeRequired": "Both start date should be filled or not at all"
+            "errorRangeRequired": "Both start date should be filled or not at all",
+            "maxToday": "Date entered should not be more than today"
         },
         "transactionStartDate": {
             "errorRequired": "Start Date must have valid date format value"
@@ -1005,7 +1006,7 @@
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
         "dateFilter": "Date Filter",
-        "nameFilter": "Name Filter",
+        "nameFilter": "NPWP Name Filter",
         "downloadReport": "download report",
         "filterNotSet": "Filter Not Set"
     },

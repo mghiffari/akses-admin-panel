@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   apiurl: 'http://149.129.250.31:30001/api/v1/',
-  msPaymentApiUrl: 'http://149.129.250.31:30011/api/v1/',
   endPoint: {
     updateAccount: 'account',
     login: 'auth/login',
