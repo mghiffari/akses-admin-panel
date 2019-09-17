@@ -10,7 +10,7 @@ import { constants } from 'src/app/shared/common/constants';
 })
 export class HomeComponent implements OnInit {
   locale = 'id';
-  userData = {};
+  userData = null;
   featureNames = constants.features;
   allButtons = [{
     title: 'bannerListScreen.createBanner',

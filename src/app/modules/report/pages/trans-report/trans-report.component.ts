@@ -108,8 +108,8 @@ export class TransReportComponent implements OnInit {
     if(this.authService.getFeatureViewPrvg(prvg)){
       this.allowDownload = this.authService.getFeatureDownloadPrvg(prvg)
       this.filterForm = new FormGroup({
-        startDate: new FormControl(null, Validators.required),
-        endDate: new FormControl(null, Validators.required),
+        startDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
+        endDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
         search: new FormControl('', [Validators.required, Validators.minLength(this.searchValidation.minLength)])
       }, {
           validators: CustomValidation.dateRangeValidaton
@@ -129,6 +129,11 @@ export class TransReportComponent implements OnInit {
     } else {
       this.authService.blockOpenPage()
     }
+  }
+
+   // return current time
+   now(){
+    return new Date()
   }
 
   // event handling paginator value changed (page index and page size)

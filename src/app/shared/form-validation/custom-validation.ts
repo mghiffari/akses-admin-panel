@@ -381,4 +381,24 @@ export class CustomValidation {
         return { 'dateRangeRequired': true }
       }
   };
-}
+
+  // used to check wheter date is less than or equal to today
+  static maxToday (control: AbstractControl): { [key: string]: any } {
+      console.log('CustomValidation | maxToday');
+      const today = new Date();
+      if (control.value) {
+        try {
+          const value = new Date(control.value)
+          value.setHours(0,0,0,0)
+          if(today.getTime() - value.getTime() < 0){
+            return {maxToday: true}
+          } else {
+            return null
+          }
+        } catch (error) {
+          return null
+        }
+      }
+      return null;
+    }
+  }

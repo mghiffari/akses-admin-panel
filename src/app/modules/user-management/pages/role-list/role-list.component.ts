@@ -264,7 +264,7 @@ export class RoleListComponent implements OnInit {
       return null
     } else {
       let form = this.rolesFormArray.at(this.selectedRowIndex)
-      return form ? form.get('privileges') : null
+      return form ? (form.get('privileges') as FormArray) : null
     }
   }
 
