@@ -29,7 +29,7 @@
       ngClass.gt-md="padding-right-16" ngClass.lt-md="padding-bottom-16">
       <div fxFlex="100%" class="border-gray position-relative" fxLayoutAlign="center center">
         <div class="table-wrapper" #roleTableWrapper>
-          <table mat-table [dataSource]="roles.controls" #roleTable class="table-min-100">
+          <table mat-table [dataSource]="rolesFormArray.controls" #roleTable class="table-min-100">
             <ng-container matColumnDef="number">
               <th mat-header-cell *matHeaderCellDef class="font-th th-width-25"> {{'table.numbers' | translate}} </th>
               <td mat-cell *matCellDef="let element; let i = index">
@@ -80,7 +80,7 @@
           <mat-spinner diameter="50"></mat-spinner>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="start start" class="margin-top-10 padding-left-16"
-          *ngIf="roles.controls.length === 0 && !loading">
+          *ngIf="rolesFormArray.controls.length === 0 && !loading">
           <div class="font-gotham-light">
             {{'table.noRecordsFound' | translate}}
           </div>

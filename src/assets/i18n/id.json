@@ -442,7 +442,8 @@
         },
         "date": {
             "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai",
-            "errorRangeRequired": "Kedua Tanggal Mulai dan Tanggal Selesai harus diisi atau tidak sama sekali"
+            "errorRangeRequired": "Kedua Tanggal Mulai dan Tanggal Selesai harus diisi atau tidak sama sekali",
+            "maxToday": "Tanggal yang dimasukkan tidak boleh melebihi hari ini"
         },
         "transactionStartDate": {
             "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid"
@@ -1005,7 +1006,7 @@
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
         "dateFilter": "Filter Tanggal",
-        "nameFilter": "Cari Nama",
+        "nameFilter": "Cari Nama NPWP",
         "downloadReport": "download laporan",
         "filterNotSet": "Filter Belum Diatur"
     },
