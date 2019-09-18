@@ -73,6 +73,12 @@ export class SpecialOfferComponent implements OnInit {
     })
   }
 
+  // check is sp category is mpl
+  isCategoryMPL() {
+    let cat = this.offer.category
+    return cat && cat.toLowerCase().includes(constants.specialOfferCategory.mpl)
+  }
+
   //redirect to approval list screen
   goToListScreen = () => {
     console.log('SpecialOfferComponent | gotoListScreen')

@@ -27,9 +27,10 @@
           {{'forms.recipient.fieldTitle' | translate}}
         </div>
         <div fxFlex="70%" class="padding-left-16">
-          <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
-            <a *ngIf="offer.url" class="text-purple font-description" [href]="offer.url" style="text-decoration: none">
+          <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" *ngIf="offer.url">
+            <a *ngIf="!isCategoryMPL()" class="text-purple font-description" [href]="offer.url" style="text-decoration: none">
               {{'specialOfferDetailsScreen.recipientUrlLabel' | translate}}.csv</a>
+            <span *ngIf="isCategoryMPL()">{{offer.url}}</span>
           </div>
         </div>
       </div>
