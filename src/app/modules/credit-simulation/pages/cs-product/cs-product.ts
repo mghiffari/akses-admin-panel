@@ -120,7 +120,6 @@ export class CSProductComponent implements OnInit {
             let prvg = this.authService.getFeaturePrivilege(resp.data.unique_tag);
             if(prvg && this.authService.getFeatureViewPrvg(prvg)) {
               this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
-              console.log('allow edit: ', this.allowEdit);
               let tasks = [
                 this.creditSimulationService.getProductById(this.productId).pipe(map(res => res), catchError(e => of(e))),
                 this.creditSimulationService.getProductComponents(this.productId).pipe(map(res => res), catchError(e => of(e)))

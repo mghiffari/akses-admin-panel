@@ -1014,13 +1014,10 @@
     "features": {
         "homebanner": "Home Banner",
         "artikel": "Artikel",
-        "specialoffer": "Penawaran Special",
-        "oneclicknmcy": "One Click NMCY",
-        "durablespecialoffer": "Penawaran Special Durable",
+        "specialoffer": "Special Offer",
         "faq": "FAQ",
         "lokasicabang": "Lokasi Cabang",
         "ubahnomorhandphone": "Ubah Nomor Handphone",
-        "simulasikredit": "Simulasi Kredit",
         "instruksipembayaran": "Instruksi Pembayaran",
         "notifikasi": "Notifikasi",
         "user": "User",
@@ -1037,7 +1034,8 @@
         "furnitur": "Furnitur",
         "gadget": "Gadget",
         "multigunamotor": "Multiguna Motor",
-        "multigunamobil": "Multiguna Mobil"
+        "multigunamobil": "Multiguna Mobil",
+        "spmultigunamotor": "SP Multiguna Motor"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
