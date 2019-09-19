@@ -61,7 +61,7 @@ export class UserListComponent implements OnInit {
   //angular on init
   ngOnInit() {
     console.log('UserComponent | ngOnInit');
-    let prvg = this.authService.getFeaturePrivilege(constants.features.paymentInstruction)
+    let prvg = this.authService.getFeaturePrivilege(constants.features.user)
     if (this.authService.getFeatureViewPrvg(prvg)) {
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
