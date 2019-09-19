@@ -1015,8 +1015,6 @@
         "homebanner": "Home Banner",
         "artikel": "Article",
         "specialoffer": "Special Offer",
-        "oneclicknmcy": "One Click NMCY",
-        "durablespecialoffer": "Durable Special Offer",
         "faq": "FAQ",
         "lokasicabang": "Branch Locator",
         "ubahnomorhandphone": "Change Phone Number",
@@ -1037,7 +1035,8 @@
         "furnitur": "Furniture",
         "gadget": "Gadget",
         "multigunamotor": "Multipurpose Motorcycle",
-        "multigunamobil": "Multipurpose Car"
+        "multigunamobil": "Multipurpose Car",
+        "spmultigunamotor": "SP Multipurpose Motorcycle"
     },
     "apiErrors": {
         "noInternet": "no internet connection",

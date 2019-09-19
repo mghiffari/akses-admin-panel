@@ -52,8 +52,6 @@ export const constants = {
         banner: 'homebanner',
         article: 'artikel',
         specialOffer: 'specialoffer',
-        oneClickNMCY: 'oneclicknmcy',
-        durableSpecialOffer: 'durablespecialoffer',
         faq: 'faq',
         branchLocation: 'lokasicabang',
         changePhoneNumber: 'ubahnomorhandphone',
