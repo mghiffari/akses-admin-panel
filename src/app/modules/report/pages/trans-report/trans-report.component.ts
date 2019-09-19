@@ -50,7 +50,8 @@ export class TransReportComponent implements OnInit {
   isFocusedSearch = false;
   allowDownload = false;
   filterForm: FormGroup;
-  searchValidation = CustomValidation.transactionSearch
+  searchValidation = CustomValidation.transactionSearch;
+  now = new Date();
 
   private table: any;
   @ViewChild('transactionTable') set tabl(table: ElementRef) {
@@ -129,11 +130,6 @@ export class TransReportComponent implements OnInit {
     } else {
       this.authService.blockOpenPage()
     }
-  }
-
-   // return current time
-   now(){
-    return new Date()
   }
 
   // event handling paginator value changed (page index and page size)

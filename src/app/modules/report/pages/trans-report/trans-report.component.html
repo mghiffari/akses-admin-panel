@@ -15,7 +15,7 @@
           </div>
           <div fxFlex="60%">
             <mat-form-field appearance="fill">
-              <input matInput #startDateInput [max]="now()" [matDatepicker]="startDatepicker" formControlName="startDate"
+              <input matInput #startDateInput [max]="now" [matDatepicker]="startDatepicker" formControlName="startDate"
                 placeholder="{{'forms.schedule.datePlaceholder' | translate}}" (focus)="isFocusedStartDate = true"
                 (blur)="isFocusedStartDate = false">
               <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
@@ -34,7 +34,7 @@
           </div>
           <div fxFlex="60%">
             <mat-form-field appearance="fill">
-              <input matInput #endDateInput [max]="now()" [matDatepicker]="endDatepicker" formControlName="endDate"
+              <input matInput #endDateInput [max]="now" [matDatepicker]="endDatepicker" formControlName="endDate"
                 placeholder="{{'forms.schedule.datePlaceholder' | translate}}" (focus)="isFocusedEndDate = true"
                 (blur)="isFocusedEndDate = false">
               <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
