@@ -328,7 +328,8 @@
         },
         "recipient": {
             "fieldTitle": "Recipient",
-            "placeholder": "Recipient",
+            "placeholder": "Select a File",
+            "searchPlaceholder": "Search file",
             "errorRequired": "Recipient is required",
             "errorFileType": "Only .csv format is supported",
             "errorCSVRequired": "csv file is required",
@@ -887,6 +888,7 @@
     "specialOfferDetailsScreen": {
         "getOfferFailed": "failed to get Special Offer data",
         "getCategoryFailed": "failed to get Special Offer categories",
+        "getFileListFailed": "failed to get MPL reicipient file list",
         "createTitle": "Create New Special Offer",
         "updateTitle": "Update Special Offer",
         "viewTitle": "Special Offer Details",

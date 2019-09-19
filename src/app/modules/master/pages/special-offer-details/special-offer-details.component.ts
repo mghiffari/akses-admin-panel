@@ -29,6 +29,8 @@ export class SpecialOfferDetailsComponent implements OnInit {
   isCreate = true;
   offerForm: FormGroup;
   categories = [];
+  fileList = [];
+  filteredFileList = []
   allowCreate = false;
   allowEdit = false;
   tinyMceSettings = constants.tinyMceSettings
@@ -146,6 +148,11 @@ export class SpecialOfferDetailsComponent implements OnInit {
     return this.offerForm.get('oldEndDate');
   }
 
+  // searchFileKeyword form control getter
+  get searchFileKeyword() {
+    return this.offerForm.get('searchFileKeyword');
+  }
+
   // on init
   ngOnInit() {
     console.log('SpecialOfferDetailsComponent | ngOnInit')
@@ -157,7 +164,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
       this.offerForm = new FormGroup({
         id: new FormControl(''),
         csvFile: new FormControl(null, [Validators.required, CustomValidation.type('csv')]),
-        recipient: new FormControl(null),
+        recipient: new FormControl(null, Validators.required),
         category: new FormControl('', Validators.required),
         image: new FormControl(null, Validators.required),
         imageFile: new FormControl(null, [
@@ -170,7 +177,8 @@ export class SpecialOfferDetailsComponent implements OnInit {
         instructions: new FormControl(null, Validators.required),
         endDate: new FormControl(new Date(), Validators.required),
         endTime: new FormControl('', Validators.required),
-        oldEndDate: new FormControl(null)
+        oldEndDate: new FormControl(null),
+        searchFileKeyword: new FormControl('')
       }, {
           validators: CustomValidation.offerEndDate
         })
@@ -190,76 +198,109 @@ export class SpecialOfferDetailsComponent implements OnInit {
             try {
               console.table(response)
               this.categories = response.data[0].aks_adm_lovs;
-              if (!this.isCreate) {
-                try {
-                  this.loading = true;
-                  this.csvFile.setValidators([CustomValidation.type('csv')]);
-                  const id = params.id
-                  this.offerService.getOfferById(id).subscribe(
-                    response => {
+              this.offerService.getSpRecipientFiles().subscribe(
+                response => {
+                  try {
+                    this.fileList = response.data
+                    this.filteredFileList = this.fileList
+                    if (!this.isCreate) {
                       try {
-                        console.table(response)
-                        let editedOffer: SpecialOffer = Object.assign(new SpecialOffer(), response.data);
-                        let oldEndDate = new Date(editedOffer.end_date);
-                        let date = new Date(editedOffer.end_date)
-                        if (editedOffer.status !== this.approvalStatus.approved) {
-                          if (!CustomValidation.durationFromNowValidation(date)) {
-                            this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
-                          } else {
-                            let hour = date.getHours();
-                            let minute = date.getMinutes();
-                            let time = (hour > 9 ? '' : '0') + hour + ':'
-                              + (minute > 9 ? '' : '0') + minute
-                            this.offerForm.patchValue({
-                              id: id,
-                              image: editedOffer.sp_offer_image,
-                              imageFile: null,
-                              oldImage: editedOffer.sp_offer_image,
-                              title: editedOffer.title,
-                              description: editedOffer.description,
-                              termsAndConds: editedOffer.terms_and_conditions,
-                              instructions: editedOffer.instructions,
-                              endDate: date,
-                              endTime: time,
-                              oldEndDate: oldEndDate,
-                              category: editedOffer.category,
-                              recipient: editedOffer.url
-                            })
+                        this.loading = true;
+                        this.csvFile.setValidators([CustomValidation.type('csv')]);
+                        const id = params.id
+                        this.offerService.getOfferById(id).subscribe(
+                          response => {
+                            try {
+                              console.table(response)
+                              let editedOffer: SpecialOffer = Object.assign(new SpecialOffer(), response.data);
+                              let oldEndDate = new Date(editedOffer.end_date);
+                              let date = new Date(editedOffer.end_date)
+                              if (editedOffer.status !== this.approvalStatus.approved) {
+                                if (!CustomValidation.durationFromNowValidation(date)) {
+                                  this.editOfferError('notificationDetailsScreen.cantUpdate.minDuration')
+                                } else {
+                                  let hour = date.getHours();
+                                  let minute = date.getMinutes();
+                                  let time = (hour > 9 ? '' : '0') + hour + ':'
+                                    + (minute > 9 ? '' : '0') + minute
+                                  this.offerForm.patchValue({
+                                    id: id,
+                                    image: editedOffer.sp_offer_image,
+                                    imageFile: null,
+                                    oldImage: editedOffer.sp_offer_image,
+                                    title: editedOffer.title,
+                                    description: editedOffer.description,
+                                    termsAndConds: editedOffer.terms_and_conditions,
+                                    instructions: editedOffer.instructions,
+                                    endDate: date,
+                                    endTime: time,
+                                    oldEndDate: oldEndDate,
+                                    category: editedOffer.category,
+                                    recipient: editedOffer.url
+                                  })
+                                  this.recipient.disable()
+                                }
+                              } else {
+                                this.editOfferError('specialOfferDetailsScreen.cantUpdate.approvedOffer')
+                              }
+                            } catch (error) {
+                              console.table(error)
+                            }
+                          }, error => {
+                            try {
+                              console.table(error);
+                              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                                data: {
+                                  title: 'specialOfferDetailsScreen.getOfferFailed',
+                                  content: {
+                                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                                    data: null
+                                  }
+                                }
+                              })
+                              errorSnackbar.afterDismissed().subscribe(() => {
+                                this.goToListScreen()
+                              })
+                            } catch (error) {
+                              console.log(error)
+                            }
                           }
-                        } else {
-                          this.editOfferError('specialOfferDetailsScreen.cantUpdate.approvedOffer')
-                        }
+                        ).add(() => {
+                          this.loading = false;
+                        })
                       } catch (error) {
                         console.table(error)
                       }
-                    }, error => {
-                      try {
-                        console.table(error);
-                        let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                          data: {
-                            title: 'specialOfferDetailsScreen.getOfferFailed',
-                            content: {
-                              text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                              data: null
-                            }
-                          }
-                        })
-                        errorSnackbar.afterDismissed().subscribe(() => {
-                          this.goToListScreen()
-                        })
-                      } catch (error) {
-                        console.log(error)
-                      }
+                    } else {
+                      this.loading = false
+                      this.handleCategoryChange()
                     }
-                  ).add(() => {
-                    this.loading = false;
-                  })
-                } catch (error) {
-                  console.table(error)
+                  } catch (error) {
+                    console.error(error)
+                    this.loading = false
+                  }
+
+                }, error => {
+                  try {
+                    console.table(error);
+                    this.loading = false
+                    let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                      data: {
+                        title: 'specialOfferDetailsScreen.getFileListFailed',
+                        content: {
+                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                          data: null
+                        }
+                      }
+                    })
+                    errorSnackbar.afterDismissed().subscribe(() => {
+                      this.goToListScreen()
+                    })
+                  } catch (error) {
+                    console.log(error)
+                  }
                 }
-              } else {
-                this.loading = false
-              }
+              )
             } catch (error) {
               console.table(error)
               this.loading = false
@@ -289,6 +330,46 @@ export class SpecialOfferDetailsComponent implements OnInit {
         this.authService.blockOpenPage()
       }
     })
+  }
+
+  // handle when category form value change
+  handleCategoryChange() {
+    console.log('SpecialOfferDetailsComponent | handleCategoryChange')
+    this.category.valueChanges.subscribe(value => {
+      if (this.isSelectedCategoryMPL()) {
+        this.recipient.setValidators(Validators.required)
+        this.csvFile.setValidators([CustomValidation.type('csv')]);
+      } else {
+        this.recipient.setValidators([])
+        this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')]);
+      }
+      this.filteredFileList = this.fileList
+      this.offerForm.patchValue({
+        csvFile: null,
+        recipient: '',
+        searchFileKeyword: ''
+      })
+    })
+  }
+
+  // filter file list based on search keyword
+  filterFileList(e) {
+    console.log("NotificationDetailsComponent | filterArticles");
+    if (e.target.value) {
+      this.filteredFileList = [];
+      this.fileList.map((file) => {
+        if (file.name.toLowerCase().includes(e.target.value.toLowerCase())) {
+          this.filteredFileList.push(file);
+        }
+      });
+    } else {
+      this.filteredFileList = this.fileList;
+    }
+  };
+  // check is selected category is mpl
+  isSelectedCategoryMPL() {
+    let cat = this.category.value
+    return cat && cat.toLowerCase().includes(constants.specialOfferCategory.mpl)
   }
 
   // handling onchange file event for
@@ -384,7 +465,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
             if (CustomValidation.durationFromNowValidation(this.oldEndDate.value)) {
               if (CustomValidation.durationFromNowValidation(this.endDate.value)) {
                 if (this.oldImage.value === this.image.value) {
-                  let formValue = this.offerForm.value;
+                  let formValue = this.offerForm.getRawValue();
                   let endDate = new Date(formValue.endDate);
                   let timeSplit = formValue.endTime.split(':')
                   let hrs = Number(timeSplit[0])
@@ -430,114 +511,29 @@ export class SpecialOfferDetailsComponent implements OnInit {
       compressedImg => {
         console.log(compressedImg)
         let offer = new SpecialOffer();
-        let formValue = this.offerForm.value;
+        let formValue = this.offerForm.getRawValue();
         let endDate = new Date(formValue.endDate);
         let timeSplit = formValue.endTime.split(':')
         let hrs = Number(timeSplit[0])
         let min = Number(timeSplit[1])
         endDate.setHours(hrs, min, 0, 0)
         if (this.isCreate) {
-          let uploadUrlTasks = [
-            this.fileService.getUploadUrl(compressedImg, this.fileService.specialOfferComponent).pipe(catchError(e => of(e))),
-            this.fileService.getUploadUrl(formValue.csvFile, this.fileService.specialOfferRecipientComp).pipe(catchError(e => of(e)))
-          ]
-          forkJoin(uploadUrlTasks).subscribe((responses: Array<any>) => {
-            let imgUrlRes = responses[0]
-            let csvUrlRes = responses[1]
-            console.table(imgUrlRes)
-            console.table(csvUrlRes)
-            if (imgUrlRes instanceof HttpErrorResponse) {
-              try {
-                this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadImageFailed',
-                    content: {
-                      text: 'apiErrors.' + (imgUrlRes.status ? imgUrlRes.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.error(error)
-              }
-            } else if (csvUrlRes instanceof HttpErrorResponse) {
-              try {
-                this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadCSVFailed',
-                    content: {
-                      text: 'apiErrors.' + (csvUrlRes.status ? csvUrlRes.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.error(error)
-              }
-            } else {
-              try {
-                let imgUploadUrl = imgUrlRes.data.signurl
-                let csvUploadUrl = csvUrlRes.data.signurl
-                let tasks = [
-                  this.fileService.uploadFile(imgUploadUrl, compressedImg).pipe(catchError(e => of(e))),
-                  this.fileService.uploadFile(csvUploadUrl, formValue.csvFile).pipe(catchError(e => of(e)))
-                ]
-                forkJoin(tasks).subscribe((responses: Array<any>) => {
-                  let imageResponse = responses[0];
-                  let csvResponse = responses[1];
-                  try {
-                    console.table(imageResponse)
-                    console.table(csvResponse)
-                    if (imageResponse instanceof HttpErrorResponse) {
-                      this.onSubmittingForm = false;
-                      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                        data: {
-                          title: 'specialOfferDetailsScreen.uploadImageFailed',
-                          content: {
-                            text: 'error',
-                            data: null
-                          }
-                        }
-                      })
-                    } else if (csvResponse instanceof HttpErrorResponse) {
-                      this.onSubmittingForm = false;
-                      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                        data: {
-                          title: 'specialOfferDetailsScreen.uploadCSVFailed',
-                          content: {
-                            text: 'error',
-                            data: null
-                          }
-                        }
-                      })
-                    } else {
-                      offer.url = csvUploadUrl.split('?')[0];
-                      offer.sp_offer_image = imgUploadUrl.split('?')[0];
-                      offer.title = formValue.title;
-                      offer.description = formValue.description;
-                      offer.terms_and_conditions = formValue.termsAndConds;
-                      offer.instructions = formValue.instructions;
-                      offer.end_date = endDate;
-                      offer.category = formValue.category
-                      offer.status = this.approvalStatus.waitingForApproval
-                      offer.status = this.approvalStatus.waitingForApproval
-                      offer.status_by = null
-                      offer.status_dt = null
-                      this.insertOffer(offer);
-                    }
-                  } catch (error) {
-                    console.table(error)
-                    this.onSubmittingForm = false;
-                  }
-                })
-              } catch (error) {
-                console.error(error)
-                this.onSubmittingForm = false;
-              }
-            }
-          })
+          offer.title = formValue.title;
+          offer.description = formValue.description;
+          offer.terms_and_conditions = formValue.termsAndConds;
+          offer.instructions = formValue.instructions;
+          offer.end_date = endDate;
+          offer.category = formValue.category
+          offer.status = this.approvalStatus.waitingForApproval
+          offer.status = this.approvalStatus.waitingForApproval
+          offer.status_by = null
+          offer.status_dt = null
+          if (this.isSelectedCategoryMPL()) {
+            offer.url = formValue.recipient
+            this.uploadFilesMPL(compressedImg, offer)
+          } else {
+            this.uploadFilesNonMPL(compressedImg, formValue.csvFile, offer)
+          }
         } else {
           this.fileService.getUploadUrl(compressedImg, this.fileService.specialOfferComponent).subscribe(
             response => {
@@ -603,6 +599,150 @@ export class SpecialOfferDetailsComponent implements OnInit {
     )
   }
 
+  //method to handle uploading files for creating mpl special offer
+  uploadFilesMPL(compressedImg, offer) {
+    console.log('SpecialOfferDetailsComponent | uploadFilesMPL')
+    this.fileService.getUploadUrl(compressedImg, this.fileService.specialOfferComponent).subscribe(
+      response => {
+        try {
+          let imgUrlRes = response
+          console.table(imgUrlRes)
+          let imgUploadUrl = imgUrlRes.data.signurl
+          this.fileService.uploadFile(imgUploadUrl, compressedImg).subscribe(
+            response => {
+              offer.sp_offer_image = imgUploadUrl.split('?')[0];
+              this.insertOffer(offer);
+            }, error => {
+              this.onSubmittingForm = false;
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'specialOfferDetailsScreen.uploadImageFailed',
+                  content: {
+                    text: 'error',
+                    data: null
+                  }
+                }
+              })
+            }
+          )
+        } catch (error) {
+          console.log(error)
+          this.onSubmittingForm = false
+        }
+      }, error => {
+        try {
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'specialOfferDetailsScreen.uploadImageFailed',
+              content: {
+                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    )
+  }
+
+  //method to handle uploading files for creating non mpl special offer
+  uploadFilesNonMPL(compressedImg, csvFile, offer) {
+    console.log('SpecialOfferDetailsComponent | uploadFilesNonMPL')
+    let uploadUrlTasks = [
+      this.fileService.getUploadUrl(compressedImg, this.fileService.specialOfferComponent).pipe(catchError(e => of(e))),
+      this.fileService.getUploadUrl(csvFile, this.fileService.specialOfferRecipientComp).pipe(catchError(e => of(e)))
+    ]
+    forkJoin(uploadUrlTasks).subscribe((responses: Array<any>) => {
+      let imgUrlRes = responses[0]
+      let csvUrlRes = responses[1]
+      console.table(imgUrlRes)
+      console.table(csvUrlRes)
+      if (imgUrlRes instanceof HttpErrorResponse) {
+        try {
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'specialOfferDetailsScreen.uploadImageFailed',
+              content: {
+                text: 'apiErrors.' + (imgUrlRes.status ? imgUrlRes.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      } else if (csvUrlRes instanceof HttpErrorResponse) {
+        try {
+          this.onSubmittingForm = false;
+          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+            data: {
+              title: 'specialOfferDetailsScreen.uploadCSVFailed',
+              content: {
+                text: 'apiErrors.' + (csvUrlRes.status ? csvUrlRes.error.err_code : 'noInternet'),
+                data: null
+              }
+            }
+          })
+        } catch (error) {
+          console.error(error)
+        }
+      } else {
+        try {
+          let imgUploadUrl = imgUrlRes.data.signurl
+          let csvUploadUrl = csvUrlRes.data.signurl
+          let tasks = [
+            this.fileService.uploadFile(imgUploadUrl, compressedImg).pipe(catchError(e => of(e))),
+            this.fileService.uploadFile(csvUploadUrl, csvFile).pipe(catchError(e => of(e)))
+          ]
+          forkJoin(tasks).subscribe((responses: Array<any>) => {
+            let imageResponse = responses[0];
+            let csvResponse = responses[1];
+            try {
+              console.table(imageResponse)
+              console.table(csvResponse)
+              if (imageResponse instanceof HttpErrorResponse) {
+                this.onSubmittingForm = false;
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'specialOfferDetailsScreen.uploadImageFailed',
+                    content: {
+                      text: 'error',
+                      data: null
+                    }
+                  }
+                })
+              } else if (csvResponse instanceof HttpErrorResponse) {
+                this.onSubmittingForm = false;
+                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                  data: {
+                    title: 'specialOfferDetailsScreen.uploadCSVFailed',
+                    content: {
+                      text: 'error',
+                      data: null
+                    }
+                  }
+                })
+              } else {
+                offer.url = csvUploadUrl.split('?')[0];
+                offer.sp_offer_image = imgUploadUrl.split('?')[0];
+                this.insertOffer(offer);
+              }
+            } catch (error) {
+              console.table(error)
+              this.onSubmittingForm = false;
+            }
+          })
+        } catch (error) {
+          console.error(error)
+          this.onSubmittingForm = false;
+        }
+      }
+    })
+  }
   // call insert offer api
   insertOffer(data) {
     console.log('SpecialOfferDetailsComponent | insertOffer')

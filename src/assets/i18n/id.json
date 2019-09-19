@@ -328,7 +328,8 @@
         },
         "recipient": {
             "fieldTitle": "Penerima",
-            "placeholder": "Penerima",
+            "placeholder": "Pilih File",
+            "searchPlaceholder": "Cari file",
             "errorRequired": "Penerima wajib diisi",
             "errorFileType": "Hanya format .csv yang dapat diupload",
             "errorCSVRequired": "File csv wajib diisi",
@@ -887,6 +888,7 @@
     "specialOfferDetailsScreen": {
         "getOfferFailed": "gagal mendapatkan data Special Offer",
         "getCategoryFailed": "gagal mendapatkan kategori Special Offer",
+        "getFileListFailed": "gagal mendapatkan list file target penerima MPL",
         "createTitle": "Tambahkan Special Offer Baru",
         "updateTitle": "Ubah Special Offer",
         "viewTitle": "Detail Special Offer",
