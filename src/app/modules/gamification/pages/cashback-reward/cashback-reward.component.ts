@@ -50,6 +50,7 @@ export class CashbackRewardComponent implements OnInit {
   isFocusedSearch = false;
   allowDownload = false;
   filterForm: FormGroup;
+  now = new Date()
 
   private table: any;
   @ViewChild('cashbackRewardTable') set tabl(table: ElementRef) {
@@ -128,11 +129,6 @@ export class CashbackRewardComponent implements OnInit {
     } else {
       this.authService.blockOpenPage()
     }
-  }
-
-  // return current time
-  now(){
-    return new Date()
   }
   
   // event handling paginator value changed (page index and page size)
