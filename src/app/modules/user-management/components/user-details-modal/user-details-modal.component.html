@@ -39,7 +39,7 @@
               <span *ngIf="lastName.errors.required">{{'forms.lastName.errorRequired' | translate}}</span>
               <span *ngIf="lastName.errors.maxlength">{{'forms.lastName.errorMaxLength' | translate: maxLength }}</span>
               <span
-                *ngIf="lastName.errors.internationalname && !firstName.errors.required">{{'forms.lastName.errorFormat' | translate}}</span>
+                *ngIf="lastName.errors.internationalname && !lastName.errors.required">{{'forms.lastName.errorFormat' | translate}}</span>
             </mat-error>
           </div>
         </div>
