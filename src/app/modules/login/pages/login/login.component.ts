@@ -117,7 +117,7 @@ export class LoginComponent implements OnInit {
           this.password.setValue('');
           this.onSubmittingForm = false;
 
-          if (error.status && error.error.err_code === '01005') {
+          if (error.status && error.error.err_code === '01005' || error.error.err_code === '01003') {
             ++this.wrongPasswordCount;
           }
           // show captcha if password wrong 3 times
