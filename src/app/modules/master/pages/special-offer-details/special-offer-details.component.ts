@@ -12,7 +12,7 @@ import { ConfirmationModalComponent } from 'src/app/shared/components/confirmati
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
 import { SpecialOffer } from 'src/app/shared/models/special-offer';
 import { LovService } from 'src/app/shared/services/lov.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, pairwise } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { constants } from 'src/app/shared/common/constants';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -164,7 +164,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
       this.offerForm = new FormGroup({
         id: new FormControl(''),
         csvFile: new FormControl(null, [Validators.required, CustomValidation.type('csv')]),
-        recipient: new FormControl(null, Validators.required),
+        recipient: new FormControl(null),
         category: new FormControl('', Validators.required),
         image: new FormControl(null, Validators.required),
         imageFile: new FormControl(null, [
@@ -239,6 +239,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                                     recipient: editedOffer.url
                                   })
                                   this.recipient.disable()
+                                  this.category.disable()
                                 }
                               } else {
                                 this.editOfferError('specialOfferDetailsScreen.cantUpdate.approvedOffer')
@@ -335,18 +336,27 @@ export class SpecialOfferDetailsComponent implements OnInit {
   // handle when category form value change
   handleCategoryChange() {
     console.log('SpecialOfferDetailsComponent | handleCategoryChange')
-    this.category.valueChanges.subscribe(value => {
+    this.category.valueChanges.pipe(pairwise()).subscribe(([prev, next]) => {
+      const formValue = this.offerForm.getRawValue()
+      let recipient = formValue.recipient
+      let csvFile = formValue.csvFile
       if (this.isSelectedCategoryMPL()) {
         this.recipient.setValidators(Validators.required)
         this.csvFile.setValidators([CustomValidation.type('csv')]);
+        csvFile = null
+        recipient = ''
       } else {
-        this.recipient.setValidators([])
+        this.recipient.clearValidators()
         this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')]);
+        if (prev.toLowerCase().includes(constants.specialOfferCategory.mpl)) {
+          this.recipient.setValue('')
+          csvFile = null
+        }
       }
       this.filteredFileList = this.fileList
       this.offerForm.patchValue({
-        csvFile: null,
-        recipient: '',
+        csvFile: csvFile,
+        recipient: recipient,
         searchFileKeyword: ''
       })
     })
