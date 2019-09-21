@@ -19,7 +19,7 @@ export class PayInstService {
   // get list by payment type
   getListByType(type){
     console.log('PayInstService | getListByType')
-    let url = this.listApiUrl + '/' + encodeURIComponent(type);
+    let url = this.listApiUrl + '?instruction_type=' + encodeURIComponent(type);
     return this.authService.wrapTokenGetApi(url)
   }
 
