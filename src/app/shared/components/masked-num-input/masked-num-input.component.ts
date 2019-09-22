@@ -62,33 +62,37 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
       value = numeral(event.target.value).value()
       // not using value / 100 to avoid floating points where 199.8 become 1.998000001
       if (this.type === MaskedInputType.Percentage) {
-        let numString = value.toString();
-        let arrayNum = numString.split('.')
-        let integerDigit = (Number(arrayNum[0])/100)
-        if(integerDigit !== 0){
-          if(arrayNum.length > 1){
-            let intString = integerDigit.toString()
-            let intStringSplit = intString.split('.')
-            if(intStringSplit.length > 1){
-              if(intStringSplit[1].length < 2){
-                intString += '0'
-              } else if (intStringSplit[1].length > 2){
-                intString = intStringSplit[0] + '.' + intStringSplit[1].substr(0, 2)
+        try {
+          let numString = value.toString();
+          let arrayNum = numString.split('.')
+          let integerDigit = (Number(arrayNum[0])/100)
+          if(integerDigit !== 0){
+            if(arrayNum.length > 1){
+              let intString = integerDigit.toString()
+              let intStringSplit = intString.split('.')
+              if(intStringSplit.length > 1){
+                if(intStringSplit[1].length < 2){
+                  intString += '0'
+                } else if (intStringSplit[1].length > 2){
+                  intString = intStringSplit[0] + '.' + intStringSplit[1].substr(0, 2)
+                }
+              } else {
+                intString += '.00'
               }
+              value = Number(intString + arrayNum[1])
             } else {
-              intString += '.00'
+              value = integerDigit;
             }
-            value = Number(intString + arrayNum[1])
           } else {
-            value = integerDigit;
-          }
-        } else {
-          if(arrayNum.length > 1){
-            let sign = ((value > 0) ?  '' :  '-')
-            value = Number(sign + integerDigit + '.00' + arrayNum[1])
-          } else {
-            value = integerDigit;
-          }
+            if(arrayNum.length > 1){
+              let sign = ((value > 0) ?  '' :  '-')
+              value = Number(sign + integerDigit + '.00' + arrayNum[1])
+            } else {
+              value = integerDigit;
+            }
+          }          
+        } catch (error) {
+          this.writeValue(value)
         }
       }
     }
