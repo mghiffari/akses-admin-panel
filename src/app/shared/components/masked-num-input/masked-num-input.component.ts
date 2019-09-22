@@ -67,7 +67,18 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
         let integerDigit = (Number(arrayNum[0])/100)
         if(integerDigit !== 0){
           if(arrayNum.length > 1){
-            value = Number(integerDigit + arrayNum[1])
+            let intString = integerDigit.toString()
+            let intStringSplit = intString.split('.')
+            if(intStringSplit.length > 1){
+              if(intStringSplit[1].length < 2){
+                intString += '0'
+              } else if (intStringSplit[1].length > 2){
+                intString = intStringSplit[0] + '.' + intStringSplit[1].substr(0, 2)
+              }
+            } else {
+              intString += '.00'
+            }
+            value = Number(intString + arrayNum[1])
           } else {
             value = integerDigit;
           }
