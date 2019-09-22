@@ -61,7 +61,7 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
     if (event.target.value && event.target.value.toString().trim() !== '') {
       value = numeral(event.target.value).value()
       // not using value / 100 to avoid floating points where 199.8 become 1.998000001
-      if (this.type === MaskedInputType.Percentage) {
+      try {
         let numString = value.toString();
         let arrayNum = numString.split('.')
         let integerDigit = (Number(arrayNum[0])/100)
@@ -89,7 +89,9 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
           } else {
             value = integerDigit;
           }
-        }
+        }          
+      } catch (error) {
+        this.writeValue(value)
       }
     }
     this.writeValue(value)
