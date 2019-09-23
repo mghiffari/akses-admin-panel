@@ -12,7 +12,7 @@ import { ConfirmationModalComponent } from 'src/app/shared/components/confirmati
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
 import { SpecialOffer } from 'src/app/shared/models/special-offer';
 import { LovService } from 'src/app/shared/services/lov.service';
-import { catchError, pairwise } from 'rxjs/operators';
+import { catchError, pairwise, startWith } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { constants } from 'src/app/shared/common/constants';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -336,30 +336,33 @@ export class SpecialOfferDetailsComponent implements OnInit {
   // handle when category form value change
   handleCategoryChange() {
     console.log('SpecialOfferDetailsComponent | handleCategoryChange')
-    this.category.valueChanges.pipe(pairwise()).subscribe(([prev, next]) => {
-      const formValue = this.offerForm.getRawValue()
-      let recipient = formValue.recipient
-      let csvFile = formValue.csvFile
-      if (this.isSelectedCategoryMPL()) {
-        this.recipient.setValidators(Validators.required)
-        this.csvFile.setValidators([CustomValidation.type('csv')]);
-        csvFile = null
-        recipient = ''
-      } else {
-        this.recipient.clearValidators()
-        this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')]);
-        if (prev.toLowerCase().includes(constants.specialOfferCategory.mpl)) {
-          this.recipient.setValue('')
+    this.category.valueChanges.pipe(startWith(null), pairwise()).subscribe((
+      [prev, next]) => {
+        const formValue = this.offerForm.getRawValue()
+        let recipient = formValue.recipient
+        let csvFile = formValue.csvFile
+        if (this.isSelectedCategoryMPL()) {
+          this.recipient.setValidators(Validators.required)
+          this.csvFile.setValidators([CustomValidation.type('csv')]);
           csvFile = null
+          recipient = ''
+        } else {
+          this.recipient.clearValidators()
+          this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')]);
+          if (prev.toLowerCase().includes(constants.specialOfferCategory.mpl)) {
+            this.recipient.setValue('')
+            csvFile = null
+          }
         }
-      }
-      this.filteredFileList = this.fileList
-      this.offerForm.patchValue({
-        csvFile: csvFile,
-        recipient: recipient,
-        searchFileKeyword: ''
+        this.filteredFileList = this.fileList
+        this.offerForm.patchValue({
+          csvFile: csvFile,
+          recipient: recipient,
+          searchFileKeyword: ''
+        })
+      }, error => {
+        console.error(error)
       })
-    })
   }
 
   // filter file list based on search keyword
