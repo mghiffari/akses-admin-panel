@@ -495,7 +495,8 @@
         "forgotYourPassword": "Lupa Password?",
         "passwordSendToEmail": "password baru sudah dikirim ke email anda",
         "passwordSendFailed": "gagal reset password",
-        "passwordChanged": "password berhasil diubah, login ulang dengan password baru"
+        "passwordChanged": "password berhasil diubah, login ulang dengan password baru",
+        "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
     },
     "table": {
         "noRecordsFound": "Data Kosong",
@@ -1179,6 +1180,8 @@
         "07072": "data tidak ditemukan",
         "07073": "data tidak bisa dididownload",
         "07075": "transaksi tidak ditemukan",
-        "07078": "transaksi tidak ditemukan"
+        "07078": "transaksi tidak ditemukan",
+        "01133": "akun anda terblokir, silakan klik 'Lupa Password' dan masukkan e-mail anda untuk meminta password baru",
+        "01134": "format password salah"
     }
 }

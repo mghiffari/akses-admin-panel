@@ -495,7 +495,8 @@
         "forgotYourPassword": "Forgot Your Password?",
         "passwordSendToEmail": "New password was sent to your email",
         "passwordSendFailed": "reset password failed",
-        "passwordChanged": "password successfully changed, relogin with the new password"
+        "passwordChanged": "password successfully changed, relogin with the new password",
+        "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
     },
     "table": {
         "noRecordsFound": "No Records Found",
@@ -1180,6 +1181,8 @@
         "07072": "no data found",
         "07073": "data cannot be downloaded",
         "07075": "transaction not found",
-        "07078": "transaction not found"
+        "07078": "transaction not found",
+        "01133": "your account is blocked, click on 'Forgot Your Password' and enter your e-mail to ask for new password",
+        "01134": "password format is incorrect"
     }
 }

@@ -1,5 +1,6 @@
 export const constants = {
     appName: 'Akses',
+    loginMaxAttempt: 5,
     tinyMceSettings: {
         inline: false,
         statusbar: false,
