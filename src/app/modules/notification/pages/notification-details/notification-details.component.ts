@@ -113,6 +113,7 @@ export class NotificationDetailsComponent implements OnInit {
         }
         if (allowPage) {
           this.loading = true;
+          this.handleChangeFilterText()
           this.articleService.getArticlesByCategory(this.linkCategory.value).subscribe(
             response => {
               console.log(response)
@@ -267,35 +268,36 @@ export class NotificationDetailsComponent implements OnInit {
     )
   }
 
-  // Method to display the array of Articles based on search text
-  filterArticles(e) {
-    console.log("NotificationDetailsComponent | filterArticles");
-    if (e.target.value) {
+  // Method to subscribe to searct text change to filter article and special offer
+  handleChangeFilterText(){
+    console.log("NotificationDetailsComponent | handleChangeFilterText");
+    this.searchArticle.valueChanges.subscribe(value => {
       this.displayArticles = [];
-      this.articles.map((article) => {
-        if (article.title.toLowerCase().includes(e.target.value.toLowerCase())) {
-          this.displayArticles.push(article);
-        }
-      });
-    } else {
-      this.displayArticles = this.articles;
-    }
-  };
+      if(value){
+        this.articles.map((article) => {
+          if (article.title.toLowerCase().includes(value)) {
+            this.displayArticles.push(article);
+          }
+        });
+      } else {
+        this.displayArticles = this.articles;
+      }
+    })
 
-  // Method to display the array of Special Offers based on search text
-  filterSpecialOffers(e) {
-    console.log("NotificationDetailsComponent | filterSpecialOffers");
-    if (e.target.value) {
-      this.displaySpecialOffers = [];
-      this.specialOffers.map((specialOffer) => {
-        if (specialOffer.title.toLowerCase().includes(e.target.value.toLowerCase())) {
-          this.displaySpecialOffers.push(specialOffer);
-        }
-      });
-    } else {
-      this.displaySpecialOffers = this.specialOffers;
-    }
-  };
+    this.searchSpecialOffer.valueChanges.subscribe(value => {
+      this.displayArticles = [];
+      if (value) {
+        this.displaySpecialOffers = [];
+        this.specialOffers.map((specialOffer) => {
+          if (specialOffer.title.toLowerCase().includes(value.toLowerCase())) {
+            this.displaySpecialOffers.push(specialOffer);
+          }
+        });
+      } else {
+        this.displaySpecialOffers = this.specialOffers;
+      }
+    })
+  }
 
   // Handle link type value change
   handleLinkTypeChange() {
@@ -449,6 +451,16 @@ export class NotificationDetailsComponent implements OnInit {
   // oldScheduleSending formControl getter
   get oldScheduleSending() {
     return this.notifForm.get('oldScheduleSending')
+  }
+
+  // searchArticle formControl getter
+  get searchArticle() {
+    return this.notifForm.get('searchArticle')
+  }
+
+  // searchSpecialOffer formControl getter
+  get searchSpecialOffer() {
+    return this.notifForm.get('searchSpecialOffer')
   }
 
   // Handle when csv file input value change

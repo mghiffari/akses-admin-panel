@@ -64,7 +64,7 @@
         <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" *ngIf="isSelectedCategoryMPL()">
           <mat-form-field appearance="fill">
             <mat-select formControlName="recipient">
-              <ngx-mat-select-search (keyup)="filterFileList($event)" formControlName="searchFileKeyword"
+              <ngx-mat-select-search formControlName="searchFileKeyword"
                 placeholderLabel="{{'forms.recipient.searchPlaceholder'| translate}}">
               </ngx-mat-select-search>
               <mat-option value="">
