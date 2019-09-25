@@ -402,7 +402,7 @@
         "passwordSendToEmail": "New password was sent to your email",
         "passwordSendFailed": "reset password failed",
         "passwordChanged": "password successfully changed, relogin with the new password",
-        "failedCount": "you have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
+        "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
     },
     "table": {
         "noRecordsFound": "No Records Found",

@@ -122,8 +122,13 @@ export class LoginComponent implements OnInit {
 
           if (error.status && error.error.err_code === '01005' || error.error.err_code === '01003') {
             ++this.wrongPasswordCount;
-            this.loginAttemptCount = error.error.counter;
-            this.loginAttempLeft = constants.loginMaxAttempt - this.loginAttemptCount;
+            if(error.error.counter) {
+              this.loginAttemptCount = error.error.counter;
+              this.loginAttempLeft = constants.loginMaxAttempt - this.loginAttemptCount;
+            }else {
+              this.loginAttemptCount = 0;
+              this.loginAttempLeft = null;
+            }
           }
           // show captcha if password wrong 3 times
           if (this.wrongPasswordCount > 3) {

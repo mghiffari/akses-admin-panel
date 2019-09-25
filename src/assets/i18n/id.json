@@ -402,7 +402,7 @@
         "passwordSendToEmail": "password baru sudah dikirim ke email anda",
         "passwordSendFailed": "gagal reset password",
         "passwordChanged": "password berhasil diubah, login ulang dengan password baru",
-        "failedCount": "anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
+        "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
     },
     "table": {
         "noRecordsFound": "Data Kosong",
