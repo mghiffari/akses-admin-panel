@@ -94,6 +94,7 @@ export class CustomValidation {
       confirmPassword.setErrors({ matchPassword: true })
       return { 'matchPassword': true }
     } else {
+      confirmPassword.setErrors(null)
       return null;
     }
   };
@@ -177,7 +178,7 @@ export class CustomValidation {
       newPassword: new FormControl('', [Validators.required,
       Validators.minLength(CustomValidation.password.minLength),
       Validators.maxLength(CustomValidation.password.maxLength),
-      Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/)
+      Validators.pattern(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/)
       ]),
       confirmPassword: new FormControl('')
     }, {

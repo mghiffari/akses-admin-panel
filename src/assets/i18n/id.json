@@ -401,7 +401,8 @@
             "errorRequired": "Gambar wajib diisi",
             "errorRatio": "Hanya rasio {{width}}:{{height}} yang dapat diupload",
             "errorType": "Hanya format .jpg, .jpeg and .png yang dapat diupload",
-            "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )"
+            "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )",
+            "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
         },
         "description": {
             "fieldTitle": "Deskripsi",
@@ -1178,6 +1179,8 @@
         "07072": "data tidak ditemukan",
         "07073": "data tidak bisa dididownload",
         "07075": "transaksi tidak ditemukan",
-        "07078": "transaksi tidak ditemukan"
+        "07078": "transaksi tidak ditemukan",
+        "01133": "akun anda terblokir, silakan klik 'Lupa Password' dan masukkan e-mail anda untuk meminta password baru",
+        "01134": "format password salah"
     }
 }
