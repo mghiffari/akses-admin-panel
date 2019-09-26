@@ -51,7 +51,7 @@
             "errorRequired": "Masukkan Password Baru",
             "errorMinLength": "Jumlah karakter minimum untuk Password Baru adalah {{minLength}}",
             "errorMaxLength": "Jumlah karakter maksimum untuk Password Baru adalah {{maxLength}}",
-            "errorFormat": "Password Baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, dan satu angka",
+            "errorFormat": "Password Baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, satu angka dan satu karakter spesial: #?!@$%^&*-",
             "placeholder": "Password baru"
         },
         "confirmPassword": {
@@ -401,7 +401,8 @@
         "forgotYourPassword": "Lupa Password?",
         "passwordSendToEmail": "password baru sudah dikirim ke email anda",
         "passwordSendFailed": "gagal reset password",
-        "passwordChanged": "password berhasil diubah, login ulang dengan password baru"
+        "passwordChanged": "password berhasil diubah, login ulang dengan password baru",
+        "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
     },
     "table": {
         "noRecordsFound": "Data Kosong",
@@ -852,6 +853,8 @@
         "01109": "token expired",
         "01110": "oid tidak terdaftar",
         "01111": "data user tidak ditemukan",
-        "01112" : "notifikasi telah dikirim ke semua user"
+        "01112": "notifikasi telah dikirim ke semua user",
+        "01133": "akun anda terblokir, silakan klik 'Lupa Password' dan masukkan e-mail anda untuk meminta password baru",
+        "01134": "format password salah"
     }
 }

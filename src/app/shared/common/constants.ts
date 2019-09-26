@@ -1,5 +1,6 @@
 export const constants = {
     appName: 'Akses',
+    loginMaxAttempt: 5,
     branchCSVFileExampleUrl: 'http://adira-akses-dev.oss-ap-southeast-5.aliyuncs.com/branch/branch_2019040811570583.csv',
     tinyMceSettings: {
         inline: false,

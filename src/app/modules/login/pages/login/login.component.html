@@ -61,6 +61,13 @@
         <a class="link-purple cursor-pointer"
           (click)="goToResetPasswordForm()">{{'loginScreen.forgotPassword' | translate}}</a>
       </div>
+      <ng-container *ngIf="!onSubmittingForm && loginAttemptCount > 0">
+        <div fxLayout="row" class="margin-top-20">
+          <mat-error class="bottom-error" style="padding: 0!important">
+            {{'loginScreen.failedCount' | translate: {count: loginAttemptCount, remaining: loginAttempLeft} }}
+          </mat-error>
+        </div>
+      </ng-container>
       <div fxLayout="row" fxLayoutAlign="end center" class="margin-top-20">
         <button mat-raised-button color="primary" (click)="onLogin()" [disabled]="!authForm.valid"
           *ngIf="!onSubmittingForm">{{'loginScreen.login' | translate}}</button>
