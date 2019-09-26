@@ -12,6 +12,7 @@ import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
+import { constants } from 'src/app/shared/common/constants';
 declare var $: any;
 
 @Component({
@@ -29,6 +30,8 @@ export class LoginComponent implements OnInit {
   changePasswordForm;
   resetPasswordForm;
   wrongPasswordCount = 0;
+  loginAttemptCount = 0;
+  loginAttempLeft = null;
   captchaCode = '';
   auth: Auth = new Auth();
   changePasswordModel: ChangePassword = new ChangePassword();
@@ -119,6 +122,13 @@ export class LoginComponent implements OnInit {
 
           if (error.status && error.error.err_code === '01005' || error.error.err_code === '01003') {
             ++this.wrongPasswordCount;
+          }
+          if(error.error.counter) {
+            this.loginAttemptCount = error.error.counter;
+            this.loginAttempLeft = constants.loginMaxAttempt - this.loginAttemptCount;
+          }else {
+            this.loginAttemptCount = 0;
+            this.loginAttempLeft = null;
           }
           // show captcha if password wrong 3 times
           if (this.wrongPasswordCount > 3) {
