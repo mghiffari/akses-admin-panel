@@ -13,6 +13,7 @@ import { LovService } from 'src/app/shared/services/lov.service';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Injectable()
 export class BannerDetailsService {
@@ -48,6 +49,7 @@ export class BannerDetailsService {
 
   vRegexURL: any = /^(http?|https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|io|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
   vPrivilege = null
+  vImageRatio = CustomValidation.articleImg.ratio;
 
   constructor(
     private _ng2ImgToolsService: Ng2ImgToolsService,
@@ -253,7 +255,6 @@ export class BannerDetailsService {
   //used to disable save button
   isDisableCreateBanner() {
     console.log('BannerDetailService | isDisableCreateBanner');
-    this.resetErrorMessage();
     if (this.vBannerData.title === undefined || this.vBannerData.title === '') {
       return true;
     } else if (this.vBannerData.banner === undefined || this.vBannerData.banner === null) {
@@ -444,12 +445,21 @@ export class BannerDetailsService {
     console.log('BannerDetailService | previewImage');
     var image: File = null;
     image = files;
-    this.resetErrorMessage();
     if (files.length === 0)
       return;
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this._translateService.get('forms.homeBanner.errorType').subscribe(res => {
+    let types = ['jpeg', 'jpg', 'png']
+    let errorType = false
+    let splits = files[0].name.split('.');
+    if (splits.length > 1) {
+      let ext = splits[splits.length - 1].trim();
+      if (!types.includes(ext)) {
+        errorType = true;
+      }
+    } else {
+      errorType = true;
+    }
+    if (errorType) {
+      this._translateService.get('forms.articlePicture.errorType').subscribe(res => {
         if (component === "banner") {
           this.vErrorMessage.imageBanner = res;
         } else {
@@ -462,25 +472,29 @@ export class BannerDetailsService {
     reader.onload = (_event) => {
       var img = new Image();
       img.src = reader.result.toString();
-      //DON'T ERASE I STILL NEED FOR IMAGE VALIDATION
-      // img.onload = (_event) => {
-      //   if(img.height/10*16 != img.width) {
-      //     this._translateService.get('forms.homeBanner.errorRatio').subscribe(res => {
-      //       if(component === "banner") {
-      //         this.vErrorMessage.imageBanner = res;
-      //       } else {
-      //         this.vErrorMessage.imageFooter = res;
-      //       }
-      //     });
-      //     return;
-      //   }
-      // }
       if (component === "banner") {
+        // Validate the File Height and Width.
         this.vBannerData.banner = img.src;
+        img.onload = () => {
+          const height = img.height;
+          const width = img.width;
+          const ratioHeight = this.vImageRatio.height
+          const ratioWidth = this.vImageRatio.width
+          if (width / ratioWidth !== height / ratioHeight) {
+            this._translateService.get('forms.articlePicture.errorRatio', { width: ratioWidth, height: ratioHeight })
+              .subscribe(res => {
+                this.vErrorMessage.imageBanner = res;
+              });
+          } else {
+            this.vErrorMessage.imageBanner = '';
+            this.compressImage(component, image[0]);
+          }
+        };
       } else {
+        this.vErrorMessage.imageFooter = ''
         this.vBannerData.foot_image_content = img.src;
+        this.compressImage(component, image[0]);
       }
-      this.compressImage(component, image[0]);
     }
     reader.readAsDataURL(files[0]);
   }

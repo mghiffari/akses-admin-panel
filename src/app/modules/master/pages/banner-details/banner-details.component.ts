@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BannerDetailsService } from './services/banner-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { constants } from 'src/app/shared/common/constants';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Component({
   selector: 'app-banner-detail',
@@ -35,6 +36,8 @@ export class BannerDetailsComponent implements OnInit {
 
   //used for default rich text editor
   tinyMceSettings = constants.tinyMceSettings;
+  
+  imageRatio = CustomValidation.articleImg.ratio;
 
   constructor(
     private _bannerDetailService: BannerDetailsService,

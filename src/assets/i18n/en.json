@@ -193,7 +193,9 @@
         "articlePicture": {
             "fieldTitle": "Article Picture",
             "errorRequired": "Article Picture is required",
-            "errorType": "Only .jpg, .jpeg and .png format are supported"
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "errorRatio": "Only {{width}}:{{height}} ratio is supported",
+            "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
         },
         "uniqueTag": {
             "fieldTitle": "Unique Tag",
