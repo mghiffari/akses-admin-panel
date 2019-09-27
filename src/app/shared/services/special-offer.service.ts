@@ -11,6 +11,7 @@ export class SpecialOfferService {
   saveApiUrl = this.specialOfferApiUrl + '/save'
   bulkApproveApiUrl = this.specialOfferApiUrl + '/approve'
   bulkRejectApiUrl = this.specialOfferApiUrl + '/reject'
+  recipientFileListApiUrl = this.specialOfferApiUrl + '/mpllist'
 
   constructor(
     private authService: AuthService
@@ -62,5 +63,12 @@ export class SpecialOfferService {
     let url = this.bulkRejectApiUrl
     console.log("SpecialOfferService | bulkRejectSpecialOffer ", url);
     return this.authService.wrapTokenPostApi(url, data)
+  }
+
+  // get list of sftp filename for special offer recipient
+  getSpRecipientFiles(){
+    let url = this.recipientFileListApiUrl
+    console.log("SpecialOfferService | getSpRecipientFiles ", url);
+    return this.authService.wrapTokenGetApi(url)
   }
 }

@@ -280,7 +280,7 @@
             <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
-                  <ngx-mat-select-search (keyup)="filterSpecialOffers($event)" formControlName="searchSpecialOffer"
+                  <ngx-mat-select-search formControlName="searchSpecialOffer"
                     placeholderLabel="{{'forms.notifSpecialOffer.searchPlaceholder'| translate}}"></ngx-mat-select-search>
                   <mat-option value="" (click)="handleSelectSpecialOffer()">
                     {{'forms.notifSpecialOffer.placeholder' | translate}}</mat-option>
@@ -317,7 +317,7 @@
             <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" fxLayout="row wrap" fxLayoutGap="10px">
               <mat-form-field appearance="fill">
                 <mat-select formControlName="linkId">
-                  <ngx-mat-select-search (keyup)="filterArticles($event)" formControlName="searchArticle"
+                  <ngx-mat-select-search formControlName="searchArticle"
                     placeholderLabel="{{'forms.notifArticle.searchPlaceholder'| translate}}"></ngx-mat-select-search>
                   <mat-option value="" (click)="selectedLinkTitle=''">
                     {{'forms.notifArticle.placeholder' | translate}}</mat-option>

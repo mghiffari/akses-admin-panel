@@ -50,6 +50,7 @@ export class CashbackRewardComponent implements OnInit {
   isFocusedSearch = false;
   allowDownload = false;
   filterForm: FormGroup;
+  now = new Date()
 
   private table: any;
   @ViewChild('cashbackRewardTable') set tabl(table: ElementRef) {
@@ -107,8 +108,8 @@ export class CashbackRewardComponent implements OnInit {
     if(this.authService.getFeatureViewPrvg(prvg)){
       this.allowDownload = this.authService.getFeatureDownloadPrvg(prvg)
       this.filterForm = new FormGroup({
-        startDate: new FormControl(null, Validators.required),
-        endDate: new FormControl(null, Validators.required),
+        startDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
+        endDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
         search: new FormControl('')
       }, {
         validators: CustomValidation.dateRangeValidaton
@@ -129,7 +130,7 @@ export class CashbackRewardComponent implements OnInit {
       this.authService.blockOpenPage()
     }
   }
-
+  
   // event handling paginator value changed (page index and page size)
   onPaginatorChange(e) {
     console.log('CashbackRewardComponent | onPaginatorChange');

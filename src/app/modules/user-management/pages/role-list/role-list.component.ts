@@ -116,6 +116,101 @@ export class RoleListComponent implements OnInit {
     return this.rolesFormArray.at(this.selectedRowIndex)
   }
 
+  // check if all feature privileges are checked
+  isCheckedAllFeature(){
+    let formArray = this.getPrivilegesFormArray()
+    if(formArray){
+      const controls = (formArray as FormArray).controls
+      let isAllSelected = true
+      for(let featureForm of controls){
+        isAllSelected = isAllSelected && this.isCheckedAllPrvg(featureForm as FormGroup)
+        if(!isAllSelected){
+          break;
+        }
+      }
+      return isAllSelected
+    } else {
+      return false
+    }
+  }
+
+  // check if all privileges partially selected
+  isIndeterminateAllFeature(){
+    let formArray = this.getPrivilegesFormArray()
+    if(formArray){
+      const features = formArray.value
+      let foundCheck = false
+      let foundUncheck = false
+      for(let feature of features){
+        if(foundCheck){
+          if(foundUncheck){
+            break;
+          } else {
+            foundUncheck = !(feature.view && feature.edit && feature.delete && feature.publish && feature.download && feature.create)
+            if(foundUncheck){
+              break;
+            }
+          }
+        } else {
+          foundCheck = foundCheck || (feature.view || feature.edit || feature.delete || feature.publish || feature.download || feature.create)
+          if(!foundUncheck){
+            foundUncheck = !(feature.view && feature.edit && feature.delete && feature.publish && feature.download && feature.create)
+          }
+        }
+      }
+      return foundCheck && foundUncheck
+    } else {
+      return false
+    }
+  }
+
+  // toggle check all feature
+  checkedAllFeature(e){
+    let formArray = this.getPrivilegesFormArray()
+    if(formArray){
+      const controls = (formArray as FormArray).controls
+      for(let featureForm of controls){
+        this.checkedAllPrvg(e, featureForm as FormGroup)
+      }
+    }
+  }
+
+  // check if a feature privileges are checked
+  isCheckedAllPrvg(form: FormGroup){
+    let formValue = form.value
+    return formValue.view && formValue.edit && formValue.delete && formValue.publish && formValue.download && formValue.create
+  }
+
+  // check if a feature privileges are indeterminate
+  isIndeterminateAllPrvg(form: FormGroup){
+    let formValue = form.value
+    return formValue.view && !(formValue.edit && formValue.delete && formValue.publish && formValue.download && formValue.create)
+  }
+
+  // toggle check all feature privilege
+  checkedAllPrvg(e, form: FormGroup){
+    if (e.checked) {
+      form.patchValue({
+        view: true,
+        create: true,
+        edit: true,
+        delete: true,
+        publish: true,
+        download: true
+      })
+    } else {
+      form.patchValue({
+        view: false,
+        create: false,
+        edit: false,
+        delete: false,
+        publish: false,
+        download: false
+      })
+    }
+    form.markAsDirty()
+  }
+
   // uncheck other privilege if view privilege is unchecked
   onChangeViewPrivilege(form: FormGroup) {
     console.log('RoleListComponent | onChangeViewPrivilege')
@@ -128,6 +223,7 @@ export class RoleListComponent implements OnInit {
         publish: false,
         download: false
       })
+      form.markAsDirty()
     }
   }
 
@@ -139,6 +235,7 @@ export class RoleListComponent implements OnInit {
       form.patchValue({
         view: true
       })
+      form.markAsDirty()
     }
   }
 
@@ -167,7 +264,7 @@ export class RoleListComponent implements OnInit {
       return null
     } else {
       let form = this.rolesFormArray.at(this.selectedRowIndex)
-      return form ? form.get('privileges') : null
+      return form ? (form.get('privileges') as FormArray) : null
     }
   }
 
@@ -207,7 +304,7 @@ export class RoleListComponent implements OnInit {
     if (prevRoleForm) {
       let prevRole = prevRoleForm.value
       if (prevRole.id && prevRole.id !== '') {
-        if (prevRole.dirty) {
+        if (prevRoleForm.dirty) {
           let roleData: RolePrivilege = this.roleList.find((el: RolePrivilege) => {
             return el.id === prevRole.id
           })

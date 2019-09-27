@@ -61,7 +61,22 @@
         <div fxFlexAlign="center" fxFlex="30%">
           {{'forms.recipient.fieldTitle' | translate}}
         </div>
-        <div fxFlex="70%">
+        <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%" *ngIf="isSelectedCategoryMPL()">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="recipient">
+              <ngx-mat-select-search formControlName="searchFileKeyword"
+                placeholderLabel="{{'forms.recipient.searchPlaceholder'| translate}}">
+              </ngx-mat-select-search>
+              <mat-option value="">
+                {{'forms.recipient.placeholder' | translate}}</mat-option>
+              <mat-option *ngFor="let file of filteredFileList" [value]="file.name">{{file.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="recipient.invalid && (recipient.dirty || recipient.touched)">
+            <span *ngIf="recipient.errors.required">{{'forms.recipient.errorRequired' | translate}}</span>
+          </mat-error>
+        </div>
+        <div fxFlex="70%" *ngIf="!isSelectedCategoryMPL()">
           <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
             <div>
               <button mat-raised-button color="accent" (click)="csvInput.click(); csvFile.markAsTouched()"

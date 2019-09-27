@@ -200,7 +200,7 @@ export class MainNavComponent {
             if(this.authService.getViewPrvg(el.unique_tag)) {
               prodNavList.push(
                 {
-                  title: el.name,
+                  title: 'features.' + el.unique_tag,
                   link: '/product/' + el.id,
                   getShowFlag: () => {return this.getViewPrivilege(el.unique_tag)}
                 }
@@ -268,7 +268,7 @@ export class MainNavComponent {
   showAuthMenus(csChildMenus = []){
     console.log('MainNavComponent | showAuthMenus')
     for(let nav of this.allNav){
-      if(nav.featureName === this.featureNames.creditSimulation) {
+      if(nav.featureName && nav.featureName === this.featureNames.creditSimulation) {
         nav.children = csChildMenus;
       }
       let children = []

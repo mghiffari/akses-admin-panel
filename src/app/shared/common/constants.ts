@@ -1,5 +1,6 @@
 export const constants = {
     appName: 'Akses',
+    loginMaxAttempt: 5,
     tinyMceSettings: {
         inline: false,
         statusbar: false,
@@ -52,8 +53,6 @@ export const constants = {
         banner: 'homebanner',
         article: 'artikel',
         specialOffer: 'specialoffer',
-        oneClickNMCY: 'oneclicknmcy',
-        durableSpecialOffer: 'durablespecialoffer',
         faq: 'faq',
         branchLocation: 'lokasicabang',
         changePhoneNumber: 'ubahnomorhandphone',

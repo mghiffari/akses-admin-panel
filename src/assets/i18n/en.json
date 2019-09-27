@@ -328,7 +328,8 @@
         },
         "recipient": {
             "fieldTitle": "Recipient",
-            "placeholder": "Recipient",
+            "placeholder": "Select a File",
+            "searchPlaceholder": "Search file",
             "errorRequired": "Recipient is required",
             "errorFileType": "Only .csv format is supported",
             "errorCSVRequired": "csv file is required",
@@ -431,6 +432,7 @@
             "errorRequired": "Role Name is required"
         },
         "privilege": {
+            "selectAll": "Select All",
             "options": {
                 "create": "Create",
                 "view": "View",
@@ -442,7 +444,8 @@
         },
         "date": {
             "errorRange": "Start Date must be less than or equal than End Date",
-            "errorRangeRequired": "Both start date should be filled or not at all"
+            "errorRangeRequired": "Both start date should be filled or not at all",
+            "maxToday": "Date entered should not be more than today"
         },
         "transactionStartDate": {
             "errorRequired": "Start Date must have valid date format value"
@@ -492,7 +495,8 @@
         "forgotYourPassword": "Forgot Your Password?",
         "passwordSendToEmail": "New password was sent to your email",
         "passwordSendFailed": "reset password failed",
-        "passwordChanged": "password successfully changed, relogin with the new password"
+        "passwordChanged": "password successfully changed, relogin with the new password",
+        "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
     },
     "table": {
         "noRecordsFound": "No Records Found",
@@ -885,6 +889,7 @@
     "specialOfferDetailsScreen": {
         "getOfferFailed": "failed to get Special Offer data",
         "getCategoryFailed": "failed to get Special Offer categories",
+        "getFileListFailed": "failed to get MPL reicipient file list",
         "createTitle": "Create New Special Offer",
         "updateTitle": "Update Special Offer",
         "viewTitle": "Special Offer Details",
@@ -1005,7 +1010,7 @@
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
         "dateFilter": "Date Filter",
-        "nameFilter": "Name Filter",
+        "nameFilter": "NPWP Name Filter",
         "downloadReport": "download report",
         "filterNotSet": "Filter Not Set"
     },
@@ -1013,8 +1018,6 @@
         "homebanner": "Home Banner",
         "artikel": "Article",
         "specialoffer": "Special Offer",
-        "oneclicknmcy": "One Click NMCY",
-        "durablespecialoffer": "Durable Special Offer",
         "faq": "FAQ",
         "lokasicabang": "Branch Locator",
         "ubahnomorhandphone": "Change Phone Number",
@@ -1035,16 +1038,17 @@
         "furnitur": "Furniture",
         "gadget": "Gadget",
         "multigunamotor": "Multipurpose Motorcycle",
-        "multigunamobil": "Multipurpose Car"
+        "multigunamobil": "Multipurpose Car",
+        "spmultigunamotor": "SP Multipurpose Motorcycle"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
         "01000": "internal server error",
         "01001": "email can not be empty",
         "01002": "password can not be empty",
-        "01003": "user not found",
+        "01003": "email and password not match",
         "01004": "user is not active",
-        "01005": "password not match",
+        "01005": "email and password not match",
         "01006": "missing input email account",
         "01007": "failed to send email",
         "01008": "unauthorized",
@@ -1177,6 +1181,8 @@
         "07072": "no data found",
         "07073": "data cannot be downloaded",
         "07075": "transaction not found",
-        "07078": "transaction not found"
+        "07078": "transaction not found",
+        "01133": "your account is blocked, click on 'Forgot Your Password' and enter your e-mail to ask for new password",
+        "01134": "password format is incorrect"
     }
 }

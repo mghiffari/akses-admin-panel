@@ -328,7 +328,8 @@
         },
         "recipient": {
             "fieldTitle": "Penerima",
-            "placeholder": "Penerima",
+            "placeholder": "Pilih File",
+            "searchPlaceholder": "Cari file",
             "errorRequired": "Penerima wajib diisi",
             "errorFileType": "Hanya format .csv yang dapat diupload",
             "errorCSVRequired": "File csv wajib diisi",
@@ -431,6 +432,7 @@
             "errorRequired": "Nama Role wajib diisi"
         },
         "privilege": {
+            "selectAll": "Select All",
             "options": {
                 "create": "Create",
                 "view": "View",
@@ -442,7 +444,8 @@
         },
         "date": {
             "errorRange": "Tanggal Mulai harus lebih kecil atau sama dengan Tanggal Selesai",
-            "errorRangeRequired": "Kedua Tanggal Mulai dan Tanggal Selesai harus diisi atau tidak sama sekali"
+            "errorRangeRequired": "Kedua Tanggal Mulai dan Tanggal Selesai harus diisi atau tidak sama sekali",
+            "maxToday": "Tanggal yang dimasukkan tidak boleh melebihi hari ini"
         },
         "transactionStartDate": {
             "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid"
@@ -492,7 +495,8 @@
         "forgotYourPassword": "Lupa Password?",
         "passwordSendToEmail": "password baru sudah dikirim ke email anda",
         "passwordSendFailed": "gagal reset password",
-        "passwordChanged": "password berhasil diubah, login ulang dengan password baru"
+        "passwordChanged": "password berhasil diubah, login ulang dengan password baru",
+        "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
     },
     "table": {
         "noRecordsFound": "Data Kosong",
@@ -885,6 +889,7 @@
     "specialOfferDetailsScreen": {
         "getOfferFailed": "gagal mendapatkan data Special Offer",
         "getCategoryFailed": "gagal mendapatkan kategori Special Offer",
+        "getFileListFailed": "gagal mendapatkan list file target penerima MPL",
         "createTitle": "Tambahkan Special Offer Baru",
         "updateTitle": "Ubah Special Offer",
         "viewTitle": "Detail Special Offer",
@@ -1005,20 +1010,17 @@
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
         "dateFilter": "Filter Tanggal",
-        "nameFilter": "Cari Nama",
+        "nameFilter": "Cari Nama NPWP",
         "downloadReport": "download laporan",
         "filterNotSet": "Filter Belum Diatur"
     },
     "features": {
         "homebanner": "Home Banner",
         "artikel": "Artikel",
-        "specialoffer": "Penawaran Special",
-        "oneclicknmcy": "One Click NMCY",
-        "durablespecialoffer": "Penawaran Special Durable",
+        "specialoffer": "Special Offer",
         "faq": "FAQ",
         "lokasicabang": "Lokasi Cabang",
         "ubahnomorhandphone": "Ubah Nomor Handphone",
-        "simulasikredit": "Simulasi Kredit",
         "instruksipembayaran": "Instruksi Pembayaran",
         "notifikasi": "Notifikasi",
         "user": "User",
@@ -1035,16 +1037,17 @@
         "furnitur": "Furnitur",
         "gadget": "Gadget",
         "multigunamotor": "Multiguna Motor",
-        "multigunamobil": "Multiguna Mobil"
+        "multigunamobil": "Multiguna Mobil",
+        "spmultigunamotor": "SP Multiguna Motor"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",
         "01000": "internal server error",
         "01001": "email tidak boleh kosong",
         "01002": "email tidak boleh kosong",
-        "01003": "user tidak ditemukan",
+        "01003": "email dan password tidak sesuai",
         "01004": "user tidak aktif",
-        "01005": "password tidak cocok",
+        "01005": "email dan password tidak sesuai",
         "01006": "email tidak boleh kosong",
         "01007": "email gagal dikirim",
         "01008": "unauthorized",
@@ -1177,6 +1180,8 @@
         "07072": "data tidak ditemukan",
         "07073": "data tidak bisa dididownload",
         "07075": "transaksi tidak ditemukan",
-        "07078": "transaksi tidak ditemukan"
+        "07078": "transaksi tidak ditemukan",
+        "01133": "akun anda terblokir, silakan klik 'Lupa Password' dan masukkan e-mail anda untuk meminta password baru",
+        "01134": "format password salah"
     }
 }

@@ -29,7 +29,7 @@
                     </div>
                     <div fxFlex="60%">
                       <mat-form-field appearance="fill">
-                        <input matInput #startDateInput [matDatepicker]="startDatepicker" formControlName="startDate"
+                        <input matInput #startDateInput [max]="now" [matDatepicker]="startDatepicker" formControlName="startDate"
                           placeholder="{{'forms.schedule.datePlaceholder' | translate}}"
                           (focus)="isFocusedStartDate = true" (blur)="isFocusedStartDate = false">
                         <mat-datepicker-toggle matSuffix [for]="startDatepicker"></mat-datepicker-toggle>
@@ -37,6 +37,7 @@
                       </mat-form-field>
                       <mat-error class="bottom-error"
                         *ngIf="filterForm.invalid && (filterForm.dirty || filterForm.touched)">
+                        <span *ngIf="!filterForm.errors.dateRangeRequired && startDate.errors.maxToday">{{'forms.date.maxToday' | translate}}</span>
                         <span
                           *ngIf="filterForm.errors.dateRangeRequired">{{'forms.date.errorRangeRequired' | translate}}</span>
                       </mat-error>
@@ -49,7 +50,7 @@
                     </div>
                     <div fxFlex="60%">
                       <mat-form-field appearance="fill">
-                        <input matInput #endDateInput [matDatepicker]="endDatepicker" formControlName="endDate"
+                        <input matInput #endDateInput [max]="now" [matDatepicker]="endDatepicker" formControlName="endDate"
                           placeholder="{{'forms.schedule.datePlaceholder' | translate}}"
                           (focus)="isFocusedEndDate = true" (blur)="isFocusedEndDate = false">
                         <mat-datepicker-toggle matSuffix [for]="endDatepicker"></mat-datepicker-toggle>
@@ -57,6 +58,7 @@
                       </mat-form-field>
                       <mat-error class="bottom-error"
                         *ngIf="filterForm.invalid && (filterForm.dirty || filterForm.touched)">
+                        <span *ngIf="!filterForm.errors.dateRangeRequired && endDate.errors.maxToday">{{'forms.date.maxToday' | translate}}</span>
                         <span
                           *ngIf="filterForm.errors.dateRangeRequired">{{'forms.date.errorRangeRequired' | translate}}</span>
                       </mat-error>

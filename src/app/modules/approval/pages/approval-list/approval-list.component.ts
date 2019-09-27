@@ -20,8 +20,8 @@ export class ApprovalListComponent implements OnInit {
   paginatorProps = { ...constants.paginatorProps };
   loading = false;
   filterForm: FormGroup = new FormGroup({
-    startDate: new FormControl(null),
-    endDate: new FormControl(null),
+    startDate: new FormControl(null, CustomValidation.maxToday),
+    endDate: new FormControl(null, CustomValidation.maxToday),
     search: new FormControl('')
   }, {
       validators: [CustomValidation.dateRangeValidaton, CustomValidation.dateRangeRequiredValidaton]
@@ -31,6 +31,7 @@ export class ApprovalListComponent implements OnInit {
   approvalType = constants.approvalType
   featureTags = constants.features
   approvalStatus = constants.approvalStatus
+  now = new Date()
   tabs = [
     {
       type: this.approvalType.specialOffer,
@@ -113,6 +114,7 @@ export class ApprovalListComponent implements OnInit {
     this.filterForm.disable({ emitEvent: false })
     this.filterForm.reset({ emitEvent: false })
     this.filterForm.valueChanges.subscribe(value => {
+      console.log('valueChanges')
       if (this.filterForm.valid) {
         this.loadData()
       } else {
