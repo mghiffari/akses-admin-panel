@@ -275,6 +275,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                     } else {
                       this.loading = false
                       this.handleCategoryChange()
+                      this.handleChangeFilterText()
                     }
                   } catch (error) {
                     console.error(error)
@@ -333,6 +334,23 @@ export class SpecialOfferDetailsComponent implements OnInit {
     })
   }
 
+  // Method to handle filter search text for file list
+  handleChangeFilterText(){
+    console.log("SpecialOfferDetailsComponent | handleChangeFilterText");
+    this.searchFileKeyword.valueChanges.subscribe(value => {
+      if (value) {
+        this.filteredFileList = [];
+        this.fileList.map((file) => {
+          if (file.name.toLowerCase().includes(value.toLowerCase())) {
+            this.filteredFileList.push(file);
+          }
+        });
+      } else {
+        this.filteredFileList = this.fileList;
+      }
+    })
+  }
+
   // handle when category form value change
   handleCategoryChange() {
     console.log('SpecialOfferDetailsComponent | handleCategoryChange')
@@ -365,20 +383,6 @@ export class SpecialOfferDetailsComponent implements OnInit {
       })
   }
 
-  // filter file list based on search keyword
-  filterFileList(e) {
-    console.log("NotificationDetailsComponent | filterArticles");
-    if (e.target.value) {
-      this.filteredFileList = [];
-      this.fileList.map((file) => {
-        if (file.name.toLowerCase().includes(e.target.value.toLowerCase())) {
-          this.filteredFileList.push(file);
-        }
-      });
-    } else {
-      this.filteredFileList = this.fileList;
-    }
-  };
   // check is selected category is mpl
   isSelectedCategoryMPL() {
     let cat = this.category.value
