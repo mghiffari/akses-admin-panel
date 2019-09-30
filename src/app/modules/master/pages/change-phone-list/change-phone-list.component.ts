@@ -32,6 +32,7 @@ export class ChangePhoneListComponent implements OnInit {
     'oldPhoneNumber',
     'newPhoneNumber',
     'lastUpdated',
+    'contractNo',
     'actionsStatus',
     'remark'
   ]

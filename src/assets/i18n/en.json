@@ -546,6 +546,7 @@
             "requestDuration": "Request Duration",
             "oldPhoneNumber": "Old Phonenumber",
             "newPhoneNumber": "New Phonenumber",
+            "contractNo": "Contract Number",
             "actionsStatus": "Action / Status",
             "remark": "Remark"
         },

@@ -546,6 +546,7 @@
             "requestDuration": "Umur Request",
             "oldPhoneNumber": "Nomor HP Lama",
             "newPhoneNumber": "Nomor HP Baru",
+            "contractNo": "Nomor Kontrak",
             "actionsStatus": "Action / Status",
             "remark": "Keterangan"
         },
