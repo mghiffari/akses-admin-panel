@@ -260,18 +260,22 @@ export class ArticleDetailsService {
         // Validate the File Height and Width.
         this.vArticleData.article_image = img.src;
         img.onload = () => {
-          const height = img.height;
-          const width = img.width;
-          const ratioHeight = this.vImageRatio.height
-          const ratioWidth = this.vImageRatio.width
-          if (width / ratioWidth !== height / ratioHeight) {
-            this._translateService.get('forms.articlePicture.errorRatio', { width: ratioWidth, height: ratioHeight })
-              .subscribe(res => {
-                this.vErrorMessage.imageArticle = res;
-              });
-          } else {
-            this.vErrorMessage.imageArticle = '';
-            this.compressImage(component, image[0]);
+          try {
+            const height = img.height;
+            const width = img.width;
+            const ratioHeight = this.vImageRatio.height
+            const ratioWidth = this.vImageRatio.width
+            if (width / ratioWidth !== height / ratioHeight) {
+              this._translateService.get('forms.articlePicture.errorRatio', { width: ratioWidth, height: ratioHeight })
+                .subscribe(res => {
+                  this.vErrorMessage.imageArticle = res;
+                });
+            } else {
+              this.vErrorMessage.imageArticle = '';
+              this.compressImage(component, image[0]);
+            }    
+          } catch (error) {
+            console.error(error)
           }
         };
       } else {
