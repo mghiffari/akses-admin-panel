@@ -13,6 +13,7 @@ import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snac
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +49,8 @@ export class ArticleDetailsService {
 
   vPrivilege = null
 
+  vImageRatio = CustomValidation.articleImg.ratio;
+
   constructor(
     private _translateService: TranslateService,
     private _ng2ImgToolsService: Ng2ImgToolsService,
@@ -60,31 +63,31 @@ export class ArticleDetailsService {
   ) { }
 
   // get feature privilege
-  getFeaturePrvg(){
+  getFeaturePrvg() {
     console.log('ArticleDetailsService | getFeaturePrvg');
     this.vPrivilege = this._authService.getFeaturePrivilege(constants.features.article)
   }
 
   // get view privilege flag
-  getViewPrvg(){
+  getViewPrvg() {
     console.log('ArticleDetailsService | getFeaturePrvg');
     return this._authService.getFeatureViewPrvg(this.vPrivilege)
   }
 
   // get create privilege flag
-  getCreatePrvg(){
+  getCreatePrvg() {
     console.log('ArticleDetailsService | getCreatePrvg');
     return this._authService.getFeatureCreatePrvg(this.vPrivilege)
   }
 
   // get edit privilege flag
-  getEditPrvg(){
+  getEditPrvg() {
     console.log('ArticleDetailsService | getEditPrvg');
     return this._authService.getFeatureEditPrvg(this.vPrivilege)
   }
 
   // show error snack bar if has no access
-  showNoAccessSnackbar(){
+  showNoAccessSnackbar() {
     console.log('ArticleDetailsService | showNoAccessSnackbar');
     this._authService.blockOpenPage()
   }
@@ -225,11 +228,20 @@ export class ArticleDetailsService {
     console.log('ArticleDetailsService | previewImage');
     var image: File = null;
     image = files;
-    this.resetErrorMessage();
     if (files.length === 0)
       return;
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
+    let types = ['jpeg', 'jpg', 'png']
+    let errorType = false
+    let splits = files[0].name.split('.');
+    if (splits.length > 1) {
+      let ext = splits[splits.length - 1].trim();
+      if (!types.includes(ext)) {
+        errorType = true;
+      }
+    } else {
+      errorType = true;
+    }
+    if (errorType) {
       this._translateService.get('forms.articlePicture.errorType').subscribe(res => {
         if (component === "article") {
           this.vErrorMessage.imageArticle = res;
@@ -242,13 +254,35 @@ export class ArticleDetailsService {
     var reader = new FileReader();
     reader.onload = (_event) => {
       var img = new Image();
-      img.src = reader.result.toString();
+      //Set the Base64 string return from FileReader as source.
+      img.src = _event.target['result'];
       if (component === "article") {
+        // Validate the File Height and Width.
         this.vArticleData.article_image = img.src;
+        img.onload = () => {
+          try {
+            const height = img.height;
+            const width = img.width;
+            const ratioHeight = this.vImageRatio.height
+            const ratioWidth = this.vImageRatio.width
+            if (width / ratioWidth !== height / ratioHeight) {
+              this._translateService.get('forms.articlePicture.errorRatio', { width: ratioWidth, height: ratioHeight })
+                .subscribe(res => {
+                  this.vErrorMessage.imageArticle = res;
+                });
+            } else {
+              this.vErrorMessage.imageArticle = '';
+              this.compressImage(component, image[0]);
+            }    
+          } catch (error) {
+            console.error(error)
+          }
+        };
       } else {
+        this.vErrorMessage.imageFooter = ''
         this.vArticleData.foot_image_content = img.src;
+        this.compressImage(component, image[0]);
       }
-      this.compressImage(component, image[0]);
     }
     reader.readAsDataURL(files[0]);
   }
@@ -282,7 +316,6 @@ export class ArticleDetailsService {
   //used to disable save button
   isDisableCreateArticle() {
     console.log('ArticleDetailsService | isDisableCreateArticle');
-    this.resetErrorMessage();
     if (this.vArticleData.category === undefined || this.vArticleData.category === '') {
       return true;
     } else if (this.vArticleData.title === undefined || this.vArticleData.title === '') {

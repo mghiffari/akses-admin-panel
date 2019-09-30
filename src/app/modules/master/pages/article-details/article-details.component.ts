@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleDetailsService } from 'src/app/modules/master/pages/article-details/services/article-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { constants } from 'src/app/shared/common/constants';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Component({
   selector: 'app-article-details',
@@ -24,6 +25,7 @@ export class ArticleDetailsComponent implements OnInit {
   vShowFooterButtonURL: boolean = false;
 
   tinyMceSettings = constants.tinyMceSettings;
+  imageRatio = CustomValidation.articleImg.ratio;
 
   constructor(
     private _articleDetailsService: ArticleDetailsService,

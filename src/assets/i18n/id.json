@@ -193,7 +193,9 @@
         "articlePicture": {
             "fieldTitle": "Gambar Artikel",
             "errorRequired": "Gambar Artikel wajib diisi",
-            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload"
+            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload",
+            "errorRatio": "Hanya rasio {{width}}:{{height}} yang dapat diupload",
+            "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )"
         },
         "uniqueTag": {
             "fieldTitle": "Unique Tag",
