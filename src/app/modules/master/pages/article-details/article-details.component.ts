@@ -175,7 +175,7 @@ export class ArticleDetailsComponent implements OnInit {
     }
   }
 
-  //triggered when radio button akses page on footer text clicked
+  //triggered when radio button adiraku page on footer text clicked
   showFooterTextModul() {
     console.log('ArticleDetailComponent | showFooterTextModul');
     this.vShowFooterTextModul = true;

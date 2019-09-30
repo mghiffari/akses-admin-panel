@@ -36,7 +36,7 @@ export class BannerDetailsComponent implements OnInit {
 
   //used for default rich text editor
   tinyMceSettings = constants.tinyMceSettings;
-  
+
   imageRatio = CustomValidation.articleImg.ratio;
 
   constructor(
@@ -256,7 +256,7 @@ export class BannerDetailsComponent implements OnInit {
     }
   }
 
-  //triggered when radio button akses page on footer text clicked
+  //triggered when radio button adiraku page on footer text clicked
   showFooterTextModul() {
     console.log('BannerDetailComponent | showFooterTextModul');
     this.vShowFooterTextModul = true;

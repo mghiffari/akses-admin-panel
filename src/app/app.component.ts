@@ -11,7 +11,7 @@ import * as numeral from 'numeral';
   styleUrls: []
 })
 export class AppComponent implements OnInit {
-  title = 'Admin Panel Akses Adira';
+  title = 'Admin Panel Adiraku';
   showNavbar = false;
 
   constructor(private router: Router,
