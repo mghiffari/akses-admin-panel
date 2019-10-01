@@ -6,7 +6,7 @@ metadata:
   labels:
     app: pprd-fe-admin-panel
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
   revisionHistoryLimit: 10
