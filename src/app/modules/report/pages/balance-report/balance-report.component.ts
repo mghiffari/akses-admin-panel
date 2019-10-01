@@ -26,7 +26,7 @@ export class BalanceReportComponent implements OnInit {
     'vaNumber',
     'name',
     'phoneNumber',
-    'aksesPayBalance',
+    'adiraPayBalance',
     'timestamp'
   ];
   transactionColumn: string[] = [

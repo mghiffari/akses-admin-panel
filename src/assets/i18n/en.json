@@ -141,7 +141,7 @@
             "fieldDetailPage": "Page Detail",
             "fieldDescBox": "Description",
             "fieldURL": "URL Option",
-            "fieldModulAccess": "Akses Page",
+            "fieldModulAccess": "Adiraku Page",
             "fieldExternalURLAccess": "External URL",
             "fieldEcternalURLAccessPlaceholder": "Input URL here",
             "errorRequired": "Detail Page or URL is required"
@@ -579,7 +579,7 @@
             "vaNumber": "VA Number",
             "name": "Name",
             "phNumber": "Phone Number",
-            "aksesPay": "Akses pay Balance",
+            "adiraPay": "Adira pay Balance",
             "timestamp": "Timestamp",
             "transCode": "Transaction Code",
             "transDesc": "Transaction Description",
