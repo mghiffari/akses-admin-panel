@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiurl: 'https://prod.aksesadirafinance.com/ms-admin/',
+  apiurl: 'https://preprod.aksesadirafinance.com/ms-admin/',
   endPoint: {
     updateAccount: 'account',
     login: 'auth/login',
@@ -9,6 +9,6 @@ export const environment = {
     updateNotification: 'notification'
   },
   enableAdiraEmailValidation: true,
-  version: '1.0.21',
+  version: '1.0.31',
   versionDate: new Date(2019, 6, 11)
 };
