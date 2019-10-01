@@ -32,7 +32,7 @@ spec:
             cpu: 15m
             memory: 80Mi
         ports:
-        - containerPort: 89
+        - containerPort: 80
           name: ppd-fe-adm-pnl
       imagePullSecrets:
       - name: regsecret
