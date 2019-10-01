@@ -44,4 +44,4 @@ RUN echo "worker_processes auto;\
     }\
     " > /etc/nginx/nginx.conf
 COPY nginx.conf etc/nginx/conf.d/
-EXPOSE 80
+EXPOSE 89
