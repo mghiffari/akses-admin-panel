@@ -12,4 +12,5 @@ export class ChangePhone {
     status: string;
     action: string;
     remarks: string;
+    contract_no: string;
 }
