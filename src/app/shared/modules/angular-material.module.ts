@@ -27,7 +27,8 @@ import {
   MatTooltipModule,
   MatTabsModule,
   MatCardModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatChipsModule
 } from '@angular/material';
 
 @NgModule({
@@ -62,7 +63,8 @@ import {
     MatSortModule,
     MatTabsModule,
     MatCardModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatChipsModule
   ],
   exports: [
     FlexLayoutModule,
@@ -92,7 +94,8 @@ import {
     MatSortModule,
     MatTabsModule,
     MatCardModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatChipsModule
   ]
 })
 export class AngularMaterialModule { }
