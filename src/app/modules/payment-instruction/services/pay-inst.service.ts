@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class PayInstService {
   paymentInstructionApiUrl = environment.apiurl + 'paymentinstruction'
   listApiUrl = this.paymentInstructionApiUrl + '/list';
+  listByTypeApiUrl =  this.listApiUrl + '?instruction_type=';
   detailApiUrl = this.paymentInstructionApiUrl + '/detail';
   swapOrderListApiUrl = this.listApiUrl + '/swap-order';
   listByIdApiUrl = this.listApiUrl + '/id';
@@ -19,7 +20,7 @@ export class PayInstService {
   // get list by payment type
   getListByType(type){
     console.log('PayInstService | getListByType')
-    let url = this.listApiUrl + '/' + encodeURIComponent(type);
+    let url = this.listByTypeApiUrl + encodeURIComponent(type);
     return this.authService.wrapTokenGetApi(url)
   }
 
