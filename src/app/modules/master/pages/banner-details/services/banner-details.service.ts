@@ -51,6 +51,17 @@ export class BannerDetailsService {
   vPrivilege = null
   vImageRatio = CustomValidation.articleImg.ratio;
 
+  //footer
+  vShowFooterText: boolean = false;
+  vShowFooterTextModul: boolean = false;
+  vShowFooterTextURL: boolean = false;
+  vShowFooterImage: boolean = false;
+  vShowFooterImageModul: boolean = false;
+  vShowFooterImageURL: boolean = false;
+  vShowFooterButton: boolean = false;
+  vShowFooterButtonModul: boolean = false;
+  vShowFooterButtonURL: boolean = false;
+
   constructor(
     private _ng2ImgToolsService: Ng2ImgToolsService,
     private _bannerService: BannerService,
@@ -268,13 +279,13 @@ export class BannerDetailsService {
     } else if (this.vBannerData.end_date === undefined || this.vBannerData.end_date === '') {
       return true;
     } else if (this.vBannerData.clickable_flg) {
-      if (this.vBannerData.clickable_is_detail === undefined || this.vBannerData.clickable_is_detail === null) {
+      if (!this.vBannerData.clickable_is_detail && !this.vBannerData.clickable_is_internal) {
         return true;
       } else {
         if (!this.vBannerData.clickable_is_detail) {
-          if (this.vBannerData.clickable_is_internal === undefined || this.vBannerData.clickable_is_internal === null) {
+          if (!this.vBannerData.clickable_is_internal) {
             return true;
-          } else if (this.vBannerData.clickable_redirect === undefined || this.vBannerData.clickable_redirect === '') {
+          } else if (!this.vBannerData.clickable_redirect) {
             return true;
           } else if (!this.vRegexURL.test(this.vBannerData.clickable_redirect) && !this.vBannerData.clickable_is_internal) {
             this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -284,14 +295,14 @@ export class BannerDetailsService {
           }
           this.resetErrorMessage();
           return false;
-        } else if (this.vBannerData.clickable_is_detail) {
-          if (this.vBannerData.description === undefined || this.vBannerData.description === '') {
+        } else {
+          if (!this.vBannerData.description) {
             return true;
           }
-          if (this.vBannerData.foot_text_flg.length > 0) {
-            if (this.vBannerData.foot_text_content === undefined || this.vBannerData.foot_text_content === '') {
+          if (this.vShowFooterText || this.vBannerData.foot_text_flg) {
+            if (!this.vBannerData.foot_text_content) {
               return true;
-            } else if (this.vBannerData.foot_text_redirect === undefined || this.vBannerData.foot_text_redirect === '') {
+            } else if (!this.vBannerData.foot_text_redirect) {
               return true;
             } else if (!this.vRegexURL.test(this.vBannerData.foot_text_redirect) && this.vBannerData.foot_text_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -300,12 +311,12 @@ export class BannerDetailsService {
               return true;
             }
           }
-          if (this.vBannerData.foot_image_flg != null) {
-            if (this.vBannerData.foot_image_content === undefined || this.vBannerData.foot_image_content === null) {
+          if (this.vShowFooterImage || this.vBannerData.foot_image_flg) {
+            if (!this.vBannerData.foot_image_content) {
               return true;
-            } else if (this.vErrorMessage.imageFooter != "") {
+            } else if (this.vErrorMessage.imageFooter) {
               return true;
-            } else if (this.vBannerData.foot_image_redirect === undefined || this.vBannerData.foot_image_redirect === '') {
+            } else if (!this.vBannerData.foot_image_redirect) {
               return true;
             } else if (!this.vRegexURL.test(this.vBannerData.foot_image_redirect) && this.vBannerData.foot_image_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -314,10 +325,10 @@ export class BannerDetailsService {
               return true;
             }
           }
-          if (this.vBannerData.foot_button_flg.length > 0) {
-            if (this.vBannerData.foot_button_content === undefined || this.vBannerData.foot_button_content === '') {
+          if (this.vShowFooterButton || this.vBannerData.foot_button_flg) {
+            if (!this.vBannerData.foot_button_content) {
               return true;
-            } else if (this.vBannerData.foot_button_redirect === undefined || this.vBannerData.foot_button_redirect === '') {
+            } else if (!this.vBannerData.foot_button_redirect) {
               return true;
             } else if (!this.vRegexURL.test(this.vBannerData.foot_button_redirect) && this.vBannerData.foot_button_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
