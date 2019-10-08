@@ -48,6 +48,16 @@ export class ArticleDetailsService {
 
   vPrivilege = null
 
+  vShowFooterText: boolean = false;
+  vShowFooterTextModul: boolean = false;
+  vShowFooterTextURL: boolean = false;
+  vShowFooterImage: boolean = false;
+  vShowFooterImageModul: boolean = false;
+  vShowFooterImageURL: boolean = false;
+  vShowFooterButton: boolean = false;
+  vShowFooterButtonModul: boolean = false;
+  vShowFooterButtonURL: boolean = false;
+
   constructor(
     private _translateService: TranslateService,
     private _ng2ImgToolsService: Ng2ImgToolsService,
@@ -60,31 +70,31 @@ export class ArticleDetailsService {
   ) { }
 
   // get feature privilege
-  getFeaturePrvg(){
+  getFeaturePrvg() {
     console.log('ArticleDetailsService | getFeaturePrvg');
     this.vPrivilege = this._authService.getFeaturePrivilege(constants.features.article)
   }
 
   // get view privilege flag
-  getViewPrvg(){
+  getViewPrvg() {
     console.log('ArticleDetailsService | getFeaturePrvg');
     return this._authService.getFeatureViewPrvg(this.vPrivilege)
   }
 
   // get create privilege flag
-  getCreatePrvg(){
+  getCreatePrvg() {
     console.log('ArticleDetailsService | getCreatePrvg');
     return this._authService.getFeatureCreatePrvg(this.vPrivilege)
   }
 
   // get edit privilege flag
-  getEditPrvg(){
+  getEditPrvg() {
     console.log('ArticleDetailsService | getEditPrvg');
     return this._authService.getFeatureEditPrvg(this.vPrivilege)
   }
 
   // show error snack bar if has no access
-  showNoAccessSnackbar(){
+  showNoAccessSnackbar() {
     console.log('ArticleDetailsService | showNoAccessSnackbar');
     this._authService.blockOpenPage()
   }
@@ -225,11 +235,20 @@ export class ArticleDetailsService {
     console.log('ArticleDetailsService | previewImage');
     var image: File = null;
     image = files;
-    this.resetErrorMessage();
     if (files.length === 0)
       return;
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
+    let types = ['jpeg', 'jpg', 'png']
+    let errorType = false
+    let splits = files[0].name.split('.');
+    if (splits.length > 1) {
+      let ext = splits[splits.length - 1].trim();
+      if (!types.includes(ext)) {
+        errorType = true;
+      }
+    } else {
+      errorType = true;
+    }
+    if (errorType) {
       this._translateService.get('forms.articlePicture.errorType').subscribe(res => {
         if (component === "article") {
           this.vErrorMessage.imageArticle = res;
@@ -242,13 +261,18 @@ export class ArticleDetailsService {
     var reader = new FileReader();
     reader.onload = (_event) => {
       var img = new Image();
-      img.src = reader.result.toString();
+      //Set the Base64 string return from FileReader as source.
+      img.src = _event.target['result'];
       if (component === "article") {
+        // Validate the File Height and Width.
         this.vArticleData.article_image = img.src;
+        this.vErrorMessage.imageArticle = '';
+        this.compressImage(component, image[0]);
       } else {
+        this.vErrorMessage.imageFooter = ''
         this.vArticleData.foot_image_content = img.src;
+        this.compressImage(component, image[0]);
       }
-      this.compressImage(component, image[0]);
     }
     reader.readAsDataURL(files[0]);
   }
@@ -282,7 +306,6 @@ export class ArticleDetailsService {
   //used to disable save button
   isDisableCreateArticle() {
     console.log('ArticleDetailsService | isDisableCreateArticle');
-    this.resetErrorMessage();
     if (this.vArticleData.category === undefined || this.vArticleData.category === '') {
       return true;
     } else if (this.vArticleData.title === undefined || this.vArticleData.title === '') {
@@ -294,10 +317,10 @@ export class ArticleDetailsService {
     } else if (this.vArticleData.content === undefined || this.vArticleData.content === '') {
       return true;
     } else {
-      if (this.vArticleData.foot_text_flg.length > 0) {
-        if (this.vArticleData.foot_text_content === undefined || this.vArticleData.foot_text_content === '') {
+      if (this.vShowFooterText || this.vArticleData.foot_text_flg) {
+        if (!this.vArticleData.foot_text_content) {
           return true;
-        } else if (this.vArticleData.foot_text_redirect === undefined || this.vArticleData.foot_text_redirect === '') {
+        } else if (!this.vArticleData.foot_text_redirect) {
           return true;
         } else if (!this.vRegexURL.test(this.vArticleData.foot_text_redirect) && this.vArticleData.foot_text_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -306,12 +329,12 @@ export class ArticleDetailsService {
           return true;
         }
       }
-      if (this.vArticleData.foot_image_flg != null) {
-        if (this.vArticleData.foot_image_content === undefined || this.vArticleData.foot_image_content === null) {
+      if (this.vShowFooterImage || this.vArticleData.foot_image_flg) {
+        if (!this.vArticleData.foot_image_content) {
           return true;
-        } else if (this.vErrorMessage.imageFooter != "") {
+        } else if (this.vErrorMessage.imageFooter) {
           return true;
-        } else if (this.vArticleData.foot_image_redirect === undefined || this.vArticleData.foot_image_redirect === '') {
+        } else if (!this.vArticleData.foot_image_redirect) {
           return true;
         } else if (!this.vRegexURL.test(this.vArticleData.foot_image_redirect) && this.vArticleData.foot_image_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -320,10 +343,10 @@ export class ArticleDetailsService {
           return true;
         }
       }
-      if (this.vArticleData.foot_button_flg.length > 0) {
-        if (this.vArticleData.foot_button_content === undefined || this.vArticleData.foot_button_content === '') {
+      if (this.vShowFooterButton || this.vArticleData.foot_button_flg) {
+        if (!this.vArticleData.foot_button_content) {
           return true;
-        } else if (this.vArticleData.foot_button_redirect === undefined || this.vArticleData.foot_button_redirect === '') {
+        } else if (!this.vArticleData.foot_button_redirect) {
           return true;
         } else if (!this.vRegexURL.test(this.vArticleData.foot_button_redirect) && this.vArticleData.foot_button_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {

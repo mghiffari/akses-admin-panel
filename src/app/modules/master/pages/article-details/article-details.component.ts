@@ -12,17 +12,6 @@ export class ArticleDetailsComponent implements OnInit {
   vCurrentPage: string;
   vId: string;
 
-  //footer
-  vShowFooterText: boolean = false;
-  vShowFooterTextModul: boolean = false;
-  vShowFooterTextURL: boolean = false;
-  vShowFooterImage: boolean = false;
-  vShowFooterImageModul: boolean = false;
-  vShowFooterImageURL: boolean = false;
-  vShowFooterButton: boolean = false;
-  vShowFooterButtonModul: boolean = false;
-  vShowFooterButtonURL: boolean = false;
-
   tinyMceSettings = constants.tinyMceSettings;
 
   constructor(
@@ -33,6 +22,46 @@ export class ArticleDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentPage();
+  }
+
+  getShowFooterText(){
+    return this.getFooter('vShowFooterText')
+  }
+
+  getShowFooterTextModul(){
+    return this.getFooter('vShowFooterTextModul')
+  }
+
+  getShowFooterTextURL(){
+    return this.getFooter('vShowFooterTextURL')
+  }
+
+  getShowFooterImage(){
+    return this.getFooter('vShowFooterImage')
+  }
+
+  getShowFooterImageModul(){
+    return this.getFooter('vShowFooterImageModul')
+  }
+
+  getShowFooterImageURL(){
+    return this.getFooter('vShowFooterImageURL')
+  }
+
+  getShowFooterButton(){
+    return this.getFooter('vShowFooterButton')
+  }
+
+  getShowFooterButtonModul(){
+    return this.getFooter('vShowFooterButtonModul')
+  }
+
+  getShowFooterButtonURL(){
+    return this.getFooter('vShowFooterButtonURL')
+  }
+
+  getFooter(variableName){
+    return this._articleDetailsService[variableName];
   }
 
   //get current page (create or update)
@@ -92,15 +121,15 @@ export class ArticleDetailsComponent implements OnInit {
   //initiate check box for update component
   initiateCheckBox() {
     console.log('ArticleDetailComponent | initiateCheckBox');
-    this.vShowFooterText = this.getArticleData().foot_text_content != "";
-    this.vShowFooterTextModul = this.getArticleData().foot_text_flg === "int";
-    this.vShowFooterTextURL = this.getArticleData().foot_text_flg == "ext";
-    this.vShowFooterImage = this.getArticleData().foot_image_content != "" && this.getArticleData().foot_image_content !== undefined && this.getArticleData().foot_image_content !== null;
-    this.vShowFooterImageModul = this.getArticleData().foot_image_flg == "int";
-    this.vShowFooterImageURL = this.getArticleData().foot_image_flg == "ext";
-    this.vShowFooterButton = this.getArticleData().foot_button_content != "";
-    this.vShowFooterButtonModul = this.getArticleData().foot_button_flg == "int";
-    this.vShowFooterButtonURL = this.getArticleData().foot_button_flg == "ext";
+    this._articleDetailsService.vShowFooterText = this.getArticleData().foot_text_content != "";
+    this._articleDetailsService.vShowFooterTextModul = this.getArticleData().foot_text_flg === "int";
+    this._articleDetailsService.vShowFooterTextURL = this.getArticleData().foot_text_flg == "ext";
+    this._articleDetailsService.vShowFooterImage = this.getArticleData().foot_image_content != "" && this.getArticleData().foot_image_content !== undefined && this.getArticleData().foot_image_content !== null;
+    this._articleDetailsService.vShowFooterImageModul = this.getArticleData().foot_image_flg == "int";
+    this._articleDetailsService.vShowFooterImageURL = this.getArticleData().foot_image_flg == "ext";
+    this._articleDetailsService.vShowFooterButton = this.getArticleData().foot_button_content != "";
+    this._articleDetailsService.vShowFooterButtonModul = this.getArticleData().foot_button_flg == "int";
+    this._articleDetailsService.vShowFooterButtonURL = this.getArticleData().foot_button_flg == "ext";
   }
 
   //get category data from services
@@ -130,15 +159,15 @@ export class ArticleDetailsComponent implements OnInit {
   //reset check box by default (all not checked)
   resetCheckBox() {
     console.log('ArticleDetailComponent | resetCheckbox');
-    this.vShowFooterText = false;
-    this.vShowFooterTextModul = false;
-    this.vShowFooterTextURL = false;
-    this.vShowFooterImage = false;
-    this.vShowFooterImageModul = false;
-    this.vShowFooterImageURL = false;
-    this.vShowFooterButton = false;
-    this.vShowFooterButtonModul = false;
-    this.vShowFooterButtonURL = false;
+    this._articleDetailsService.vShowFooterText = false;
+    this._articleDetailsService.vShowFooterTextModul = false;
+    this._articleDetailsService.vShowFooterTextURL = false;
+    this._articleDetailsService.vShowFooterImage = false;
+    this._articleDetailsService.vShowFooterImageModul = false;
+    this._articleDetailsService.vShowFooterImageURL = false;
+    this._articleDetailsService.vShowFooterButton = false;
+    this._articleDetailsService.vShowFooterButtonModul = false;
+    this._articleDetailsService.vShowFooterButtonURL = false;
   }
 
   //preview and compress image process when image choosen
@@ -165,37 +194,37 @@ export class ArticleDetailsComponent implements OnInit {
   //triggered when check box footer text clicked
   showFooterText() {
     console.log('ArticleDetailComponent | showFooterText');
-    this.vShowFooterText = !this.vShowFooterText;
-    if(!this.vShowFooterText) {
-      this.vShowFooterTextURL = false;
-      this.vShowFooterTextModul = false;
+    this._articleDetailsService.vShowFooterText = !this._articleDetailsService.vShowFooterText;
+    if(!this._articleDetailsService.vShowFooterText) {
+      this._articleDetailsService.vShowFooterTextURL = false;
+      this._articleDetailsService.vShowFooterTextModul = false;
       this._articleDetailsService.resetFootText("","","");
     }
   }
 
-  //triggered when radio button akses page on footer text clicked
+  //triggered when radio button adiraku page on footer text clicked
   showFooterTextModul() {
     console.log('ArticleDetailComponent | showFooterTextModul');
-    this.vShowFooterTextModul = true;
-    this.vShowFooterTextURL = false;
+    this._articleDetailsService.vShowFooterTextModul = true;
+    this._articleDetailsService.vShowFooterTextURL = false;
     this._articleDetailsService.resetFootText(this.getArticleData().foot_text_flg,this.getArticleData().foot_text_content,"");
   }
   
   //triggered when radio button external url on footer text clicked 
   showFooterTextURL() {
     console.log('ArticleDetailComponent | showFooterTextURL')
-    this.vShowFooterTextModul = false;
-    this.vShowFooterTextURL = true;
+    this._articleDetailsService.vShowFooterTextModul = false;
+    this._articleDetailsService.vShowFooterTextURL = true;
     this._articleDetailsService.resetFootText(this.getArticleData().foot_text_flg,this.getArticleData().foot_text_content,"");
   }
 
   //triggered when check box footer image clicked
   showFooterImage() {
     console.log('ArticleDetailComponent | showFooterImage');
-    this.vShowFooterImage = !this.vShowFooterImage;
-    if(!this.vShowFooterImage) {
-      this.vShowFooterImageModul = false;
-      this.vShowFooterImageURL = false;
+    this._articleDetailsService.vShowFooterImage = !this._articleDetailsService.vShowFooterImage;
+    if(!this._articleDetailsService.vShowFooterImage) {
+      this._articleDetailsService.vShowFooterImageModul = false;
+      this._articleDetailsService.vShowFooterImageURL = false;
       this._articleDetailsService.resetFootImage(null,"","");
     }
   }
@@ -203,26 +232,26 @@ export class ArticleDetailsComponent implements OnInit {
   //triggered when radio button access page on footer image clicked
   showFooterImageModul() {
     console.log('ArticleDetailComponent | showFooterImageModul');
-    this.vShowFooterImageModul = true;
-    this.vShowFooterImageURL = false;
+    this._articleDetailsService.vShowFooterImageModul = true;
+    this._articleDetailsService.vShowFooterImageURL = false;
     this._articleDetailsService.resetFootImage(this.getArticleData().foot_image_flg,this.getArticleData().foot_image_content,"");
   }
 
   //triggered when radio button external url on footer image clicked
   showFooterImageURL() {
     console.log('ArticleDetailComponent | showFooterImageURL');
-    this.vShowFooterImageModul = false;
-    this.vShowFooterImageURL = true;
+    this._articleDetailsService.vShowFooterImageModul = false;
+    this._articleDetailsService.vShowFooterImageURL = true;
     this._articleDetailsService.resetFootImage(this.getArticleData().foot_image_flg,this.getArticleData().foot_image_content,"");
   }
 
   //triggered when check box footer button clicked
   showFooterButton() {
     console.log('ArticleDetailComponent | showFooterButton');
-    this.vShowFooterButton = !this.vShowFooterButton;
-    if(!this.vShowFooterButton) {
-      this.vShowFooterButtonModul = true;
-      this.vShowFooterButtonURL = false;
+    this._articleDetailsService.vShowFooterButton = !this._articleDetailsService.vShowFooterButton;
+    if(!this._articleDetailsService.vShowFooterButton) {
+      this._articleDetailsService.vShowFooterButtonModul = true;
+      this._articleDetailsService.vShowFooterButtonURL = false;
       this._articleDetailsService.resetFootButton("","","");
     }
   }
@@ -230,16 +259,16 @@ export class ArticleDetailsComponent implements OnInit {
   //triggered when radio button access page on footer button clicked
   showFooterButtonModul() {
     console.log('ArticleDetailComponent | showFooterButtonModul');
-    this.vShowFooterButtonModul = true;
-    this.vShowFooterButtonURL = false;
+    this._articleDetailsService.vShowFooterButtonModul = true;
+    this._articleDetailsService.vShowFooterButtonURL = false;
     this._articleDetailsService.resetFootButton(this.getArticleData().foot_button_flg,this.getArticleData().foot_button_content,"");
   }
 
   //triggered when radio button external url on footer button clicked
   showFooterButtonURL() {
     console.log('ArticleDetailComponent | showFooterButtonURL');
-    this.vShowFooterButtonModul = false;
-    this.vShowFooterButtonURL = true;
+    this._articleDetailsService.vShowFooterButtonModul = false;
+    this._articleDetailsService.vShowFooterButtonURL = true;
     this._articleDetailsService.resetFootButton(this.getArticleData().foot_button_flg,this.getArticleData().foot_button_content,"");
   }
 }
