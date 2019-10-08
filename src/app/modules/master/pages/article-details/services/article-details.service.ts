@@ -51,6 +51,16 @@ export class ArticleDetailsService {
 
   vImageRatio = CustomValidation.articleImg.ratio;
 
+  vShowFooterText: boolean = false;
+  vShowFooterTextModul: boolean = false;
+  vShowFooterTextURL: boolean = false;
+  vShowFooterImage: boolean = false;
+  vShowFooterImageModul: boolean = false;
+  vShowFooterImageURL: boolean = false;
+  vShowFooterButton: boolean = false;
+  vShowFooterButtonModul: boolean = false;
+  vShowFooterButtonURL: boolean = false;
+
   constructor(
     private _translateService: TranslateService,
     private _ng2ImgToolsService: Ng2ImgToolsService,
@@ -327,10 +337,10 @@ export class ArticleDetailsService {
     } else if (this.vArticleData.content === undefined || this.vArticleData.content === '') {
       return true;
     } else {
-      if (this.vArticleData.foot_text_flg.length > 0) {
-        if (this.vArticleData.foot_text_content === undefined || this.vArticleData.foot_text_content === '') {
+      if (this.vShowFooterText || this.vArticleData.foot_text_flg) {
+        if (!this.vArticleData.foot_text_content) {
           return true;
-        } else if (this.vArticleData.foot_text_redirect === undefined || this.vArticleData.foot_text_redirect === '') {
+        } else if (!this.vArticleData.foot_text_redirect) {
           return true;
         } else if (!this.vRegexURL.test(this.vArticleData.foot_text_redirect) && this.vArticleData.foot_text_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -339,12 +349,12 @@ export class ArticleDetailsService {
           return true;
         }
       }
-      if (this.vArticleData.foot_image_flg != null) {
-        if (this.vArticleData.foot_image_content === undefined || this.vArticleData.foot_image_content === null) {
+      if (this.vShowFooterImage || this.vArticleData.foot_image_flg) {
+        if (!this.vArticleData.foot_image_content) {
           return true;
-        } else if (this.vErrorMessage.imageFooter != "") {
+        } else if (this.vErrorMessage.imageFooter) {
           return true;
-        } else if (this.vArticleData.foot_image_redirect === undefined || this.vArticleData.foot_image_redirect === '') {
+        } else if (!this.vArticleData.foot_image_redirect) {
           return true;
         } else if (!this.vRegexURL.test(this.vArticleData.foot_image_redirect) && this.vArticleData.foot_image_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -353,10 +363,10 @@ export class ArticleDetailsService {
           return true;
         }
       }
-      if (this.vArticleData.foot_button_flg.length > 0) {
-        if (this.vArticleData.foot_button_content === undefined || this.vArticleData.foot_button_content === '') {
+      if (this.vShowFooterButton || this.vArticleData.foot_button_flg) {
+        if (!this.vArticleData.foot_button_content) {
           return true;
-        } else if (this.vArticleData.foot_button_redirect === undefined || this.vArticleData.foot_button_redirect === '') {
+        } else if (!this.vArticleData.foot_button_redirect) {
           return true;
         } else if (!this.vRegexURL.test(this.vArticleData.foot_button_redirect) && this.vArticleData.foot_button_flg == "ext") {
           this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
