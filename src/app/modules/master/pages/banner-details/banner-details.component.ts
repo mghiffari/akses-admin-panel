@@ -23,17 +23,6 @@ export class BannerDetailsComponent implements OnInit {
   //show detail page
   vShowDetailPage: boolean = false;
 
-  // //footer
-  // vShowFooterText: boolean = false;
-  // vShowFooterTextModul: boolean = false;
-  // vShowFooterTextURL: boolean = false;
-  // vShowFooterImage: boolean = false;
-  // vShowFooterImageModul: boolean = false;
-  // vShowFooterImageURL: boolean = false;
-  // vShowFooterButton: boolean = false;
-  // vShowFooterButtonModul: boolean = false;
-  // vShowFooterButtonURL: boolean = false;
-
   //used for default rich text editor
   tinyMceSettings = constants.tinyMceSettings;
 
