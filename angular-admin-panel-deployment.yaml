@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-admin-panel
+  namespace: production
+  labels:
+    app: fe-admin-panel
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: fe-admin-panel
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: fe-admin-panel
+        tier: frontend
+    spec:
+      containers:
+      - name: fe-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/prod-akses/fe-admin-panel:latest
+        imagePullPolicy: Always
+        resources: 
+          limits:
+            cpu: 150m
+            memory: 1000Mi
+          requests:
+            cpu: 15m
+            memory: 250Mi
+        ports:
+        - containerPort: 80
+          name: fe-admin-panel
+      imagePullSecrets:
+      - name: regsecret
+      restartPolicy: Always
+      hostNetwork: true
