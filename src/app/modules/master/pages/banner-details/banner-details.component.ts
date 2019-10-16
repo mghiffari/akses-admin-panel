@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BannerDetailsService } from './services/banner-details.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { constants } from 'src/app/shared/common/constants';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Component({
   selector: 'app-banner-detail',
@@ -22,19 +23,10 @@ export class BannerDetailsComponent implements OnInit {
   //show detail page
   vShowDetailPage: boolean = false;
 
-  //footer
-  vShowFooterText: boolean = false;
-  vShowFooterTextModul: boolean = false;
-  vShowFooterTextURL: boolean = false;
-  vShowFooterImage: boolean = false;
-  vShowFooterImageModul: boolean = false;
-  vShowFooterImageURL: boolean = false;
-  vShowFooterButton: boolean = false;
-  vShowFooterButtonModul: boolean = false;
-  vShowFooterButtonURL: boolean = false;
-
   //used for default rich text editor
   tinyMceSettings = constants.tinyMceSettings;
+
+  imageRatio = CustomValidation.articleImg.ratio;
 
   constructor(
     private _bannerDetailService: BannerDetailsService,
@@ -44,6 +36,46 @@ export class BannerDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentPage(); 
+  }
+
+  getShowFooterText(){
+    return this.getFooter('vShowFooterText')
+  }
+
+  getShowFooterTextModul(){
+    return this.getFooter('vShowFooterTextModul')
+  }
+
+  getShowFooterTextURL(){
+    return this.getFooter('vShowFooterTextURL')
+  }
+
+  getShowFooterImage(){
+    return this.getFooter('vShowFooterImage')
+  }
+
+  getShowFooterImageModul(){
+    return this.getFooter('vShowFooterImageModul')
+  }
+
+  getShowFooterImageURL(){
+    return this.getFooter('vShowFooterImageURL')
+  }
+
+  getShowFooterButton(){
+    return this.getFooter('vShowFooterButton')
+  }
+
+  getShowFooterButtonModul(){
+    return this.getFooter('vShowFooterButtonModul')
+  }
+
+  getShowFooterButtonURL(){
+    return this.getFooter('vShowFooterButtonURL')
+  }
+
+  getFooter(variableName){
+    return this._bannerDetailService[variableName];
   }
 
   //get current page (create or update)
@@ -112,15 +144,15 @@ export class BannerDetailsComponent implements OnInit {
     this.vClickableChecked = false;
     this.vShowDetailPage = false;
     this.vShowURL = false;
-    this.vShowFooterText = false;
-    this.vShowFooterTextModul = false;
-    this.vShowFooterTextURL = false;
-    this.vShowFooterImage = false;
-    this.vShowFooterImageModul = false;
-    this.vShowFooterImageURL = false;
-    this.vShowFooterButton = false;
-    this.vShowFooterButtonModul = false;
-    this.vShowFooterButtonURL = false;
+    this._bannerDetailService.vShowFooterText = false;
+    this._bannerDetailService.vShowFooterTextModul = false;
+    this._bannerDetailService.vShowFooterTextURL = false;
+    this._bannerDetailService.vShowFooterImage = false;
+    this._bannerDetailService.vShowFooterImageModul = false;
+    this._bannerDetailService.vShowFooterImageURL = false;
+    this._bannerDetailService.vShowFooterButton = false;
+    this._bannerDetailService.vShowFooterButtonModul = false;
+    this._bannerDetailService.vShowFooterButtonURL = false;
     this.vShowExternalURL = false;
     this.vShowModul = false;
   }
@@ -131,15 +163,15 @@ export class BannerDetailsComponent implements OnInit {
     this.vClickableChecked = this.getCreateBannerData().clickable_flg;
     this.vShowDetailPage = this.getCreateBannerData().clickable_is_detail;
     this.vShowURL = this.getCreateBannerData().clickable_flg && !this.getCreateBannerData().clickable_is_detail;
-    this.vShowFooterText = this.getCreateBannerData().foot_text_content != "";
-    this.vShowFooterTextModul = this.getCreateBannerData().foot_text_flg === "int";
-    this.vShowFooterTextURL = this.getCreateBannerData().foot_text_flg == "ext";
-    this.vShowFooterImage = this.getCreateBannerData().foot_image_content != "" && this.getCreateBannerData().foot_image_content !== undefined && this.getCreateBannerData().foot_image_content !== null;
-    this.vShowFooterImageModul = this.getCreateBannerData().foot_image_flg == "int";
-    this.vShowFooterImageURL = this.getCreateBannerData().foot_image_flg == "ext";
-    this.vShowFooterButton = this.getCreateBannerData().foot_button_content != "";
-    this.vShowFooterButtonModul = this.getCreateBannerData().foot_button_flg == "int";
-    this.vShowFooterButtonURL = this.getCreateBannerData().foot_button_flg == "ext";
+    this._bannerDetailService.vShowFooterText = this.getCreateBannerData().foot_text_content != "";
+    this._bannerDetailService.vShowFooterTextModul = this.getCreateBannerData().foot_text_flg === "int";
+    this._bannerDetailService.vShowFooterTextURL = this.getCreateBannerData().foot_text_flg == "ext";
+    this._bannerDetailService.vShowFooterImage = this.getCreateBannerData().foot_image_content != "" && this.getCreateBannerData().foot_image_content !== undefined && this.getCreateBannerData().foot_image_content !== null;
+    this._bannerDetailService.vShowFooterImageModul = this.getCreateBannerData().foot_image_flg == "int";
+    this._bannerDetailService.vShowFooterImageURL = this.getCreateBannerData().foot_image_flg == "ext";
+    this._bannerDetailService.vShowFooterButton = this.getCreateBannerData().foot_button_content != "";
+    this._bannerDetailService.vShowFooterButtonModul = this.getCreateBannerData().foot_button_flg == "int";
+    this._bannerDetailService.vShowFooterButtonURL = this.getCreateBannerData().foot_button_flg == "ext";
     this.vShowExternalURL = this.getCreateBannerData().clickable_flg && !this.getCreateBannerData().clickable_is_internal;
     this.vShowModul = this.getCreateBannerData().clickable_is_internal;
     // console.log("initiate check box: ", this.vClickableChecked, this.vShowDetailPage, this.vShowURL, this.vShowFooterText,
@@ -216,9 +248,9 @@ export class BannerDetailsComponent implements OnInit {
     console.log('BannerDetailComponent | showURL');
     this.vShowURL = true;
     this.vShowDetailPage = false;
-    this.vShowFooterText = false;
-    this.vShowFooterImage = false;
-    this.vShowFooterButton = false;
+    this._bannerDetailService.vShowFooterText = false;
+    this._bannerDetailService.vShowFooterImage = false;
+    this._bannerDetailService.vShowFooterButton = false;
     this._bannerDetailService.getCreateBannerData().clickable_is_detail = false;
     this._bannerDetailService.resetDetailPage("");
     this._bannerDetailService.resetFootText("","","");
@@ -245,37 +277,37 @@ export class BannerDetailsComponent implements OnInit {
   //triggered when check box footer text clicked
   showFooterText() {
     console.log('BannerDetailComponent | showFooterText');
-    this.vShowFooterText = !this.vShowFooterText;
-    if(!this.vShowFooterText) {
-      this.vShowFooterTextURL = false;
-      this.vShowFooterTextModul = false;
+    this._bannerDetailService.vShowFooterText = !this._bannerDetailService.vShowFooterText;
+    if(!this._bannerDetailService.vShowFooterText) {
+      this._bannerDetailService.vShowFooterTextURL = false;
+      this._bannerDetailService.vShowFooterTextModul = false;
       this._bannerDetailService.resetFootText("","","");
     }
   }
 
-  //triggered when radio button akses page on footer text clicked
+  //triggered when radio button adiraku page on footer text clicked
   showFooterTextModul() {
     console.log('BannerDetailComponent | showFooterTextModul');
-    this.vShowFooterTextModul = true;
-    this.vShowFooterTextURL = false;
+    this._bannerDetailService.vShowFooterTextModul = true;
+    this._bannerDetailService.vShowFooterTextURL = false;
     this._bannerDetailService.resetFootText(this.getCreateBannerData().foot_text_flg,this.getCreateBannerData().foot_text_content,"");
   }
   
   //triggered when radio button external url on footer text clicked 
   showFooterTextURL() {
     console.log('BannerDetailComponent | showFooterTextURL')
-    this.vShowFooterTextModul = false;
-    this.vShowFooterTextURL = true;
+    this._bannerDetailService.vShowFooterTextModul = false;
+    this._bannerDetailService.vShowFooterTextURL = true;
     this._bannerDetailService.resetFootText(this.getCreateBannerData().foot_text_flg,this.getCreateBannerData().foot_text_content,"");
   }
 
   //triggered when check box footer image clicked
   showFooterImage() {
     console.log('BannerDetailComponent | showFooterImage');
-    this.vShowFooterImage = !this.vShowFooterImage;
-    if(!this.vShowFooterImage) {
-      this.vShowFooterImageModul = false;
-      this.vShowFooterImageURL = false;
+    this._bannerDetailService.vShowFooterImage = !this._bannerDetailService.vShowFooterImage;
+    if(!this._bannerDetailService.vShowFooterImage) {
+      this._bannerDetailService.vShowFooterImageModul = false;
+      this._bannerDetailService.vShowFooterImageURL = false;
       this._bannerDetailService.resetFootImage(null,"","");
     }
   }
@@ -283,26 +315,26 @@ export class BannerDetailsComponent implements OnInit {
   //triggered when radio button access page on footer image clicked
   showFooterImageModul() {
     console.log('BannerDetailComponent | showFooterImageModul');
-    this.vShowFooterImageModul = true;
-    this.vShowFooterImageURL = false;
+    this._bannerDetailService.vShowFooterImageModul = true;
+    this._bannerDetailService.vShowFooterImageURL = false;
     this._bannerDetailService.resetFootImage(this.getCreateBannerData().foot_image_flg,this.getCreateBannerData().foot_image_content,"");
   }
 
   //triggered when radio button external url on footer image clicked
   showFooterImageURL() {
     console.log('BannerDetailComponent | showFooterImageURL');
-    this.vShowFooterImageModul = false;
-    this.vShowFooterImageURL = true;
+    this._bannerDetailService.vShowFooterImageModul = false;
+    this._bannerDetailService.vShowFooterImageURL = true;
     this._bannerDetailService.resetFootImage(this.getCreateBannerData().foot_image_flg,this.getCreateBannerData().foot_image_content,"");
   }
 
   //triggered when check box footer button clicked
   showFooterButton() {
     console.log('BannerDetailComponent | showFooterButton');
-    this.vShowFooterButton = !this.vShowFooterButton;
-    if(!this.vShowFooterButton) {
-      this.vShowFooterButtonModul = true;
-      this.vShowFooterButtonURL = false;
+    this._bannerDetailService.vShowFooterButton = !this._bannerDetailService.vShowFooterButton;
+    if(!this._bannerDetailService.vShowFooterButton) {
+      this._bannerDetailService.vShowFooterButtonModul = true;
+      this._bannerDetailService.vShowFooterButtonURL = false;
       this._bannerDetailService.resetFootButton("","","");
     }
   }
@@ -310,16 +342,16 @@ export class BannerDetailsComponent implements OnInit {
   //triggered when radio button access page on footer button clicked
   showFooterButtonModul() {
     console.log('BannerDetailComponent | showFooterButtonModul');
-    this.vShowFooterButtonModul = true;
-    this.vShowFooterButtonURL = false;
+    this._bannerDetailService.vShowFooterButtonModul = true;
+    this._bannerDetailService.vShowFooterButtonURL = false;
     this._bannerDetailService.resetFootButton(this.getCreateBannerData().foot_button_flg,this.getCreateBannerData().foot_button_content,"");
   }
 
   //triggered when radio button external url on footer button clicked
   showFooterButtonURL() {
     console.log('BannerDetailComponent | showFooterButtonURL');
-    this.vShowFooterButtonModul = false;
-    this.vShowFooterButtonURL = true;
+    this._bannerDetailService.vShowFooterButtonModul = false;
+    this._bannerDetailService.vShowFooterButtonURL = true;
     this._bannerDetailService.resetFootButton(this.getCreateBannerData().foot_button_flg,this.getCreateBannerData().foot_button_content,"");
   }
 }

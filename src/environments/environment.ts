@@ -13,8 +13,8 @@ export const environment = {
     updateNotification: 'notification'
   },
   enableAdiraEmailValidation: false,
-  version: '1.0.32',
-  versionDate: new Date(2019, 8, 18)
+  version: '1.0.33',
+  versionDate: new Date(2019, 9, 1)
 };
 
 

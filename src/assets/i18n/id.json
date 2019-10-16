@@ -75,7 +75,7 @@
             "errorRequired": "Masukkan Password Baru",
             "errorMinLength": "Jumlah karakter minimum untuk Password Baru adalah {{minLength}}",
             "errorMaxLength": "Jumlah karakter maksimum untuk Password Baru adalah {{maxLength}}",
-            "errorFormat": "Password Baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, dan satu angka",
+            "errorFormat": "Password Baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, satu angka dan satu karakter spesial: #?!@$%^&*-",
             "placeholder": "Password baru"
         },
         "confirmPassword": {
@@ -141,10 +141,10 @@
             "fieldDetailPage": "Detil Halaman",
             "fieldDescBox": "Deskripsi",
             "fieldURL": "Pemilihan URL",
-            "fieldModulAccess": "Halaman Aplikasi Akses",
+            "fieldModulAccess": "Halaman Aplikasi Adiraku",
             "fieldExternalURLAccess": "URL Eksternal",
             "fieldExternalURLAccessPlaceholder": "Masukkan URL di sini",
-            "errorRequired": "Halaman aplikasi Akses atau pemilihan URL wajib diisi"
+            "errorRequired": "Halaman aplikasi Adiraku atau pemilihan URL wajib diisi"
         },
         "addFooterBanner": {
             "fieldTitle": "Tambahkan Footer",
@@ -193,7 +193,9 @@
         "articlePicture": {
             "fieldTitle": "Gambar Artikel",
             "errorRequired": "Gambar Artikel wajib diisi",
-            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload"
+            "errorType": "Hanya format .jpg, .jpeg dan .png yang dapat diupload",
+            "errorRatio": "Hanya rasio {{width}}:{{height}} yang dapat diupload",
+            "hint": "Rasio {{width}}:{{height}} (tipe file: .jpeg / .png )"
         },
         "uniqueTag": {
             "fieldTitle": "Unique Tag",
@@ -544,6 +546,7 @@
             "requestDuration": "Umur Request",
             "oldPhoneNumber": "Nomor HP Lama",
             "newPhoneNumber": "Nomor HP Baru",
+            "contractNo": "Nomor Kontrak",
             "actionsStatus": "Action / Status",
             "remark": "Keterangan"
         },
@@ -577,7 +580,7 @@
             "vaNumber": "Nomor VA",
             "name": "Nama",
             "phNumber": "Nomor Handphone",
-            "aksesPay": "Saldo Akses pay",
+            "adiraPay": "Saldo Adira pay",
             "timestamp": "Timestamp",
             "transCode": "Kode Transaksi",
             "transDesc": "Deskripsi Transaksi",

@@ -47,6 +47,13 @@ export class CustomValidation {
     }
   }
 
+  static articleImg = {
+    ratio: {
+      height: 10,
+      width: 16
+    }
+  }
+
   static offerTitle = {
     maxLength: 80
   }

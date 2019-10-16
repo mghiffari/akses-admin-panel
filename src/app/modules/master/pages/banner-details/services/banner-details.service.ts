@@ -13,6 +13,7 @@ import { LovService } from 'src/app/shared/services/lov.service';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
+import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Injectable()
 export class BannerDetailsService {
@@ -48,6 +49,18 @@ export class BannerDetailsService {
 
   vRegexURL: any = /^(http?|https?|ftp):\/\/([a-zA-Z0-9.-]+(:[a-zA-Z0-9.&%$-]+)*@)*((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}|([a-zA-Z0-9-]+\.)*[a-zA-Z0-9-]+\.(com|edu|gov|int|mil|net|org|biz|arpa|info|name|pro|aero|coop|io|museum|[a-zA-Z]{2}))(:[0-9]+)*(\/($|[a-zA-Z0-9.,?'\\+&%$#=~_-]+))*$/;
   vPrivilege = null
+  vImageRatio = CustomValidation.articleImg.ratio;
+
+  //footer
+  vShowFooterText: boolean = false;
+  vShowFooterTextModul: boolean = false;
+  vShowFooterTextURL: boolean = false;
+  vShowFooterImage: boolean = false;
+  vShowFooterImageModul: boolean = false;
+  vShowFooterImageURL: boolean = false;
+  vShowFooterButton: boolean = false;
+  vShowFooterButtonModul: boolean = false;
+  vShowFooterButtonURL: boolean = false;
 
   constructor(
     private _ng2ImgToolsService: Ng2ImgToolsService,
@@ -253,7 +266,6 @@ export class BannerDetailsService {
   //used to disable save button
   isDisableCreateBanner() {
     console.log('BannerDetailService | isDisableCreateBanner');
-    this.resetErrorMessage();
     if (this.vBannerData.title === undefined || this.vBannerData.title === '') {
       return true;
     } else if (this.vBannerData.banner === undefined || this.vBannerData.banner === null) {
@@ -267,13 +279,13 @@ export class BannerDetailsService {
     } else if (this.vBannerData.end_date === undefined || this.vBannerData.end_date === '') {
       return true;
     } else if (this.vBannerData.clickable_flg) {
-      if (this.vBannerData.clickable_is_detail === undefined || this.vBannerData.clickable_is_detail === null) {
+      if (!this.vBannerData.clickable_is_detail && !this.vBannerData.clickable_is_internal) {
         return true;
       } else {
         if (!this.vBannerData.clickable_is_detail) {
-          if (this.vBannerData.clickable_is_internal === undefined || this.vBannerData.clickable_is_internal === null) {
+          if (!this.vBannerData.clickable_is_internal) {
             return true;
-          } else if (this.vBannerData.clickable_redirect === undefined || this.vBannerData.clickable_redirect === '') {
+          } else if (!this.vBannerData.clickable_redirect) {
             return true;
           } else if (!this.vRegexURL.test(this.vBannerData.clickable_redirect) && !this.vBannerData.clickable_is_internal) {
             this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -283,14 +295,14 @@ export class BannerDetailsService {
           }
           this.resetErrorMessage();
           return false;
-        } else if (this.vBannerData.clickable_is_detail) {
-          if (this.vBannerData.description === undefined || this.vBannerData.description === '') {
+        } else {
+          if (!this.vBannerData.description) {
             return true;
           }
-          if (this.vBannerData.foot_text_flg.length > 0) {
-            if (this.vBannerData.foot_text_content === undefined || this.vBannerData.foot_text_content === '') {
+          if (this.vShowFooterText || this.vBannerData.foot_text_flg) {
+            if (!this.vBannerData.foot_text_content) {
               return true;
-            } else if (this.vBannerData.foot_text_redirect === undefined || this.vBannerData.foot_text_redirect === '') {
+            } else if (!this.vBannerData.foot_text_redirect) {
               return true;
             } else if (!this.vRegexURL.test(this.vBannerData.foot_text_redirect) && this.vBannerData.foot_text_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -299,12 +311,12 @@ export class BannerDetailsService {
               return true;
             }
           }
-          if (this.vBannerData.foot_image_flg != null) {
-            if (this.vBannerData.foot_image_content === undefined || this.vBannerData.foot_image_content === null) {
+          if (this.vShowFooterImage || this.vBannerData.foot_image_flg) {
+            if (!this.vBannerData.foot_image_content) {
               return true;
-            } else if (this.vErrorMessage.imageFooter != "") {
+            } else if (this.vErrorMessage.imageFooter) {
               return true;
-            } else if (this.vBannerData.foot_image_redirect === undefined || this.vBannerData.foot_image_redirect === '') {
+            } else if (!this.vBannerData.foot_image_redirect) {
               return true;
             } else if (!this.vRegexURL.test(this.vBannerData.foot_image_redirect) && this.vBannerData.foot_image_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -313,10 +325,10 @@ export class BannerDetailsService {
               return true;
             }
           }
-          if (this.vBannerData.foot_button_flg.length > 0) {
-            if (this.vBannerData.foot_button_content === undefined || this.vBannerData.foot_button_content === '') {
+          if (this.vShowFooterButton || this.vBannerData.foot_button_flg) {
+            if (!this.vBannerData.foot_button_content) {
               return true;
-            } else if (this.vBannerData.foot_button_redirect === undefined || this.vBannerData.foot_button_redirect === '') {
+            } else if (!this.vBannerData.foot_button_redirect) {
               return true;
             } else if (!this.vRegexURL.test(this.vBannerData.foot_button_redirect) && this.vBannerData.foot_button_flg == "ext") {
               this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
@@ -444,12 +456,21 @@ export class BannerDetailsService {
     console.log('BannerDetailService | previewImage');
     var image: File = null;
     image = files;
-    this.resetErrorMessage();
     if (files.length === 0)
       return;
-    var mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this._translateService.get('forms.homeBanner.errorType').subscribe(res => {
+    let types = ['jpeg', 'jpg', 'png']
+    let errorType = false
+    let splits = files[0].name.split('.');
+    if (splits.length > 1) {
+      let ext = splits[splits.length - 1].trim();
+      if (!types.includes(ext)) {
+        errorType = true;
+      }
+    } else {
+      errorType = true;
+    }
+    if (errorType) {
+      this._translateService.get('forms.articlePicture.errorType').subscribe(res => {
         if (component === "banner") {
           this.vErrorMessage.imageBanner = res;
         } else {
@@ -462,25 +483,33 @@ export class BannerDetailsService {
     reader.onload = (_event) => {
       var img = new Image();
       img.src = reader.result.toString();
-      //DON'T ERASE I STILL NEED FOR IMAGE VALIDATION
-      // img.onload = (_event) => {
-      //   if(img.height/10*16 != img.width) {
-      //     this._translateService.get('forms.homeBanner.errorRatio').subscribe(res => {
-      //       if(component === "banner") {
-      //         this.vErrorMessage.imageBanner = res;
-      //       } else {
-      //         this.vErrorMessage.imageFooter = res;
-      //       }
-      //     });
-      //     return;
-      //   }
-      // }
       if (component === "banner") {
+        // Validate the File Height and Width.
         this.vBannerData.banner = img.src;
+        img.onload = () => {
+          try {
+            const height = img.height;
+            const width = img.width;
+            const ratioHeight = this.vImageRatio.height
+            const ratioWidth = this.vImageRatio.width
+            if (width / ratioWidth !== height / ratioHeight) {
+              this._translateService.get('forms.articlePicture.errorRatio', { width: ratioWidth, height: ratioHeight })
+                .subscribe(res => {
+                  this.vErrorMessage.imageBanner = res;
+                });
+            } else {
+              this.vErrorMessage.imageBanner = '';
+              this.compressImage(component, image[0]);
+            }        
+          } catch (error) {
+            console.error(error)
+          }
+        };
       } else {
+        this.vErrorMessage.imageFooter = ''
         this.vBannerData.foot_image_content = img.src;
+        this.compressImage(component, image[0]);
       }
-      this.compressImage(component, image[0]);
     }
     reader.readAsDataURL(files[0]);
   }
