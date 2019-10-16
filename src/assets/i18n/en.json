@@ -75,7 +75,7 @@
             "errorRequired": "New Password is required",
             "errorMinLength": "Min. length of New Password is {{minLength}}",
             "errorMaxLength": "Max. length of New Password is {{maxLength}}",
-            "errorFormat": "New Password should contain at least one uppercase one lowercase and one number",
+            "errorFormat": "New Password should contain at least one uppercase one lowercase, one number, and one special character: #?!@$%^&*-",
             "placeholder": "New password"
         },
         "confirmPassword": {
