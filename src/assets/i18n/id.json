@@ -75,7 +75,7 @@
             "errorRequired": "Masukkan Password Baru",
             "errorMinLength": "Jumlah karakter minimum untuk Password Baru adalah {{minLength}}",
             "errorMaxLength": "Jumlah karakter maksimum untuk Password Baru adalah {{maxLength}}",
-            "errorFormat": "Password Baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, dan satu angka",
+            "errorFormat": "Password Baru wajib mengandung minimal satu huruf kapital, satu huruf kecil, satu angka dan satu karakter spesial: #?!@$%^&*-",
             "placeholder": "Password baru"
         },
         "confirmPassword": {
