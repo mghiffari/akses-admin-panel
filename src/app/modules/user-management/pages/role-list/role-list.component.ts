@@ -389,6 +389,8 @@ export class RoleListComponent implements OnInit {
       } else {
         select()
       }
+    } else if (afterSelect) {
+      afterSelect()
     }
   }
 
