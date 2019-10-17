@@ -524,7 +524,9 @@ export class RoleListComponent implements OnInit {
             edit: new FormControl(false),
             delete: new FormControl(false),
             publish: new FormControl(false),
-            download: new FormControl(false)
+            download: new FormControl(false),
+            unique_tag: new FormControl(feature.unique_tag),
+
           }))
         })
         formArray.push(new FormGroup({
