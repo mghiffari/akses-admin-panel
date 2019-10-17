@@ -108,15 +108,17 @@ export class BalanceReportComponent implements OnInit {
       error => {
         try {
             console.table(error);
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'balanceReport.loadFailed',
-                content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+            if(!error.error || !error.error.err_code || error.error.err_code != '07078') {
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'balanceReport.loadFailed',
+                  content: {
+                    text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
                 }
-              }
-            });
+              });
+            }
             this.balanceData = [];
             this.transData = [];
             this.loading = false;
