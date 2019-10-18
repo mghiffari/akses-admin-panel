@@ -45,7 +45,6 @@ export class BalanceReportComponent implements OnInit {
   search: string;
   locale = 'id';
   loading = false;
-  searchValidation = CustomValidation.transactionSearch;
   isFocusedInput = false;
 
   private balanceTable: any;
@@ -144,7 +143,13 @@ export class BalanceReportComponent implements OnInit {
     if(event){
       this.search === event.target.value
     } 
-    return this.search !== undefined && this.search !== null && this.search !== '' && (this.search.length >= this.searchValidation.minLength);
+    if(this.search !== undefined && this.search !== null && this.search !== ''){
+      return true;
+    } else {
+      this.balanceData = [];
+      this.transData = [];
+      return false;
+    }
   }
 
 }
