@@ -91,14 +91,14 @@
     <div fxFlex="70%" fxFlex.lt-lg="60%" fxFlex.lt-md="100%" fxLayout="column">
       <div fxLayout="row wrap" fxLayoutAlign="start end" [style.min-height]="createBtn.offsetHeight + 'px'">
         <div class="padding-bottom-8 padding-left-10">
-          <mat-checkbox color="primary" [checked]="isCheckedAllFeature()" [indeterminate]="isIndeterminateAllFeature()" (change)="checkedAllFeature($event)">
+          <mat-checkbox color="primary" *ngIf="!loading" [checked]="isCheckedAllFeature()" [indeterminate]="isIndeterminateAllFeature()" (change)="checkedAllFeature($event)">
             {{'forms.privilege.selectAll' | translate}}
           </mat-checkbox>
         </div>
       </div>
       <div fxFlex="grow" class="border-gray position-relative" fxLayoutAlign="center center">
         <div class="table-wrapper">
-          <mat-accordion displayMode="flat">
+          <mat-accordion displayMode="flat" *ngIf="!loading">
             <mat-expansion-panel *ngFor="let element of getPrivilegesFormArray()?.controls" style="width: 100%">
               <mat-expansion-panel-header>
                 <mat-checkbox color="primary" [checked]="isCheckedAllPrvg(element)"
