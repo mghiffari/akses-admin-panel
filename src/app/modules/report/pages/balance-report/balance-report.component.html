@@ -13,9 +13,6 @@
             (blur)="isFocusedInput = false" (keyup)="isSearchValid($event) && onSearch()">
           <mat-icon matSuffix [class.search-disabled]="!isSearchValid()">search</mat-icon>
         </mat-form-field>
-        <mat-hint class="bottom-hint no-padding">
-          {{'forms.transactionSearch.hint' | translate : searchValidation}}
-        </mat-hint>
       </div>
     </div>
   </div>

@@ -50,7 +50,6 @@ export class TransReportComponent implements OnInit {
   isFocusedSearch = false;
   allowDownload = false;
   filterForm: FormGroup;
-  searchValidation = CustomValidation.transactionSearch;
   now = new Date();
 
   private table: any;
@@ -111,7 +110,7 @@ export class TransReportComponent implements OnInit {
       this.filterForm = new FormGroup({
         startDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
         endDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
-        search: new FormControl('', [Validators.required, Validators.minLength(this.searchValidation.minLength)])
+        search: new FormControl('', Validators.required)
       }, {
           validators: CustomValidation.dateRangeValidaton
         })
