@@ -143,7 +143,13 @@ export class BalanceReportComponent implements OnInit {
     if(event){
       this.search === event.target.value
     } 
-    return this.search !== undefined && this.search !== null && this.search !== '';
+    if(this.search !== undefined && this.search !== null && this.search !== ''){
+      return true;
+    } else {
+      this.balanceData = [];
+      this.transData = [];
+      return false;
+    }
   }
 
 }
