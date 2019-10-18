@@ -56,15 +56,9 @@
             placeholder="{{'forms.transactionSearch.placeholder' | translate}}"
             (focus)="isFocusedSearch = true" (blur)="isFocusedSearch = false">
         </mat-form-field>
-        <mat-error class="bottom-error" *ngIf="search.invalid && (filterForm.dirty || filterForm.touched); else searchHint">
+        <mat-error class="bottom-error" *ngIf="search.invalid && (filterForm.dirty || filterForm.touched)">
             <span *ngIf="search.errors.required">{{'forms.transactionSearch.errorRequired' | translate}}</span>
-            <span *ngIf="search.errors.minlength">{{'forms.transactionSearch.hint' | translate: searchValidation}}</span>
         </mat-error>
-        <ng-template #searchHint>
-          <mat-hint class="bottom-hint">
-            {{'forms.transactionSearch.hint' | translate : searchValidation}}
-          </mat-hint>
-        </ng-template>
       </div>
 
     </div>
