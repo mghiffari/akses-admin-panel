@@ -45,7 +45,6 @@ export class BalanceReportComponent implements OnInit {
   search: string;
   locale = 'id';
   loading = false;
-  searchValidation = CustomValidation.transactionSearch;
   isFocusedInput = false;
 
   private balanceTable: any;
@@ -108,15 +107,17 @@ export class BalanceReportComponent implements OnInit {
       error => {
         try {
             console.table(error);
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'balanceReport.loadFailed',
-                content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
+            if(!error.error || !error.error.err_code || error.error.err_code != '07078') {
+              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+                data: {
+                  title: 'balanceReport.loadFailed',
+                  content: {
+                    text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
+                    data: null
+                  }
                 }
-              }
-            });
+              });
+            }
             this.balanceData = [];
             this.transData = [];
             this.loading = false;
@@ -142,7 +143,13 @@ export class BalanceReportComponent implements OnInit {
     if(event){
       this.search === event.target.value
     } 
-    return this.search !== undefined && this.search !== null && this.search !== '' && (this.search.length >= this.searchValidation.minLength);
+    if(this.search !== undefined && this.search !== null && this.search !== ''){
+      return true;
+    } else {
+      this.balanceData = [];
+      this.transData = [];
+      return false;
+    }
   }
 
 }

@@ -81,10 +81,6 @@ export class CustomValidation {
     maxLength: 300
   }
 
-  static transactionSearch = {
-    minLength: 8
-  }
-
   static gamificationSampleSize = {
     minValue: 1
   }
