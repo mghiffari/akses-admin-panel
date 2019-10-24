@@ -44,7 +44,6 @@ export class BalanceReportComponent implements OnInit {
   search: string;
   locale = 'id';
   loading = false;
-  searchValidation = CustomValidation.transactionSearch;
   isFocusedInput = false;
 
   private balanceTable: any;
@@ -109,7 +108,9 @@ export class BalanceReportComponent implements OnInit {
         this.loading = false;
         this.balanceData = [];
         this.transData = [];
-        this.authService.handleApiError('balanceReport.loadFailed', error)
+        if (!error.error || !error.error.err_code || error.error.err_code != '07078') {
+          this.authService.handleApiError('balanceReport.loadFailed', error)
+        }
       }
     ).add(() => {
       if (this.searchInput && isFocusedInput) {
@@ -126,7 +127,13 @@ export class BalanceReportComponent implements OnInit {
     if (event) {
       this.search = event.target.value
     }
-    return this.search !== undefined && this.search !== null && this.search !== '' && (this.search.length >= this.searchValidation.minLength);
+    if (this.search !== undefined && this.search !== null && this.search !== '') {
+      return true;
+    } else {
+      this.balanceData = [];
+      this.transData = [];
+      return false;
+    }
   }
 
 }
