@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { BranchService } from '../../services/branch.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { constants } from 'src/app/shared/common/constants';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-branch-upload-modal',
@@ -30,7 +30,8 @@ export class BranchUploadModalComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackBar: MatSnackBar,
     private branchService: BranchService,
-    private fileService: FileManagementService) {
+    private fileService: FileManagementService,
+    private authService: AuthService) {
     dialogRef.disableClose = true;
   }
 
@@ -76,22 +77,16 @@ export class BranchUploadModalComponent implements OnInit {
               let failedCount = response.data.insert_failed.length
               let successCount = response.data.insert_success.length
               if (failedCount && failedCount > 0) {
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'uploadCSVModal.uploadFailed',
-                    content: {
-                      text: 'uploadCSVModal.totalFailed',
-                      data: {
-                        totalFailed: failedCount
-                      }
-                    }
-                  }
+                this.authService.openSnackbarError('uploadCSVModal.uploadFailed'
+                , 'uploadCSVModal.totalFailed'
+                , {
+                  totalFailed: failedCount
                 })
                 if (successCount > 0) {
                   this.dialogRef.close(true)
                 }
               } else {
-                let successSnackbar = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
                   data: {
                     title: 'success',
                     content: {
@@ -106,32 +101,14 @@ export class BranchUploadModalComponent implements OnInit {
             }
           },
           error => {
-            try {
               console.table(error);
               this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'uploadCSVModal.uploadFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet')
-                  }
-                }
-              })
-            } catch (error) {
-              console.table(error)
-            }
+              this.authService.handleApiError('uploadCSVModal.uploadFailed', error)
           })
       }, error => {
         console.error(error)
         this.onSubmittingForm = false;
-        this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-          data: {
-            title: 'uploadCSVModal.uploadFailed',
-            content: {
-              text: 'failedToProcessFile'
-            }
-          }
-        })
+        this.authService.openSnackbarError('uploadCSVModal.uploadFailed', 'failedToProcessFile')
       }
     )
   }

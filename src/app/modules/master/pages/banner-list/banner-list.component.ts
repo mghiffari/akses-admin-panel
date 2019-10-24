@@ -3,7 +3,6 @@ import { BannerService } from '../../services/banner.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { Banner } from '../../models/banner';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
@@ -14,8 +13,8 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: []
 })
 export class BannerListComponent implements OnInit {
-  paginatorProps = { ...constants.paginatorProps};
-  
+  paginatorProps = { ...constants.paginatorProps };
+
   orderObject = {};
   today = new Date();
 
@@ -62,7 +61,7 @@ export class BannerListComponent implements OnInit {
     this.allowEdit = false;
     this.allowDelete = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.banner)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.lazyLoadData()
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
@@ -73,9 +72,9 @@ export class BannerListComponent implements OnInit {
   }
 
   //delete
-  onDelete(banner){
+  onDelete(banner) {
     console.log("BannerListComponent | onDelete")
-    if(this.allowDelete){
+    if (this.allowDelete) {
       const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -89,7 +88,7 @@ export class BannerListComponent implements OnInit {
         }
       })
       modalRef.afterClosed().subscribe(result => {
-        if(result){
+        if (result) {
           this.loading = true;
           let bannerDel: Banner = Object.assign(new Banner(), banner);
           bannerDel.is_deleted = true;
@@ -106,27 +105,15 @@ export class BannerListComponent implements OnInit {
                     }
                   }
                 })
-                this.lazyLoadData()              
+                this.lazyLoadData()
               } catch (error) {
                 console.table(error)
               }
             },
             error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'failedToDelete',
-                    content: {
-                      text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })              
-              } catch (error) {
-                console.table(error)
-              }
+              console.table(error);
+              this.loading = false;
+              this.authService.handleApiError('failedToDelete', error);
             }
           )
         }
@@ -155,7 +142,7 @@ export class BannerListComponent implements OnInit {
   }
 
   // event handling when sorting change
-  onSortChange(e){
+  onSortChange(e) {
     console.log('BannerListComponent | onPaginatorChange');
     this.orderObject = e;
     this.onSearch();
@@ -174,7 +161,7 @@ export class BannerListComponent implements OnInit {
       this.search,
       this.orderObject).subscribe(
         (data: any) => {
-          try {            
+          try {
             console.table(data);
             this.banners = data.data;
             this.paginatorProps.length = data.count;
@@ -183,25 +170,17 @@ export class BannerListComponent implements OnInit {
             this.banners = [];
             this.paginatorProps.length = 0;
             this.paginatorProps.pageIndex = 0;
-          } 
+          }
         },
         error => {
-          try {            
+          try {
             console.table(error);
             this.banners = [];
             this.paginatorProps.length = 0;
             this.paginatorProps.pageIndex = 0;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'bannerListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('bannerListScreen.loadFailed', error);
           } catch (error) {
-            console.log(error)
+            console.error(error)
           }
         }
       ).add(
@@ -210,7 +189,7 @@ export class BannerListComponent implements OnInit {
             this.table.renderRows();
           }
           this.loading = false;
-          if ( this.searchInput && isFocusedInput){
+          if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
               this.searchInput.nativeElement.focus();
             });
@@ -220,7 +199,7 @@ export class BannerListComponent implements OnInit {
   }
 
   //check if banner active based on start date and end date
-  isActiveBanner(startDt, endDt){
+  isActiveBanner(startDt, endDt) {
     console.log('BannerListComponent | isActiveBanner');
     let startDate = new Date(startDt);
     let endDate = new Date(endDt);

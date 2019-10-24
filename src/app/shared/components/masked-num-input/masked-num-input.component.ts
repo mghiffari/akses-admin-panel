@@ -140,9 +140,9 @@ export class MaskedNumInputComponent implements ControlValueAccessor, OnInit {
           let floatingDigit = arrayNum[1];
           if(floatingDigit.length <= 2){
             let trailingZeros = '00'
-            result = arrayNum[0] + floatingDigit + trailingZeros.slice(0, 2-floatingDigit.length)
+            result = integerDigit + floatingDigit + trailingZeros.slice(0, 2-floatingDigit.length)
           } else {
-            result = arrayNum[0] + floatingDigit.substring(0, 2) + '.' 
+            result = integerDigit + floatingDigit.substring(0, 2) + '.' 
               + floatingDigit.substring(2, floatingDigit.length)
           }
         } else {

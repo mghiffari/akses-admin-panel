@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { FileManagementService } from 'src/app/shared/services/file-management.service';
 import { Ng2ImgToolsService } from 'ng2-img-tools';
@@ -248,22 +247,12 @@ export class SpecialOfferDetailsComponent implements OnInit {
                               console.table(error)
                             }
                           }, error => {
-                            try {
-                              console.table(error);
-                              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                                data: {
-                                  title: 'specialOfferDetailsScreen.getOfferFailed',
-                                  content: {
-                                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                                    data: null
-                                  }
-                                }
-                              })
+                            console.table(error);
+                            let errorSnackbar = this.authService.handleApiError('specialOfferDetailsScreen.getOfferFailed', error)
+                            if (errorSnackbar) {
                               errorSnackbar.afterDismissed().subscribe(() => {
                                 this.goToListScreen()
                               })
-                            } catch (error) {
-                              console.log(error)
                             }
                           }
                         ).add(() => {
@@ -283,23 +272,13 @@ export class SpecialOfferDetailsComponent implements OnInit {
                   }
 
                 }, error => {
-                  try {
-                    console.table(error);
-                    this.loading = false
-                    let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                      data: {
-                        title: 'specialOfferDetailsScreen.getFileListFailed',
-                        content: {
-                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                          data: null
-                        }
-                      }
-                    })
+                  console.table(error);
+                  this.loading = false;
+                  let errorSnackbar = this.authService.handleApiError('specialOfferDetailsScreen.getFileListFailed', error)
+                  if (errorSnackbar) {
                     errorSnackbar.afterDismissed().subscribe(() => {
                       this.goToListScreen()
                     })
-                  } catch (error) {
-                    console.log(error)
                   }
                 }
               )
@@ -308,23 +287,13 @@ export class SpecialOfferDetailsComponent implements OnInit {
               this.loading = false
             }
           }, error => {
-            try {
-              console.table(error);
-              this.loading = false
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'specialOfferDetailsScreen.getCategoryFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
+            console.table(error);
+            this.loading = false
+            let errorSnackbar = this.authService.handleApiError('specialOfferDetailsScreen.getCategoryFailed', error)
+            if (errorSnackbar) {
               errorSnackbar.afterDismissed().subscribe(() => {
                 this.goToListScreen()
               })
-            } catch (error) {
-              console.log(error)
             }
           }
         )
@@ -335,12 +304,12 @@ export class SpecialOfferDetailsComponent implements OnInit {
   }
 
   // Method to handle filter search text for file list
-  handleChangeFilterText(){
+  handleChangeFilterText() {
     console.log("SpecialOfferDetailsComponent | handleChangeFilterText");
     this.searchFileKeyword.valueChanges.subscribe(value => {
       if (value) {
         this.filteredFileList = [];
-        this.fileList.map((file) => {
+        this.fileList.forEach((file) => {
           if (file.name.toLowerCase().includes(value.toLowerCase())) {
             this.filteredFileList.push(file);
           }
@@ -356,31 +325,31 @@ export class SpecialOfferDetailsComponent implements OnInit {
     console.log('SpecialOfferDetailsComponent | handleCategoryChange')
     this.category.valueChanges.pipe(startWith(null), pairwise()).subscribe((
       [prev, next]) => {
-        const formValue = this.offerForm.getRawValue()
-        let recipient = formValue.recipient
-        let csvFile = formValue.csvFile
-        if (this.isSelectedCategoryMPL()) {
-          this.recipient.setValidators(Validators.required)
-          this.csvFile.setValidators([CustomValidation.type('csv')]);
+      const formValue = this.offerForm.getRawValue()
+      let recipient = formValue.recipient
+      let csvFile = formValue.csvFile
+      if (this.isSelectedCategoryMPL()) {
+        this.recipient.setValidators(Validators.required)
+        this.csvFile.setValidators([CustomValidation.type('csv')]);
+        csvFile = null
+        recipient = ''
+      } else {
+        this.recipient.clearValidators()
+        this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')]);
+        if (prev.toLowerCase().includes(constants.specialOfferCategory.mpl)) {
+          this.recipient.setValue('')
           csvFile = null
-          recipient = ''
-        } else {
-          this.recipient.clearValidators()
-          this.csvFile.setValidators([Validators.required, CustomValidation.type('csv')]);
-          if (prev.toLowerCase().includes(constants.specialOfferCategory.mpl)) {
-            this.recipient.setValue('')
-            csvFile = null
-          }
         }
-        this.filteredFileList = this.fileList
-        this.offerForm.patchValue({
-          csvFile: csvFile,
-          recipient: recipient,
-          searchFileKeyword: ''
-        })
-      }, error => {
-        console.error(error)
+      }
+      this.filteredFileList = this.fileList
+      this.offerForm.patchValue({
+        csvFile: csvFile,
+        recipient: recipient,
+        searchFileKeyword: ''
       })
+    }, error => {
+      console.error(error)
+    })
   }
 
   // check is selected category is mpl
@@ -540,9 +509,8 @@ export class SpecialOfferDetailsComponent implements OnInit {
           offer.terms_and_conditions = formValue.termsAndConds;
           offer.instructions = formValue.instructions;
           offer.end_date = endDate;
-          offer.category = formValue.category
-          offer.status = this.approvalStatus.waitingForApproval
-          offer.status = this.approvalStatus.waitingForApproval
+          offer.category = formValue.category;
+          offer.status = this.approvalStatus.waitingForApproval;
           offer.status_by = null
           offer.status_dt = null
           if (this.isSelectedCategoryMPL()) {
@@ -576,15 +544,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                   }, error => {
                     console.table(error)
                     this.onSubmittingForm = false
-                    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                      data: {
-                        title: 'specialOfferDetailsScreen.uploadImageFailed',
-                        content: {
-                          text: 'error',
-                          data: null
-                        }
-                      }
-                    })
+                    this.authService.openSnackbarError('specialOfferDetailsScreen.uploadImageFailed', 'error')
                   }
                 )
               } catch (error) {
@@ -592,20 +552,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
                 this.onSubmittingForm = false;
               }
             }, error => {
-              try {
-                this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadImageFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.error(error)
-              }
+              this.handleSubmitError('specialOfferDetailsScreen.uploadImageFailed', error);
             }
           )
         }
@@ -631,15 +578,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
               this.insertOffer(offer);
             }, error => {
               this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'specialOfferDetailsScreen.uploadImageFailed',
-                  content: {
-                    text: 'error',
-                    data: null
-                  }
-                }
-              })
+              this.authService.openSnackbarError('specialOfferDetailsScreen.uploadImageFailed', 'error')
             }
           )
         } catch (error) {
@@ -647,20 +586,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
           this.onSubmittingForm = false
         }
       }, error => {
-        try {
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'specialOfferDetailsScreen.uploadImageFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.error(error)
-        }
+        this.handleSubmitError('specialOfferDetailsScreen.uploadImageFailed', error);
       }
     )
   }
@@ -678,35 +604,9 @@ export class SpecialOfferDetailsComponent implements OnInit {
       console.table(imgUrlRes)
       console.table(csvUrlRes)
       if (imgUrlRes instanceof HttpErrorResponse) {
-        try {
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'specialOfferDetailsScreen.uploadImageFailed',
-              content: {
-                text: 'apiErrors.' + (imgUrlRes.status ? imgUrlRes.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.error(error)
-        }
+        this.handleSubmitError('specialOfferDetailsScreen.uploadImageFailed', imgUrlRes)
       } else if (csvUrlRes instanceof HttpErrorResponse) {
-        try {
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'specialOfferDetailsScreen.uploadCSVFailed',
-              content: {
-                text: 'apiErrors.' + (csvUrlRes.status ? csvUrlRes.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.error(error)
-        }
+        this.handleSubmitError('specialOfferDetailsScreen.uploadCSVFailed', csvUrlRes)
       } else {
         try {
           let imgUploadUrl = imgUrlRes.data.signurl
@@ -723,26 +623,10 @@ export class SpecialOfferDetailsComponent implements OnInit {
               console.table(csvResponse)
               if (imageResponse instanceof HttpErrorResponse) {
                 this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadImageFailed',
-                    content: {
-                      text: 'error',
-                      data: null
-                    }
-                  }
-                })
+                this.authService.openSnackbarError('specialOfferDetailsScreen.uploadImageFailed', 'error')
               } else if (csvResponse instanceof HttpErrorResponse) {
                 this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'specialOfferDetailsScreen.uploadCSVFailed',
-                    content: {
-                      text: 'error',
-                      data: null
-                    }
-                  }
-                })
+                this.authService.openSnackbarError('specialOfferDetailsScreen.uploadCSVFailed', 'error')
               } else {
                 offer.url = csvUploadUrl.split('?')[0];
                 offer.sp_offer_image = imgUploadUrl.split('?')[0];
@@ -779,21 +663,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
           this.goToListScreen()
         })
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'specialOfferDetailsScreen.createFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleSubmitError('specialOfferDetailsScreen.createFailed', error)
       }
     )
   }
@@ -821,21 +691,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
           })
         }
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'specialOfferDetailsScreen.updateFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleSubmitError('specialOfferDetailsScreen.updateFailed', error);
       }
     )
   }
@@ -869,21 +725,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
           this.goToListScreen();
         })
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'specialOfferDetailsScreen.deleteIconFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleSubmitError('specialOfferDetailsScreen.deleteIconFailed', error);
       }
     )
   }
@@ -892,38 +734,23 @@ export class SpecialOfferDetailsComponent implements OnInit {
   showFormError() {
     console.log('NotificationDetailsComponent | showFormError')
     let errorText = '';
-    let data = null;
     if (this.offerForm.errors.endDateRequired) {
       errorText = 'forms.endDate.errorRequired';
     } else if (this.offerForm.errors.endDateMin) {
       errorText = 'forms.endDate.errorMin';
     }
-    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'invalidForm',
-        content: {
-          text: errorText,
-          data: data
-        }
-      }
-    })
+    this.authService.openSnackbarError('invalidForm', errorText)
   }
 
   // show error if to be edited offer data is not valid eq: end date <= 1 hr
   editOfferError(errorText) {
     console.log('SpecialOfferDetailsComponent | editOfferError')
-    let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'error',
-        content: {
-          text: errorText,
-          data: null
-        }
-      }
-    })
-    errorSnackbar.afterDismissed().subscribe(() => {
-      this.goToListScreen();
-    })
+    let errorSnackbar = this.authService.openSnackbarError('error', errorText);
+    if (errorSnackbar) {
+      errorSnackbar.afterDismissed().subscribe(() => {
+        this.goToListScreen();
+      })
+    }
   }
 
   //return now datetime with second and ms set to 0
@@ -941,4 +768,11 @@ export class SpecialOfferDetailsComponent implements OnInit {
     this.router.navigate(['/master/special-offers'])
   }
 
+  // handle stop loading and show error snackbar on api error
+  handleSubmitError(errorTitle, apiError) {
+    console.log('SpecialOfferDetailsComponent | handleSubmitError')
+    console.table(apiError)
+    this.onSubmittingForm = false;
+    this.authService.handleApiError(errorTitle, apiError);
+  }
 }

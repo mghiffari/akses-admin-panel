@@ -8,7 +8,6 @@ import { Auth } from 'src/app/shared/models/auth';
 import { ChangePassword } from 'src/app/shared/models/change-password';
 import { UserLoggedIn } from 'src/app/shared/models/user-logged-in';
 import { AccountService } from 'src/app/shared/services/account.service';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
@@ -122,10 +121,10 @@ export class LoginComponent implements OnInit {
 
           if (error.status && error.error.err_code === '01005' || error.error.err_code === '01003') {
             ++this.wrongPasswordCount;
-            if(error.error.counter) {
+            if (error.error.counter) {
               this.loginAttemptCount = error.error.counter;
               this.loginAttempLeft = constants.loginMaxAttempt - this.loginAttemptCount;
-            }else {
+            } else {
               this.loginAttemptCount = 0;
               this.loginAttempLeft = null;
             }
@@ -136,16 +135,9 @@ export class LoginComponent implements OnInit {
             this.recaptcha.setValidators([Validators.required, CustomValidation.equal(this.captchaCode)])
             this.recaptcha.setValue('')
           }
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'loginScreen.loginFailed',
-              content: {
-                text: "apiErrors." + (error.status ? error.error.err_code : 'noInternet')
-              }
-            }
-          })
+          this.authService.handleApiError('loginScreen.loginFailed', error);
         } catch (error) {
-          console.table(error)
+          console.error(error)
         }
       }
     )
@@ -222,18 +214,10 @@ export class LoginComponent implements OnInit {
             console.table(error);
             this.onSubmittingForm = false;
             this.changePasswordForm.reset();
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'changePasswordScreen.failed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('changePasswordScreen.failed', error)
             this.accessToken = error.headers.get('access-token') ? error.headers.get('access-token') : this.accessToken;
           } catch (error) {
-            console.table(error)
+            console.error(error)
           }
         }
       )
@@ -258,21 +242,9 @@ export class LoginComponent implements OnInit {
         })
       },
       error => {
-        try {
-          console.table(error);
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'loginScreen.passwordSendFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        console.table(error);
+        this.onSubmittingForm = false;
+        this.authService.handleApiError('loginScreen.passwordSendFailed', error)
       }
     )
 
@@ -335,7 +307,7 @@ export class LoginComponent implements OnInit {
     let midChar = captcha.length / 2
     let midCharRoundDown = Math.floor(midChar)
     let midCharRoundUp = Math.ceil(midChar)
-    let min = captcha.length % 2 !== 0 ? 1 : 0
+
     for (let i = 0; i < captcha.length; i++) {
       let x = 0;
       if (i < midChar) {
@@ -343,10 +315,8 @@ export class LoginComponent implements OnInit {
       } else {
         x = middleCharPositionX + ((i - midCharRoundDown) * nexCharPosition)
       }
-      console.log(captcha[i])
       this.canvasContext.strokeText(captcha[i], this.captchaCanvasElement.width / 2 + x, this.captchaCanvasElement.height / 2);
     }
-    // this.canvasContext.strokeText(captcha.join(""), this.captchaCanvasElement.width / 2, this.captchaCanvasElement.height / 2);
     this.captchaCode = captcha.join("");
   }
 

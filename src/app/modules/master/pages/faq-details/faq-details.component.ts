@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FAQ } from '../../models/faq';
 import { FAQService } from '../../services/faq.service';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { LovData } from 'src/app/shared/models/lov';
 import { LovService } from 'src/app/shared/services/lov.service';
@@ -78,7 +77,7 @@ export class FAQDetailsComponent implements OnInit {
     this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
     this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
     if (this.router.url.includes('update')) {
-      if(this.allowEdit){
+      if (this.allowEdit) {
         this.isCreate = false;
         this.id = this.route.snapshot.params['id'];
         this.faqService.getFaqById(this.id).subscribe(
@@ -98,29 +97,19 @@ export class FAQDetailsComponent implements OnInit {
               console.table(error)
             }
           }, error => {
-            try {
-              console.table(error);
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'faqDetailsScreen.getFaqFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
+            console.table(error);
+            let errorSnackbar = this.authService.handleApiError('faqDetailsScreen.getFaqFailed', error)
+            if (errorSnackbar) {
               errorSnackbar.afterDismissed().subscribe(() => {
                 this.goToListScreen()
               })
-            } catch (error) {
-              console.log(error)
             }
           })
       } else {
         this.authService.blockOpenPage()
       }
     } else {
-      if(this.allowCreate){
+      if (this.allowCreate) {
         this.faqForm = new FormGroup({
           category: new FormControl('', [Validators.required]),
           title: new FormControl('', [Validators.required]),
@@ -150,20 +139,8 @@ export class FAQDetailsComponent implements OnInit {
         }
       },
       error => {
-        try {
-          console.table(error);
-          let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'faqDetailsScreen.getFaqCategoriesFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.log(error)
-        }
+        console.table(error);
+        this.authService.handleApiError('faqDetailsScreen.getFaqCategoriesFailed', error);
       }
     ).add(() => {
       this.loading = false;
@@ -183,91 +160,31 @@ export class FAQDetailsComponent implements OnInit {
     this.faqModel.content = form.content;
     this.faqModel.bookmark = form.bookmark;
     if (this.isCreate) {
-      if(this.allowCreate){
+      if (this.allowCreate) {
         this.faqService.createFaq(this.faqModel)
           .subscribe(
             (data: any) => {
-              try {
-                console.table(data);
-                this.onSubmittingForm = false;
-                let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                  data: {
-                    title: 'success',
-                    content: {
-                      text: 'faqDetailsScreen.succesCreated',
-                      data: null
-                    }
-                  }
-                })
-                snackbarSucess.afterDismissed().subscribe(() => {
-                  this.goToListScreen();
-                })
-              } catch (error) {
-                console.log(error)
-              }
+              this.handleUpdateCreateSuccess('faqDetailsScreen.succesCreated', data);
             },
             error => {
-              try {
-                console.table(error);
-                this.onSubmittingForm = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'faqDetailsScreen.createFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.log(error)
-              }
+              console.table(error);
+              this.onSubmittingForm = false;
+              this.authService.handleApiError('faqDetailsScreen.createFailed', error);
             }
           )
       } else {
         this.authService.blockPageAction()
       }
     } else {
-      if(this.allowEdit){
+      if (this.allowEdit) {
         this.faqModel.id = this.id;
         this.onSubmittingForm = true;
         this.faqService.updateFaq(this.faqModel).subscribe(
           (data: any) => {
-            try {
-              console.table(data);
-              this.onSubmittingForm = false;
-              let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                data: {
-                  title: 'success',
-                  content: {
-                    text: 'faqDetailsScreen.succesUpdated',
-                    data: null
-                  }
-                }
-              })
-              snackbarSucess.afterDismissed().subscribe(() => {
-                this.goToListScreen();
-              })
-            } catch (error) {
-              console.log(error)
-            }
+            this.handleUpdateCreateSuccess('faqDetailsScreen.succesUpdate', data)
           },
           error => {
-            try {
-              console.table(error);
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'faqDetailsScreen.updateFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.log(error)
-            }
+            this.handleUpdateCreateFailed('faqDetailsScreen.updateFailed', error)
           }
         )
       } else {
@@ -281,5 +198,35 @@ export class FAQDetailsComponent implements OnInit {
   goToListScreen = () => {
     console.log('FAQDetailsComponent | gotoListScreen')
     this.router.navigate(['/master/faqs'])
+  }
+
+  // handle update create success
+  handleUpdateCreateSuccess(successText, response) {
+    console.log('FAQDetailsComponent | handleUpdateCreateSuccess');
+    try {
+      console.table(response);
+      this.onSubmittingForm = false;
+      let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+        data: {
+          title: 'success',
+          content: {
+            text: successText,
+            data: null
+          }
+        }
+      })
+      snackbarSucess.afterDismissed().subscribe(() => {
+        this.goToListScreen();
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  handleUpdateCreateFailed(errorTitle, apiError) {
+    console.log('FAQDetailsComponent | handleUpdateCreateFailed');
+    console.table(apiError);
+    this.onSubmittingForm = false;
+    this.authService.handleApiError(errorTitle, apiError)
   }
 }

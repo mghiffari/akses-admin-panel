@@ -4,9 +4,8 @@ import { AccountService } from 'src/app/shared/services/account.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserForm } from '../../models/user-form';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
-import { User } from '../../models/user';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-user-details-modal',
@@ -26,10 +25,11 @@ export class UserDetailsModalComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UserDetailsModalComponent>,
     private accountService: AccountService,
     private snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: any) { 
-      console.log("UserDetailsModalComponent | constructor")
-      dialogRef.disableClose = true;
-    }
+    private authService: AuthService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    console.log("UserDetailsModalComponent | constructor")
+    dialogRef.disableClose = true;
+  }
 
   ngOnInit() {
     console.log("UserDetailsModalComponent | ngOnInit")
@@ -48,7 +48,7 @@ export class UserDetailsModalComponent implements OnInit {
         role: new FormControl('', Validators.required),
         email: new FormControl('', [Validators.required, Validators.email, CustomValidation.adiraEmail])
       })
-      if(!this.data.isCreate){
+      if (!this.data.isCreate) {
         this.isCreate = false
         let editedUser = this.data.editedUser
         this.email.disable()
@@ -62,7 +62,7 @@ export class UserDetailsModalComponent implements OnInit {
           role: selectedRole ? selectedRole : '',
           email: editedUser.login.email
         })
-      }      
+      }
     } catch (error) {
       console.error(error)
     }
@@ -102,39 +102,10 @@ export class UserDetailsModalComponent implements OnInit {
       this.accountService.createUser(this.userModel)
         .subscribe(
           (data: any) => {
-            try {            
-              console.table(data);
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                data: {
-                  title: 'success',
-                  content: {
-                    text: 'userDetailsScreen.succesCreated',
-                    data: null
-                  }
-                }
-              })
-              this.dialogRef.close(true)
-            } catch (error) {
-              console.log(error)
-            }
+            this.handleUpdateCreateSuccess('userDetailsScreen.succesCreated', data);
           },
           error => {
-            try {            
-              console.table(error);
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'userDetailsScreen.createFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.log(error)
-            }
+            this.handleApiError('userDetailsScreen.createFailed', error);
           }
         )
     } else {
@@ -147,42 +118,42 @@ export class UserDetailsModalComponent implements OnInit {
       this.onSubmittingForm = true;
       this.accountService.updateUser(editedUser).subscribe(
         (data: any) => {
-          try {            
-            console.table(data);
-            this.onSubmittingForm = false;
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'userDetailsScreen.succesUpdated',
-                  data: null
-                }
-              }
-            })
-            this.dialogRef.close(true)
-          } catch (error) {
-            console.log(error)
-          }
+          this.handleUpdateCreateSuccess('userDetailsScreen.succesUpdated', data);
         },
         error => {
-          try {            
-            console.table(error);
-            this.onSubmittingForm = false;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'userDetailsScreen.updateFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.log(error)
-          }
+          this.handleApiError('userDetailsScreen.updateFailed', error);
         }
       )
     }
 
+  }
+
+  // handle update or create success result
+  handleUpdateCreateSuccess(successTitle, response){
+    console.log('UserDetailsModalComponent | handleUpdateCreateSuccess')
+    try {
+      console.table(response);
+      this.onSubmittingForm = false;
+      this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+        data: {
+          title: 'success',
+          content: {
+            text: successTitle,
+            data: null
+          }
+        }
+      })
+      this.dialogRef.close(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // handle api error
+  handleApiError(errorTitle, apiError){
+    console.log('UserDetailsModalComponent | handleApiError')
+    console.table(apiError);
+    this.onSubmittingForm = false;
+    this.authService.handleApiError(errorTitle, apiError);
   }
 }

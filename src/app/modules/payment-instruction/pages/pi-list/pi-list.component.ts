@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { LovService } from 'src/app/shared/services/lov.service';
 import { PayInstService } from '../../services/pay-inst.service';
@@ -44,7 +43,7 @@ export class PIListComponent implements OnInit {
     this.allowEdit = false;
     this.allowDelete = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.paymentInstruction)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
       this.allowDelete = this.authService.getFeatureDeletePrvg(prvg)
@@ -61,21 +60,7 @@ export class PIListComponent implements OnInit {
             console.table(error)
           }
         }, error => {
-          try {
-            console.table(error);
-            this.loading = false;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'paymentInstructionScreen.getTypeFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.table(error)
-          }
+          this.handleApiError('paymentInstructionScreen.getTypeFailed', error);
         })
     } else {
       this.authService.blockOpenPage()
@@ -91,7 +76,7 @@ export class PIListComponent implements OnInit {
   // handling click arrow up event
   onOrderUp(index) {
     console.log("PIListComponent | onOrderUp");
-    if(this.allowEdit){
+    if (this.allowEdit) {
       this.loading = true;
       if (this.data[index] && this.data[index - 1]) {
         let selectedData = new InstructionList();
@@ -114,16 +99,7 @@ export class PIListComponent implements OnInit {
       response => {
         this.loadData()
       }, error => {
-        this.loading = false;
-        this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-          data: {
-            title: 'paymentInstructionScreen.changeOrderFailed',
-            content: {
-              text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-              data: null
-            }
-          }
-        })
+        this.handleApiError('paymentInstructionScreen.changeOrderFailed', error);
       }
     )
   }
@@ -131,7 +107,7 @@ export class PIListComponent implements OnInit {
   // handling click arrow down event
   onOrderDown(index) {
     console.log("PIListComponent | onOrderDown");
-    if(this.allowEdit){
+    if (this.allowEdit) {
       this.loading = true;
       if (this.data[index] && this.data[index + 1]) {
         let selectedData = new InstructionList();
@@ -150,7 +126,7 @@ export class PIListComponent implements OnInit {
   // delete 
   onDelete(instructionList) {
     console.log("PIListComponent | onDelete")
-    if(this.allowDelete){
+    if (this.allowDelete) {
       const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -192,21 +168,7 @@ export class PIListComponent implements OnInit {
               }
             },
             error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'failedToDelete',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.table(error)
-              }
+              this.handleApiError('failedToDelete', error);
             }
           )
         }
@@ -226,13 +188,13 @@ export class PIListComponent implements OnInit {
           console.table(response)
           this.loading = false;
           this.data = response.data;
-          if(this.table){
+          if (this.table) {
             this.table.renderRows();
           }
         } catch (error) {
           console.table(error)
           this.data = [];
-          if(this.table){
+          if (this.table) {
             this.table.renderRows();
           }
         }
@@ -241,22 +203,21 @@ export class PIListComponent implements OnInit {
           console.table(error);
           this.loading = false;
           this.data = [];
-          if(this.table){
+          if (this.table) {
             this.table.renderRows();
           }
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionScreen.getInstructionListFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
+          this.authService.handleApiError('paymentInstructionScreen.getInstructionListFailed', error);
         } catch (error) {
-          console.table(error)
+          console.error(error)
         }
       }
     )
+  }
+
+  handleApiError(errorTitle, apiError){
+    console.log('PIListComponent | handleApiError');
+    console.table(apiError)
+    this.loading = false;
+    this.authService.handleApiError(errorTitle, apiError);
   }
 }

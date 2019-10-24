@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SpecialOffer } from 'src/app/shared/models/special-offer';
 import { constants } from 'src/app/shared/common/constants';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
 @Component({
@@ -46,23 +45,13 @@ export class SpecialOfferComponent implements OnInit {
               console.table(error)
             }
           }, error => {
-            try {
               console.table(error);
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'specialOfferDetailsScreen.getOfferFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-              errorSnackbar.afterDismissed().subscribe(() => {
-                this.goToListScreen()
-              })
-            } catch (error) {
-              console.log(error)
-            }
+              let errorSnackbar = this.authService.handleApiError('specialOfferDetailsScreen.getOfferFailed', error);
+              if(errorSnackbar){
+                errorSnackbar.afterDismissed().subscribe(() => {
+                  this.goToListScreen()
+                })
+              }
           }
         ).add(() => {
           this.loading = false;

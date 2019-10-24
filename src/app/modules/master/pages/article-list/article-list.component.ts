@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { ArticleService } from '../../../../shared/services/article.service';
 import { ArticleData } from '../../models/articles';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -14,7 +13,7 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: []
 })
 export class ArticleListComponent implements OnInit {
-  paginatorProps = { ...constants.paginatorProps};
+  paginatorProps = { ...constants.paginatorProps };
 
   articleColumns: string[] = [
     'number',
@@ -57,7 +56,7 @@ export class ArticleListComponent implements OnInit {
     this.allowEdit = false;
     this.allowDelete = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.article)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.lazyLoadData()
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
@@ -68,9 +67,9 @@ export class ArticleListComponent implements OnInit {
   }
 
   //delete
-  onDelete(article){
+  onDelete(article) {
     console.log("ArticleListComponent | onDelete")
-    if(this.allowDelete){
+    if (this.allowDelete) {
       const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -84,7 +83,7 @@ export class ArticleListComponent implements OnInit {
         }
       })
       modalRef.afterClosed().subscribe(result => {
-        if(result){
+        if (result) {
           this.loading = true;
           let delArticle = Object.assign({}, article);
           delArticle.is_deleted = true;
@@ -101,27 +100,15 @@ export class ArticleListComponent implements OnInit {
                     }
                   }
                 })
-                this.lazyLoadData()              
+                this.lazyLoadData()
               } catch (error) {
                 console.table(error)
               }
             },
             error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'failedToDelete',
-                    content: {
-                      text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })              
-              } catch (error) {
-                console.table(error)
-              }
+              console.table(error);
+              this.loading = false;
+              this.authService.handleApiError('failedToDelete', error)
             }
           )
         }
@@ -160,7 +147,7 @@ export class ArticleListComponent implements OnInit {
       this.paginatorProps.pageSize,
       this.search).subscribe(
         (data: any) => {
-          try {            
+          try {
             console.table(data);
             this.articles = data.data;
             this.paginatorProps.length = data.count;
@@ -172,23 +159,15 @@ export class ArticleListComponent implements OnInit {
             this.articles = []
             this.paginatorProps.pageIndex = 0
             this.paginatorProps.length = 0
-          } 
+          }
         },
         error => {
-          try {            
+          try {
             console.table(error);
             this.articles = []
             this.paginatorProps.pageIndex = 0
             this.paginatorProps.length = 0
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'articleListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('articleListScreen.loadFailed', error)
           } catch (error) {
             console.log(error)
           }
@@ -199,7 +178,7 @@ export class ArticleListComponent implements OnInit {
             this.table.renderRows();
           }
           this.loading = false;
-          if ( this.searchInput && isFocusedInput){
+          if (this.searchInput && isFocusedInput) {
             setTimeout(() => {
               this.searchInput.nativeElement.focus();
             });

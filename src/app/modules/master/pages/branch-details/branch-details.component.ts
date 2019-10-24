@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { BranchService } from '../../services/branch.service';
 import { LovService } from 'src/app/shared/services/lov.service';
@@ -183,18 +182,13 @@ export class BranchDetailsComponent implements OnInit {
           }, error => {
             try {
               console.table(error);
-              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'branchDetailsScreen.getBranchFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-              errorSnackbar.afterDismissed().subscribe(() => {
-                this.goToListScreen()
-              })
+              this.loading = false;
+              let errorSnackbar = this.authService.handleApiError('branchDetailsScreen.getBranchFailed', error)
+              if (errorSnackbar) {
+                errorSnackbar.afterDismissed().subscribe(() => {
+                  this.goToListScreen()
+                })
+              }
             } catch (error) {
               this.loading = false;
               console.log(error)
@@ -256,20 +250,8 @@ export class BranchDetailsComponent implements OnInit {
       this.loading = false;
       if (response[0] instanceof Error) {
         const error = response[0];
-        try {
-          console.table(error);
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'branchDetailsScreen.getBranchTypeFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        console.table(error);
+        this.authService.handleApiError('branchDetailsScreen.getBranchTypeFailed', error);
       } else {
         try {
           console.table(response[0]);
@@ -281,20 +263,8 @@ export class BranchDetailsComponent implements OnInit {
 
       if (response[1] instanceof Error) {
         const error = response[1];
-        try {
-          console.table(error);
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'branchDetailsScreen.getProvincesFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        console.table(error);
+        this.authService.handleApiError('branchDetailsScreen.getProvincesFailed', error);
       } else {
         try {
           console.table(response[1]);
@@ -317,20 +287,8 @@ export class BranchDetailsComponent implements OnInit {
 
       if (response[2] instanceof Error) {
         const error = response[2];
-        try {
-          console.table(error);
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'branchDetailsScreen.getCSRegionFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        console.table(error);
+        this.authService.handleApiError('branchDetailsScreen.getCSRegionFailed', error);
       } else {
         try {
           console.table(response[2]);
@@ -378,20 +336,8 @@ export class BranchDetailsComponent implements OnInit {
           }
         },
         error => {
-          try {
-            console.table(error);
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchDetailsScreen.getCitiesFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.table(error)
-          }
+          console.table(error);
+          this.authService.handleApiError('branchDetailsScreen.getCitiesFailed', error);
         }
       )
     }
@@ -433,20 +379,8 @@ export class BranchDetailsComponent implements OnInit {
           }
         },
         error => {
-          try {
-            console.table(error);
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchDetailsScreen.getDistrictsFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.table(error)
-          }
+          console.table(error);
+          this.authService.handleApiError('branchDetailsScreen.getDistrictsFailed', error);
         }
       )
     }
@@ -482,20 +416,8 @@ export class BranchDetailsComponent implements OnInit {
           }
         },
         error => {
-          try {
-            console.table(error);
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchDetailsScreen.getSubDistrictsFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.table(error)
-          }
+          console.table(error);
+          this.authService.handleApiError('branchDetailsScreen.getSubDistrictsFailed', error)
         }
       )
     }
@@ -526,41 +448,10 @@ export class BranchDetailsComponent implements OnInit {
       this.branchModel.cr_sim_area_code = form.areaCode;
       this.branchService.updateBranch(this.branchModel).subscribe(
         (data: any) => {
-          try {
-            console.table(data);
-            this.onSubmittingForm = false;
-            let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'branchDetailsScreen.succesUpdated',
-                  data: null
-                }
-              }
-            })
-            snackbarSucess.afterDismissed().subscribe(() => {
-              this.goToListScreen();
-            })
-          } catch (error) {
-            console.log(error)
-          }
+          this.handleUpdateCreateSuccess('branchDetailsScreen.succesUpdated', data)
         },
         error => {
-          try {
-            console.table(error);
-            this.onSubmittingForm = false;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchDetailsScreen.updateFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.log(error)
-          }
+          this.handleUpdateCreateError('branchDetailsScreen.updateFailed', error)
         }
       )
     }
@@ -583,15 +474,7 @@ export class BranchDetailsComponent implements OnInit {
           this.duplicateBranchId = response.data.id;
           if (this.onSubmittingForm) {
             this.onSubmittingForm = false;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchDetailsScreen.createFailed',
-                content: {
-                  text: 'branchDetailsScreen.duplicateBranchCode',
-                  data: null
-                }
-              }
-            })
+            this.authService.openSnackbarError('branchDetailsScreen.createFailed', 'branchDetailsScreen.duplicateBranchCode');
             this.branchCode.setErrors({ 'duplicatecode': true })
           } else {
             this.branchCode.setErrors({ 'duplicatecode': true })
@@ -630,43 +513,43 @@ export class BranchDetailsComponent implements OnInit {
     this.branchService.createBranch(this.branchModel)
       .subscribe(
         (data: any) => {
-          try {
-            console.table(data);
-            this.onSubmittingForm = false;
-            let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: 'branchDetailsScreen.succesCreated',
-                  data: null
-                }
-              }
-            })
-            snackbarSucess.afterDismissed().subscribe(() => {
-              this.goToListScreen();
-            })
-          } catch (error) {
-            console.log(error)
-          }
+          this.handleUpdateCreateSuccess('branchDetailsScreen.succesCreated', data)
         },
         error => {
-          try {
-            console.table(error);
-            this.onSubmittingForm = false;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchDetailsScreen.createFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.log(error)
-          }
+          this.handleUpdateCreateError('branchDetailsScreen.createFailed', error)
         }
       )
+  }
+
+  // handle general api error to stop loading and show error snackbar
+  handleUpdateCreateError(errorTitle, apiError) {
+    console.log('BranchDetailsComponent | handleApiError');
+    console.table(apiError);
+    this.onSubmittingForm = false;
+    this.authService.handleApiError(errorTitle, apiError)
+  }
+
+  // handling update create banner success
+  handleUpdateCreateSuccess(successText, response) {
+    console.log('BranchDetailsComponent | handleUpdateCreateSuccess');
+    try {
+      console.table(response);
+      this.onSubmittingForm = false;
+      let snackbarSucess = this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+        data: {
+          title: 'success',
+          content: {
+            text: successText,
+            data: null
+          }
+        }
+      })
+      snackbarSucess.afterDismissed().subscribe(() => {
+        this.goToListScreen();
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 }

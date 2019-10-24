@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { FAQService } from '../../services/faq.service';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { FAQ } from '../../models/faq';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
@@ -65,7 +64,7 @@ export class FAQListComponent implements OnInit {
     this.allowEdit = false;
     this.allowDelete = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.faq)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.lazyLoadData()
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
@@ -78,7 +77,7 @@ export class FAQListComponent implements OnInit {
   //delete
   onDelete(faq) {
     console.log("FAQListComponent | onDelete")
-    if(this.allowDelete){
+    if (this.allowDelete) {
       const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -115,21 +114,9 @@ export class FAQListComponent implements OnInit {
               }
             },
             error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'failedToDelete',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.table(error)
-              }
+              console.table(error);
+              this.loading = false;
+              this.authService.handleApiError('failedToDelete', error);
             }
           )
         }
@@ -182,21 +169,10 @@ export class FAQListComponent implements OnInit {
         }
       },
       error => {
-        try {
-          console.table(error);
-          this.loading = false;
-          let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: toggleFAQ.bookmark ? 'faqListScreen.bookmarkFailed' : 'faqListScreen.removeBookmarkFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        console.table(error);
+        this.loading = false;
+        this.authService.handleApiError(
+          toggleFAQ.bookmark ? 'faqListScreen.bookmarkFailed' : 'faqListScreen.removeBookmarkFailed', error);
       }
     )
   }
@@ -214,7 +190,7 @@ export class FAQListComponent implements OnInit {
           try {
             console.table(data);
             this.faqs = data.data;
-            this.paginatorProps.length = data.count;            
+            this.paginatorProps.length = data.count;
           } catch (error) {
             console.table(error);
             this.faqs = []
@@ -228,15 +204,7 @@ export class FAQListComponent implements OnInit {
             this.faqs = []
             this.paginatorProps.length = 0
             this.paginatorProps.pageIndex = 0
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'faqListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('faqListScreen.loadFailed', error)
           } catch (error) {
             console.log(error)
           }
