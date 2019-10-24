@@ -2,12 +2,10 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification.service';
 import { Notification } from '../../models/notification';
-import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
 
@@ -18,7 +16,7 @@ import { constants } from 'src/app/shared/common/constants';
 })
 export class NotificationListComponent implements OnInit {
   now = new Date();
-  paginatorProps = { ...constants.paginatorProps};
+  paginatorProps = { ...constants.paginatorProps };
 
   notifColumns: string[] = [
     'number',
@@ -63,7 +61,7 @@ export class NotificationListComponent implements OnInit {
     this.allowEdit = false;
     this.allowDelete = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.notification)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.lazyLoadData()
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
@@ -76,8 +74,8 @@ export class NotificationListComponent implements OnInit {
   //delete
   onDelete(notif) {
     console.log("NotificationListComponent | onDelete")
-    if(this.allowDelete){
-      if(this.isEditableNotif(notif)){
+    if (this.allowDelete) {
+      if (this.isEditableNotif(notif)) {
         const modalRef = this.modal.open(ConfirmationModalComponent, {
           width: '260px',
           data: {
@@ -112,21 +110,9 @@ export class NotificationListComponent implements OnInit {
                 }
               },
               error => {
-                try {
-                  console.table(error);
-                  this.loading = false;
-                  let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'failedToDelete',
-                      content: {
-                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                        data: null
-                      }
-                    }
-                  })
-                } catch (error) {
-                  console.table(error)
-                }
+                console.table(error);
+                this.loading = false;
+                this.authService.handleApiError('failedToDelete', error)
               }
             )
           }
@@ -140,10 +126,10 @@ export class NotificationListComponent implements OnInit {
   }
 
   // edit button handler
-  onEdit(notif){
+  onEdit(notif) {
     console.log('NotificationListComponent | onEdit')
-    if(this.allowEdit){
-      if(this.isEditableNotif(notif)){
+    if (this.allowEdit) {
+      if (this.isEditableNotif(notif)) {
         this.router.navigate(['/notifications/update', notif.id])
       } else {
         this.table.renderRows();
@@ -155,8 +141,8 @@ export class NotificationListComponent implements OnInit {
   }
 
   // refresh button handler
-  onRefresh(notif: Notification){
-    console.log('NotificationListComponent | onRefresh')    
+  onRefresh(notif: Notification) {
+    console.log('NotificationListComponent | onRefresh')
     this.loading = true;
     this.notifService.refreshNotif(notif.id).subscribe(
       response => {
@@ -168,41 +154,21 @@ export class NotificationListComponent implements OnInit {
           notif.clicked = data.total_clicked;
           if (this.table) {
             this.table.renderRows();
-          }      
+          }
         } catch (error) {
           console.log(error)
         }
       }, error => {
-        try {
-          console.table(error)
-          this.loading = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'failedToRefreshData',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.log(error)
-        }
+        console.table(error)
+        this.loading = false;
+        this.authService.handleApiError('failedToRefreshData', error);
       }
     )
   }
   // show error if to be edited notification data is not valid eq: immediate notif & notif <= 1 hr
-  editNotifError(){
+  editNotifError() {
     console.log('NotificationListComponent | editNotifError')
-    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'error',
-        content: {
-          text: 'notificationDetailsScreen.cantUpdate.minDuration',
-          data: null
-        }
-      }
-    })
+    this.authService.openSnackbarError('error', 'notificationDetailsScreen.cantUpdate.minDuration');
   }
 
   // event handling paginator value changed (page index and page size)
@@ -224,9 +190,9 @@ export class NotificationListComponent implements OnInit {
   }
 
   //check whether notifcation is editable
-  isEditableNotif(notif){
+  isEditableNotif(notif) {
     console.log('NotificationListComponent | onSearch');
-    if(notif.scheduled_flg){
+    if (notif.scheduled_flg) {
       return CustomValidation.durationFromNowValidation(new Date(notif.schedule_sending))
     } else {
       return false;
@@ -268,15 +234,7 @@ export class NotificationListComponent implements OnInit {
             if (this.table) {
               this.table.renderRows();
             }
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'notificationListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('notificationListScreen.loadFailed', error)
           } catch (error) {
             console.log(error)
           }

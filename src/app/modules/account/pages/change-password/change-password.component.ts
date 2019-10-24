@@ -5,9 +5,7 @@ import { AccountService } from 'src/app/shared/services/account.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-change-password',
@@ -78,22 +76,8 @@ export class ChangePasswordComponent implements OnInit {
 
         },
         error => {
-          try {
-            console.table(error);
-            this.onSubmittingForm = false;
-            this.changePasswordForm.reset();
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'changePasswordScreen.failed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.table(error)
-          }
+          console.table(error);
+          this.authService.handleApiError('changePasswordScreen.failed', error)
         }
       )
   }

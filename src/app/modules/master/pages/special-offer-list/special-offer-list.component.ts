@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { Router } from '@angular/router';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SpecialOfferService } from 'src/app/shared/services/special-offer.service';
@@ -85,15 +84,7 @@ export class SpecialOfferListComponent implements OnInit {
   // show error if to be edited offer data is not valid eq: immediate notif & notif <= 1 hr
   editOfferError() {
     console.log('SpecialOfferListComponent | editOfferError')
-    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'error',
-        content: {
-          text: 'specialOfferDetailsScreen.cantUpdate.minDuration',
-          data: null
-        }
-      }
-    })
+    this.authService.openSnackbarError('error', 'specialOfferDetailsScreen.cantUpdate.minDuration')
   }
 
   // event handling paginator value changed (page index and page size)
@@ -148,16 +139,8 @@ export class SpecialOfferListComponent implements OnInit {
             console.table(error);
             this.offers = [];
             this.paginatorProps.length = 0;
-            this.paginatorProps.pageIndex = 0
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'specialOfferListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.paginatorProps.pageIndex = 0;
+            this.authService.handleApiError('specialOfferListScreen.loadFailed', error);
           } catch (error) {
             console.log(error)
           }

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { PageService } from 'src/app/shared/services/page.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { Feature } from '../../models/feature';
 import { RolePrivilege } from '../../models/role-privilege';
 import { Privilege } from '../../models/privilege';
@@ -117,14 +116,14 @@ export class RoleListComponent implements OnInit {
   }
 
   // check if all feature privileges are checked
-  isCheckedAllFeature(){
+  isCheckedAllFeature() {
     let formArray = this.getPrivilegesFormArray()
-    if(formArray){
-      const controls = (formArray as FormArray).controls
+    if (formArray) {
+      const controls = formArray.controls
       let isAllSelected = true
-      for(let featureForm of controls){
+      for (let featureForm of controls) {
         isAllSelected = isAllSelected && this.isCheckedAllPrvg(featureForm as FormGroup)
-        if(!isAllSelected){
+        if (!isAllSelected) {
           break;
         }
       }
@@ -135,25 +134,25 @@ export class RoleListComponent implements OnInit {
   }
 
   // check if all privileges partially selected
-  isIndeterminateAllFeature(){
+  isIndeterminateAllFeature() {
     let formArray = this.getPrivilegesFormArray()
-    if(formArray){
+    if (formArray) {
       const features = formArray.value
       let foundCheck = false
       let foundUncheck = false
-      for(let feature of features){
-        if(foundCheck){
-          if(foundUncheck){
+      for (let feature of features) {
+        if (foundCheck) {
+          if (foundUncheck) {
             break;
           } else {
             foundUncheck = !(feature.view && feature.edit && feature.delete && feature.publish && feature.download && feature.create)
-            if(foundUncheck){
+            if (foundUncheck) {
               break;
             }
           }
         } else {
-          foundCheck = foundCheck || (feature.view || feature.edit || feature.delete || feature.publish || feature.download || feature.create)
-          if(!foundUncheck){
+          foundCheck = (feature.view || feature.edit || feature.delete || feature.publish || feature.download || feature.create)
+          if (!foundUncheck) {
             foundUncheck = !(feature.view && feature.edit && feature.delete && feature.publish && feature.download && feature.create)
           }
         }
@@ -165,30 +164,30 @@ export class RoleListComponent implements OnInit {
   }
 
   // toggle check all feature
-  checkedAllFeature(e){
+  checkedAllFeature(e) {
     let formArray = this.getPrivilegesFormArray()
-    if(formArray){
-      const controls = (formArray as FormArray).controls
-      for(let featureForm of controls){
+    if (formArray) {
+      const controls = formArray.controls
+      for (let featureForm of controls) {
         this.checkedAllPrvg(e, featureForm as FormGroup)
       }
     }
   }
 
   // check if a feature privileges are checked
-  isCheckedAllPrvg(form: FormGroup){
+  isCheckedAllPrvg(form: FormGroup) {
     let formValue = form.value
     return formValue.view && formValue.edit && formValue.delete && formValue.publish && formValue.download && formValue.create
   }
 
   // check if a feature privileges are indeterminate
-  isIndeterminateAllPrvg(form: FormGroup){
+  isIndeterminateAllPrvg(form: FormGroup) {
     let formValue = form.value
     return formValue.view && !(formValue.edit && formValue.delete && formValue.publish && formValue.download && formValue.create)
   }
 
   // toggle check all feature privilege
-  checkedAllPrvg(e, form: FormGroup){
+  checkedAllPrvg(e, form: FormGroup) {
     if (e.checked) {
       form.patchValue({
         view: true,
@@ -473,21 +472,7 @@ export class RoleListComponent implements OnInit {
                     this.loadData()
                   },
                   error => {
-                    try {
-                      console.table(error);
-                      this.loading = false;
-                      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                        data: {
-                          title: 'failedToDelete',
-                          content: {
-                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                            data: null
-                          }
-                        }
-                      })
-                    } catch (error) {
-                      console.table(error)
-                    }
+                    this.handleApiError('failedToDelete', error);
                   }
                 )
               }
@@ -573,7 +558,7 @@ export class RoleListComponent implements OnInit {
     if (allowSave) {
       if (selectedRoleFormGroup) {
         if (selectedRoleFormGroup.valid) {
-  
+
           this.loading = true;
           let role = new RolePrivilege()
           role.name = selectedRole.name
@@ -595,72 +580,37 @@ export class RoleListComponent implements OnInit {
             return prvg;
           })
           role.privileges = privileges
-  
+
+          const onSubmitSuccess = (succesText, response) => {
+            console.table(response)
+            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+              data: {
+                title: 'success',
+                content: {
+                  text: succesText,
+                  data: null
+                }
+              }
+            })
+            this.loadData(onSuccess)
+          }
           if (selectedRole.id && selectedRole.id !== '') {
             // update
             role.id = selectedRole.id
             this.pageService.updateRolePrivileges(role).subscribe(
               response => {
-                console.table(response)
-                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                  data: {
-                    title: 'success',
-                    content: {
-                      text: 'roleListScreen.succesUpdated',
-                      data: null
-                    }
-                  }
-                })
-                this.loadData(onSuccess)
+                onSubmitSuccess('roleListScreen.succesUpdated', response);
               }, error => {
-                try {
-                  console.table(error)
-                  this.loading = false
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'roleListScreen.updateFailed',
-                      content: {
-                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                        data: null
-                      }
-                    }
-                  })
-                } catch (error) {
-                  console.error(error)
-                }
+                this.handleApiError('roleListScreen.updateFailed', error);
               }
             )
           } else {
             // create
             this.pageService.createRolePrivileges(role).subscribe(
               response => {
-                console.table(response)
-                this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                  data: {
-                    title: 'success',
-                    content: {
-                      text: 'roleListScreen.succesCreated',
-                      data: null
-                    }
-                  }
-                })
-                this.loadData(onSuccess)
+                onSubmitSuccess('roleListScreen.succesCreated', response);
               }, error => {
-                try {
-                  console.table(error)
-                  this.loading = false
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'roleListScreen.createFailed',
-                      content: {
-                        text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                        data: null
-                      }
-                    }
-                  })
-                } catch (error) {
-                  console.error(error)
-                }
+                this.handleApiError('roleListScreen.createFailed', error);
               }
             )
           }
@@ -671,15 +621,7 @@ export class RoleListComponent implements OnInit {
           if (this.getElementRoleName(selectedRoleFormGroup).errors && this.getElementRoleName(selectedRoleFormGroup).errors.required) {
             errorText = 'forms.roleName.errorRequired'
           }
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'invalidForm',
-              content: {
-                text: errorText,
-                data: null
-              }
-            }
-          })
+          this.authService.openSnackbarError('invalidForm', errorText)
         }
       }
     } else {
@@ -743,7 +685,7 @@ export class RoleListComponent implements OnInit {
               description: new FormControl(el.description),
               privileges: new FormArray(privileges)
             })
-            if(!this.allowEdit){
+            if (!this.allowEdit) {
               roleForm.disable()
             }
             roles.push(roleForm)
@@ -772,21 +714,7 @@ export class RoleListComponent implements OnInit {
           console.error(error)
         }
       }, error => {
-        try {
-          console.table(error);
-          this.loading = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'roleListScreen.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.error(error)
-        }
+        this.handleApiError('roleListScreen.loadFailed', error);
       }
     )
   }
@@ -800,5 +728,13 @@ export class RoleListComponent implements OnInit {
     if (this.featureTable) {
       this.featureTable.renderRows();
     }
+  }
+
+  // handle api error
+  handleApiError(errorTitle, apiError) {
+    console.log('RoleListComponent | handleApiError');
+    console.table(apiError);
+    this.loading = false;
+    this.authService.handleApiError(errorTitle, apiError);
   }
 }

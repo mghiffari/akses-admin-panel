@@ -5,7 +5,6 @@ import { constants } from 'src/app/shared/common/constants';
 import { Rule } from '../../models/rule';
 import { GamificationService } from '../../services/gamification.service';
 import { MatSnackBar } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { Syspref } from '../../models/syspref';
 
 @Component({
@@ -108,19 +107,7 @@ export class RuleListComponent implements OnInit {
           }
         }, error => {
           console.table(error)
-          try {
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'gamificationRuleScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.error(error)
-          }
+          this.authService.handleApiError('gamificationRuleScreen.loadFailed', error);
         }
       ).add(() => {
         this.loading = false

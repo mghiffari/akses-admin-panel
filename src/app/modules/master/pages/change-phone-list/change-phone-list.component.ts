@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ChangePhoneService } from '../../services/change-phone.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { RemarkInputModalComponent } from '../../components/remark-input-modal/remark-input-modal.component';
@@ -15,7 +14,7 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: ['./change-phone-list.component.scss']
 })
 export class ChangePhoneListComponent implements OnInit {
-  paginatorProps = { ...constants.paginatorProps};
+  paginatorProps = { ...constants.paginatorProps };
   action = {
     approved: 'Accepted',
     rejected: 'Rejected'
@@ -69,7 +68,7 @@ export class ChangePhoneListComponent implements OnInit {
     this.now = new Date();
     this.allowEdit = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.changePhoneNumber)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.lazyLoadData()
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
     } else {
@@ -148,93 +147,61 @@ export class ChangePhoneListComponent implements OnInit {
   // reject one request
   rejectRequest(request) {
     console.log('ChangePhoneListComponent | rejectRequest');
-    if(this.allowEdit){
-      const modalRef = this.modal.open(ConfirmationModalComponent, {
-        width: '260px',
-        data: {
-          title: 'changePhonenumberRequestListScreen.confirmationModal.reject.title',
-          content: {
-            string: 'changePhonenumberRequestListScreen.confirmationModal.reject.content',
-            data: null
-          }
-        }
-      })
-      modalRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.loading = true;
-          let rejectedRequest = new ChangePhone();
-          rejectedRequest.id = request.id
-          rejectedRequest.status = this.status.closed;
-          rejectedRequest.action = this.action.rejected;
-          this.requestService.bulkUpdateRequest(rejectedRequest).subscribe(
-            response => {
-              try {
-                this.loading = false;
-                let data = response.data
-                if (data.fail_count === 0) {
-                  this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                    data: {
-                      title: 'success',
-                      content: {
-                        text: 'changePhonenumberRequestListScreen.rejectSuccess',
-                        data: null
-                      }
-                    }
-                  })
-                } else {
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'changePhonenumberRequestListScreen.rejectFailed',
-                      content: {
-                        text: 'changePhonenumberRequestListScreen.totalRequestFailed',
-                        data: {
-                          totalRequest: data.fail_count
-                        }
-                      }
-                    }
-                  })
-                }
-                if (data.success_count > 0) {
-                  this.lazyLoadData();
-                }
-              } catch (error) {
-                console.table(error)
-              }
-            }, error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'changePhonenumberRequestListScreen.rejectFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.log(error)
-              }
-            }
-          )
-        }
-      })
-    } else {
-      this.authService.blockPageAction()
-    }
+    this.updateSingleRequest(request,
+      'changePhonenumberRequestListScreen.confirmationModal.reject.title',
+      'changePhonenumberRequestListScreen.confirmationModal.reject.content',
+      this.action.rejected,
+      'changePhonenumberRequestListScreen.rejectSuccess',
+      'changePhonenumberRequestListScreen.rejectFailed',
+      'changePhonenumberRequestListScreen.totalRequestFailed'
+    )
   }
 
   // approve one request
   approveRequest(request) {
     console.log('ChangePhoneListComponent | approveRequest');
-    if(this.allowEdit){
+    this.updateSingleRequest(request,
+      'changePhonenumberRequestListScreen.confirmationModal.approve.title',
+      'changePhonenumberRequestListScreen.confirmationModal.approve.content',
+      this.action.approved,
+      'changePhonenumberRequestListScreen.approveSuccess',
+      'changePhonenumberRequestListScreen.approveFailed',
+      'changePhonenumberRequestListScreen.totalRequestFailed'
+    )
+  }
+
+  // handle how to update single request based on aciton type
+  updateSingleRequest(request, modalTitle, modalContent, action, successText, errorTitle, errorText){
+    console.log('ChangePhoneListComponent | updateSingleRequest');
+    let updateRequest = new ChangePhone();
+    updateRequest.id = request.id
+    updateRequest.status = this.status.closed;
+    updateRequest.action = action;
+    this.updateRequest(updateRequest, modalTitle, modalContent, successText, errorTitle, errorText)
+  }
+
+  // handle how to update several requests based on aciton type
+  bulkUpdateRequest(modalTitle, modalContent, action, successText, errorTitle, errorText){
+    console.log('ChangePhoneListComponent | updateSingleRequest');
+    let updateRequests = this.selectedRequests.map(el => {
+      let req = new ChangePhone()
+      req.id = el.id;
+      req.status = this.status.closed;
+      req.action = action;
+      return req;
+    });
+    this.updateRequest(updateRequests, modalTitle, modalContent, successText, errorTitle, errorText)
+  }
+
+  // call update request api
+  updateRequest(requests, modalTitle, modalContent, successText, errorTitle, errorText) {
+    if (this.allowEdit) {
       const modalRef = this.modal.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
-          title: 'changePhonenumberRequestListScreen.confirmationModal.approve.title',
+          title: modalTitle,
           content: {
-            string: 'changePhonenumberRequestListScreen.confirmationModal.approve.content',
+            string: modalContent,
             data: null
           }
         }
@@ -242,11 +209,7 @@ export class ChangePhoneListComponent implements OnInit {
       modalRef.afterClosed().subscribe(result => {
         if (result) {
           this.loading = true;
-          let approvedRequest = new ChangePhone();
-          approvedRequest.id = request.id
-          approvedRequest.status = this.status.closed;
-          approvedRequest.action = this.action.approved;
-          this.requestService.bulkUpdateRequest(approvedRequest).subscribe(
+          this.requestService.bulkUpdateRequest(requests).subscribe(
             response => {
               try {
                 this.loading = false;
@@ -256,23 +219,17 @@ export class ChangePhoneListComponent implements OnInit {
                     data: {
                       title: 'success',
                       content: {
-                        text: 'changePhonenumberRequestListScreen.approveSuccess',
+                        text: successText,
                         data: null
                       }
                     }
                   })
                 } else {
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'changePhonenumberRequestListScreen.approveFailed',
-                      content: {
-                        text: 'changePhonenumberRequestListScreen.totalRequestFailed',
-                        data: {
-                          totalRequest: data.fail_count
-                        }
-                      }
-                    }
-                  })
+                  this.authService.openSnackbarError(errorTitle,
+                    errorText,
+                    {
+                      totalRequest: data.fail_count
+                    })
                 }
                 if (data.success_count > 0) {
                   this.lazyLoadData();
@@ -281,21 +238,8 @@ export class ChangePhoneListComponent implements OnInit {
                 console.table(error)
               }
             }, error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'changePhonenumberRequestListScreen.approveFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.log(error)
-              }
+              this.loading = false;
+              this.authService.handleApiError(errorTitle, error)
             }
           )
         }
@@ -305,178 +249,30 @@ export class ChangePhoneListComponent implements OnInit {
     }
   }
 
-  //reject selected requests,
+  //reject selected requests
   bulkRejectRequest() {
     console.log('ChangePhoneListComponent | bulkRejectRequest');
-    if(this.allowEdit){
-      const modalRef = this.modal.open(ConfirmationModalComponent, {
-        width: '260px',
-        data: {
-          title: 'changePhonenumberRequestListScreen.confirmationModal.reject.title',
-          content: {
-            string: 'changePhonenumberRequestListScreen.confirmationModal.reject.content',
-            data: null
-          }
-        }
-      })
-      modalRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.loading = true;
-          let rejectedRequests = this.selectedRequests.map(el => {
-            let req = new ChangePhone()
-            req.id = el.id;
-            req.status = this.status.closed;
-            req.action = this.action.rejected;
-            return req;
-          });
-          this.requestService.bulkUpdateRequest(rejectedRequests).subscribe(
-            response => {
-              try {
-                this.loading = false;
-                let data = response.data
-                if (data.fail_count === 0) {
-                  this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                    data: {
-                      title: 'success',
-                      content: {
-                        text: 'changePhonenumberRequestListScreen.bulkRejectSuccess',
-                        data: {
-                          totalRequest: this.selectedRequests.length
-                        }
-                      }
-                    }
-                  })
-                } else {
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'changePhonenumberRequestListScreen.bulkRejectFailed',
-                      content: {
-                        text: 'changePhonenumberRequestListScreen.totalRequestFailed',
-                        data: {
-                          totalRequest: data.fail_count
-                        }
-                      }
-                    }
-                  })
-                }
-                if (data.success_count > 0) {
-                  this.lazyLoadData();
-                }
-              } catch (error) {
-                console.table(error)
-              }
-            }, error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'changePhonenumberRequestListScreen.bulkRejectFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: {
-                        totalRequest: this.selectedRequests.length
-                      }
-                    }
-                  }
-                })
-              } catch (error) {
-                console.log(error)
-              }
-            }
-          )
-        }
-      })
-    } else {
-      this.authService.blockPageAction()
-    }
+    this.bulkUpdateRequest(
+      'changePhonenumberRequestListScreen.confirmationModal.reject.title',
+      'changePhonenumberRequestListScreen.confirmationModal.reject.content',
+      this.action.rejected,
+      'hangePhonenumberRequestListScreen.bulkRejectSuccess',
+      'changePhonenumberRequestListScreen.bulkRejectFailed',
+      'changePhonenumberRequestListScreen.totalRequestFailed'
+    )
   }
 
   //approve selected requests
   bulkApproveRequest() {
     console.log('ChangePhoneListComponent | bulkApproveRequest');
-    if(this.allowEdit){
-      const modalRef = this.modal.open(ConfirmationModalComponent, {
-        width: '260px',
-        data: {
-          title: 'changePhonenumberRequestListScreen.confirmationModal.approve.title',
-          content: {
-            string: 'changePhonenumberRequestListScreen.confirmationModal.approve.content',
-            data: null
-          }
-        }
-      })
-      modalRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.loading = true;
-          let approvedRequests = this.selectedRequests.map(el => {
-            let req = new ChangePhone()
-            req.id = el.id;
-            req.status = this.status.closed;
-            req.action = this.action.approved;
-            return req;
-          });
-          this.requestService.bulkUpdateRequest(approvedRequests).subscribe(
-            response => {
-              try {
-                this.loading = false;
-                let data = response.data
-                if (data.fail_count === 0) {
-                  this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-                    data: {
-                      title: 'success',
-                      content: {
-                        text: 'changePhonenumberRequestListScreen.bulkApproveSuccess',
-                        data: {
-                          totalRequest: this.selectedRequests.length
-                        }
-                      }
-                    }
-                  })
-                } else {
-                  this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                    data: {
-                      title: 'changePhonenumberRequestListScreen.bulkApproveFailed',
-                      content: {
-                        text: 'changePhonenumberRequestListScreen.totalRequestFailed',
-                        data: {
-                          totalRequest: data.fail_count
-                        }
-                      }
-                    }
-                  })
-                }
-                if (data.success_count > 0) {
-                  this.lazyLoadData();
-                }
-              } catch (error) {
-                console.table(error)
-              }
-            }, error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'changePhonenumberRequestListScreen.bulkApproveFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: {
-                        totalRequest: this.selectedRequests.length
-                      }
-                    }
-                  }
-                })
-              } catch (error) {
-                console.log(error)
-              }
-            }
-          )
-        }
-      })
-    } else {
-      this.authService.blockPageAction()
-    }
+    this.bulkUpdateRequest(
+      'changePhonenumberRequestListScreen.confirmationModal.approve.title',
+      'changePhonenumberRequestListScreen.confirmationModal.approve.content',
+      this.action.approved,
+      'hangePhonenumberRequestListScreen.bulkApproveSuccess',
+      'changePhonenumberRequestListScreen.bulkApproveFailed',
+      'changePhonenumberRequestListScreen.totalRequestFailed'
+    )
   }
 
   // count number of request that not yet approved or rejected
@@ -496,13 +292,13 @@ export class ChangePhoneListComponent implements OnInit {
   // show modal to edit remark for rejected request
   editRemark(request) {
     console.log('ChangePhoneListComponent | editRemark');
-    if(this.allowEdit){
+    if (this.allowEdit) {
       const modalRef = this.modal.open(RemarkInputModalComponent, {
         data: {
           request: request
         }
       })
-  
+
       modalRef.afterClosed().subscribe(result => {
         if (result) {
           this.lazyLoadData();
@@ -573,15 +369,7 @@ export class ChangePhoneListComponent implements OnInit {
             this.paginatorProps.pageIndex = 0;
             this.selectedRequests = [];
             this.countSelectableRequest();
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'changePhonenumberRequestListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('changePhonenumberRequestListScreen.loadFailed', error);
           } catch (error) {
             console.log(error)
           }

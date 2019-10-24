@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LovService } from 'src/app/shared/services/lov.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { Observable } from 'rxjs';
@@ -117,51 +116,51 @@ export class PIDetailsComponent implements OnInit {
   ngOnInit() {
     console.log('PIDetailsComponent | ngOnInit')
     let prvg = this.authService.getFeaturePrivilege(constants.features.paymentInstruction)
-      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
-      this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
-      let allowPage = false
-      if(this.router.url.includes('update')){
-        this.isCreate = false;
-        allowPage = this.allowEdit
-      } else {
-        this.isCreate = true;
-        allowPage = this.allowCreate
-      }
-      if(allowPage){
-        this.loading = true;
-        this.route.params.subscribe(params => {
-          try {
-            this.instructionForm = new FormGroup({
-              id: new FormControl(''),
-              icon: new FormControl('', Validators.required),
-              // validate file size, file type
-              iconFile: new FormControl(null, [
-                CustomValidation.type(['jpg', 'jpeg', 'png'])
-              ]),
-              oldIcon: new FormControl(''),
-              grpTitle: new FormControl('', Validators.required),
-              instructions: new FormArray([], [
-                Validators.required,
-                Validators.maxLength(this.instructionValidation.maxLength)]),
-              order: new FormControl(null),
-              instructionType: new FormControl(null)
-            })
-            if (!this.isCreate) {
-              let id = params.id;
-              this.getInstructionById(id);
-            } else {
-              let paymentType = params.paymentType;
-              this.checkPaymentType(paymentType)
-            }
-          } catch (error) {
-            console.table(error)
-            this.loading = false;
+    this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
+    this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
+    let allowPage = false
+    if (this.router.url.includes('update')) {
+      this.isCreate = false;
+      allowPage = this.allowEdit
+    } else {
+      this.isCreate = true;
+      allowPage = this.allowCreate
+    }
+    if (allowPage) {
+      this.loading = true;
+      this.route.params.subscribe(params => {
+        try {
+          this.instructionForm = new FormGroup({
+            id: new FormControl(''),
+            icon: new FormControl('', Validators.required),
+            // validate file size, file type
+            iconFile: new FormControl(null, [
+              CustomValidation.type(['jpg', 'jpeg', 'png'])
+            ]),
+            oldIcon: new FormControl(''),
+            grpTitle: new FormControl('', Validators.required),
+            instructions: new FormArray([], [
+              Validators.required,
+              Validators.maxLength(this.instructionValidation.maxLength)]),
+            order: new FormControl(null),
+            instructionType: new FormControl(null)
+          })
+          if (!this.isCreate) {
+            let id = params.id;
+            this.getInstructionById(id);
+          } else {
+            let paymentType = params.paymentType;
+            this.checkPaymentType(paymentType)
           }
-    
-        })
-      } else {
-        this.authService.blockOpenPage()
-      }
+        } catch (error) {
+          console.table(error)
+          this.loading = false;
+        }
+
+      })
+    } else {
+      this.authService.blockOpenPage()
+    }
   }
 
   // call get payment types api to check payment type param
@@ -184,17 +183,11 @@ export class PIDetailsComponent implements OnInit {
           if (found) {
             this.instructionForm.patchValue({ instructionType: paymentType })
           } else {
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'error',
-                content: {
-                  text: 'paymentInstructionDetailsScreen.typeNotFound',
-                  data: {
-                    type: paymentType
-                  }
-                }
-              }
-            })
+            this.authService.openSnackbarError('error'
+              , 'paymentInstructionDetailsScreen.typeNotFound'
+              , {
+                type: paymentType
+              })
             this.goToListScreen()
           }
         } catch (error) {
@@ -202,17 +195,7 @@ export class PIDetailsComponent implements OnInit {
         }
       }, error => {
         try {
-          console.table(error);
-          this.loading = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.getTypeFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
+          this.handleLoadInitError('paymentInstructionDetailsScreen.getTypeFailed', error);
         } catch (error) {
           console.table(error)
         }
@@ -232,22 +215,7 @@ export class PIDetailsComponent implements OnInit {
           console.table(error)
         }
       }, error => {
-        try {
-          console.table(error);
-          this.loading = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.getInstructionFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-          this.goToListScreen()
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleLoadInitError('paymentInstructionDetailsScreen.getInstructionFailed', error);
       }
     )
   }
@@ -281,22 +249,7 @@ export class PIDetailsComponent implements OnInit {
           console.table(error)
         }
       }, error => {
-        try {
-          console.table(error)
-          this.loading = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.getStepsFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-          this.goToListScreen()
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleLoadInitError('paymentInstructionDetailsScreen.getStepsFailed', error);
       }
     )
   }
@@ -390,14 +343,14 @@ export class PIDetailsComponent implements OnInit {
   save() {
     console.log('PIDetailsComponent | save')
     if (this.isCreate) {
-      if(this.allowCreate){
+      if (this.allowCreate) {
         this.onSubmittingForm = true;
         this.uploadIcon();
       } else {
         this.authService.blockPageAction()
       }
     } else {
-      if(this.allowEdit){
+      if (this.allowEdit) {
         if (this.oldIcon.value === this.icon.value) {
           let instructionDetails = [];
           let stepsForm = this.instructions.value;
@@ -460,15 +413,7 @@ export class PIDetailsComponent implements OnInit {
             }, error => {
               console.table(error)
               this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'paymentInstructionDetailsScreen.uploadIconFailed',
-                  content: {
-                    text: 'error',
-                    data: null
-                  }
-                }
-              })
+              this.authService.openSnackbarError('paymentInstructionDetailsScreen.uploadIconFailed', 'error');
             }
           )
         } catch (error) {
@@ -476,21 +421,7 @@ export class PIDetailsComponent implements OnInit {
           this.onSubmittingForm = false;
         }
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.uploadIconFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.log(error)
-        }
+        this.handleSubmitApiError('paymentInstructionDetailsScreen.uploadIconFailed', error);
       })
   }
 
@@ -508,21 +439,7 @@ export class PIDetailsComponent implements OnInit {
           console.table(error)
         }
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.insertInstructionFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleSubmitApiError('paymentInstructionDetailsScreen.insertInstructionFailed', error);
       }
     )
   }
@@ -556,21 +473,7 @@ export class PIDetailsComponent implements OnInit {
           this.goToListScreen();
         })
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.insertStepsFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleSubmitApiError('paymentInstructionDetailsScreen.insertStepsFailed', error);
       }
     )
   }
@@ -598,21 +501,7 @@ export class PIDetailsComponent implements OnInit {
           })
         }
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.updateFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleSubmitApiError('paymentInstructionDetailsScreen.updateFailed', error);
       }
     )
   }
@@ -646,21 +535,7 @@ export class PIDetailsComponent implements OnInit {
           this.goToListScreen();
         })
       }, error => {
-        try {
-          console.table(error)
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'paymentInstructionDetailsScreen.deleteIconFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        this.handleSubmitApiError('paymentInstructionDetailsScreen.deleteIconFailed', error);
       }
     )
   }
@@ -670,5 +545,19 @@ export class PIDetailsComponent implements OnInit {
     console.log('PIDetailsComponent | goToListScreen')
     this.instructionForm.reset()
     this.router.navigate(['/payment-instructions'])
+  }
+
+  handleLoadInitError(errorTitle, apiError) {
+    console.table(apiError)
+    this.loading = false;
+    this.authService.handleApiError(errorTitle, apiError)
+    this.goToListScreen()
+  }
+
+  handleSubmitApiError(errorTitle, apiError) {
+    console.log('PIDetailsComponent | handleSubmitApiError')
+    console.table(apiError)
+    this.onSubmittingForm = false;
+    this.authService.handleApiError(errorTitle, apiError);
   }
 }

@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
         trillion: 't'
       },
       ordinal: function (number) {
-        return number === 1 ? '' : '';
+        return '';
       },
       currency: {
         symbol: 'Rp'
@@ -48,8 +48,7 @@ export class AppComponent implements OnInit {
       map((route) => {
         while (route.firstChild) {
           route = route.firstChild;
-        };
-
+        }
         return route;
       }),
       filter((route) => route.outlet === 'primary'),

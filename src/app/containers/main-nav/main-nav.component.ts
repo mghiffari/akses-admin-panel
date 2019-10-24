@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { CreditSimulationService } from 'src/app/shared/services/credit-simulation.service';
 import { CSProduct } from 'src/app/shared/models/cs-product';
 import { MatSnackBar } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { constants } from 'src/app/shared/common/constants';
 import { ApprovalService } from 'src/app/shared/services/approval.service';
 import { ApprovalTab } from 'src/app/shared/models/approval-tab';
@@ -42,32 +41,32 @@ export class MainNavComponent {
         {
           title: 'navMenus.master.children.banners',
           link: '/banners',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.banner)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.banner) }
         },
         {
           title: 'navMenus.master.children.articles',
           link: '/articles',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.article)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.article) }
         },
         {
           title: 'navMenus.master.children.specialOffers',
           link: '/special-offers',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.specialOffer)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.specialOffer) }
         },
         {
           title: 'navMenus.master.children.faqs',
           link: '/faqs',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.faq)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.faq) }
         },
         {
           title: 'navMenus.master.children.branches',
           link: '/branches',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.branchLocation)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.branchLocation) }
         },
         {
           title: 'navMenus.master.children.changePhonenumberRequests',
           link: '/change-phonenumber-requests',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.changePhoneNumber)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.changePhoneNumber) }
         }
       ]
     },
@@ -80,12 +79,12 @@ export class MainNavComponent {
     {
       title: 'navMenus.paymentInstruction.title',
       link: '/payment-instructions',
-      getShowFlag: () => {return this.getViewPrivilege(this.featureNames.paymentInstruction)}
+      getShowFlag: () => { return this.getViewPrivilege(this.featureNames.paymentInstruction) }
     },
     {
       title: 'navMenus.notification.title',
       link: '/notifications',
-      getShowFlag: () => {return this.getViewPrivilege(this.featureNames.notification)}
+      getShowFlag: () => { return this.getViewPrivilege(this.featureNames.notification) }
     },
     {
       title: 'navMenus.userManagement.title',
@@ -94,12 +93,12 @@ export class MainNavComponent {
         {
           title: 'navMenus.userManagement.children.users',
           link: '/users',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.user)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.user) }
         },
         {
           title: 'navMenus.userManagement.children.roles',
           link: '/roles',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.role)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.role) }
         }
       ]
     },
@@ -110,19 +109,19 @@ export class MainNavComponent {
         {
           title: 'navMenus.report.children.transReport',
           link: '/transaction-report',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.transactionReport)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.transactionReport) }
         },
         {
           title: 'navMenus.report.children.balanceReport',
           link: '/balance-report',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.balanceReport)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.balanceReport) }
         },
       ]
     },
     {
       title: 'navMenus.approval.title',
       link: '/approvals',
-      getShowFlag: () => {return this.getPublishPrivilege()}
+      getShowFlag: () => { return this.getPublishPrivilege() }
     },
     {
       title: 'navMenus.gamification.title',
@@ -131,12 +130,12 @@ export class MainNavComponent {
         {
           title: 'navMenus.gamification.children.rule',
           link: '/rule',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.gamificationRule)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.gamificationRule) }
         },
         {
           title: 'navMenus.gamification.children.cashbackReward',
           link: '/cashback-reward',
-          getShowFlag: () => {return this.getViewPrivilege(this.featureNames.cashbackReward)}
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.cashbackReward) }
         },
       ]
     },
@@ -157,18 +156,18 @@ export class MainNavComponent {
   }
 
   // get view privilege of feature
-  getViewPrivilege(featureName){
+  getViewPrivilege(featureName) {
     console.log('MainNavComponent | getViewPrivilege')
     return this.authService.getViewPrvg(featureName)
   }
 
   // get publish privilege
-  getPublishPrivilege(){
+  getPublishPrivilege() {
     console.log('MainNavComponent | getViewPrivilege')
     let canApprove = false
-    for(let tab of this.approvalTabs){
+    for (let tab of this.approvalTabs) {
       canApprove = (canApprove || this.authService.getPublishPrvg(tab.unique_tag))
-      if(canApprove){
+      if (canApprove) {
         break;
       }
     }
@@ -196,35 +195,23 @@ export class MainNavComponent {
         try {
           console.table(response)
           creditSimulationProducts = response.data;
-          creditSimulationProducts.map(el => {
-            if(this.authService.getViewPrvg(el.unique_tag)) {
+          creditSimulationProducts.forEach(el => {
+            if (this.authService.getViewPrvg(el.unique_tag)) {
               prodNavList.push(
                 {
                   title: 'features.' + el.unique_tag,
                   link: '/product/' + el.id,
-                  getShowFlag: () => {return this.getViewPrivilege(el.unique_tag)}
+                  getShowFlag: () => { return this.getViewPrivilege(el.unique_tag) }
                 }
               );
-            }              
+            }
           });
         } catch (error) {
           console.table(error)
-        } 
+        }
       }, error => {
-        try {
-          console.table(error)
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'navMenus.creditSimulation.failedGetProducts',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        } 
+        console.table(error);
+        this.authService.handleApiError('navMenus.approval.failedGetFeatures', error)
       }
     ).add(() => {
       this.getApprovalTabs(prodNavList)
@@ -232,7 +219,7 @@ export class MainNavComponent {
   }
 
   // get approval tabs to check publish privilege
-  getApprovalTabs(prodNavList){
+  getApprovalTabs(prodNavList) {
     console.log('MainNavComponent | getApprovalTabs')
     this.approvalService.getApprovalTabs().subscribe(
       response => {
@@ -241,22 +228,10 @@ export class MainNavComponent {
           this.approvalTabs = response.data
         } catch (error) {
           console.table(error)
-        } 
+        }
       }, error => {
-        try {
-          console.table(error)
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'navMenus.approval.failedGetFeatures',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        } 
+        console.table(error);
+        this.authService.handleApiError('navMenus.approval.failedGetFeatures', error)
       }
     ).add(() => {
       this.loading = false;
@@ -265,10 +240,10 @@ export class MainNavComponent {
   }
 
   // show authorized menus only
-  showAuthMenus(csChildMenus = []){
+  showAuthMenus(csChildMenus = []) {
     console.log('MainNavComponent | showAuthMenus')
-    for(let nav of this.allNav){
-      if(nav.featureName && nav.featureName === this.featureNames.creditSimulation) {
+    for (let nav of this.allNav) {
+      if (nav.featureName && nav.featureName === this.featureNames.creditSimulation) {
         nav.children = csChildMenus;
       }
       let children = []
@@ -277,14 +252,14 @@ export class MainNavComponent {
         link: nav.link,
         children: nav.children ? nav.children : null
       }
-      if(nav.getShowFlag){
-        if(nav.getShowFlag()){
+      if (nav.getShowFlag) {
+        if (nav.getShowFlag()) {
           this.navList.push(addNav)
         }
       } else {
-        if(addNav.children){
-          for(let child of addNav.children){
-            if(child.getShowFlag && child.getShowFlag()) {
+        if (addNav.children) {
+          for (let child of addNav.children) {
+            if (child.getShowFlag && child.getShowFlag()) {
               let addChild = {
                 title: child.title,
                 link: child.link,
@@ -292,7 +267,7 @@ export class MainNavComponent {
               children.push(addChild)
             }
           }
-          if(children.length > 0){
+          if (children.length > 0) {
             addNav.children = children
             this.navList.push(addNav)
           }

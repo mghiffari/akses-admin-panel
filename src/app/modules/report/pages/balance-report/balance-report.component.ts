@@ -1,11 +1,10 @@
 // Angular modules
-import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackBar } from '@angular/material';
 
 // Components
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 
 // Models
 import { BalanceData, TransBalanceData } from '../../models/balance-data';
@@ -79,7 +78,7 @@ export class BalanceReportComponent implements OnInit {
     this.translateService.get('angularLocale').subscribe(res => {
       this.locale = res;
     });
-    if(!this.authService.getViewPrvg(constants.features.balanceReport)){
+    if (!this.authService.getViewPrvg(constants.features.balanceReport)) {
       this.authService.blockOpenPage()
     }
   }
@@ -106,29 +105,14 @@ export class BalanceReportComponent implements OnInit {
         }
       },
       error => {
-        try {
-            console.table(error);
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'balanceReport.loadFailed',
-                content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            });
-            this.balanceData = [];
-            this.transData = [];
-            this.loading = false;
-          } catch (error) {
-            console.log(error);
-            this.balanceData = [];
-            this.transData = [];
-            this.loading = false;
-          }
+        console.table(error);
+        this.loading = false;
+        this.balanceData = [];
+        this.transData = [];
+        this.authService.handleApiError('balanceReport.loadFailed', error)
       }
     ).add(() => {
-      if(this.searchInput && isFocusedInput){
+      if (this.searchInput && isFocusedInput) {
         setTimeout(() => {
           this.searchInput.nativeElement.focus();
         })
@@ -139,9 +123,9 @@ export class BalanceReportComponent implements OnInit {
   // check if serach valid or not
   isSearchValid(event = null) {
     console.log('BalanceReportComponent | isSearchValid')
-    if(event){
-      this.search === event.target.value
-    } 
+    if (event) {
+      this.search = event.target.value
+    }
     return this.search !== undefined && this.search !== null && this.search !== '' && (this.search.length >= this.searchValidation.minLength);
   }
 

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { BranchService } from '../../services/branch.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { BranchUploadModalComponent } from '../../components/branch-upload-modal/branch-upload-modal.component';
 import { Overlay } from '@angular/cdk/overlay';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
@@ -16,7 +15,7 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: []
 })
 export class BranchListComponent implements OnInit {
-  paginatorProps = { ...constants.paginatorProps};
+  paginatorProps = { ...constants.paginatorProps };
 
   branchColumns: string[] = [
     'number',
@@ -61,7 +60,7 @@ export class BranchListComponent implements OnInit {
     this.allowEdit = false;
     this.allowDelete = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.branchLocation)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.lazyLoadData()
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
@@ -74,7 +73,7 @@ export class BranchListComponent implements OnInit {
   //delete
   onDelete(branch) {
     console.log("BranchListComponent | onDelete")
-    if(this.allowDelete){
+    if (this.allowDelete) {
       const modalRef = this.modal.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -111,21 +110,9 @@ export class BranchListComponent implements OnInit {
               }
             },
             error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'failedToDelete',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-              } catch (error) {
-                console.table(error)
-              }
+              console.table(error);
+              this.loading = false;
+              this.authService.handleApiError('failedToDelete', error)
             }
           )
         }
@@ -156,7 +143,7 @@ export class BranchListComponent implements OnInit {
   // handle upload modal
   onUpload() {
     console.log('BranchListComponent | onUpload');
-    if(this.allowCreate){
+    if (this.allowCreate) {
       const modalRef = this.modal.open(BranchUploadModalComponent, {
         width: '80%',
         maxHeight: '100%',
@@ -191,7 +178,7 @@ export class BranchListComponent implements OnInit {
             this.branches = [];
             this.paginatorProps.length = 0;
             this.paginatorProps.pageIndex = 0;
-          } 
+          }
         },
         error => {
           try {
@@ -199,15 +186,7 @@ export class BranchListComponent implements OnInit {
             this.branches = [];
             this.paginatorProps.length = 0;
             this.paginatorProps.pageIndex = 0;
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'branchListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('branchListScreen.loadFailed', error);
           } catch (error) {
             console.log(error)
           }

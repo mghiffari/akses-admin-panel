@@ -93,9 +93,9 @@ export class AuthService {
   }
 
   // go to landing page
-  blockOpenPage(){
+  blockOpenPage() {
     console.log('AuthService | blockOpenPage');
-    let errorSB = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       data: {
         title: 'pageBlockedError.title',
         content: {
@@ -108,7 +108,7 @@ export class AuthService {
   }
 
   // show error for unauthorized action
-  blockPageAction(){
+  blockPageAction() {
     console.log('AuthService | blockPageAction');
     this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       data: {
@@ -122,9 +122,9 @@ export class AuthService {
   }
 
   // get feature privilege
-  getFeaturePrivilege(featureName){
+  getFeaturePrivilege(featureName) {
     console.log('AuthService | getFeaturePrivilege');
-    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+    if (!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses) {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
@@ -134,9 +134,9 @@ export class AuthService {
   }
 
   // get a feature view flag privilege by feature name
-  getViewPrvg(featureName){
+  getViewPrvg(featureName) {
     console.log('AuthService | getViewPrvg');
-    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+    if (!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses) {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
@@ -146,9 +146,9 @@ export class AuthService {
   }
 
   // get a feature create flag privilege by feature name
-  getCreatePrvg(featureName){
+  getCreatePrvg(featureName) {
     console.log('AuthService | getCreatePrvg');
-    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+    if (!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses) {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
@@ -158,9 +158,9 @@ export class AuthService {
   }
 
   // get a feature publish flag privilege by feature name
-  getPublishPrvg(featureName){
+  getPublishPrvg(featureName) {
     console.log('AuthService | getPublishPrvg');
-    if(!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses){
+    if (!this.userLoginData || !this.userLoginData.data || !this.userLoginData.data.akses) {
       this.userLoginData = JSON.parse(this.getUserLogin())
     }
     let feature = this.userLoginData.akses.find(el => {
@@ -170,32 +170,32 @@ export class AuthService {
   }
 
   // get feature create flag privilege
-  getFeatureViewPrvg(feature){
+  getFeatureViewPrvg(feature) {
     return feature && feature.view
   }
 
   // get feature create flag privilege
-  getFeatureCreatePrvg(feature){
+  getFeatureCreatePrvg(feature) {
     return feature && feature.view && feature.create
   }
 
   // get feature edit flag privilege
-  getFeatureEditPrvg(feature){
+  getFeatureEditPrvg(feature) {
     return feature && feature.view && feature.edit
   }
 
   // get feature delete flag privilege
-  getFeatureDeletePrvg(feature){
+  getFeatureDeletePrvg(feature) {
     return feature && feature.view && feature.delete
   }
 
   // get feature download flag privilege
-  getFeatureDownloadPrvg(feature){
+  getFeatureDownloadPrvg(feature) {
     return feature && feature.view && feature.download
   }
 
   // get feature download flag privilege
-  getFeaturePublishPrvg(feature){
+  getFeaturePublishPrvg(feature) {
     return feature && feature.view && feature.publish
   }
 
@@ -206,9 +206,9 @@ export class AuthService {
     return headers.append('Authorization', accessToken);
   }
 
-  initRequestHeaders(contentType= 'application/json; charset=utf-8'){
+  initRequestHeaders(contentType = 'application/json; charset=utf-8') {
     return new HttpHeaders({
-      'Content-Type':contentType
+      'Content-Type': contentType
     });
   }
 
@@ -229,158 +229,76 @@ export class AuthService {
   //wraping the post API using access token or not inside header
   wrapTokenPostApi(url, data, accessToken = null) {
     console.log('AuthService | wrapTokenPostApi ', url);
-    return this.http
-      .post<HttpResponse<Object>>(url, data, {
-        observe: 'response',
-        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
-      })
-      .pipe(
-        tap((resp: any) => {
-          this.getTokenInResponse(resp) 
-        }),
-        catchError(err => {
-          if (err.status === 401) {
-            this.logout();
-            this.showLoggedOutDialog()
-          } else {
-            let token = err.headers.get('Authorization')
-            if (this.getAccessToken() && token) {
-              this.setAccessToken(token)
-            }
-            return throwError(err)
-          }
-        }),
-        map((resp: any) => resp.body),
-      )
+    const api = () => {
+      return this.http
+        .post<HttpResponse<Object>>(url, data, {
+          observe: 'response',
+          headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
+        })
+    }
+    return this.wrapApiCall(api);
   }
 
   //wraping the get API with access token or not inside header
   wrapTokenGetApi(url, accessToken = null) {
     console.log('AuthService | wrapTokenGetApi ', url);
-    return this.http
+    const api = () => {
+      return this.http
       .get<HttpResponse<Object>>(url, {
         observe: 'response',
         headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
-      .pipe(
-        tap((resp: any) => {
-          let token = resp.headers.get('Authorization')
-          if (token) {
-            if (this.getAccessToken()) {
-              this.setAccessToken(token)
-            } else {
-              resp.body = Object.assign({ token: token }, resp.body)
-            }
-          }
-        }),
-        catchError(err => {
-          if (err.status === 401) {
-            this.logout();
-            this.showLoggedOutDialog()
-          } else {
-            let token = err.headers.get('Authorization')
-            if (this.getAccessToken() && token) {
-              this.setAccessToken(token)
-            }
-            return throwError(err)
-          }
-        }),
-        map((resp: any) => resp.body),
-      )
+    }
+    return this.wrapApiCall(api);
   }
 
   //wraping the put API with access token or not inside header
   wrapTokenPutApi(url, data, accessToken = null, headers = null) {
     console.log('AuthService | wrapTokenPutApi ', url);
-    return this.http
+    const api = () => {
+      return this.http
       .put<HttpResponse<Object>>(url, data, {
         observe: 'response',
         headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
       })
-      .pipe(
-        tap((resp: any) => {
-          this.getTokenInResponse(resp) 
-        }),
-        catchError(err => {
-          if (err.status === 401) {
-            this.logout();
-            this.showLoggedOutDialog()
-          } else {
-            let token = err.headers.get('Authorization')
-            if (this.getAccessToken() && token) {
-              this.setAccessToken(token)
-            }
-            return throwError(err)
-          }
-        }),
-        map((resp: any) => resp.body),
-      )
+    }
+    return this.wrapApiCall(api);
   }
 
   //wraping the patch API with access token or not inside header
   wrapTokenPatchApi(url, data, accessToken = null) {
     console.log('AuthService | wrapTokenPatchApi ', url);
-    return this.http
+    const api = () => {
+      return this.http
       .patch<HttpResponse<Object>>(url, data, {
         observe: 'response',
         headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
       })
-      .pipe(
-        tap((resp: any) => {
-          this.getTokenInResponse(resp) 
-        }),
-        catchError(err => {
-          if (err.status === 401) {
-            this.logout();
-            this.showLoggedOutDialog()
-          } else {
-            let token = err.headers.get('Authorization')
-            if (this.getAccessToken() && token) {
-              this.setAccessToken(token)
-            }
-            return throwError(err)
-          }
-        }),
-        map((resp: any) => resp.body),
-      )
+    }
+    return this.wrapApiCall(api);
   }
 
   //wraping the delete API with access token or not inside header
-  wrapTokenDeleteApi(url, accessToken = null, body=null, headers = null) {
+  wrapTokenDeleteApi(url, accessToken = null, body = null, headers = null) {
     console.log('AuthService | wrapTokenDeleteApi ', url);
-    if(body){
+    if (body) {
       return this.wrapTokenRequestApi('delete', url, body, accessToken)
     } else {
-      return this.http
+      const api = () => {
+        return this.http
         .delete<HttpResponse<Object>>(url, {
           observe: 'response',
           headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
         })
-        .pipe(
-          tap((resp: any) => {
-            this.getTokenInResponse(resp) 
-          }),
-          catchError(err => {
-            if (err.status === 401) {
-              this.logout();
-              this.showLoggedOutDialog()
-            } else {
-              let token = err.headers.get('Authorization')
-              if (this.getAccessToken() && token) {
-                this.setAccessToken(token)
-              }
-              return throwError(err)
-            }
-          }),
-          map((resp: any) => resp.body),
-        )
+      }
+      return this.wrapApiCall(api);
     }
   }
 
   //wraping the request API with access token or not inside header
-  wrapTokenRequestApi(method, url, body = null, accessToken = null){
+  wrapTokenRequestApi(method, url, body = null, accessToken = null) {
     let options = {}
-    if(body){
+    if (body) {
       options = {
         observe: 'response',
         headers: this.appendAuthHeaders(new HttpHeaders(), accessToken),
@@ -392,10 +310,18 @@ export class AuthService {
         headers: this.appendAuthHeaders(new HttpHeaders(), accessToken)
       }
     }
-    return this.http.request<HttpResponse<Object>>(method, url, options)
-    .pipe(
+    const api = () => {
+      return this.http.request<HttpResponse<Object>>(method, url, options)
+    }
+    return this.wrapApiCall(api);
+  }
+
+  // wrap api to handle error
+  wrapApiCall(apiCall) {
+    console.log('AuthService | wrapApiCall');
+    return apiCall().pipe(
       tap((resp: any) => {
-        this.getTokenInResponse(resp) 
+        this.getTokenInResponse(resp)
       }),
       catchError(err => {
         if (err.status === 401) {
@@ -423,6 +349,32 @@ export class AuthService {
       } else {
         resp.body = Object.assign({ token: token }, resp.body)
       }
+    }
+  }
+
+  // handle showing snackbar
+  openSnackbarError(title, contentText, contentData = null){
+    console.log('AuthService | showSnackbarError');
+    let snackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+      data: {
+        title: title,
+        content: {
+          text: contentText,
+          data: contentData
+        }
+      }
+    })
+    return snackbar;
+  }
+
+  handleApiError(snackbarTitle, apiError, contentData = null){
+    let snackbar = null;
+    try {
+      snackbar = this.openSnackbarError(snackbarTitle, 'apiErrors.' + (apiError.status ? apiError.error.err_code : 'noInternet'), contentData)
+      return snackbar;
+    } catch (error) {
+      console.error(error)
+      return snackbar;
     }
   }
 }
