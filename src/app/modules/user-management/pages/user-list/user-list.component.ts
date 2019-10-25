@@ -3,7 +3,6 @@ import { User, UserForm } from '../../models/user';
 import { AccountService } from 'src/app/shared/services/account.service';
 import { PageService } from 'src/app/shared/services/page.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { UserDetailsModalComponent } from '../../components/user-details-modal/user-details-modal.component';
@@ -16,7 +15,7 @@ import { constants } from 'src/app/shared/common/constants';
   styleUrls: []
 })
 export class UserListComponent implements OnInit {
-  paginatorProps = { ...constants.paginatorProps};
+  paginatorProps = { ...constants.paginatorProps };
 
   userColumns: string[] = [
     'number',
@@ -75,29 +74,15 @@ export class UserListComponent implements OnInit {
             this.roles = response.data;
           } catch (error) {
             console.error(error)
-          } 
+          }
         },
         error => {
-          try {
-            console.table(error);
-            this.loading = false;
-            let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'userListScreen.failedToGetRoles',
-                content: {
-                  text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })              
-          } catch (error) {
-            console.table(error)
-          }
+          this.handleApiError('userListScreen.failedToGetRoles', error);
         }
       );
     } else {
       this.authService.blockOpenPage()
-    }  
+    }
   }
 
   // event handling paginator value changed (page index and page size)
@@ -119,9 +104,9 @@ export class UserListComponent implements OnInit {
   }
 
   //delete
-  onDelete(user: User){
+  onDelete(user: User) {
     console.log("UserComponent | onDelete")
-    if(this.allowDelete){
+    if (this.allowDelete) {
       const modalRef = this.modal.open(ConfirmationModalComponent, {
         width: '260px',
         data: {
@@ -135,7 +120,7 @@ export class UserListComponent implements OnInit {
         }
       })
       modalRef.afterClosed().subscribe(result => {
-        if(result){
+        if (result) {
           this.loading = true;
           let delUser = Object.assign(new UserForm(), user);
           delUser.is_deleted = true;
@@ -153,27 +138,13 @@ export class UserListComponent implements OnInit {
                     }
                   }
                 })
-                this.lazyLoadData()              
+                this.lazyLoadData()
               } catch (error) {
                 console.table(error)
               }
             },
             error => {
-              try {
-                console.table(error);
-                this.loading = false;
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'failedToDelete',
-                    content: {
-                      text: 'apiErrors.'+ (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })              
-              } catch (error) {
-                console.table(error)
-              }
+              this.handleApiError('failedToDelete', error);
             }
           )
         }
@@ -184,21 +155,21 @@ export class UserListComponent implements OnInit {
   }
 
   // handle click edit button
-  onEdit(user){
+  onEdit(user) {
     console.log('UserComponent | onEdit');
-    if(this.allowEdit){
+    if (this.allowEdit) {
       const modalRef = this.modal.open(UserDetailsModalComponent, {
         width: '80%',
         minWidth: '260px',
         maxWidth: '400px',
         data: {
           isCreate: false,
-          editedUser: {...user},
+          editedUser: { ...user },
           roles: this.roles
         }
       });
       modalRef.afterClosed().subscribe(result => {
-        if(result) {
+        if (result) {
           this.lazyLoadData();
         }
       });
@@ -208,9 +179,9 @@ export class UserListComponent implements OnInit {
   };
 
   // handle click create link
-  onCreate(){
+  onCreate() {
     console.log('UserComponent | onCreate');
-    if(this.allowCreate){
+    if (this.allowCreate) {
       this.modal.open(UserDetailsModalComponent, {
         width: '80%',
         minWidth: '260px',
@@ -235,7 +206,7 @@ export class UserListComponent implements OnInit {
       this.paginatorProps.pageSize,
       this.search).subscribe(
         (data: any) => {
-          try {            
+          try {
             console.table(data);
             this.users = data.data;
             this.paginatorProps.length = data.count;
@@ -247,23 +218,11 @@ export class UserListComponent implements OnInit {
           }
         },
         error => {
-          try {            
-            console.table(error);
-            this.paginatorProps.pageIndex = 0
-            this.paginatorProps.length = 0
-            this.users = []
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'userListScreen.loadFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.log(error)
-          }
+          console.table(error);
+          this.paginatorProps.pageIndex = 0
+          this.paginatorProps.length = 0
+          this.users = [];
+          this.authService.handleApiError('userListScreen.loadFailed', error)
         }
       ).add(
         () => {
@@ -280,4 +239,11 @@ export class UserListComponent implements OnInit {
       )
   }
 
+  // handle api error
+  handleApiError(errorTitle, apiError) {
+    console.log('UserComponent | handleApiError');
+    console.table(apiError);
+    this.loading = false;
+    this.authService.handleApiError(errorTitle, apiError);
+  }
 }

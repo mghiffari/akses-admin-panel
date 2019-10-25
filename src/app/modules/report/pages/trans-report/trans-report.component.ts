@@ -4,7 +4,6 @@ import { CustomValidation } from 'src/app/shared/form-validation/custom-validati
 import { TransactionReport } from '../../models/transaction-report';
 import { constants } from 'src/app/shared/common/constants';
 import { TranslateService } from '@ngx-translate/core';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { MatSnackBar } from '@angular/material';
 import { ReportService } from '../../services/report.service';
 import { DatePipe } from '@angular/common';
@@ -162,15 +161,7 @@ export class TransReportComponent implements OnInit {
   // show form error in snackbar
   showFormError(errorText) {
     console.log('TransReportComponent | editNotifError')
-    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'invalidForm',
-        content: {
-          text: errorText,
-          data: null
-        }
-      }
-    })
+    this.authService.openSnackbarError('invalidForm', errorText);
   }
 
   // parse download link with 
@@ -212,17 +203,9 @@ export class TransReportComponent implements OnInit {
           console.table(error);
           this.resetPage()
           this.resetTable()
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'transactionReport.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
+          this.authService.handleApiError('transactionReport.loadFailed', error)
         } catch (error) {
-          console.log(error)
+          console.error(error)
         }
       }
     ).add(
