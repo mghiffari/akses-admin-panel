@@ -4,8 +4,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ChangePhoneService } from '../../services/change-phone.service';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { ChangePhone } from '../../models/change-phone';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-remark-input-modal',
@@ -21,6 +21,7 @@ export class RemarkInputModalComponent implements OnInit {
   //constructor
   constructor(public dialogRef: MatDialogRef<RemarkInputModalComponent>,
     private requestService: ChangePhoneService,
+    private authService: AuthService,
     private snackbar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log('RemarkInputModalComponent | constructor')
@@ -55,7 +56,7 @@ export class RemarkInputModalComponent implements OnInit {
         this.onSubmittingForm = false;
         try {
           let data = response.data;
-          if(data.fail_count === 0){
+          if (data.fail_count === 0) {
             this.snackbar.openFromComponent(SuccessSnackbarComponent, {
               data: {
                 title: 'success',
@@ -67,34 +68,15 @@ export class RemarkInputModalComponent implements OnInit {
             })
             this.dialogRef.close(true)
           } else {
-            this.snackbar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'changePhonenumberRequestListScreen.addRemarkFailed',
-                content: {
-                  text: '',
-                  data: null
-                }
-              }
-            })
+            this.authService.openSnackbarError('changePhonenumberRequestListScreen.addRemarkFailed', '')
           }
         } catch (error) {
           console.error(error)
         }
       }, error => {
-        try {
-          this.onSubmittingForm = false;
-          this.snackbar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'changePhonenumberRequestListScreen.addRemarkFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.table(error)
-        }
+        console.table(error);
+        this.onSubmittingForm = false;
+        this.authService.handleApiError('changePhonenumberRequestListScreen.addRemarkFailed', error);
       }
     )
   }

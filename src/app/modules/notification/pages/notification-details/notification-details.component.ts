@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatDialog } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NotifConfirmModalComponent } from '../../components/notif-confirm-modal/notif-confirm-modal.component';
@@ -187,23 +186,7 @@ export class NotificationDetailsComponent implements OnInit {
                               console.log(error)
                             }
                           }, error => {
-                            try {
-                              console.table(error);
-                              let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                                data: {
-                                  title: 'notificationDetailsScreen.getNotificationFailed',
-                                  content: {
-                                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                                    data: null
-                                  }
-                                }
-                              })
-                              errorSnackbar.afterDismissed().subscribe(() => {
-                                this.goToListScreen()
-                              })
-                            } catch (error) {
-                              console.log(error)
-                            }
+                            this.handleLoadInitError('notificationDetailsScreen.getNotificationFailed', error);
                           }).add(() => {
                             this.loading = false;
                           })
@@ -219,23 +202,7 @@ export class NotificationDetailsComponent implements OnInit {
                     }
                   },
                   error => {
-                    try {
-                      console.table(error);
-                      let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                        data: {
-                          title: 'specialOfferListScreen.loadFailed',
-                          content: {
-                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                            data: null
-                          }
-                        }
-                      })
-                      errorSnackbar.afterDismissed().subscribe(() => {
-                        this.goToListScreen()
-                      })
-                    } catch (error) {
-                      console.log(error)
-                    }
+                    this.handleLoadInitError('specialOfferListScreen.loadFailed', error);
                   }
                 )
 
@@ -243,23 +210,7 @@ export class NotificationDetailsComponent implements OnInit {
                 console.log(error)
               }
             }, error => {
-              try {
-                console.table(error);
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'articleListScreen.loadFailed',
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
-                errorSnackbar.afterDismissed().subscribe(() => {
-                  this.goToListScreen()
-                })
-              } catch (error) {
-                console.log(error)
-              }
+              this.handleLoadInitError('articleListScreen.loadFailed', error);
             })
         } else {
           this.authService.blockOpenPage()
@@ -269,12 +220,12 @@ export class NotificationDetailsComponent implements OnInit {
   }
 
   // Method to subscribe to searct text change to filter article and special offer
-  handleChangeFilterText(){
+  handleChangeFilterText() {
     console.log("NotificationDetailsComponent | handleChangeFilterText");
     this.searchArticle.valueChanges.subscribe(value => {
       this.displayArticles = [];
-      if(value){
-        this.articles.map((article) => {
+      if (value) {
+        this.articles.forEach((article) => {
           if (article.title.toLowerCase().includes(value)) {
             this.displayArticles.push(article);
           }
@@ -288,7 +239,7 @@ export class NotificationDetailsComponent implements OnInit {
       this.displayArticles = [];
       if (value) {
         this.displaySpecialOffers = [];
-        this.specialOffers.map((specialOffer) => {
+        this.specialOffers.forEach((specialOffer) => {
           if (specialOffer.title.toLowerCase().includes(value.toLowerCase())) {
             this.displaySpecialOffers.push(specialOffer);
           }
@@ -618,7 +569,7 @@ export class NotificationDetailsComponent implements OnInit {
       const linkCategory = formValue.linkCategory.toLowerCase()
       if (linkCategory.includes(constants.specialOfferCategory.durable)) {
         notification.link_type = this.notificationLinkType.specialOfferLinkCategory.durable
-      } else if (linkCategory.includes(constants.specialOfferCategory.mpl)){
+      } else if (linkCategory.includes(constants.specialOfferCategory.mpl)) {
         notification.link_type = this.notificationLinkType.specialOfferLinkCategory.mpl
       } else {
         notification.link_type = this.notificationLinkType.specialOfferLinkCategory.oneclick
@@ -639,6 +590,19 @@ export class NotificationDetailsComponent implements OnInit {
     let tasks = [];
     let getUploadUrlTasks = [];
     let fileTypes = [];
+    const doUpdloadUrlTasks = () => {
+      forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+        let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
+        if (!errorConvert) {
+          forkJoin(tasks).subscribe((responses: Array<any>) => {
+            let error = this.handleUploadFilesResponse(responses, fileTypes)
+            if (!error) {
+              this.createNotification(notification)
+            }
+          })
+        }
+      })
+    }
     if (!this.recipientAllFlag.value) {
       getUploadUrlTasks.push(this.fileService.getUploadUrl(this.csvFile.value, this.fileService.notificationRecipientComp).pipe(catchError(e => of(e))))
       fileTypes.push('csv')
@@ -653,17 +617,7 @@ export class NotificationDetailsComponent implements OnInit {
           console.log(compressedImg)
           getUploadUrlTasks.push(this.fileService.getUploadUrl(compressedImg, this.fileService.notificationComponent).pipe(catchError(e => of(e))))
           fileTypes.push('image')
-          forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
-            let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
-            if (!errorConvert) {
-              forkJoin(tasks).subscribe((responses: Array<any>) => {
-                let error = this.handleUploadFilesResponse(responses, fileTypes)
-                if (!error) {
-                  this.createNotification(notification)
-                }
-              })
-            }
-          })
+          doUpdloadUrlTasks()
         }, error => {
           console.log(error)
           this.onSubmittingForm = false;
@@ -671,17 +625,7 @@ export class NotificationDetailsComponent implements OnInit {
       )
     } else {
       if (getUploadUrlTasks.length > 0) {
-        forkJoin(getUploadUrlTasks).subscribe((convertRes: Array<any>) => {
-          let errorConvert = this.handleGetUploadUrlResponse(convertRes, fileTypes, tasks, notification)
-          if (!errorConvert) {
-            forkJoin(tasks).subscribe((responses: Array<any>) => {
-              let error = this.handleUploadFilesResponse(responses, fileTypes)
-              if (!error) {
-                this.createNotification(notification)
-              }
-            })
-          }
-        })
+        doUpdloadUrlTasks()
       } else {
         this.createNotification(notification)
       }
@@ -721,6 +665,20 @@ export class NotificationDetailsComponent implements OnInit {
       shouldDeleteIcon = true
     }
 
+    const doUpdloadUrlTasks = () => {
+      forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
+        let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
+        if (!errorConvert) {
+          forkJoin(tasks).subscribe((responses: Array<any>) => {
+            let error = this.handleUploadFilesResponse(responses, fileTypes)
+            if (!error) {
+              this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
+            }
+          })
+        }
+      })
+    }
+
     if (formValue.imageFile) {
       if (formValue.oldImage) {
         shouldDeleteImage = true
@@ -731,17 +689,7 @@ export class NotificationDetailsComponent implements OnInit {
           console.log(compressedImg);
           getUploadUrlTasks.push(this.fileService.getUploadUrl(compressedImg, this.fileService.notificationComponent).pipe(catchError(e => of(e))))
           fileTypes.push('image')
-          forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
-            let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
-            if (!errorConvert) {
-              forkJoin(tasks).subscribe((responses: Array<any>) => {
-                let error = this.handleUploadFilesResponse(responses, fileTypes)
-                if (!error) {
-                  this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
-                }
-              })
-            }
-          })
+          doUpdloadUrlTasks()
         }, error => {
           this.onSubmittingForm = false;
           console.log(error)
@@ -751,17 +699,7 @@ export class NotificationDetailsComponent implements OnInit {
         shouldDeleteImage = true
       }
       if (getUploadUrlTasks.length > 0) {
-        forkJoin(getUploadUrlTasks).subscribe((getUrlRes: Array<any>) => {
-          let errorConvert = this.handleGetUploadUrlResponse(getUrlRes, fileTypes, tasks, notification)
-          if (!errorConvert) {
-            forkJoin(tasks).subscribe((responses: Array<any>) => {
-              let error = this.handleUploadFilesResponse(responses, fileTypes)
-              if (!error) {
-                this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
-              }
-            })
-          }
-        })
+        doUpdloadUrlTasks()
       } else {
         this.updateNotification(notification, shouldDeleteCSV, shouldDeleteIcon, shouldDeleteImage)
       }
@@ -771,27 +709,16 @@ export class NotificationDetailsComponent implements OnInit {
   // handling get uploading files url response (forkJoin result)
   handleGetUploadUrlResponse(responses: Array<any>, fileTypes, tasks: any[], notification: Notification) {
     let error = false;
+    const onError = (errorTitle, apiError) => {
+      error = true;
+      this.handleSubmitError(errorTitle, apiError);
+    }
     responses.forEach((response, index) => {
       console.log(response)
       switch (fileTypes[index]) {
         case 'csv':
           if (response instanceof HttpErrorResponse) {
-            error = true;
-            this.onSubmittingForm = false;
-            try {
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'notificationDetailsScreen.uploadCSVFailed',
-                  content: {
-                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.error(error)
-            }
+            onError('notificationDetailsScreen.uploadCSVFailed', response);
           } else {
             try {
               let uploadUrl = response.data.signurl;
@@ -805,22 +732,7 @@ export class NotificationDetailsComponent implements OnInit {
           break;
         case 'icon':
           if (response instanceof HttpErrorResponse) {
-            error = true;
-            this.onSubmittingForm = false;
-            try {
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'notificationDetailsScreen.uploadIconFailed',
-                  content: {
-                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.error(error)
-            }
+            onError('notificationDetailsScreen.uploadIconFailed', response);
           } else {
             try {
               let uploadUrl = response.data.signurl;
@@ -834,22 +746,7 @@ export class NotificationDetailsComponent implements OnInit {
           break;
         case 'image':
           if (response instanceof HttpErrorResponse) {
-            error = true;
-            this.onSubmittingForm = false;
-            try {
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'notificationDetailsScreen.uploadImageFailed',
-                  content: {
-                    text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.error(error)
-            }
+            onError('notificationDetailsScreen.uploadImageFailed', response);
           } else {
             try {
               let uploadUrl = response.data.signurl;
@@ -878,60 +775,21 @@ export class NotificationDetailsComponent implements OnInit {
           if (response instanceof HttpErrorResponse) {
             error = true;
             this.onSubmittingForm = false;
-            try {
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'notificationDetailsScreen.uploadCSVFailed',
-                  content: {
-                    text: 'error',
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.table(error)
-            }
+            this.authService.openSnackbarError('notificationDetailsScreen.uploadCSVFailed', 'error')
           }
           break;
         case 'icon':
           if (response instanceof HttpErrorResponse) {
             error = true;
             this.onSubmittingForm = false;
-            try {
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'notificationDetailsScreen.uploadIconFailed',
-                  content: {
-                    text: 'error',
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.table(error)
-            }
+            this.authService.openSnackbarError('notificationDetailsScreen.uploadIconFailed', 'error');
           }
           break;
         case 'image':
           if (response instanceof HttpErrorResponse) {
             error = true;
             this.onSubmittingForm = false;
-            try {
-              this.onSubmittingForm = false;
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'notificationDetailsScreen.uploadImageFailed',
-                  content: {
-                    text: 'error',
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.table(error)
-            }
+            this.authService.openSnackbarError('notificationDetailsScreen.uploadImageFailed', 'error');
           }
           break;
         default:
@@ -961,21 +819,7 @@ export class NotificationDetailsComponent implements OnInit {
           this.goToListScreen();
         })
       }, error => {
-        try {
-          console.table(error);
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'notificationDetailsScreen.createFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.log(error)
-        }
+        this.handleSubmitError('notificationDetailsScreen.createFailed', error)
       }
     )
   }
@@ -1009,21 +853,7 @@ export class NotificationDetailsComponent implements OnInit {
         }
       },
       error => {
-        try {
-          console.table(error);
-          this.onSubmittingForm = false;
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'notificationDetailsScreen.updateFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.log(error)
-        }
+        this.handleSubmitError('notificationDetailsScreen.updateFailed', error)
       }
     )
   }
@@ -1069,37 +899,13 @@ export class NotificationDetailsComponent implements OnInit {
           try {
             switch (deletedFiles[index]) {
               case 'csv':
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'notificationDetailsScreen.deleteCSVFailed',
-                    content: {
-                      text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
+                this.authService.handleApiError('notificationDetailsScreen.deleteCSVFailed', response)
                 break;
               case 'icon':
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'notificationDetailsScreen.deleteIconFailed',
-                    content: {
-                      text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
+                this.authService.handleApiError('notificationDetailsScreen.deleteIconFailed', response)
                 break;
               case 'image':
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'notificationDetailsScreen.deleteImageFailed',
-                    content: {
-                      text: 'apiErrors.' + (response.status ? response.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })
+                this.authService.handleApiError('notificationDetailsScreen.deleteImageFailed', response)
                 break;
               default:
                 break;
@@ -1142,29 +948,13 @@ export class NotificationDetailsComponent implements OnInit {
         errorText = 'forms.schedule.errorMin';
       }
     }
-    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'invalidForm',
-        content: {
-          text: errorText,
-          data: data
-        }
-      }
-    })
+    this.authService.openSnackbarError('invalidForm', errorText, data)
   }
 
   // show error if to be edited notification data is not valid eq: immediate notif & notif <= 1 hr
   editNotifError(errorText) {
     console.log('NotificationDetailsComponent | editNotifError')
-    let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'error',
-        content: {
-          text: errorText,
-          data: null
-        }
-      }
-    })
+    let errorSnackbar = this.authService.openSnackbarError('error', errorText);
     errorSnackbar.afterDismissed().subscribe(() => {
       this.goToListScreen();
     })
@@ -1182,5 +972,25 @@ export class NotificationDetailsComponent implements OnInit {
   goToListScreen = () => {
     console.log('NotificationDetailsComponent | gotoListScreen')
     this.router.navigate(['/notifications'])
+  }
+
+  // handle error on init page
+  handleLoadInitError(errorTitle, apiError) {
+    console.log('NotificationDetailsComponent | gotoListScreen')
+    console.table(apiError);
+    let errorSnackbar = this.authService.handleApiError(errorTitle, apiError);
+    if (errorSnackbar) {
+      errorSnackbar.afterDismissed().subscribe(() => {
+        this.goToListScreen()
+      })
+    }
+  }
+
+  // handle error for create or update api
+  handleSubmitError(errorTitle, apiError){
+    console.log('NotificationDetailsComponent | handleSubmitError')
+    console.table(apiError)
+    this.onSubmittingForm = false;
+    this.authService.handleApiError(errorTitle, apiError);
   }
 }
