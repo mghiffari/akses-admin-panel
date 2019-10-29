@@ -39,4 +39,3 @@ spec:
       imagePullSecrets:
       - name: regsecret
       restartPolicy: Always
-      hostNetwork: true
