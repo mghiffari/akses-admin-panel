@@ -370,7 +370,17 @@ export class AuthService {
   handleApiError(snackbarTitle, apiError, contentData = null){
     let snackbar = null;
     try {
-      snackbar = this.openSnackbarError(snackbarTitle, 'apiErrors.' + (apiError.status ? apiError.error.err_code : 'noInternet'), contentData)
+      let errorText = 'apiErrors.';
+      if(apiError.status){
+        if(apiError.error && apiError.error.err_code) {
+          errorText += apiError.error.err_code;
+        } else {
+          errorText = apiError.statusText;
+        }
+      } else {
+        errorText += 'noInternet';
+      }
+      snackbar = this.openSnackbarError(snackbarTitle, errorText, contentData)
       return snackbar;
     } catch (error) {
       console.error(error)
