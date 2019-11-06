@@ -456,7 +456,7 @@
             "errorRequired": "End Date must have valid date format value"
         },
         "transactionSearch": {
-            "placeholder": "Search OID / VA / Phone Number / Contract No.",
+            "placeholder": "Search OID / VA / Phone Number / Contract No. ",
             "hint": "Min. length of search text is {{minLength}}",
             "errorRequired": "Search is required"
         },
@@ -578,6 +578,7 @@
         "transactionTable": {
             "oid": "OID",
             "vaNumber": "VA Number",
+            "contNo": "Contract Number",
             "name": "Name",
             "phNumber": "Phone Number",
             "adiraPay": "Adira pay Balance",
