@@ -14,7 +14,7 @@ export class ReportService {
     console.log('ReportService | constructor');
   }
 
-  // get balance report list and search 
+  // get balance report list and search
   getBalanceReport(value) {
     let url = this.balanceReportApiUrl;
     console.log("Report Service | getBalanceReport ", url);
@@ -23,6 +23,7 @@ export class ReportService {
     }
     return this.authService.wrapTokenPostApi(url, data);
   }
+
 
   // get transaction report list with filter and pagination
   getTransactionReport(page, pageSize, fromDate, toDate, search) {
@@ -36,12 +37,13 @@ export class ReportService {
     return this.authService.wrapTokenPostApi(url, data);
   }
 
+
   // return download link parsed with needed parameter
   parseDownloadLink(fromDate, toDate, search) {
     console.log("Report Service | parseDownloadLink");
-    return this.downloadTransReporApiUrl 
-      + '?from_date=' + fromDate 
-      + '&to_date='+ toDate 
+    return this.downloadTransReporApiUrl
+      + '?from_date=' + fromDate
+      + '&to_date='+ toDate
       + '&search_key=' + encodeURIComponent(search)
       + '&token=' + this.authService.getAccessToken()
   }
