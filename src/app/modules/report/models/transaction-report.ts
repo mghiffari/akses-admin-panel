@@ -17,5 +17,3 @@ export class TransactionReport{
     destination_va: string;
     transaction_date: Date;
 }
-
-
