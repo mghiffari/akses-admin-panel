@@ -452,7 +452,7 @@
         "transactionStartDate": {
             "errorRequired": "Tanggal Mulai wajib diisi dengan format tanggal dan waktu yang valid"
         },
-        "transactionEndDate": {
+        "transactionEndDate": {git
             "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid"
         },
         "transactionSearch": {
@@ -578,6 +578,7 @@
         "transactionTable": {
             "oid": "OID",
             "vaNumber": "Nomor VA",
+            "contNo": "No. Kontrak",
             "name": "Nama",
             "phNumber": "Nomor Handphone",
             "adiraPay": "Saldo Adira pay",
