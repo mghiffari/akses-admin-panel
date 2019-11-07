@@ -20,6 +20,7 @@ export class TransReportComponent implements OnInit {
   transactionColumns: string[] = [
     'oid',
     'vaNumber',
+    'contNo',
     'customerName',
     'mobileNumber',
     'transactionCode',
