@@ -578,6 +578,7 @@
         "transactionTable": {
             "oid": "OID",
             "vaNumber": "Nomor VA",
+            "contNo": "No. Kontrak",
             "name": "Nama",
             "phNumber": "Nomor Handphone",
             "adiraPay": "Saldo Adira pay",
