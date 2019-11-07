@@ -456,7 +456,7 @@
             "errorRequired": "Tanggal Selesai wajib diisi dengan format tanggal dan waktu yang valid"
         },
         "transactionSearch": {
-            "placeholder": "Cari OID / VA / Nomor Handphone / No. PK",
+            "placeholder": "Cari OID / VA / Nomor Handphone / No. Kontrak",
             "hint": "Jumlah karakter minimum untuk pencarian adalah {{minLength}}",
             "errorRequired": "Keyword pencarian wajib diisi"
         },
