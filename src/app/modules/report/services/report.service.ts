@@ -24,7 +24,6 @@ export class ReportService {
     return this.authService.wrapTokenPostApi(url, data);
   }
 
-
   // get transaction report list with filter and pagination
   getTransactionReport(page, pageSize, fromDate, toDate, search) {
     let url = this.reportApiUrl + '/' + page + '/' + pageSize;
@@ -36,7 +35,6 @@ export class ReportService {
     }
     return this.authService.wrapTokenPostApi(url, data);
   }
-
 
   // return download link parsed with needed parameter
   parseDownloadLink(fromDate, toDate, search) {
