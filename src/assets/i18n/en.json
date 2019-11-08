@@ -45,7 +45,14 @@
                 "rule": "Rule",
                 "cashbackReward": "Cashback Reward"
             }
+        },
+        "vaMaster": {
+            "title": "VA Master",
+            "children": {
+                "requestWithdrawal": "Request Withdrawal",
+                "trackYourRequest": "Track Your Request"
         }
+      }
     },
     "userAction": {
         "logout": "Logout",
