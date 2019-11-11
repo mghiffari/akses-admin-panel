@@ -1,17 +1,41 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: angular-admin-panel
+  name: dev-fe-admin-panel
+  namespace: development
+  labels:
+    app: dev-fe-admin-panel
 spec:
-  replicas: 1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: dev-fe-admin-panel
+      tier: frontend
   template:
     metadata:
-     labels:
-      app: angular-admin-panel
+      labels:
+        app: dev-fe-admin-panel
+        tier: frontend
     spec:
       containers:
-      - name: angular-admin-panel
-        image: 10.50.4.87:5000/angular-admin-panel:latest
+      - name: dev-fe-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/dev-akses/dev-fe-admin-panel:latest
         imagePullPolicy: Always
+        resources: 
+          limits:
+            cpu: 45m
+            memory: 300Mi
+          requests:
+            cpu: 30m
+            memory: 200Mi
+        ports:
+        - containerPort: 80
+          name: dev-fe-adm-pnl
+      imagePullSecrets:
+      - name: regsecret
       restartPolicy: Always
-      hostNetwork: true
