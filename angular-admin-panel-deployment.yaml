@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sit-fe-admin-panel
+  namespace: sit
+  labels:
+    app: sit-fe-admin-panel
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: sit-fe-admin-panel
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: sit-fe-admin-panel
+        tier: frontend
+    spec:
+      containers:
+      - name: sit-fe-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/uat-akses/sit-fe-admin-panel:latest
+        imagePullPolicy: Always
+        resources: 
+          limits:
+            cpu: 45m
+            memory: 300Mi
+          requests:
+            cpu: 30m
+            memory: 200Mi
+        ports:
+        - containerPort: 80
+          name: sit-fe-adm-pnl
+      imagePullSecrets:
+      - name: regsecret
+      restartPolicy: Always
