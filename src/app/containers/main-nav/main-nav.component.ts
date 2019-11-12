@@ -139,6 +139,22 @@ export class MainNavComponent {
         },
       ]
     },
+    {
+      title: 'navMenus.vaMaster.title',
+      link: '/va-master',
+      children: [
+        {
+          title: 'navMenus.vaMaster.children.requestWithdrawal',
+          link: '/requestWithdrawal',
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.banner) }
+        },
+        {
+          title: 'navMenus.vaMaster.children.trackYourRequest',
+          link: '/trackYourRequest',
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.article) }
+        }
+      ]
+    }
   ]
 
   navList = []
