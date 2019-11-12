@@ -29,10 +29,10 @@ spec:
         resources: 
           limits:
             cpu: 45m
-            memory: 300Mi
+            memory: 225Mi
           requests:
             cpu: 30m
-            memory: 200Mi
+            memory: 150Mi
         ports:
         - containerPort: 80
           name: dev-fe-adm-pnl
