@@ -50,9 +50,10 @@
             "title": "VA Master",
             "children": {
                 "requestWithdrawal": "Request Withdrawal",
-                "trackYourRequest": "Track Your Request"
+                "trackYourRequest": "Track Your Request",
+                "toDoList": "To Do List"
+            }
         }
-      }
     },
     "userAction": {
         "logout": "Logout",
@@ -514,6 +515,10 @@
         "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
     },
     "table": {
+        "jenisva": "Jenis VA",
+        "subdate": "Tanggal Pengajuan",
+        "amount": "Jumlah",
+        "initiator": "Initiator",
         "noRecordsFound": "Data Kosong",
         "search": "Cari di sini",
         "actions": "Actions",
@@ -950,6 +955,10 @@
         "lastLogin": "TERAKHIR LOGIN",
         "addEntry": "Tambah Entri Baru"
     },
+    "toDoListScreen": {
+        "title": "Approval Cashout Master",
+        "loadFailed": "gagal mendapatkan list data"
+    },
     "approvalListScreen": {
         "title": "Approval",
         "getTabsFailed": "gagal mendapatkan list fitur approval",
@@ -1066,7 +1075,8 @@
         "multigunamotor": "Multiguna Motor",
         "multigunamobil": "Multiguna Mobil",
         "spmultigunamotor": "SP Multiguna Motor",
-        "requestwithdrawal": "requestwithdrawal"
+        "requestwithdrawal": "Request Withdrawal",
+        "approvecashout": "Approve Cashout"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

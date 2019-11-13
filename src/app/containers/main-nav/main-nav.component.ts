@@ -34,7 +34,7 @@ export class MainNavComponent {
     );
 
   allNav = [
-    {
+      {
       title: 'navMenus.master.title',
       link: '/master',
       children: [
@@ -146,12 +146,17 @@ export class MainNavComponent {
         {
           title: 'navMenus.vaMaster.children.requestWithdrawal',
           link: '/requestWithdrawal',
-          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.banner) }
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.requestwithdrawal) }
         },
         {
           title: 'navMenus.vaMaster.children.trackYourRequest',
           link: '/trackYourRequest',
-          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.article) }
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.requestwithdrawal) }
+        },
+        {
+          title: 'navMenus.vaMaster.children.toDoList',
+          link: '/todo-list',
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.approvecashout) }
         }
       ]
     }

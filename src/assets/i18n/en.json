@@ -50,7 +50,9 @@
             "title": "VA Master",
             "children": {
                 "requestWithdrawal": "Request Withdrawal",
-                "trackYourRequest": "Track Your Request"
+                "trackYourRequest": "Track Your Request",
+                "toDoList": "To Do List"
+            }
         }
       }
     },
@@ -514,6 +516,10 @@
         "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
     },
     "table": {
+        "jenisva": "VA Type",
+        "subdate": "Request Date",
+        "amount": "Amount",
+        "initiator": "Initiator",
         "noRecordsFound": "No Records Found",
         "search": "search",
         "actions": "Actions",
@@ -950,6 +956,10 @@
         "lastLogin": "LAST LOGIN",
         "addEntry": "Add a New Entry"
     },
+    "toDoListScreen": {
+        "title": "Approval Cashout Master",
+        "loadFailed": "failed to get list data"
+    },
     "approvalListScreen": {
         "title": "Approval",
         "getTabsFailed": "failed to get list of approval features",
@@ -1066,7 +1076,9 @@
         "gadget": "Gadget",
         "multigunamotor": "Multipurpose Motorcycle",
         "multigunamobil": "Multipurpose Car",
-        "spmultigunamotor": "SP Multipurpose Motorcycle"
+        "spmultigunamotor": "SP Multipurpose Motorcycle",
+        "requestwithdrawal": "Request Withdrawal",
+        "approvecashout": "Approve Cashout"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
