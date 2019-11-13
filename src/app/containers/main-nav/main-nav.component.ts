@@ -34,7 +34,7 @@ export class MainNavComponent {
     );
 
   allNav = [
-    {
+      {
       title: 'navMenus.master.title',
       link: '/master',
       children: [
@@ -152,6 +152,11 @@ export class MainNavComponent {
           title: 'navMenus.vaMaster.children.trackYourRequest',
           link: '/trackYourRequest',
           getShowFlag: () => { return this.getViewPrivilege(this.featureNames.article) }
+        },
+        {
+          title: 'navMenus.vaMaster.children.toDoList',
+          link: '/todo-list',
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.approvecashout) }
         }
       ]
     }
