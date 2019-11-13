@@ -15,6 +15,24 @@ import { CashoutMasterService } from 'src/app/shared/services/cashout-master.ser
 })
 
 export class RequestWithdrawalListComponent implements OnInit{
+
+  vClickableChecked: boolean = false;
+
+  //show detail page
+  vShowPartialPage: boolean = false;
+  vShowFullPage: boolean = false;
+
+  //triggered when radio button URL Option clicked
+  showPartialPage() {
+    console.log('WithdrawalPartial | showPartialPage');
+  }
+  
+  showFullPage() {
+  
+  }
+  
+  
+
   loading = false;
   requestForm: FormGroup;
   data = []
@@ -23,15 +41,6 @@ export class RequestWithdrawalListComponent implements OnInit{
 
   get amount() {
     return this.requestForm.get('amount');
-  }
-
-  vShowPartialPage: boolean = false;
-
-  vShowFullPage: boolean = false;
-
-  //triggered when radio button URL Option clicked
-  showPartialPage() {
-    console.log('WithdrawalPartial | showPartialPage');
   }
 
   constructor(

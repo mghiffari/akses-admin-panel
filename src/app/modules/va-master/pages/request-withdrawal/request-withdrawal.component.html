@@ -5,41 +5,54 @@
     </div>
   </div>
   <form [formGroup]="requestForm" *ngIf="!loading">
-      <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
-          <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
-              <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-                {{'requestWithdrawalScreen.jenisVAMaster' | translate}}
-              </div>
-              <div fxFlexAlign="center" fxFlex="70%">
-                <mat-form-field appearance="fill">
-                  <mat-select formControlName="jenisvamaster">
-                    <mat-option value="">Pilih Jenis VA Master</mat-option>
-                    <mat-option *ngFor="let dat of data" [value]="dat.id">{{dat.va_name + ' - ' + dat.va_number}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-          </div>
+    <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'requestWithdrawalScreen.jenisVAMaster' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="jenisvamaster">
+              <mat-option value="">Pilih Jenis VA Master</mat-option>
+              <mat-option *ngFor="let dat of data" [value]="dat.id">{{dat.va_name + ' - ' + dat.va_number}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
-      <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
-          <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
-            <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-              {{'requestWithdrawalScreen.currentAmount' | translate}}
-            </div>
-          </div>
+    </div>
+    <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'requestWithdrawalScreen.currentAmount' | translate}}
+        </div>
       </div>
-      <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
-          <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
-              <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-                {{'requestWithdrawalScreen.totalWithdrawal' | translate}}
-              </div>
-              <div fxFlexAlign="center" fxFlex="70%">
-                <mat-form-field appearance="fill">
-                  <input matInput placeholder="{{'requestWithdrawalScreen.totalWithdrawal' | translate}}" formControlName="amount">
-                </mat-form-field>
-              </div>
-          </div>
+    </div>
+    <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+      <div fxFlex="50%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+        <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
+          {{'requestWithdrawalScreen.totalWithdrawal' | translate}}
+        </div>
+        <div fxFlexAlign="center" fxFlex="70%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'requestWithdrawalScreen.totalWithdrawal' | translate}}"
+              formControlName="amount">
+          </mat-form-field>
+        </div>
       </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <div fxFlex="67%" fxFlex.lt-md="100%" fxFlex.lt-lg="35%" fxFlex.lt-sm="100%">
+        <mat-radio-group [disabled]="!vClickableChecked" fxLayout="row wrap">
+          <mat-radio-button [checked]="vShowPartialPage" fxFlex="30%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+            fxFlex.lt-sm="100%" color="primary" [value]="true" (change)="showPartialPage()">
+            {{ 'forms.vaMaster.partial' | translate }}</mat-radio-button>
+          <mat-radio-button [checked]="vShowFullPage" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+            fxFlex.lt-sm="100%" color="primary" [value]="false" (change)="showFullPage()">
+            {{ 'forms.vaMaster.full' | translate }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
   </form>
   <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
     <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
@@ -50,6 +63,3 @@
     </div>
   </div>
 </div>
-
-
-
