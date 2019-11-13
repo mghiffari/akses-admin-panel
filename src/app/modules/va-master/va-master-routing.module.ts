@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CanDeactivateGuard } from 'src/app/_guard/can-deactivate.guard';
 import { RequestWithdrawalListComponent} from './pages/request-withdrawal/request-withdrawal.component';
 import { TrackYourRequestListComponent} from './pages/track-your-request/track-your-request.component';
+import { ToDoListComponent} from './pages/todo-list/todo-list.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,14 @@ const routes: Routes = [
     canDeactivate: [CanDeactivateGuard],
     data: {
       title: 'Track Your Request'
+    }
+  },
+  {
+    path: 'todo-list',
+    component: ToDoListComponent,
+    canDeactivate: [CanDeactivateGuard],
+    data: {
+      title: 'To Do List'
     }
   }
 ];
