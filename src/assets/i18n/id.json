@@ -491,6 +491,12 @@
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
+        },
+        "vaMaster": {
+            "type": "VA Master Angsuran",
+            "partial": "Tarik Sebagian",
+            "full": "Tarik Semua",
+            "buttonSubmit": "Submit"
         }
     },
     "loginScreen": {
@@ -1018,6 +1024,16 @@
         "updateFailed": "gagal mengubah upcoming rule",
         "createFailed": "gagal menambahkan upcoming rule baru"
     },
+    "requestWithdrawalScreen": {
+        "title": "Request Withdrawal",
+        "jenisVAMaster": "Jenis VA Master",
+        "currentAmount": "Saldo Saat Ini",
+        "totalWithdrawal": "Jumlah Withdrawal"
+    },
+    "trackYourRequestScreen": {
+        "title": "Track Your Request",
+        "find": "Cari"
+    },
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
         "dateFilter": "Filter Tanggal",
@@ -1049,7 +1065,8 @@
         "gadget": "Gadget",
         "multigunamotor": "Multiguna Motor",
         "multigunamobil": "Multiguna Mobil",
-        "spmultigunamotor": "SP Multiguna Motor"
+        "spmultigunamotor": "SP Multiguna Motor",
+        "requestwithdrawal": "requestwithdrawal"
     },
     "apiErrors": {
         "noInternet": "tidak ada koneksi internet",

@@ -1,1 +1,91 @@
-TESTING
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16 border-bottom-gray">
+    <div class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      {{'requestWithdrawalScreen.title' | translate}}
+    </div>
+  </div>
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16 border-bottom-gray">
+    <div fxFlex="60%" fxFlex.lt-lg="70%" fxFlex.lt-md="80%" fxFlex.lt-sm="100%" fxLayout="column" >
+      <div fxLayout="row wrap">
+        <div fxFlex="30%" fxFlexAlign="left">
+          {{'requestWithdrawalScreen.jenisVAMaster' | translate}}
+        </div>
+        <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+          <mat-form-field appearance="fill">
+            <mat-select formControlName="category">
+              <mat-option value="">
+                {{'forms.vaMaster.type' | translate}}
+              </mat-option>
+<!--              <mat-option *ngFor="let cat of categories" [value]="cat.value">-->
+<!--                {{cat.value}}-->
+<!--              </mat-option>-->
+            </mat-select>
+          </mat-form-field>
+<!--          <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">-->
+<!--            <span *ngIf="category.errors.required">{{'forms.category.errorRequired' | translate}}</span>-->
+<!--          </mat-error>-->
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex="30%" fxFlexAlign="left">
+          {{'requestWithdrawalScreen.currentAmount' | translate}}
+        </div>
+        <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+      <div fxFlex="30%" fxFlexAlign="center">
+        {{'requestWithdrawalScreen.totalWithdrawal' | translate}}
+      </div>
+      <div fxFlex="50%" fxFlex.lt-lg="60%" fxFlex.lt-md="70%">
+        <mat-form-field appearance="fill">
+          <mat-select formControlName="category">
+            <mat-option value="">
+              {{'forms.vaMaster.type' | translate}}
+            </mat-option>
+            <!--              <mat-option *ngFor="let cat of categories" [value]="cat.value">-->
+            <!--                {{cat.value}}-->
+            <!--              </mat-option>-->
+          </mat-select>
+        </mat-form-field>
+        <!--          <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">-->
+        <!--            <span *ngIf="category.errors.required">{{'forms.category.errorRequired' | translate}}</span>-->
+        <!--          </mat-error>-->
+      </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="center center" class="margin-top-20">
+        <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
+          <mat-radio-group [disabled]="!vClickableChecked" fxLayout="row wrap">
+            <mat-radio-button [checked]="vShowPartialPage" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
+                              fxFlex.lt-sm="100%" color="primary" [value]="true" (change)="showPartialPage()">
+              {{'forms.vaMaster.partial' | translate}}</mat-radio-button>
+            <mat-radio-button [checked]="vShowFullPage" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%" fxFlex.lt-sm="100%"
+                              color="primary" [value]="false" (change)="showFullPage()">
+              {{'forms.vaMaster.full' | translate}}</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        </div>
+
+      <div fxLayout="row wrap" fxLayoutAlign="center center" class="margin-top-20">
+<!--        <button mat-button>Click me!</button>-->
+
+<!--        <div fxFlex="70%">-->
+<!--          <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="save()"-->
+<!--                  [disabled]="!offerForm.valid ">{{'forms.vaMaster.buttonSubmit' | translate}}</button>-->
+<!--          <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">-->
+<!--            <div fxLayout="row" fxLayoutAlign="center center">-->
+<!--              <div>-->
+<!--                <mat-spinner diameter="16"></mat-spinner>-->
+<!--              </div>-->
+<!--              <div class="margin-left-5">{{'loading' | translate}}</div>-->
+<!--            </div>-->
+<!--          </button>-->
+<!--        </div>-->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
