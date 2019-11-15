@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {filter, map, mergeMap} from 'rxjs/operators';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, FormControl} from '@angular/forms';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
@@ -16,32 +16,26 @@ import { CashoutMasterService } from 'src/app/shared/services/cashout-master.ser
 
 export class RequestWithdrawalListComponent implements OnInit{
 
-  vClickableChecked: boolean = false;
-
   //show detail page
   vShowPartialPage: boolean = false;
   vShowFullPage: boolean = false;
 
   //triggered when radio button URL Option clicked
-  showPartialPage() {
-    console.log('WithdrawalPartial | showPartialPage');
+  showPartialAmount() {
+    console.log('WithdrawalPartial | showPartialAmount');
   }
-  
-  showFullPage() {
-  
+
+  showFullAmount() {
+    console.log('WithdrawalPartial | showFullAmount');
   }
-  
-  
 
   loading = false;
-  requestForm: FormGroup;
+  requestForm
   data = []
+  getAmount = []
   allowCreate = false;
   allowEdit = false;
-
-  get amount() {
-    return this.requestForm.get('amount');
-  }
+  amountValue = 0;
 
   constructor(
     private authService: AuthService,
@@ -49,6 +43,11 @@ export class RequestWithdrawalListComponent implements OnInit{
   ){}
 
   ngOnInit() {
+    this.requestForm = new FormGroup({
+      jenisvamaster : new FormControl(),
+      amount: new FormControl()
+    })
+
     console.log('ToDoListComponent | ngOnInit');
     this.loading = true;
     this.allowCreate = false;
@@ -63,6 +62,19 @@ export class RequestWithdrawalListComponent implements OnInit{
       this.authService.blockOpenPage()
     }
   }
+
+  changeAmount(event){
+    this.amountValue = event.value.balance
+  }
+
+  get amount() {
+    return this.requestForm.get('amount');
+  }
+
+  get jenisvamaster() {
+    return this.requestForm.get('jenisvamaster');
+  }
+
 
   getDataSpinner()
   {
