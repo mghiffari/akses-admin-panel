@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import {filter, map, mergeMap} from 'rxjs/operators';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {FormGroup, FormControl} from '@angular/forms';
+import { filter, map, mergeMap } from 'rxjs/operators';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
@@ -14,7 +14,7 @@ import { CashoutMasterService } from 'src/app/shared/services/cashout-master.ser
   styleUrls: []
 })
 
-export class RequestWithdrawalListComponent implements OnInit{
+export class RequestWithdrawalListComponent implements OnInit {
 
   //show detail page
   vShowPartialPage: boolean = false;
@@ -40,20 +40,20 @@ export class RequestWithdrawalListComponent implements OnInit{
   constructor(
     private authService: AuthService,
     private cashoutMasterService: CashoutMasterService
-  ){}
+  ) { }
 
   ngOnInit() {
     this.requestForm = new FormGroup({
-      jenisvamaster : new FormControl(),
+      jenisvamaster: new FormControl(),
       amount: new FormControl()
     })
 
-    console.log('ToDoListComponent | ngOnInit');
+    console.log('RequestWithdrawalListComponent | ngOnInit');
     this.loading = true;
     this.allowCreate = false;
     this.allowEdit = false;
     let prvg = this.authService.getFeaturePrivilege(constants.features.requestwithdrawal)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
       this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
       this.getDataSpinner();
@@ -63,7 +63,7 @@ export class RequestWithdrawalListComponent implements OnInit{
     }
   }
 
-  changeAmount(event){
+  changeAmount(event) {
     this.amountValue = event.value.balance
   }
 
@@ -76,17 +76,14 @@ export class RequestWithdrawalListComponent implements OnInit{
   }
 
 
-  getDataSpinner()
-  {
+  getDataSpinner() {
     this.cashoutMasterService.getListVaMaster().subscribe(
       (response: any) => {
-        try
-        {
+        try {
           console.table(response);
           this.data = response.data
         }
-        catch(e)
-        {
+        catch (e) {
           console.table(e)
         }
       }

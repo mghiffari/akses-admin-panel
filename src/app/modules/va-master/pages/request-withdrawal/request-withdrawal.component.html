@@ -19,7 +19,7 @@
           </mat-form-field>
           <mat-error class="bottom-error"
             *ngIf="jenisvamaster.invalid && (jenisvamaster.dirty || jenisvamaster.touched)">
-            <span *ngIf="jenisvamaster.errors.required">{{'forms.region.errorRequired' | translate}}</span>
+            <span *ngIf="jenisvamaster.errors.required">{{'forms.vaMaster.errorRequired' | translate}}</span>
           </mat-error>
         </div>
       </div>
@@ -30,8 +30,7 @@
           {{'requestWithdrawalScreen.currentAmount' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
-          <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="30%">
-            {{amountValue | currency:'IDR':'symbol-narrow':'1.2-2': locale}}
+          <div><strong>{{amountValue | currency:'IDR':'symbol-narrow':'1.2-2': locale}}</strong>
           </div>
         </div>
       </div>
@@ -43,9 +42,12 @@
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
           <mat-form-field appearance="fill">
-            <input matInput placeholder="{{'requestWithdrawalScreen.totalWithdrawal' | translate}}"
+            <input matInput placeholder="{{'requestWithdrawalScreen.totalWithdrawal' | translate }}"
               formControlName="amount">
           </mat-form-field>
+          <mat-error class="bottom-error" *ngIf="amount.invalid && (amount.dirty || amount.touched)">
+            <span *ngIf="amount.errors.pattern">{{'forms.vaMaster.errorFormat' | translate}}</span>
+          </mat-error>
         </div>
       </div>
     </div>

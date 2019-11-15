@@ -497,7 +497,9 @@
             "type": "VA Master Angsuran",
             "partial": "Tarik Sebagian",
             "full": "Tarik Semua",
-            "buttonSubmit": "Submit"
+            "buttonSubmit": "Submit",
+            "errorFormat": "Kode Pos hanya terdiri dari angka",
+            "errorRequired": "Jenis VA Master is required"
         }
     },
     "loginScreen": {
