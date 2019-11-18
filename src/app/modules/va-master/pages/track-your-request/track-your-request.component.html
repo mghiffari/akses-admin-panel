@@ -85,4 +85,18 @@
       <tr mat-row *matRowDef="let row; columns: tycColumns;" [hidden]="loading"></tr>
     </table>
   </div>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="margin-top-10 padding-left-16"
+    *ngIf="tyc.length === 0 && !loading">
+    <div class="font-gotham-light">
+      {{'table.noRecordsFound' | translate}}
+    </div>
+  </div>
 </div>

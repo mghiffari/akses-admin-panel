@@ -17,8 +17,11 @@ export class TrackYourRequestListComponent implements OnInit {
   loading = false;
   paginatorProps = { ...constants.paginatorProps };
   typeApproval = constants.approvalStatus;
-  trackYourRequest: TrackYourRequest[] = [];
-  tyc = [];
+  tyc: TrackYourRequest[] = [];
+  search = '';
+  isFocusedInput = false;
+  searchTexts = [];
+
 
 
   isFocusedSearch = false;
@@ -51,7 +54,7 @@ export class TrackYourRequestListComponent implements OnInit {
     console.log('TrackYourRequestComponent | ngOnInit');
     this.allowCreate = false;
     this.allowEdit = false;
-    let prvg = this.authService.getFeaturePrivilege(constants.features.approvecashout)
+    let prvg = this.authService.getFeaturePrivilege(constants.features.requestwithdrawal)
     if (this.authService.getFeatureViewPrvg(prvg)) {
       this.lazyLoadData()
       this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
@@ -67,10 +70,21 @@ export class TrackYourRequestListComponent implements OnInit {
     this.lazyLoadData()
   }
 
+  // event handling when user is typing on search input
+  onSearch() {
+    console.log('TrackYourRequestComponent | onSearch');
+    this.searchTexts.push(this.search)
+    if (this.paginatorProps.pageIndex !== 0) {
+      this.paginatorProps.pageIndex = 0;
+    } else {
+      this.lazyLoadData();
+    }
+  }
+
   // call api to get data based on table page, page size, and search keyword
   lazyLoadData() {
-
     console.log('TrackYourRequestComponent | lazyLoadData');
+    let isFocusedInput = this.isFocusedInput;
     this.loading = true;
     this.cashOutMasterService.getTrackRequest(
       this.paginatorProps.pageIndex + 1,
@@ -90,6 +104,7 @@ export class TrackYourRequestListComponent implements OnInit {
         error => {
           try {
             console.table(error);
+            this.loading = false;
             this.tyc = [];
             this.paginatorProps.length = 0;
             this.paginatorProps.pageIndex = 0;
@@ -104,6 +119,11 @@ export class TrackYourRequestListComponent implements OnInit {
             this.table.renderRows();
           }
           this.loading = false;
+          if (this.searchInput && isFocusedInput) {
+            setTimeout(() => {
+              this.searchInput.nativeElement.focus();
+            });
+          }
         }
       )
   }
