@@ -500,7 +500,8 @@
         "full": "Tarik Semua",
         "buttonSubmit": "Submit",
         "errorFormat": "Kode Pos hanya terdiri dari angka",
-        "errorRequired": "Jenis VA Master is required"
+        "errorRequired": "Jenis VA Master is required",
+        "submit": "Submit"
     }
 },
 "loginScreen": {

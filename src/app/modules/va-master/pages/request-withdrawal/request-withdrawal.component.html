@@ -63,6 +63,24 @@
         </mat-radio-group>
       </div>
     </div>
+    <div fxLayout="row" class="padding-22 border-bottom-gray">
+      <div class="text-label" fxFlex="15%" fxFlex.lt-md="100%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
+
+      <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
+        <button mat-raised-button color="primary" *ngIf="!isLoading()" [disabled]="isDisableCreateRequestWithdrawal()"
+          (click)="isDisableCreateRequestWithdrawal() || submitRequestWithdrawal()">
+          {{'forms.vaMaster.submit' | translate}}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="isLoading()">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+    </div>
   </form>
   <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
     <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">

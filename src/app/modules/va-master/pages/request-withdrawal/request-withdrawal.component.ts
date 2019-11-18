@@ -75,6 +75,24 @@ export class RequestWithdrawalListComponent implements OnInit {
     return this.requestForm.get('jenisvamaster');
   }
 
+  //check button submit disable or not
+  isDisableCreateRequestWithdrawal() {
+    console.log('RequestWithdrawalListComponent | isDisableCreateRequestWithdrawal');
+    return this.cashoutMasterService.isDisableCreateRequestWithdrawal();
+  }
+
+  //get loading status for button submit
+  isLoading() {
+    console.log('RequestWithdrawalListComponent | isLoading');
+    return this.cashoutMasterService.isLoading();
+  }
+
+  //when button submit clicked
+  submitRequestWithdrawal() {
+    console.log('RequestWithdrawalListComponent | submitRequestWithdrawal');
+    this.cashoutMasterService.buttonSubmit();
+  }
+
 
   getDataSpinner() {
     this.cashoutMasterService.getListVaMaster().subscribe(
