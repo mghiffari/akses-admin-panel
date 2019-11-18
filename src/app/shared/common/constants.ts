@@ -65,7 +65,7 @@ export const constants = {
         balanceReport: 'laporansaldo',
         gamificationRule: 'gamificationrule',
         cashbackReward: 'cashbackreward',
-        cashoutMaster: 'cashoutmaster',
+        requestwithdrawal: 'requestwithdrawal',
         approvecashout: 'approvecashout'
     },
     approvalStatus: {

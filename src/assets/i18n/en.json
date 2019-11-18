@@ -54,1157 +54,1178 @@
                 "toDoList": "To Do List"
             }
         }
-      }
-    },
-    "userAction": {
-        "logout": "Logout",
-        "profile": "Profile",
-        "changePassword": "Change Password"
-    },
-    "forms": {
-        "email": {
-            "fieldTitle": "Email",
-            "errorRequired": "Email is required",
-            "errorFormat": "Email is invalid",
-            "errorAdira": "Must be an adira email",
-            "placeholder": "Email"
-        },
-        "password": {
-            "fieldTitle": "Password",
-            "errorRequired": "Password is required",
-            "placeholder": "Password"
-        },
-        "oldPassword": {
-            "fieldTitle": "Old Password",
-            "errorRequired": "Old Password is required",
-            "placeholder": "Old password"
-        },
-        "newPassword": {
-            "fieldTitle": "New Password",
-            "errorRequired": "New Password is required",
-            "errorMinLength": "Min. length of New Password is {{minLength}}",
-            "errorMaxLength": "Max. length of New Password is {{maxLength}}",
-            "errorFormat": "New Password should contain at least one uppercase one lowercase, one number, and one special character: #?!@$%^&*-",
-            "placeholder": "New password"
-        },
-        "confirmPassword": {
-            "fieldTitle": "Confirm Password",
-            "errorMatch": "Password not match",
-            "placeholder": "Confirm password"
-        },
-        "recaptcha": {
-            "fieldTitle": "Captcha",
-            "errorRequired": "Captcha is required",
-            "errorFormat": "Captcha is wrong",
-            "placeholder": "Captcha"
-        },
-        "firstName": {
-            "fieldTitle": "First Name",
-            "errorRequired": "First Name is required",
-            "errorMaxLength": "Max. length of First Name is {{maxLength}}",
-            "errorFormat": "First Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
-            "placeholder": "First name"
-        },
-        "lastName": {
-            "fieldTitle": "Last Name",
-            "errorRequired": "Lastname is required",
-            "errorMaxLength": "Max. length of Last Name is {{maxLength}}",
-            "errorFormat": "Last Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
-            "placeholder": "Last name"
-        },
-        "role": {
-            "fieldTitle": "Role",
-            "errorRequired": "Role is required",
-            "placeholder": "Select a Role"
-        },
-        "bannerTitle": {
-            "fieldTitle": "Home Banner Title",
-            "errorRequired": "Home Banner Title is required",
-            "placeholder": "Home banner title"
-        },
-        "homeBanner": {
-            "fieldTitle": "Home Banner Picture",
-            "errorRequired": "Home Banner Picture is required",
-            "errorRatio": "Only 16:10 size ratio is valid.",
-            "errorType": "Only .jpg, .jpeg and .png format are supported"
-        },
-        "orderBanner": {
-            "fieldTitle": "Order",
-            "placeholder": "Order",
-            "errorRequired": "Order is required"
-        },
-        "startDateBanner": {
-            "fieldTitle": "Start Date",
-            "placeholder": "Choose start date",
-            "errorRequired": "Start Date is required"
-        },
-        "endDateBanner": {
-            "fieldTitle": "End Date",
-            "placeholder": "Choose end date",
-            "errorRequired": "End Date is required"
-        },
-        "clickableCheck": {
-            "fieldTitle": "Clickable?"
-        },
-        "urlRadioBanner": {
-            "fieldDetailPage": "Page Detail",
-            "fieldDescBox": "Description",
-            "fieldURL": "URL Option",
-            "fieldModulAccess": "Adiraku Page",
-            "fieldExternalURLAccess": "External URL",
-            "fieldEcternalURLAccessPlaceholder": "Input URL here",
-            "errorRequired": "Detail Page or URL is required"
-        },
-        "addFooterBanner": {
-            "fieldTitle": "Add Footer",
-            "footerTextTitle": "Text",
-            "footerTextPlaceholder": "Input name of text here",
-            "footerImageTitle": "Image",
-            "footerButtonTitle": "Button",
-            "footerButtonPlaceholder": "Input name of button here",
-            "footerURLTitle": "Input URL Text"
-        },
-        "faqCategory": {
-            "fieldTitle": "Category",
-            "placeholder": "Select a Category",
-            "errorRequired": "Category is required"
-        },
-        "faqTitle": {
-            "fieldTitle": "FAQ Title",
-            "placeholder": "FAQ title",
-            "errorRequired": "FAQ Title is required"
-        },
-        "faqOrder": {
-            "fieldTitle": "Order",
-            "placeholder": "Order",
-            "errorRequired": "Order must have numeric value",
-            "errorFormat": "Order must be a number",
-            "errorMin": "Order must be a positive number > 0"
-        },
-        "faqUniqueTag": {
-            "fieldTitle": "Unique Tag",
-            "placeholder": "Unique tag",
-            "errorRequired": "Unique Tag is required"
-        },
-        "faqContent": {
-            "fieldTitle": "Description",
-            "placeholder": "Description",
-            "errorRequired": "Description is required"
-        },
-        "faqBookmark": {
-            "fieldTitle": "Bookmark FAQ"
-        },
-        "articleTitle": {
-            "fieldTitle": "Article Title",
-            "errorRequired": "Article Title is required",
-            "placeholder": "Article title"
-        },
-        "articlePicture": {
-            "fieldTitle": "Article Picture",
-            "errorRequired": "Article Picture is required",
-            "errorType": "Only .jpg, .jpeg and .png format are supported",
-            "errorRatio": "Only {{width}}:{{height}} ratio is supported",
-            "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
-        },
-        "uniqueTag": {
-            "fieldTitle": "Unique Tag",
-            "errorRequired": "Unique tag is required",
-            "placeholder": "Unique Tag"
-        },
-        "category": {
-            "fieldTitle": "Category",
-            "errorRequired": "Category is required",
-            "placeholder": "Category"
-        },
-        "branchName": {
-            "fieldTitle": "Branch Name",
-            "placeholder": "Branch name",
-            "errorRequired": "Branch Name is required"
-        },
-        "branchCode": {
-            "fieldTitle": "Branch Code",
-            "placeholder": "Branch code",
-            "errorRequired": "Branch Code is required",
-            "errorFormat": "Branch Code should only contain numbers",
-            "errorLength": "Branch Code should contain {{minLength}} numbers",
-            "errorDuplicate": {
-                "preText": "Branch Code already exist, click ",
-                "here": "here",
-                "endText": " to see the branch"
-            }
-        },
-        "branchType": {
-            "fieldTitle": "Branch Type",
-            "placeholder": "Select a Branch Type",
-            "errorRequired": "Branch Type is required"
-        },
-        "longitude": {
-            "fieldTitle": "Longitude",
-            "placeholder": "Longitude",
-            "errorRequired": "Longitude must have numeric value",
-            "errorMaxDecimalLength": "Longitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
-        },
-        "latitude": {
-            "fieldTitle": "Latitude",
-            "placeholder": "Latitude",
-            "errorRequired": "Latitude must have numeric value",
-            "errorMaxDecimalLength": "Latitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
-        },
-        "csRegion": {
-            "fieldTitle": "Region (for credit simulation)",
-            "placeholder": "Select a Region"
-        },
-        "region": {
-            "fieldTitle": "Region (for branch location)",
-            "placeholder": "Region",
-            "errorRequired": "Region is required"
-        },
-        "province": {
-            "fieldTitle": "Province",
-            "placeholder": "Select a Province",
-            "errorRequired": "Province is required"
-        },
-        "city": {
-            "fieldTitle": "City",
-            "placeholder": "Select a City",
-            "errorRequired": "City is required"
-        },
-        "subDistrict": {
-            "fieldTitle": "Sub-District",
-            "placeholder": "Select a Sub-District",
-            "errorRequired": "Sub-District is required"
-        },
-        "district": {
-            "fieldTitle": "District",
-            "placeholder": "Select a District",
-            "errorRequired": "District is required"
-        },
-        "address": {
-            "fieldTitle": "Address",
-            "placeholder": "Address",
-            "errorRequired": "Address is required"
-        },
-        "createdBy": {
-            "fieldTitle": "Created By",
-            "placeholder": "Created by",
-            "errorRequired": "Created By is required"
-        },
-        "updatedBy": {
-            "fieldTitle": "Updated By",
-            "placeholder": "Updated by",
-            "errorRequired": "Updated By is required"
-        },
-        "remark": {
-            "fieldTitle": "Remark",
-            "placeholder": "Remark",
-            "errorRequired": "Remark is required",
-            "errorMaxLength": "Max. length of Remark is {{maxLength}}"
-        },
-        "postalCode": {
-            "fieldTitle": "Postal Code",
-            "placeholder": "Postal code",
-            "errorFormat": "Postal Code should only contain numbers",
-            "errorMinLength": "Min. length of Postal Code is {{minLength}}",
-            "errorMaxLength": "Max. length of Postal Code is {{maxLength}}"
-        },
-        "tenure": {
-            "errorRequired": "Tenure must have numeric value",
-            "errorMin": "Min. value of Postal Code is {{minValue}}",
-            "errorMaxDecimalLength": "Tenure can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
-        },
-        "icon": {
-            "fieldTitle": "Icon",
-            "errorRequired": "Icon is required",
-            "errorMaxResolution": "Icon size is more than 48 X 48 pixel",
-            "errorRatio": "Only 1:1 ratio is supported",
-            "errorType": "Only .jpg, .jpeg and .png format are supported",
-            "hint": "Maximum size 48 X 48 pixel, ratio 1:1 (file type: .jpeg / .png )"
-        },
-        "instructions": {
-            "fieldTitle": "Instruction",
-            "placeholder": "Instruction",
-            "errorRequired": "Instruction is required",
-            "errorMinTotal": "There should be one or more instruction",
-            "errorMaxTotal": "Maximum number of instruction steps is {{maxLength}}",
-            "hint": {
-                "installment": "installment",
-                "boldBrackets": "Put text inside square brackets [ ] to bold"
-            }
-        },
-        "title": {
-            "fieldTitle": "Title",
-            "placeholder": "Title",
-            "iconRequied": "Title is required",
-            "errorMaxLength": "Max. length of Title is {{maxLength}}"
-        },
-        "recipient": {
-            "fieldTitle": "Recipient",
-            "placeholder": "Select a File",
-            "searchPlaceholder": "Search file",
-            "errorRequired": "Recipient is required",
-            "errorFileType": "Only .csv format is supported",
-            "errorCSVRequired": "csv file is required",
-            "options": {
-                "all": "All",
-                "selectedUsers": "Selected Users"
-            }
-        },
-        "content": {
-            "fieldTitle": "Content",
-            "placeholder": "Content",
-            "errorRequired": "Content is required",
-            "errorMaxLength": "Max. length of Content is {{maxLength}}"
-        },
-        "notifLargeIcon": {
-            "fieldTitle": "Large Icon",
-            "errorType": "Only .jpg, .jpeg and .png format are supported",
-            "errorResolution": "Only {{width}} X {{height}} pixel is supported",
-            "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
-        },
-        "notifImage": {
-            "fieldTitle": "Image",
-            "errorType": "Only .jpg, .jpeg and .png format are supported",
-            "errorResolution": "Only {{width}} X {{height}} pixel is supported",
-            "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
-        },
-        "notifLinkType": {
-            "fieldTitle": "Type",
-            "errorRequired": "Type is required",
-            "options": {
-                "article": "Article",
-                "specialOffer": "Special Offer"
-            }
-        },
-        "specialOfferCategory": {
-            "fieldTitle": "Special Offer Category",
-            "placeholder": "Special offer category",
-            "errorRequired": "Special Offer Category is required"
-        },
-        "notifSpecialOffer": {
-            "fieldTitle": "Special Offer",
-            "placeholder": "Select a Special Offer",
-            "errorRequired": "Special Offer is required",
-            "searchPlaceholder": "Search special offer"
-        },
-        "articleCategory": {
-            "fieldTitle": "Article Category",
-            "placeholder": "Article category",
-            "errorRequired": "Article Category is required"
-        },
-        "notifArticle": {
-            "fieldTitle": "Article",
-            "placeholder": "Select an Article",
-            "errorRequired": "Article is required",
-            "searchPlaceholder": "Search article"
-        },
-        "schedule": {
-            "fieldTitle": "Schedule",
-            "errorTypeRequired": "Schedule type is required",
-            "errorRequired": "Schedule must have date and time format value",
-            "errorMin": "Schedule should be more than 1 hr from now",
-            "options": {
-                "immediate": "Immediate",
-                "certainTime": "Scheduled"
-            },
-            "datePlaceholder": "mm/dd/yyyy"
-        },
-        "offerImage": {
-            "fieldTitle": "Image",
-            "errorRequired": "Image is required",
-            "errorRatio": "Only {{width}}:{{height}} ratio is supported",
-            "errorType": "Only .jpg, .jpeg and .png format are supported",
-            "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
-        },
-        "description": {
-            "fieldTitle": "Description",
-            "placeholder": "Description",
-            "errorRequired": "Description is required",
-            "errorMaxLength": "Max. length of Description is {{maxLength}}"
-        },
-        "termsAndConditions": {
-            "fieldTitle": "Terms and Conditions",
-            "errorRequired": "Terms and Conditions is required",
-            "errorMaxLength": "Max. length of Terms and Conditions is {{maxLength}}"
-        },
-        "redeemVoucherInstructions": {
-            "fieldTitle": "Redeem Voucher Instructions",
-            "errorRequired": "Redeem Voucher Instructions is required",
-            "errorMaxLength": "Max. length of Redeem Voucher Instructions is {{maxLength}}"
-        },
-        "endDatetime": {
-            "fieldTitle": "End Date",
-            "errorRequired": "End Date must have date and time format value",
-            "errorMin": "End Date should be more than 1 hr from now",
-            "datePlaceholder": "mm/dd/yyyy"
-        },
-        "roleName": {
-            "fieldTitle": "Role Name",
-            "placeholder": "Role name",
-            "errorRequired": "Role Name is required"
-        },
-        "privilege": {
-            "selectAll": "Select All",
-            "options": {
-                "create": "Create",
-                "view": "View",
-                "edit": "Edit",
-                "delete": "Delete",
-                "publish": "Publish",
-                "download": "Download"
-            }
-        },
-        "date": {
-            "errorRange": "Start Date must be less than or equal than End Date",
-            "errorRangeRequired": "Both start date should be filled or not at all",
-            "maxToday": "Date entered should not be more than today"
-        },
-        "transactionStartDate": {
-            "errorRequired": "Start Date must have valid date format value"
-        },
-        "transactionEndDate": {
-            "errorRequired": "End Date must have valid date format value"
-        },
-        "transactionSearch": {
-            "placeholder": "Search OID / VA / Phone Number / Contract No.",
-            "hint": "Min. length of search text is {{minLength}}",
-            "errorRequired": "Search is required"
-        },
-        "approvalSearch": {
-            "placeholder": "Search Title"
-        },
-        "sampleSize": {
-            "errorRequired": "Sample Size must have numeric value",
-            "errorMin": "Min. value of sample size is {{minValue}}",
-            "errorFormat": "Sample Size must be an integer number"
-        },
-        "rangeSize": {
-            "errorRequired": "Range Size must have numeric value",
-            "errorMin": "Range Size must have a positive number",
-            "errorFormat": "Range Size must be an integer number"
-        },
-        "reward": {
-            "errorRequired": "Reward must have numeric value",
-            "errorMin": "Reward must have a positive number"
-        },
-        "probability": {
-            "errorRequired": "Probability must have numeric value",
-            "errorMin": "Probability must have a positive number"
-        },
-        "buttonText": {
-            "save": "Save",
-            "back": "Back"
-        }
-    },
-    "loginScreen": {
-        "forgotPassword": "Forgot Password?",
-        "loginFailed": "login failed",
-        "login": "login",
-        "backToLogin": "back to login",
-        "sendNewPassword": "send new password",
-        "changePassword": "change password",
-        "changeYourPassword": "Change Your Password to Continue",
-        "forgotYourPassword": "Forgot Your Password?",
-        "passwordSendToEmail": "New password was sent to your email",
-        "passwordSendFailed": "reset password failed",
-        "passwordChanged": "password successfully changed, relogin with the new password",
-        "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
-    },
-    "table": {
-        "jenisva": "VA Type",
-        "subdate": "Request Date",
-        "amount": "Amount",
-        "initiator": "Initiator",
-        "noRecordsFound": "No Records Found",
-        "search": "search",
-        "actions": "Actions",
-        "numbers": "No.",
-        "status": {
-            "title": "Status",
-            "approvalTitle": "Approval",
-            "active": "Active",
-            "inactive": "Inactive",
-            "approved": "Approved",
-            "rejected": "Rejected",
-            "delivered": "Delivered",
-            "pending": "Pending",
-            "waitingForApproval": "Waiting for Approval"
-        },
-        "uniqueTag": "Unique Tag",
-        "title": "Title",
-        "category": "Category",
-        "order": "Order",
-        "lastUpdated": "Last Updated Date & By",
-        "createdDate": "Created Date",
-        "bannersTable": {
-            "preview": "Preview",
-            "startDate": "Start Date",
-            "endDate": "End Date"
-        },
-        "userTable": {
-            "firstName": "First Name",
-            "lastName": "Last Name",
-            "email": "Email",
-            "role": "Role"
-        },
-        "branchTable": {
-            "branchName": "Branch Name",
-            "branchCode": "Branch Code",
-            "branchType": "Branch Type",
-            "address": "Address",
-            "province": "Province"
-        },
-        "changePhonenumberRequestTable": {
-            "requestDate": "Request Date & Time",
-            "customerName": "Customer Name",
-            "requestDuration": "Request Duration",
-            "oldPhoneNumber": "Old Phonenumber",
-            "newPhoneNumber": "New Phonenumber",
-            "contractNo": "Contract Number",
-            "actionsStatus": "Action / Status",
-            "remark": "Remark"
-        },
-        "creditSimulationTable": {
-            "tenureMonth3": "3 Month",
-            "tenureMonth6": "6 Month",
-            "tenureMonth9": "9 Month",
-            "tenureMonth12": "12 Month",
-            "tenureMonth15": "15 Month",
-            "tenureMonth18": "18 Month",
-            "tenureMonth21": "21 Month",
-            "tenureMonth24": "24 Month",
-            "tenureMonth30": "30 Month",
-            "tenureMonth36": "36 Month",
-            "tenureMonth42": "42 Month",
-            "tenureMonth48": "48 Month",
-            "tenureMonth54": "54 Month",
-            "tenureMonth60": "60 Month"
-        },
-        "notificationTable": {
-            "schedule": "Schedule",
-            "sent": "Total Recipient",
-            "clicked": "Clicked",
-            "scheduleType": "Type"
-        },
-        "roleTable": {
-            "roleName": "Role Name"
-        },
-        "transactionTable": {
-            "oid": "OID",
-            "vaNumber": "VA Number",
-            "contNo": "Contract Number",
-            "name": "Name",
-            "phNumber": "Phone Number",
-            "adiraPay": "Adira pay Balance",
-            "timestamp": "Timestamp",
-            "transCode": "Transaction Code",
-            "transDesc": "Transaction Description",
-            "amount": "Amount",
-            "destVANumber": "Destination VA Number",
-            "sourceVANumber": "Source VA Number",
-            "transDate": "Transaction Date",
-            "transSeq": "Transaction Sequence",
-            "installmentAmount": "Installment Amount",
-            "withdrawalAmount": "Withdrawal Amount",
-            "topUpAmount": "Top Up Amount",
-            "penaltyFee": "Penalty Paid",
-            "fee": "Transaction Fee",
-            "withdrawalFee": "Withdrawal Fee",
-            "bankTransferFee": "Bank Transfer Fee",
-            "ppn": "PPN",
-            "vaName": "Bank Name"
-        },
-        "gamificationTable": {
-            "reward": "Reward",
-            "totalPerson": "Total Person",
-            "probability": "Probability",
-            "blended": "Blended",
-            "runningNumber": "Running Number"
-        },
-        "cashbackRewardTable": {
-            "vaNumber": "VA Number",
-            "rewardDate": "Reward Date",
-            "custName": "Customer Name",
-            "grossValue": "Gross Value",
-            "pphValue": "Pph Value",
-            "cashbackReceive": "Total Cashback Received",
-            "installmentVal": "Installment Value",
-            "paymentDate": "Payment Date",
-            "npwpNumber": "NPWP Number",
-            "npwpName": "NPWP Name",
-            "npwpAddress": "NPWP Address"
-        }
-    },
-    "bannerListScreen": {
-        "title": "Banners Data",
-        "createBanner": "create banner",
-        "deleteConfirmation": "Are you sure you want to delete home banner {{title}}?",
-        "loadFailed": "failed to load home banner list"
-    },
-    "bannersDetailScreen": {
-        "createBannerTitle": "Add Home Banner",
-        "updateBannerTitle": "Update Home Banner",
-        "seeBannerList": "See Banner List",
-        "successCreateBanner": "Banner successfully created",
-        "successUpdateBanner": "Banner successfully updated",
-        "updateFailed": "Failed to Update Banner",
-        "createFailed": "Failed to Create Banner",
-        "loadFailed": "Failed to load data Banner",
-        "urlNotValid": "Input URL is not valid"
-    },
-    "changePasswordScreen": {
-        "title": "Change Password",
-        "passwordChanged": "password successfully changed",
-        "seeMyProfile": "ee my profile",
-        "failed": "change password failed"
-    },
-    "angularLocale": "en-US",
-    "loading": "loading",
-    "save": "save",
-    "close": "close",
-    "yesContinue": "yes, continue!",
-    "reset": "reset",
-    "cancel": "cancel",
-    "skip": "skip",
-    "success": "success",
-    "fail": "fail",
-    "error": "error",
-    "deleteConfirmation": "Delete Confirmation",
-    "dataDeleted": "data deleted",
-    "failedToDelete": "delete failed",
-    "backToList": "back to list",
-    "upload": "upload",
-    "approve": "approve",
-    "reject": "reject",
-    "add": "add",
-    "by": "by",
-    "to": "to",
-    "edit": "edit",
-    "example": "example",
-    "invalidForm": "invalid form",
-    "imageNotExist": "image not exist",
-    "uploadCSV": "upload csv",
-    "failedToRefreshData": "refresh data failed",
-    "failedToProcessFile": "failed to process file",
-    "seeDetails": "See Details",
-    "duration": {
-        "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
-        "fromHourToSec": "{{hour}} hour {{min}} minute",
-        "inMin": "{{min}} minute",
-        "inSec": "{{sec}} sec"
-    },
-    "loggedOutModal": {
-        "title": "You're unauthorized to access this page",
-        "content": "Please re-login to access this page",
-        "button": "OK"
-    },
-    "movePageConfirmationModal": {
-        "title": "Leave Page Confirmation",
-        "content": "Are you sure you want to leave this page? Changes will be discarded"
-    },
-    "dataConfirmationModal": {
-        "title": "Data Confirmation",
-        "content": "Are you sure that all the data and content are correct?"
-    },
-    "saveConfirmationModal": {
-        "title": "New Changes Have Not been Saved",
-        "content": "Click 'save' to save the changes"
-    },
-    "pageBlockedError": {
-        "title": "access is blocked",
-        "content": "you don't have permission to access this page"
-    },
-    "actionBlockedError": {
-        "title": "action is blocked",
-        "content": "you don't have permission to do this action"
-    },
-    "userListScreen": {
-        "title": "Users Data",
-        "createUser": "create user",
-        "loadFailed": "failed to get list of users",
-        "deleteConfirmation": "Are you sure you want to delete user {{name}}?",
-        "failedToGetRoles": "Failed top get list of roles"
-    },
-    "userDetailsScreen": {
-        "getUserFailed": "failed to get user data",
-        "createTitle": "Create New User",
-        "updateTitle": "Update User Data",
-        "succesCreated": "new user successfully created",
-        "succesUpdated": "user data successfully updated",
-        "emailNotChangeAble": "Email is not updateable",
-        "updateFailed": "failed to update data",
-        "createFailed": "failed to create new user"
-    },
-    "articleListScreen": {
-        "title": "Articles Data",
-        "createArticle": "create article",
-        "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
-        "loadFailed": "failed to get list of articles"
-    },
-    "articleDetailsScreen": {
-        "createArticleTitle": "Create New Article",
-        "updateArticleTitle": "Update Article",
-        "seeArticleList": "See Article List",
-        "successCreateArticle": "Article successfully created",
-        "successUpdateArticle": "Article successfully updated",
-        "updateFailed": "Failed to Update Article",
-        "createFailed": "Failed to Create Article",
-        "loadFailed": "Failed to load article data",
-        "urlNotValid": "Input URL is not valid"
-    },
-    "faqListScreen": {
-        "title": "FAQs Data",
-        "createFAQ": "create faq",
-        "deleteConfirmation": "Are you sure you want to delete FAQ {{title}}?",
-        "loadFailed": "failed to get list of FAQ",
-        "removeBookmark": "click to remove from bookmark",
-        "addBookmark": "click to add to bookmark",
-        "bookmarkSuccess": "FAQ is now bookmarked",
-        "removeBookmarkSuccess": "FAQ is removed from bookmark",
-        "bookmarkFailed": "failed to bookmark FAQ",
-        "removeBookmarkFailed": "failed to remove FAQ from bookmark"
-    },
-    "faqDetailsScreen": {
-        "getFaqFailed": "failed to get FAQ data",
-        "createTitle": "Create New FAQ",
-        "updateTitle": "Update FAQ",
-        "succesCreated": "new FAQ successfully created",
-        "succesUpdated": "FAQ data successfully updated",
-        "updateFailed": "failed to update data",
-        "createFailed": "failed to create new FAQ",
-        "getFaqCategoriesFailed": "failed to get FAQ categories"
-    },
-    "branchDetailsScreen": {
-        "getBranchFailed": "failed to get Branch Location data",
-        "createTitle": "Create New Branch Location",
-        "updateTitle": "Update Branch Location",
-        "succesCreated": "new Branch Location successfully created",
-        "succesUpdated": "Branch Location successfully updated",
-        "updateFailed": "failed to update data",
-        "createFailed": "failed to create new Branch Location",
-        "getBranchTypesFailed": "failed to get branch types",
-        "getProvincesFailed": "failed to get province list",
-        "getCitiesFailed": "failed to get city list",
-        "getDistrictsFailed": "failed to get district list",
-        "getSubDistrictsFailed": "failed to get sub-district list",
-        "duplicateBranchCode": "Branch Code already exist",
-        "getCSRegionFailed": "failed to get region list for credit simulation"
-    },
-    "branchListScreen": {
-        "title": "Branch Locations Data",
-        "createBranch": "create branch location",
-        "uploadCSV": "upload CSV",
-        "deleteConfirmation": "Are you sure you want to delete branch location {{name}}?",
-        "loadFailed": "failed to get list of branch locations"
-    },
-    "uploadCSVModal": {
-        "title": "Upload CSV",
-        "errorFormat": "File should be in csv format",
-        "fileExample": "Example File",
-        "uploadFailed": "Upload Failed",
-        "uploadSuccess": "Upload Success",
-        "totalFailed": "{{totalFailed}} branches failed to be created",
-        "instructions": {
-            "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
-            "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
-            "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the nearest branch location on the app",
-            "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, latitude, longitude, branch code, area code",
-            "branchCode": "Each branch code should contain 4 numbers"
-        }
-    },
-    "productCreditSimulationScreen": {
-        "title": "Credit Simulation",
-        "getProductFailed": "failed to get product data",
-        "getProdCompFailed": "failed to get product components",
-        "getCreditSimulationFailed": "failed to get credit simulation data",
-        "updateSuccess": "update credit simulation success",
-        "updateFailed": "failed to update credit simulation"
-    },
-    "changePhonenumberRequestListScreen": {
-        "title": "Change Handphone",
-        "loadFailed": "failed to get list of change phonenumber requests",
-        "rejectSuccess": "change phone number request successfully rejected",
-        "rejectFailed": "failed to reject change phone number request",
-        "approveSuccess": "change phone number request successfully approved",
-        "approveFailed": "failed to approve change phone number request",
-        "bulkRejectFailed": "failed to reject requests",
-        "bulkRejectSuccess": "requests are rejected",
-        "bulkApproveFailed": "failed to approve requests",
-        "bulkApproveSuccess": "requests are approved",
-        "totalRequestSelected": "{{totalRequest}} requests are selected",
-        "totalRequestFailed": "{{totalRequest}} requests failed",
-        "confirmationModal": {
-            "reject": {
-                "title": "Rejecting Confirmation",
-                "content": "Are you sure you want to reject change phonenumber request?"
-            },
-            "approve": {
-                "title": "Approval Confirmation",
-                "content": "Are you sure you want to approve change phonenumber request?"
-            }
-        },
-        "addRemarkSuccess": "remark successfuly added",
-        "addRemarkFailed": "failed to add remark"
-    },
-    "paymentInstructionScreen": {
-        "title": "Payment Instructions",
-        "createInstruction": "create new instruction",
-        "deleteConfirmation": "Are you sure you want to delete {{grpTitle}} instruction?",
-        "getTypeFailed": "failed to get payment types",
-        "getInstructionListFailed": "failed to get instructions data",
-        "changeOrderFailed": "failed to change instruction order"
-    },
-    "paymentInstructionDetailsScreen": {
-        "createTitle": "Create Payment Instruction",
-        "updateTitle": "Update Payment Instruction",
-        "typeNotFound": "payment type {{type}} not found",
-        "succesCreated": "Payment Instruction successfully created",
-        "succesUpdated": "Payment Instruction successfully updated",
-        "addNewStep": "add new step",
-        "uploadIconFailed": "failed to upload icon",
-        "insertInstructionFailed": "failed to create instruction",
-        "insertStepsFailed": "failed to create instruction steps",
-        "getInstructionFailed": "failed to get instruction data",
-        "getStepsFailed": "failed to get instruction steps",
-        "updateFailed": "failed to update payment instructions",
-        "deleteIconFailed": "failed to delete icon"
-    },
-    "notificationListScreen": {
-        "title": "Notifications Data",
-        "createNotification": "create new notification",
-        "deleteConfirmation": "Are you sure you want to delete notification {{title}}?",
-        "loadFailed": "failed to get list of notifications",
-        "immediate": "Immediate",
-        "scheduled": "Scheduled"
-    },
-    "notificationDetailsScreen": {
-        "getNotificationFailed": "failed to get notification data",
-        "getArticleListFailed": "failed to get article list",
-        "createTitle": "Create New Notification",
-        "updateTitle": "Update Notification",
-        "succesCreated": "new notification successfully created",
-        "succesUpdated": "notification data successfully updated",
-        "updateFailed": "failed to update data",
-        "createFailed": "failed to create new notification",
-        "notifSaveConfirm": "Save Notification Confirmation",
-        "deleteCSVFailed": "failed to delete csv file",
-        "deleteImageFailed": "failed to delete image",
-        "deleteIconFailed": "failed to delete icon",
-        "uploadCSVFailed": "failed to upload csv file",
-        "uploadImageFailed": "failed to upload image",
-        "uploadIconFailed": "failed to upload icon",
-        "cantUpdate": {
-            "immediate": "can't update immediately sent notification",
-            "minDuration": "can't update notification which schedule is less than one hour"
-        }
-    },
-    "specialOfferListScreen": {
-        "title": "Special Offers Data",
-        "createOffer": "create new special offer",
-        "loadFailed": "failed to get list of special offers",
-        "approvalBy": "by"
-    },
-    "specialOfferDetailsScreen": {
-        "getOfferFailed": "failed to get Special Offer data",
-        "getCategoryFailed": "failed to get Special Offer categories",
-        "getFileListFailed": "failed to get MPL reicipient file list",
-        "createTitle": "Create New Special Offer",
-        "updateTitle": "Update Special Offer",
-        "viewTitle": "Special Offer Details",
-        "recipientUrlLabel": "Special Offer Recipient",
-        "succesCreated": "Special Offer successfully created",
-        "succesUpdated": "Special Offer successfully updated",
-        "updateFailed": "failed to update special offer",
-        "createFailed": "failed to create new Special Offer",
-        "cantUpdate": {
-            "minDuration": "can't update special offer which expiry date is less than one hour",
-            "approvedOffer": "can't update special offer that has been approved"
-        },
-        "uploadImageFailed": "failed to upload image",
-        "uploadCSVFailed": "failed to upload csv file",
-        "deleteImageFailed": "failed to delete image"
-    },
-    "roleListScreen": {
-        "title": "Roles Data",
-        "createRole": "create new role",
-        "loadFailed": "failed to get list of roles",
-        "deleteConfirmation": "Are you sure you want to delete role {{name}}?",
-        "succesCreated": "role successfully created",
-        "succesUpdated": "role successfully updated",
-        "updateFailed": "failed to update role",
-        "createFailed": "failed to create new role"
-    },
-    "balanceReport": {
-        "title": "Balance and Transaction Report",
-        "loadFailed": "failed to get balance and transaction report"
-    },
-    "transactionReport": {
-        "title": "Transaction Report",
-        "dateFilter": "Date Filter",
-        "downloadReport": "download report",
-        "filterNotSet": "Filter Not Set",
-        "loadFailed": "failed to get transaction report",
-        "downloadFailed": "failed to download transaction report"
-    },
-    "homeScreen": {
-        "welcome": "Welcome,",
-        "lastLogin": "LAST LOGIN",
-        "addEntry": "Add a New Entry"
-    },
-    "toDoListScreen": {
-        "title": "Approval Cashout Master",
-        "loadFailed": "failed to get list data"
-    },
-    "approvalListScreen": {
-        "title": "Approval",
-        "getTabsFailed": "failed to get list of approval features",
-        "refreshCountFailed": "failed to refresh approval data count",
-        "loadFailed": {
-            "specialOffer": "failed to get special offer approval list"
-        },
-        "tabsTitle": {
-            "specialOffer": "Sp. Offer"
-        },
-        "successBulkApprove": {
-            "specialOffer": "selected special offers successfully approved"
-        },
-        "successBulkReject": {
-            "specialOffer": "selected special offers successfully rejected"
-        },
-        "bulkApproveFailed": {
-            "specialOffer": "failed to approve selected special offers"
-        },
-        "bulkRejectFailed": {
-            "specialOffer": "failed to reject selected special offers"
-        },
-        "totalFailed": {
-            "specialOffer": "{{totalFailed}} special offers failed"
-        },
-        "successApprove": {
-            "specialOffer": "special offer successfully approved"
-        },
-        "successReject": {
-            "specialOffer": "special offer successfully rejected"
-        },
-        "approveFailed": {
-            "specialOffer": "failed to approve special offer"
-        },
-        "rejectFailed": {
-            "specialOffer": "failed to reject special offer"
-        },
-        "totalRowsSelected": "{{totalRows}} title are selected",
-        "specialOfferNotActive": {
-            "title": {
-                "bulk": "some special offers has passed their end date",
-                "single": "special offer has passed its end date"
-            },
-            "content": "changes on inactive special offer will not affect the application"
-        }
-    },
-    "gamificationRuleScreen": {
-        "title": "Gamification Rule",
-        "activeRule": "Active Rule",
-        "upcomingRule": "Upcoming Rule",
-        "sampleSize": "Sample Size",
-        "activeSince": "Active since",
-        "replaceText": "Will replace the active rule at",
-        "newRule": "New Rule",
-        "confirmationModal": {
-            "edit": {
-                "title": "Update Confirmation",
-                "content": "Are you sure you want to update rule? The update will be applied on next day at 00.01 WIB"
-            },
-            "newRule": {
-                "title": "New Rule Confirmation",
-                "content": "Are you sure you want to create new rule? New rule will be applied on next day at 00.01 WIB"
-            }
-        },
-        "loadFailed": "failed to get rule list",
-        "totalPersonFormula": "probability x sample size (rounded down)",
-        "lastRowDisclaimer": "This row will be automatically calculated with formula of probability: 100% - total probability row 1-8. Probability should be a positive number",
-        "cantEditRule": "Can't edit rule",
-        "upcomingRuleNotFound": "No upcoming rule found to be edited",
-        "succesCreated": "upcoming rule successfully created",
-        "succesUpdated": "upcoming rule successfully updated",
-        "updateFailed": "failed to update upcoming rule",
-        "createFailed": "failed to create upcoming rule"
-    },
-    "cashbackRewardScreen": {
-        "title": "Cashback Reward",
-        "dateFilter": "Date Filter",
-        "nameFilter": "NPWP Name Filter",
-        "downloadReport": "download report",
-        "filterNotSet": "Filter Not Set"
-    },
-    "features": {
-        "homebanner": "Home Banner",
-        "artikel": "Article",
-        "specialoffer": "Special Offer",
-        "faq": "FAQ",
-        "lokasicabang": "Branch Locator",
-        "ubahnomorhandphone": "Change Phone Number",
-        "simulasikredit": "Credit Simulation",
-        "instruksipembayaran": "Payment Instructions",
-        "notifikasi": "Notifications",
-        "user": "User",
-        "role": "Role",
-        "laporantransaksi": "Transaction Report",
-        "laporansaldo": "Balance Report",
-        "gamificationrule": "Gamification Rule",
-        "cashbackreward": "Cashback Reward",
-        "mobilbaru": "New Car",
-        "mobilbekas": "Secondhand Car",
-        "motorbaru": "New Motorcycle",
-        "motorbekas": "Secondhand Motorcycle",
-        "elektronik": "Electronic",
-        "furnitur": "Furniture",
-        "gadget": "Gadget",
-        "multigunamotor": "Multipurpose Motorcycle",
-        "multigunamobil": "Multipurpose Car",
-        "spmultigunamotor": "SP Multipurpose Motorcycle",
-        "approvecashout": "Approve Cashout"
-    },
-    "apiErrors": {
-        "noInternet": "no internet connection",
-        "01000": "internal server error",
-        "01001": "email can not be empty",
-        "01002": "password can not be empty",
-        "01003": "email and password not match",
-        "01004": "user is not active",
-        "01005": "email and password not match",
-        "01006": "missing input email account",
-        "01007": "failed to send email",
-        "01008": "unauthorized",
-        "01009": "invalid email format",
-        "01010": "failed to create new admin",
-        "01011": "failed to create admin profile",
-        "01012": "failed to create admin profile group",
-        "01013": "error get login data",
-        "01014": "error get admin account",
-        "01015": "password must be alphanumeric, one uppercase, and minimal 8 letters",
-        "01016": "wrong old password",
-        "01017": "failed to change password",
-        "01018": "failed to update account",
-        "01019": "failed to create new article record",
-        "01020": "failed to save article record",
-        "01021": "failed to retrieve article, article not found",
-        "01022": "failed to get article",
-        "01023": "failed to update article",
-        "01024": "failed to delete article",
-        "01025": "failed to create new home banner",
-        "01026": "failed to save home banner",
-        "01027": "failed to get home banner, banner not found",
-        "01028": "failed to get banner",
-        "01029": "failed to update banner",
-        "01030": "failed to delete banner",
-        "01031": "please input all parameters",
-        "01032": "failed to create branch",
-        "01033": "failed to get branch",
-        "01034": "failed to update branch",
-        "01035": "failed to create list of value type",
-        "01036": "failed to get list of value type",
-        "01037": "failed to update list of value type",
-        "01038": "failed to delete list of value type",
-        "01039": "failed to create list of value",
-        "01040": "failed to get list of value",
-        "01041": "failed to update list of value",
-        "01042": "failed to delete list of value",
-        "01043": "missing firstname parameter",
-        "01044": "missing lastname parameter",
-        "01045": "missing password parameter",
-        "01046": "missing new password parameter",
-        "01047": "missing category parameter",
-        "01048": "missing subcategory parameter",
-        "01049": "missing title parameter",
-        "01050": "missing content parameter",
-        "01051": "page must be a number",
-        "01052": "missing article id parameter",
-        "01053": "missing description parameter",
-        "01054": "missing banner parameter",
-        "01055": "missing order parameter",
-        "01056": "missing start date parameter",
-        "01057": "missing end date parameter",
-        "01058": "missing banner id parameter",
-        "01059": "failed to get banner image",
-        "01060": "failed to upload file",
-        "01061": "failed to upload file, connection timeout!",
-        "01062": "no access token provided",
-        "01063": "invalid access token",
-        "01064": "failed to create new FAQ",
-        "01065": "failed to save faq record",
-        "01066": "failed to retrieve FAQ, FAQ not found",
-        "01067": "failed to get FAQ",
-        "01068": "failed to update FAQ",
-        "01069": "failed to delete FAQ",
-        "01070": "file can not be empty",
-        "01071": "bookmark already reach maximum number",
-        "01072": "mising bookmark parameter",
-        "01073": "value already exist",
-        "01074": "missing approval",
-        "01075": "data not found",
-        "01076": "failed to update",
-        "01077": "failed to get data",
-        "01078": "missing action parameter or value",
-        "01079": "body parameter should be array object",
-        "01080": "text format is not supported",
-        "01081": "something wrong, please try again",
-        "01082": "product id parameter and value is required",
-        "01083": "unique tag parameter and value is required",
-        "01084": "instruction title parameter and value is required",
-        "01085": "failed to swap data order",
-        "01086": "instruction type parameter and value is required",
-        "01087": "icon parameter and value is required",
-        "01088": "failed to create data",
-        "01089": "data to swap order length should be 2, consist of from and destination",
-        "01090": "failed to create new notification",
-        "01091": "notification not found",
-        "01092": "notification have been sent or deleted in one signal",
-        "01093": "failed to delete notification",
-        "01094": "missing required notification title parameter",
-        "01095": "missing required notification message parameter",
-        "01096": "missing required notification article parameter",
-        "01097": "missing required update notification id parameter",
-        "01098": "missing required update notification title parameter",
-        "01099": "missing required update notification message param",
-        "01100": "missing required update notification articleid param",
-        "01101": "missing required delete notification notifid param",
-        "01102": "text param must not contain fancytext",
-        "01103": "recipient is required",
-        "01104": "missing required terms and conditions parameter",
-        "01105": "missing required image parameter",
-        "01106": "missing required end date parameter",
-        "01107": "missing required instructions parameter",
-        "01108": "branch code already exist",
-        "01109": "token expired",
-        "01110": "oid not registered",
-        "01111": "user data not found",
-        "01112": "notification has already been sent to all recipients",
-        "01113": "role name is required",
-        "01114": "failed to create role",
-        "01115": "failed to update role",
-        "01116": "failed to get role list",
-        "01117": "role id is required",
-        "01118": "failed to delete role, role is used by some active users",
-        "01119": "error sending email notification to change role",
-        "01120": "email already registered",
-        "01121": "status value for approve is wrong",
-        "01122": "status value for reject is wrong",
-        "01123": "missing cycle number parameter",
-        "01124": "missing reward parameter",
-        "01125": "missing probability parameter",
-        "01126": "missing blended parameter",
-        "01127": "missing floor parameter",
-        "01128": "missing ceiling parameter",
-        "01129": "special offer category not found",
-        "01130": "csv url invalid",
-        "01131": "failed to approve special offer",
-        "07069": "missing start date parameter",
-        "07070": "missing end date parameter",
-        "07071": "missing search key parameter",
-        "07072": "no data found",
-        "07073": "data cannot be downloaded",
-        "07075": "transaction not found",
-        "07078": "transaction not found",
-        "01133": "your account is blocked, click on 'Forgot Your Password' and enter your e-mail to ask for new password",
-        "01134": "password format is incorrect"
     }
+},
+"userAction": {
+    "logout": "Logout",
+    "profile": "Profile",
+    "changePassword": "Change Password"
+},
+"forms": {
+    "email": {
+        "fieldTitle": "Email",
+        "errorRequired": "Email is required",
+        "errorFormat": "Email is invalid",
+        "errorAdira": "Must be an adira email",
+        "placeholder": "Email"
+    },
+    "password": {
+        "fieldTitle": "Password",
+        "errorRequired": "Password is required",
+        "placeholder": "Password"
+    },
+    "oldPassword": {
+        "fieldTitle": "Old Password",
+        "errorRequired": "Old Password is required",
+        "placeholder": "Old password"
+    },
+    "newPassword": {
+        "fieldTitle": "New Password",
+        "errorRequired": "New Password is required",
+        "errorMinLength": "Min. length of New Password is {{minLength}}",
+        "errorMaxLength": "Max. length of New Password is {{maxLength}}",
+        "errorFormat": "New Password should contain at least one uppercase one lowercase, one number, and one special character: #?!@$%^&*-",
+        "placeholder": "New password"
+    },
+    "confirmPassword": {
+        "fieldTitle": "Confirm Password",
+        "errorMatch": "Password not match",
+        "placeholder": "Confirm password"
+    },
+    "recaptcha": {
+        "fieldTitle": "Captcha",
+        "errorRequired": "Captcha is required",
+        "errorFormat": "Captcha is wrong",
+        "placeholder": "Captcha"
+    },
+    "firstName": {
+        "fieldTitle": "First Name",
+        "errorRequired": "First Name is required",
+        "errorMaxLength": "Max. length of First Name is {{maxLength}}",
+        "errorFormat": "First Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
+        "placeholder": "First name"
+    },
+    "lastName": {
+        "fieldTitle": "Last Name",
+        "errorRequired": "Lastname is required",
+        "errorMaxLength": "Max. length of Last Name is {{maxLength}}",
+        "errorFormat": "Last Name can only contain alphabets, spaces and folowing characters ,.'- with no leading and trailing spaces",
+        "placeholder": "Last name"
+    },
+    "role": {
+        "fieldTitle": "Role",
+        "errorRequired": "Role is required",
+        "placeholder": "Select a Role"
+    },
+    "bannerTitle": {
+        "fieldTitle": "Home Banner Title",
+        "errorRequired": "Home Banner Title is required",
+        "placeholder": "Home banner title"
+    },
+    "homeBanner": {
+        "fieldTitle": "Home Banner Picture",
+        "errorRequired": "Home Banner Picture is required",
+        "errorRatio": "Only 16:10 size ratio is valid.",
+        "errorType": "Only .jpg, .jpeg and .png format are supported"
+    },
+    "orderBanner": {
+        "fieldTitle": "Order",
+        "placeholder": "Order",
+        "errorRequired": "Order is required"
+    },
+    "startDateBanner": {
+        "fieldTitle": "Start Date",
+        "placeholder": "Choose start date",
+        "errorRequired": "Start Date is required"
+    },
+    "endDateBanner": {
+        "fieldTitle": "End Date",
+        "placeholder": "Choose end date",
+        "errorRequired": "End Date is required"
+    },
+    "clickableCheck": {
+        "fieldTitle": "Clickable?"
+    },
+    "urlRadioBanner": {
+        "fieldDetailPage": "Page Detail",
+        "fieldDescBox": "Description",
+        "fieldURL": "URL Option",
+        "fieldModulAccess": "Adiraku Page",
+        "fieldExternalURLAccess": "External URL",
+        "fieldEcternalURLAccessPlaceholder": "Input URL here",
+        "errorRequired": "Detail Page or URL is required"
+    },
+    "addFooterBanner": {
+        "fieldTitle": "Add Footer",
+        "footerTextTitle": "Text",
+        "footerTextPlaceholder": "Input name of text here",
+        "footerImageTitle": "Image",
+        "footerButtonTitle": "Button",
+        "footerButtonPlaceholder": "Input name of button here",
+        "footerURLTitle": "Input URL Text"
+    },
+    "faqCategory": {
+        "fieldTitle": "Category",
+        "placeholder": "Select a Category",
+        "errorRequired": "Category is required"
+    },
+    "faqTitle": {
+        "fieldTitle": "FAQ Title",
+        "placeholder": "FAQ title",
+        "errorRequired": "FAQ Title is required"
+    },
+    "faqOrder": {
+        "fieldTitle": "Order",
+        "placeholder": "Order",
+        "errorRequired": "Order must have numeric value",
+        "errorFormat": "Order must be a number",
+        "errorMin": "Order must be a positive number > 0"
+    },
+    "faqUniqueTag": {
+        "fieldTitle": "Unique Tag",
+        "placeholder": "Unique tag",
+        "errorRequired": "Unique Tag is required"
+    },
+    "faqContent": {
+        "fieldTitle": "Description",
+        "placeholder": "Description",
+        "errorRequired": "Description is required"
+    },
+    "faqBookmark": {
+        "fieldTitle": "Bookmark FAQ"
+    },
+    "articleTitle": {
+        "fieldTitle": "Article Title",
+        "errorRequired": "Article Title is required",
+        "placeholder": "Article title"
+    },
+    "articlePicture": {
+        "fieldTitle": "Article Picture",
+        "errorRequired": "Article Picture is required",
+        "errorType": "Only .jpg, .jpeg and .png format are supported",
+        "errorRatio": "Only {{width}}:{{height}} ratio is supported",
+        "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
+    },
+    "uniqueTag": {
+        "fieldTitle": "Unique Tag",
+        "errorRequired": "Unique tag is required",
+        "placeholder": "Unique Tag"
+    },
+    "category": {
+        "fieldTitle": "Category",
+        "errorRequired": "Category is required",
+        "placeholder": "Category"
+    },
+    "branchName": {
+        "fieldTitle": "Branch Name",
+        "placeholder": "Branch name",
+        "errorRequired": "Branch Name is required"
+    },
+    "branchCode": {
+        "fieldTitle": "Branch Code",
+        "placeholder": "Branch code",
+        "errorRequired": "Branch Code is required",
+        "errorFormat": "Branch Code should only contain numbers",
+        "errorLength": "Branch Code should contain {{minLength}} numbers",
+        "errorDuplicate": {
+            "preText": "Branch Code already exist, click ",
+            "here": "here",
+            "endText": " to see the branch"
+        }
+    },
+    "branchType": {
+        "fieldTitle": "Branch Type",
+        "placeholder": "Select a Branch Type",
+        "errorRequired": "Branch Type is required"
+    },
+    "longitude": {
+        "fieldTitle": "Longitude",
+        "placeholder": "Longitude",
+        "errorRequired": "Longitude must have numeric value",
+        "errorMaxDecimalLength": "Longitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
+    },
+    "latitude": {
+        "fieldTitle": "Latitude",
+        "placeholder": "Latitude",
+        "errorRequired": "Latitude must have numeric value",
+        "errorMaxDecimalLength": "Latitude can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
+    },
+    "csRegion": {
+        "fieldTitle": "Region (for credit simulation)",
+        "placeholder": "Select a Region"
+    },
+    "region": {
+        "fieldTitle": "Region (for branch location)",
+        "placeholder": "Region",
+        "errorRequired": "Region is required"
+    },
+    "province": {
+        "fieldTitle": "Province",
+        "placeholder": "Select a Province",
+        "errorRequired": "Province is required"
+    },
+    "city": {
+        "fieldTitle": "City",
+        "placeholder": "Select a City",
+        "errorRequired": "City is required"
+    },
+    "subDistrict": {
+        "fieldTitle": "Sub-District",
+        "placeholder": "Select a Sub-District",
+        "errorRequired": "Sub-District is required"
+    },
+    "district": {
+        "fieldTitle": "District",
+        "placeholder": "Select a District",
+        "errorRequired": "District is required"
+    },
+    "address": {
+        "fieldTitle": "Address",
+        "placeholder": "Address",
+        "errorRequired": "Address is required"
+    },
+    "createdBy": {
+        "fieldTitle": "Created By",
+        "placeholder": "Created by",
+        "errorRequired": "Created By is required"
+    },
+    "updatedBy": {
+        "fieldTitle": "Updated By",
+        "placeholder": "Updated by",
+        "errorRequired": "Updated By is required"
+    },
+    "remark": {
+        "fieldTitle": "Remark",
+        "placeholder": "Remark",
+        "errorRequired": "Remark is required",
+        "errorMaxLength": "Max. length of Remark is {{maxLength}}"
+    },
+    "postalCode": {
+        "fieldTitle": "Postal Code",
+        "placeholder": "Postal code",
+        "errorFormat": "Postal Code should only contain numbers",
+        "errorMinLength": "Min. length of Postal Code is {{minLength}}",
+        "errorMaxLength": "Max. length of Postal Code is {{maxLength}}"
+    },
+    "tenure": {
+        "errorRequired": "Tenure must have numeric value",
+        "errorMin": "Min. value of Postal Code is {{minValue}}",
+        "errorMaxDecimalLength": "Tenure can only contain max. {{integerDigitLength}} integer and {{fractionDigitLength}} fractional part"
+    },
+    "icon": {
+        "fieldTitle": "Icon",
+        "errorRequired": "Icon is required",
+        "errorMaxResolution": "Icon size is more than 48 X 48 pixel",
+        "errorRatio": "Only 1:1 ratio is supported",
+        "errorType": "Only .jpg, .jpeg and .png format are supported",
+        "hint": "Maximum size 48 X 48 pixel, ratio 1:1 (file type: .jpeg / .png )"
+    },
+    "instructions": {
+        "fieldTitle": "Instruction",
+        "placeholder": "Instruction",
+        "errorRequired": "Instruction is required",
+        "errorMinTotal": "There should be one or more instruction",
+        "errorMaxTotal": "Maximum number of instruction steps is {{maxLength}}",
+        "hint": {
+            "installment": "installment",
+            "boldBrackets": "Put text inside square brackets [ ] to bold"
+        }
+    },
+    "title": {
+        "fieldTitle": "Title",
+        "placeholder": "Title",
+        "iconRequied": "Title is required",
+        "errorMaxLength": "Max. length of Title is {{maxLength}}"
+    },
+    "recipient": {
+        "fieldTitle": "Recipient",
+        "placeholder": "Select a File",
+        "searchPlaceholder": "Search file",
+        "errorRequired": "Recipient is required",
+        "errorFileType": "Only .csv format is supported",
+        "errorCSVRequired": "csv file is required",
+        "options": {
+            "all": "All",
+            "selectedUsers": "Selected Users"
+        }
+    },
+    "content": {
+        "fieldTitle": "Content",
+        "placeholder": "Content",
+        "errorRequired": "Content is required",
+        "errorMaxLength": "Max. length of Content is {{maxLength}}"
+    },
+    "notifLargeIcon": {
+        "fieldTitle": "Large Icon",
+        "errorType": "Only .jpg, .jpeg and .png format are supported",
+        "errorResolution": "Only {{width}} X {{height}} pixel is supported",
+        "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
+    },
+    "notifImage": {
+        "fieldTitle": "Image",
+        "errorType": "Only .jpg, .jpeg and .png format are supported",
+        "errorResolution": "Only {{width}} X {{height}} pixel is supported",
+        "hint": "Resolution {{width}} X {{height}} pixel (file type: .jpeg / .png)"
+    },
+    "notifLinkType": {
+        "fieldTitle": "Type",
+        "errorRequired": "Type is required",
+        "options": {
+            "article": "Article",
+            "specialOffer": "Special Offer"
+        }
+    },
+    "specialOfferCategory": {
+        "fieldTitle": "Special Offer Category",
+        "placeholder": "Special offer category",
+        "errorRequired": "Special Offer Category is required"
+    },
+    "notifSpecialOffer": {
+        "fieldTitle": "Special Offer",
+        "placeholder": "Select a Special Offer",
+        "errorRequired": "Special Offer is required",
+        "searchPlaceholder": "Search special offer"
+    },
+    "articleCategory": {
+        "fieldTitle": "Article Category",
+        "placeholder": "Article category",
+        "errorRequired": "Article Category is required"
+    },
+    "notifArticle": {
+        "fieldTitle": "Article",
+        "placeholder": "Select an Article",
+        "errorRequired": "Article is required",
+        "searchPlaceholder": "Search article"
+    },
+    "schedule": {
+        "fieldTitle": "Schedule",
+        "errorTypeRequired": "Schedule type is required",
+        "errorRequired": "Schedule must have date and time format value",
+        "errorMin": "Schedule should be more than 1 hr from now",
+        "options": {
+            "immediate": "Immediate",
+            "certainTime": "Scheduled"
+        },
+        "datePlaceholder": "mm/dd/yyyy"
+    },
+    "offerImage": {
+        "fieldTitle": "Image",
+        "errorRequired": "Image is required",
+        "errorRatio": "Only {{width}}:{{height}} ratio is supported",
+        "errorType": "Only .jpg, .jpeg and .png format are supported",
+        "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
+    },
+    "description": {
+        "fieldTitle": "Description",
+        "placeholder": "Description",
+        "errorRequired": "Description is required",
+        "errorMaxLength": "Max. length of Description is {{maxLength}}"
+    },
+    "termsAndConditions": {
+        "fieldTitle": "Terms and Conditions",
+        "errorRequired": "Terms and Conditions is required",
+        "errorMaxLength": "Max. length of Terms and Conditions is {{maxLength}}"
+    },
+    "redeemVoucherInstructions": {
+        "fieldTitle": "Redeem Voucher Instructions",
+        "errorRequired": "Redeem Voucher Instructions is required",
+        "errorMaxLength": "Max. length of Redeem Voucher Instructions is {{maxLength}}"
+    },
+    "endDatetime": {
+        "fieldTitle": "End Date",
+        "errorRequired": "End Date must have date and time format value",
+        "errorMin": "End Date should be more than 1 hr from now",
+        "datePlaceholder": "mm/dd/yyyy"
+    },
+    "roleName": {
+        "fieldTitle": "Role Name",
+        "placeholder": "Role name",
+        "errorRequired": "Role Name is required"
+    },
+    "privilege": {
+        "selectAll": "Select All",
+        "options": {
+            "create": "Create",
+            "view": "View",
+            "edit": "Edit",
+            "delete": "Delete",
+            "publish": "Publish",
+            "download": "Download"
+        }
+    },
+    "date": {
+        "errorRange": "Start Date must be less than or equal than End Date",
+        "errorRangeRequired": "Both start date should be filled or not at all",
+        "maxToday": "Date entered should not be more than today"
+    },
+    "transactionStartDate": {
+        "errorRequired": "Start Date must have valid date format value"
+    },
+    "transactionEndDate": {
+        "errorRequired": "End Date must have valid date format value"
+    },
+    "transactionSearch": {
+        "placeholder": "Search OID / VA / Phone Number / Contract No.",
+        "hint": "Min. length of search text is {{minLength}}",
+        "errorRequired": "Search is required"
+    },
+    "approvalSearch": {
+        "placeholder": "Search Title"
+    },
+    "sampleSize": {
+        "errorRequired": "Sample Size must have numeric value",
+        "errorMin": "Min. value of sample size is {{minValue}}",
+        "errorFormat": "Sample Size must be an integer number"
+    },
+    "rangeSize": {
+        "errorRequired": "Range Size must have numeric value",
+        "errorMin": "Range Size must have a positive number",
+        "errorFormat": "Range Size must be an integer number"
+    },
+    "reward": {
+        "errorRequired": "Reward must have numeric value",
+        "errorMin": "Reward must have a positive number"
+    },
+    "probability": {
+        "errorRequired": "Probability must have numeric value",
+        "errorMin": "Probability must have a positive number"
+    },
+    "buttonText": {
+        "save": "Save",
+        "back": "Back"
+    },
+    "vaMaster": {
+        "type": "VA Master Angsuran",
+        "partial": "Tarik Sebagian",
+        "full": "Tarik Semua",
+        "buttonSubmit": "Submit",
+        "errorFormat": "Kode Pos hanya terdiri dari angka",
+        "errorRequired": "Jenis VA Master is required",
+        "submit": "Submit"
+    }
+},
+"loginScreen": {
+    "forgotPassword": "Forgot Password?",
+    "loginFailed": "login failed",
+    "login": "login",
+    "backToLogin": "back to login",
+    "sendNewPassword": "send new password",
+    "changePassword": "change password",
+    "changeYourPassword": "Change Your Password to Continue",
+    "forgotYourPassword": "Forgot Your Password?",
+    "passwordSendToEmail": "New password was sent to your email",
+    "passwordSendFailed": "reset password failed",
+    "passwordChanged": "password successfully changed, relogin with the new password",
+    "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
+},
+"table": {
+    "jenisva": "VA Type",
+    "subdate": "Request Date",
+    "amount": "Amount",
+    "initiator": "Initiator",
+    "noRecordsFound": "No Records Found",
+    "search": "search",
+    "actions": "Actions",
+    "numbers": "No.",
+    "status": {
+        "title": "Status",
+        "approvalTitle": "Approval",
+        "active": "Active",
+        "inactive": "Inactive",
+        "approved": "Approved",
+        "rejected": "Rejected",
+        "delivered": "Delivered",
+        "pending": "Pending",
+        "waitingForApproval": "Waiting for Approval"
+    },
+    "uniqueTag": "Unique Tag",
+    "title": "Title",
+    "category": "Category",
+    "order": "Order",
+    "lastUpdated": "Last Updated Date & By",
+    "createdDate": "Created Date",
+    "bannersTable": {
+        "preview": "Preview",
+        "startDate": "Start Date",
+        "endDate": "End Date"
+    },
+    "userTable": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "role": "Role"
+    },
+    "branchTable": {
+        "branchName": "Branch Name",
+        "branchCode": "Branch Code",
+        "branchType": "Branch Type",
+        "address": "Address",
+        "province": "Province"
+    },
+    "changePhonenumberRequestTable": {
+        "requestDate": "Request Date & Time",
+        "customerName": "Customer Name",
+        "requestDuration": "Request Duration",
+        "oldPhoneNumber": "Old Phonenumber",
+        "newPhoneNumber": "New Phonenumber",
+        "contractNo": "Contract Number",
+        "actionsStatus": "Action / Status",
+        "remark": "Remark"
+    },
+    "creditSimulationTable": {
+        "tenureMonth3": "3 Month",
+        "tenureMonth6": "6 Month",
+        "tenureMonth9": "9 Month",
+        "tenureMonth12": "12 Month",
+        "tenureMonth15": "15 Month",
+        "tenureMonth18": "18 Month",
+        "tenureMonth21": "21 Month",
+        "tenureMonth24": "24 Month",
+        "tenureMonth30": "30 Month",
+        "tenureMonth36": "36 Month",
+        "tenureMonth42": "42 Month",
+        "tenureMonth48": "48 Month",
+        "tenureMonth54": "54 Month",
+        "tenureMonth60": "60 Month"
+    },
+    "notificationTable": {
+        "schedule": "Schedule",
+        "sent": "Total Recipient",
+        "clicked": "Clicked",
+        "scheduleType": "Type"
+    },
+    "roleTable": {
+        "roleName": "Role Name"
+    },
+    "transactionTable": {
+        "oid": "OID",
+        "vaNumber": "VA Number",
+        "contNo": "Contract Number",
+        "name": "Name",
+        "phNumber": "Phone Number",
+        "adiraPay": "Adira pay Balance",
+        "timestamp": "Timestamp",
+        "transCode": "Transaction Code",
+        "transDesc": "Transaction Description",
+        "amount": "Amount",
+        "destVANumber": "Destination VA Number",
+        "sourceVANumber": "Source VA Number",
+        "transDate": "Transaction Date",
+        "transSeq": "Transaction Sequence",
+        "installmentAmount": "Installment Amount",
+        "withdrawalAmount": "Withdrawal Amount",
+        "topUpAmount": "Top Up Amount",
+        "penaltyFee": "Penalty Paid",
+        "fee": "Transaction Fee",
+        "withdrawalFee": "Withdrawal Fee",
+        "bankTransferFee": "Bank Transfer Fee",
+        "ppn": "PPN",
+        "vaName": "Bank Name"
+    },
+    "gamificationTable": {
+        "reward": "Reward",
+        "totalPerson": "Total Person",
+        "probability": "Probability",
+        "blended": "Blended",
+        "runningNumber": "Running Number"
+    },
+    "cashbackRewardTable": {
+        "vaNumber": "VA Number",
+        "rewardDate": "Reward Date",
+        "custName": "Customer Name",
+        "grossValue": "Gross Value",
+        "pphValue": "Pph Value",
+        "cashbackReceive": "Total Cashback Received",
+        "installmentVal": "Installment Value",
+        "paymentDate": "Payment Date",
+        "npwpNumber": "NPWP Number",
+        "npwpName": "NPWP Name",
+        "npwpAddress": "NPWP Address"
+    }
+},
+"bannerListScreen": {
+    "title": "Banners Data",
+    "createBanner": "create banner",
+    "deleteConfirmation": "Are you sure you want to delete home banner {{title}}?",
+    "loadFailed": "failed to load home banner list"
+},
+"bannersDetailScreen": {
+    "createBannerTitle": "Add Home Banner",
+    "updateBannerTitle": "Update Home Banner",
+    "seeBannerList": "See Banner List",
+    "successCreateBanner": "Banner successfully created",
+    "successUpdateBanner": "Banner successfully updated",
+    "updateFailed": "Failed to Update Banner",
+    "createFailed": "Failed to Create Banner",
+    "loadFailed": "Failed to load data Banner",
+    "urlNotValid": "Input URL is not valid"
+},
+"changePasswordScreen": {
+    "title": "Change Password",
+    "passwordChanged": "password successfully changed",
+    "seeMyProfile": "ee my profile",
+    "failed": "change password failed"
+},
+"angularLocale": "en-US",
+"loading": "loading",
+"save": "save",
+"close": "close",
+"yesContinue": "yes, continue!",
+"reset": "reset",
+"cancel": "cancel",
+"skip": "skip",
+"success": "success",
+"fail": "fail",
+"error": "error",
+"deleteConfirmation": "Delete Confirmation",
+"dataDeleted": "data deleted",
+"failedToDelete": "delete failed",
+"backToList": "back to list",
+"upload": "upload",
+"approve": "approve",
+"reject": "reject",
+"add": "add",
+"by": "by",
+"to": "to",
+"edit": "edit",
+"example": "example",
+"invalidForm": "invalid form",
+"imageNotExist": "image not exist",
+"uploadCSV": "upload csv",
+"failedToRefreshData": "refresh data failed",
+"failedToProcessFile": "failed to process file",
+"seeDetails": "See Details",
+"duration": {
+    "fromDayToMin": "{{day}} day {{hour}} hour {{min}} minute",
+    "fromHourToSec": "{{hour}} hour {{min}} minute",
+    "inMin": "{{min}} minute",
+    "inSec": "{{sec}} sec"
+},
+"loggedOutModal": {
+    "title": "You're unauthorized to access this page",
+    "content": "Please re-login to access this page",
+    "button": "OK"
+},
+"movePageConfirmationModal": {
+    "title": "Leave Page Confirmation",
+    "content": "Are you sure you want to leave this page? Changes will be discarded"
+},
+"dataConfirmationModal": {
+    "title": "Data Confirmation",
+    "content": "Are you sure that all the data and content are correct?"
+},
+"saveConfirmationModal": {
+    "title": "New Changes Have Not been Saved",
+    "content": "Click 'save' to save the changes"
+},
+"pageBlockedError": {
+    "title": "access is blocked",
+    "content": "you don't have permission to access this page"
+},
+"actionBlockedError": {
+    "title": "action is blocked",
+    "content": "you don't have permission to do this action"
+},
+"userListScreen": {
+    "title": "Users Data",
+    "createUser": "create user",
+    "loadFailed": "failed to get list of users",
+    "deleteConfirmation": "Are you sure you want to delete user {{name}}?",
+    "failedToGetRoles": "Failed top get list of roles"
+},
+"userDetailsScreen": {
+    "getUserFailed": "failed to get user data",
+    "createTitle": "Create New User",
+    "updateTitle": "Update User Data",
+    "succesCreated": "new user successfully created",
+    "succesUpdated": "user data successfully updated",
+    "emailNotChangeAble": "Email is not updateable",
+    "updateFailed": "failed to update data",
+    "createFailed": "failed to create new user"
+},
+"articleListScreen": {
+    "title": "Articles Data",
+    "createArticle": "create article",
+    "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
+    "loadFailed": "failed to get list of articles"
+},
+"articleDetailsScreen": {
+    "createArticleTitle": "Create New Article",
+    "updateArticleTitle": "Update Article",
+    "seeArticleList": "See Article List",
+    "successCreateArticle": "Article successfully created",
+    "successUpdateArticle": "Article successfully updated",
+    "updateFailed": "Failed to Update Article",
+    "createFailed": "Failed to Create Article",
+    "loadFailed": "Failed to load article data",
+    "urlNotValid": "Input URL is not valid"
+},
+"faqListScreen": {
+    "title": "FAQs Data",
+    "createFAQ": "create faq",
+    "deleteConfirmation": "Are you sure you want to delete FAQ {{title}}?",
+    "loadFailed": "failed to get list of FAQ",
+    "removeBookmark": "click to remove from bookmark",
+    "addBookmark": "click to add to bookmark",
+    "bookmarkSuccess": "FAQ is now bookmarked",
+    "removeBookmarkSuccess": "FAQ is removed from bookmark",
+    "bookmarkFailed": "failed to bookmark FAQ",
+    "removeBookmarkFailed": "failed to remove FAQ from bookmark"
+},
+"faqDetailsScreen": {
+    "getFaqFailed": "failed to get FAQ data",
+    "createTitle": "Create New FAQ",
+    "updateTitle": "Update FAQ",
+    "succesCreated": "new FAQ successfully created",
+    "succesUpdated": "FAQ data successfully updated",
+    "updateFailed": "failed to update data",
+    "createFailed": "failed to create new FAQ",
+    "getFaqCategoriesFailed": "failed to get FAQ categories"
+},
+"branchDetailsScreen": {
+    "getBranchFailed": "failed to get Branch Location data",
+    "createTitle": "Create New Branch Location",
+    "updateTitle": "Update Branch Location",
+    "succesCreated": "new Branch Location successfully created",
+    "succesUpdated": "Branch Location successfully updated",
+    "updateFailed": "failed to update data",
+    "createFailed": "failed to create new Branch Location",
+    "getBranchTypesFailed": "failed to get branch types",
+    "getProvincesFailed": "failed to get province list",
+    "getCitiesFailed": "failed to get city list",
+    "getDistrictsFailed": "failed to get district list",
+    "getSubDistrictsFailed": "failed to get sub-district list",
+    "duplicateBranchCode": "Branch Code already exist",
+    "getCSRegionFailed": "failed to get region list for credit simulation"
+},
+"branchListScreen": {
+    "title": "Branch Locations Data",
+    "createBranch": "create branch location",
+    "uploadCSV": "upload CSV",
+    "deleteConfirmation": "Are you sure you want to delete branch location {{name}}?",
+    "loadFailed": "failed to get list of branch locations"
+},
+"uploadCSVModal": {
+    "title": "Upload CSV",
+    "errorFormat": "File should be in csv format",
+    "fileExample": "Example File",
+    "uploadFailed": "Upload Failed",
+    "uploadSuccess": "Upload Success",
+    "totalFailed": "{{totalFailed}} branches failed to be created",
+    "instructions": {
+        "format": "Upload file format should be csv with semicolon (;) as delimiter, make sure no column data contains semicolon (;)",
+        "numberFormat": "Use (.) not (,) in latitude and longitude and there should be only one (.) for each longitude/latitude",
+        "precise": "Make sure longitude and latitude is precise, slight mistake in longitude and latitude will effect the nearest branch location on the app",
+        "columnSequence": "The sequnce of the column should be the same as the example file: branch name, branch type, region, province, city, district, sub-district, postal code, address, latitude, longitude, branch code, area code",
+        "branchCode": "Each branch code should contain 4 numbers"
+    }
+},
+"productCreditSimulationScreen": {
+    "title": "Credit Simulation",
+    "getProductFailed": "failed to get product data",
+    "getProdCompFailed": "failed to get product components",
+    "getCreditSimulationFailed": "failed to get credit simulation data",
+    "updateSuccess": "update credit simulation success",
+    "updateFailed": "failed to update credit simulation"
+},
+"changePhonenumberRequestListScreen": {
+    "title": "Change Handphone",
+    "loadFailed": "failed to get list of change phonenumber requests",
+    "rejectSuccess": "change phone number request successfully rejected",
+    "rejectFailed": "failed to reject change phone number request",
+    "approveSuccess": "change phone number request successfully approved",
+    "approveFailed": "failed to approve change phone number request",
+    "bulkRejectFailed": "failed to reject requests",
+    "bulkRejectSuccess": "requests are rejected",
+    "bulkApproveFailed": "failed to approve requests",
+    "bulkApproveSuccess": "requests are approved",
+    "totalRequestSelected": "{{totalRequest}} requests are selected",
+    "totalRequestFailed": "{{totalRequest}} requests failed",
+    "confirmationModal": {
+        "reject": {
+            "title": "Rejecting Confirmation",
+            "content": "Are you sure you want to reject change phonenumber request?"
+        },
+        "approve": {
+            "title": "Approval Confirmation",
+            "content": "Are you sure you want to approve change phonenumber request?"
+        }
+    },
+    "addRemarkSuccess": "remark successfuly added",
+    "addRemarkFailed": "failed to add remark"
+},
+"paymentInstructionScreen": {
+    "title": "Payment Instructions",
+    "createInstruction": "create new instruction",
+    "deleteConfirmation": "Are you sure you want to delete {{grpTitle}} instruction?",
+    "getTypeFailed": "failed to get payment types",
+    "getInstructionListFailed": "failed to get instructions data",
+    "changeOrderFailed": "failed to change instruction order"
+},
+"paymentInstructionDetailsScreen": {
+    "createTitle": "Create Payment Instruction",
+    "updateTitle": "Update Payment Instruction",
+    "typeNotFound": "payment type {{type}} not found",
+    "succesCreated": "Payment Instruction successfully created",
+    "succesUpdated": "Payment Instruction successfully updated",
+    "addNewStep": "add new step",
+    "uploadIconFailed": "failed to upload icon",
+    "insertInstructionFailed": "failed to create instruction",
+    "insertStepsFailed": "failed to create instruction steps",
+    "getInstructionFailed": "failed to get instruction data",
+    "getStepsFailed": "failed to get instruction steps",
+    "updateFailed": "failed to update payment instructions",
+    "deleteIconFailed": "failed to delete icon"
+},
+"notificationListScreen": {
+    "title": "Notifications Data",
+    "createNotification": "create new notification",
+    "deleteConfirmation": "Are you sure you want to delete notification {{title}}?",
+    "loadFailed": "failed to get list of notifications",
+    "immediate": "Immediate",
+    "scheduled": "Scheduled"
+},
+"notificationDetailsScreen": {
+    "getNotificationFailed": "failed to get notification data",
+    "getArticleListFailed": "failed to get article list",
+    "createTitle": "Create New Notification",
+    "updateTitle": "Update Notification",
+    "succesCreated": "new notification successfully created",
+    "succesUpdated": "notification data successfully updated",
+    "updateFailed": "failed to update data",
+    "createFailed": "failed to create new notification",
+    "notifSaveConfirm": "Save Notification Confirmation",
+    "deleteCSVFailed": "failed to delete csv file",
+    "deleteImageFailed": "failed to delete image",
+    "deleteIconFailed": "failed to delete icon",
+    "uploadCSVFailed": "failed to upload csv file",
+    "uploadImageFailed": "failed to upload image",
+    "uploadIconFailed": "failed to upload icon",
+    "cantUpdate": {
+        "immediate": "can't update immediately sent notification",
+        "minDuration": "can't update notification which schedule is less than one hour"
+    }
+},
+"specialOfferListScreen": {
+    "title": "Special Offers Data",
+    "createOffer": "create new special offer",
+    "loadFailed": "failed to get list of special offers",
+    "approvalBy": "by"
+},
+"specialOfferDetailsScreen": {
+    "getOfferFailed": "failed to get Special Offer data",
+    "getCategoryFailed": "failed to get Special Offer categories",
+    "getFileListFailed": "failed to get MPL reicipient file list",
+    "createTitle": "Create New Special Offer",
+    "updateTitle": "Update Special Offer",
+    "viewTitle": "Special Offer Details",
+    "recipientUrlLabel": "Special Offer Recipient",
+    "succesCreated": "Special Offer successfully created",
+    "succesUpdated": "Special Offer successfully updated",
+    "updateFailed": "failed to update special offer",
+    "createFailed": "failed to create new Special Offer",
+    "cantUpdate": {
+        "minDuration": "can't update special offer which expiry date is less than one hour",
+        "approvedOffer": "can't update special offer that has been approved"
+    },
+    "uploadImageFailed": "failed to upload image",
+    "uploadCSVFailed": "failed to upload csv file",
+    "deleteImageFailed": "failed to delete image"
+},
+"roleListScreen": {
+    "title": "Roles Data",
+    "createRole": "create new role",
+    "loadFailed": "failed to get list of roles",
+    "deleteConfirmation": "Are you sure you want to delete role {{name}}?",
+    "succesCreated": "role successfully created",
+    "succesUpdated": "role successfully updated",
+    "updateFailed": "failed to update role",
+    "createFailed": "failed to create new role"
+},
+"balanceReport": {
+    "title": "Balance and Transaction Report",
+    "loadFailed": "failed to get balance and transaction report"
+},
+"transactionReport": {
+    "title": "Transaction Report",
+    "dateFilter": "Date Filter",
+    "downloadReport": "download report",
+    "filterNotSet": "Filter Not Set",
+    "loadFailed": "failed to get transaction report",
+    "downloadFailed": "failed to download transaction report"
+},
+"homeScreen": {
+    "welcome": "Welcome,",
+    "lastLogin": "LAST LOGIN",
+    "addEntry": "Add a New Entry"
+},
+"toDoListScreen": {
+    "title": "Approval Cashout Master",
+    "loadFailed": "failed to get list data"
+},
+"approvalListScreen": {
+    "title": "Approval",
+    "getTabsFailed": "failed to get list of approval features",
+    "refreshCountFailed": "failed to refresh approval data count",
+    "loadFailed": {
+        "specialOffer": "failed to get special offer approval list"
+    },
+    "tabsTitle": {
+        "specialOffer": "Sp. Offer"
+    },
+    "successBulkApprove": {
+        "specialOffer": "selected special offers successfully approved"
+    },
+    "successBulkReject": {
+        "specialOffer": "selected special offers successfully rejected"
+    },
+    "bulkApproveFailed": {
+        "specialOffer": "failed to approve selected special offers"
+    },
+    "bulkRejectFailed": {
+        "specialOffer": "failed to reject selected special offers"
+    },
+    "totalFailed": {
+        "specialOffer": "{{totalFailed}} special offers failed"
+    },
+    "successApprove": {
+        "specialOffer": "special offer successfully approved"
+    },
+    "successReject": {
+        "specialOffer": "special offer successfully rejected"
+    },
+    "approveFailed": {
+        "specialOffer": "failed to approve special offer"
+    },
+    "rejectFailed": {
+        "specialOffer": "failed to reject special offer"
+    },
+    "totalRowsSelected": "{{totalRows}} title are selected",
+    "specialOfferNotActive": {
+        "title": {
+            "bulk": "some special offers has passed their end date",
+            "single": "special offer has passed its end date"
+        },
+        "content": "changes on inactive special offer will not affect the application"
+    }
+},
+"gamificationRuleScreen": {
+    "title": "Gamification Rule",
+    "activeRule": "Active Rule",
+    "upcomingRule": "Upcoming Rule",
+    "sampleSize": "Sample Size",
+    "activeSince": "Active since",
+    "replaceText": "Will replace the active rule at",
+    "newRule": "New Rule",
+    "confirmationModal": {
+        "edit": {
+            "title": "Update Confirmation",
+            "content": "Are you sure you want to update rule? The update will be applied on next day at 00.01 WIB"
+        },
+        "newRule": {
+            "title": "New Rule Confirmation",
+            "content": "Are you sure you want to create new rule? New rule will be applied on next day at 00.01 WIB"
+        }
+    },
+    "loadFailed": "failed to get rule list",
+    "totalPersonFormula": "probability x sample size (rounded down)",
+    "lastRowDisclaimer": "This row will be automatically calculated with formula of probability: 100% - total probability row 1-8. Probability should be a positive number",
+    "cantEditRule": "Can't edit rule",
+    "upcomingRuleNotFound": "No upcoming rule found to be edited",
+    "succesCreated": "upcoming rule successfully created",
+    "succesUpdated": "upcoming rule successfully updated",
+    "updateFailed": "failed to update upcoming rule",
+    "createFailed": "failed to create upcoming rule"
+},
+"requestWithdrawalScreen": {
+    "title": "Request Withdrawal",
+    "jenisVAMaster": "Jenis VA Master",
+    "currentAmount": "Saldo Saat Ini",
+    "totalWithdrawal": "Jumlah Withdrawal",
+    "typeVAMaster": "Pilih Jenis VA Master"
+},
+"trackYourRequestScreen": {
+    "title": "Track Your Request",
+    "find": "Cari"
+},
+"cashbackRewardScreen": {
+    "title": "Cashback Reward",
+    "dateFilter": "Date Filter",
+    "nameFilter": "NPWP Name Filter",
+    "downloadReport": "download report",
+    "filterNotSet": "Filter Not Set"
+},
+"features": {
+    "homebanner": "Home Banner",
+    "artikel": "Article",
+    "specialoffer": "Special Offer",
+    "faq": "FAQ",
+    "lokasicabang": "Branch Locator",
+    "ubahnomorhandphone": "Change Phone Number",
+    "simulasikredit": "Credit Simulation",
+    "instruksipembayaran": "Payment Instructions",
+    "notifikasi": "Notifications",
+    "user": "User",
+    "role": "Role",
+    "laporantransaksi": "Transaction Report",
+    "laporansaldo": "Balance Report",
+    "gamificationrule": "Gamification Rule",
+    "cashbackreward": "Cashback Reward",
+    "mobilbaru": "New Car",
+    "mobilbekas": "Secondhand Car",
+    "motorbaru": "New Motorcycle",
+    "motorbekas": "Secondhand Motorcycle",
+    "elektronik": "Electronic",
+    "furnitur": "Furniture",
+    "gadget": "Gadget",
+    "multigunamotor": "Multipurpose Motorcycle",
+    "multigunamobil": "Multipurpose Car",
+    "spmultigunamotor": "SP Multipurpose Motorcycle",
+    "requestwithdrawal": "Request Withdrawal",
+    "approvecashout": "Approve Cashout"
+},
+"apiErrors": {
+    "noInternet": "no internet connection",
+    "01000": "internal server error",
+    "01001": "email can not be empty",
+    "01002": "password can not be empty",
+    "01003": "email and password not match",
+    "01004": "user is not active",
+    "01005": "email and password not match",
+    "01006": "missing input email account",
+    "01007": "failed to send email",
+    "01008": "unauthorized",
+    "01009": "invalid email format",
+    "01010": "failed to create new admin",
+    "01011": "failed to create admin profile",
+    "01012": "failed to create admin profile group",
+    "01013": "error get login data",
+    "01014": "error get admin account",
+    "01015": "password must be alphanumeric, one uppercase, and minimal 8 letters",
+    "01016": "wrong old password",
+    "01017": "failed to change password",
+    "01018": "failed to update account",
+    "01019": "failed to create new article record",
+    "01020": "failed to save article record",
+    "01021": "failed to retrieve article, article not found",
+    "01022": "failed to get article",
+    "01023": "failed to update article",
+    "01024": "failed to delete article",
+    "01025": "failed to create new home banner",
+    "01026": "failed to save home banner",
+    "01027": "failed to get home banner, banner not found",
+    "01028": "failed to get banner",
+    "01029": "failed to update banner",
+    "01030": "failed to delete banner",
+    "01031": "please input all parameters",
+    "01032": "failed to create branch",
+    "01033": "failed to get branch",
+    "01034": "failed to update branch",
+    "01035": "failed to create list of value type",
+    "01036": "failed to get list of value type",
+    "01037": "failed to update list of value type",
+    "01038": "failed to delete list of value type",
+    "01039": "failed to create list of value",
+    "01040": "failed to get list of value",
+    "01041": "failed to update list of value",
+    "01042": "failed to delete list of value",
+    "01043": "missing firstname parameter",
+    "01044": "missing lastname parameter",
+    "01045": "missing password parameter",
+    "01046": "missing new password parameter",
+    "01047": "missing category parameter",
+    "01048": "missing subcategory parameter",
+    "01049": "missing title parameter",
+    "01050": "missing content parameter",
+    "01051": "page must be a number",
+    "01052": "missing article id parameter",
+    "01053": "missing description parameter",
+    "01054": "missing banner parameter",
+    "01055": "missing order parameter",
+    "01056": "missing start date parameter",
+    "01057": "missing end date parameter",
+    "01058": "missing banner id parameter",
+    "01059": "failed to get banner image",
+    "01060": "failed to upload file",
+    "01061": "failed to upload file, connection timeout!",
+    "01062": "no access token provided",
+    "01063": "invalid access token",
+    "01064": "failed to create new FAQ",
+    "01065": "failed to save faq record",
+    "01066": "failed to retrieve FAQ, FAQ not found",
+    "01067": "failed to get FAQ",
+    "01068": "failed to update FAQ",
+    "01069": "failed to delete FAQ",
+    "01070": "file can not be empty",
+    "01071": "bookmark already reach maximum number",
+    "01072": "mising bookmark parameter",
+    "01073": "value already exist",
+    "01074": "missing approval",
+    "01075": "data not found",
+    "01076": "failed to update",
+    "01077": "failed to get data",
+    "01078": "missing action parameter or value",
+    "01079": "body parameter should be array object",
+    "01080": "text format is not supported",
+    "01081": "something wrong, please try again",
+    "01082": "product id parameter and value is required",
+    "01083": "unique tag parameter and value is required",
+    "01084": "instruction title parameter and value is required",
+    "01085": "failed to swap data order",
+    "01086": "instruction type parameter and value is required",
+    "01087": "icon parameter and value is required",
+    "01088": "failed to create data",
+    "01089": "data to swap order length should be 2, consist of from and destination",
+    "01090": "failed to create new notification",
+    "01091": "notification not found",
+    "01092": "notification have been sent or deleted in one signal",
+    "01093": "failed to delete notification",
+    "01094": "missing required notification title parameter",
+    "01095": "missing required notification message parameter",
+    "01096": "missing required notification article parameter",
+    "01097": "missing required update notification id parameter",
+    "01098": "missing required update notification title parameter",
+    "01099": "missing required update notification message param",
+    "01100": "missing required update notification articleid param",
+    "01101": "missing required delete notification notifid param",
+    "01102": "text param must not contain fancytext",
+    "01103": "recipient is required",
+    "01104": "missing required terms and conditions parameter",
+    "01105": "missing required image parameter",
+    "01106": "missing required end date parameter",
+    "01107": "missing required instructions parameter",
+    "01108": "branch code already exist",
+    "01109": "token expired",
+    "01110": "oid not registered",
+    "01111": "user data not found",
+    "01112": "notification has already been sent to all recipients",
+    "01113": "role name is required",
+    "01114": "failed to create role",
+    "01115": "failed to update role",
+    "01116": "failed to get role list",
+    "01117": "role id is required",
+    "01118": "failed to delete role, role is used by some active users",
+    "01119": "error sending email notification to change role",
+    "01120": "email already registered",
+    "01121": "status value for approve is wrong",
+    "01122": "status value for reject is wrong",
+    "01123": "missing cycle number parameter",
+    "01124": "missing reward parameter",
+    "01125": "missing probability parameter",
+    "01126": "missing blended parameter",
+    "01127": "missing floor parameter",
+    "01128": "missing ceiling parameter",
+    "01129": "special offer category not found",
+    "01130": "csv url invalid",
+    "01131": "failed to approve special offer",
+    "07069": "missing start date parameter",
+    "07070": "missing end date parameter",
+    "07071": "missing search key parameter",
+    "07072": "no data found",
+    "07073": "data cannot be downloaded",
+    "07075": "transaction not found",
+    "07078": "transaction not found",
+    "01133": "your account is blocked, click on 'Forgot Your Password' and enter your e-mail to ask for new password",
+    "01134": "password format is incorrect"
+}
 }
