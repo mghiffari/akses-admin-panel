@@ -61,11 +61,6 @@
         "changePassword": "Change Password"
     },
     "forms": {
-        "vamaster": {
-            "fieldtypeva": "VA Type",
-            "fieldamount": "Withdrawal Amount",
-            "fieldStatus": "Status"
-        },
         "email": {
             "fieldTitle": "Email",
             "errorRequired": "Email is required",
@@ -379,82 +374,114 @@
                 "specialOffer": "Special Offer"
             }
         },
-        "specialOfferCategory": {
-            "fieldTitle": "Special Offer Category",
-            "placeholder": "Special offer category",
-            "errorRequired": "Special Offer Category is required"
+        "specialOfferListScreen": {
+            "title": "Special Offers Data",
+            "createOffer": "create new special offer",
+            "loadFailed": "failed to get list of special offers",
+            "approvalBy": "by"
         },
-        "notifSpecialOffer": {
-            "fieldTitle": "Special Offer",
-            "placeholder": "Select a Special Offer",
-            "errorRequired": "Special Offer is required",
-            "searchPlaceholder": "Search special offer"
-        },
-        "articleCategory": {
-            "fieldTitle": "Article Category",
-            "placeholder": "Article category",
-            "errorRequired": "Article Category is required"
-        },
-        "notifArticle": {
-            "fieldTitle": "Article",
-            "placeholder": "Select an Article",
-            "errorRequired": "Article is required",
-            "searchPlaceholder": "Search article"
-        },
-        "schedule": {
-            "fieldTitle": "Schedule",
-            "errorTypeRequired": "Schedule type is required",
-            "errorRequired": "Schedule must have date and time format value",
-            "errorMin": "Schedule should be more than 1 hr from now",
-            "options": {
-                "immediate": "Immediate",
-                "certainTime": "Scheduled"
+        "specialOfferDetailsScreen": {
+            "getOfferFailed": "failed to get Special Offer data",
+            "getCategoryFailed": "failed to get Special Offer categories",
+            "getFileListFailed": "failed to get MPL reicipient file list",
+            "createTitle": "Create New Special Offer",
+            "updateTitle": "Update Special Offer",
+            "viewTitle": "Special Offer Details",
+            "recipientUrlLabel": "Special Offer Recipient",
+            "succesCreated": "Special Offer successfully created",
+            "succesUpdated": "Special Offer successfully updated",
+            "updateFailed": "failed to update special offer",
+            "createFailed": "failed to create new Special Offer",
+            "cantUpdate": {
+                "minDuration": "can't update special offer which expiry date is less than one hour",
+                "approvedOffer": "can't update special offer that has been approved"
             },
-            "datePlaceholder": "mm/dd/yyyy"
+            "uploadImageFailed": "failed to upload image",
+            "uploadCSVFailed": "failed to upload csv file",
+            "deleteImageFailed": "failed to delete image"
         },
-        "offerImage": {
-            "fieldTitle": "Image",
-            "errorRequired": "Image is required",
-            "errorRatio": "Only {{width}}:{{height}} ratio is supported",
-            "errorType": "Only .jpg, .jpeg and .png format are supported",
-            "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
+        "roleListScreen": {
+            "title": "Roles Data",
+            "createRole": "create new role",
+            "loadFailed": "failed to get list of roles",
+            "deleteConfirmation": "Are you sure you want to delete role {{name}}?",
+            "succesCreated": "role successfully created",
+            "succesUpdated": "role successfully updated",
+            "updateFailed": "failed to update role",
+            "createFailed": "failed to create new role"
         },
-        "description": {
-            "fieldTitle": "Description",
-            "placeholder": "Description",
-            "errorRequired": "Description is required",
-            "errorMaxLength": "Max. length of Description is {{maxLength}}"
+        "balanceReport": {
+            "title": "Balance and Transaction Report",
+            "loadFailed": "failed to get balance and transaction report"
         },
-        "termsAndConditions": {
-            "fieldTitle": "Terms and Conditions",
-            "errorRequired": "Terms and Conditions is required",
-            "errorMaxLength": "Max. length of Terms and Conditions is {{maxLength}}"
+        "transactionReport": {
+            "title": "Transaction Report",
+            "dateFilter": "Date Filter",
+            "downloadReport": "download report",
+            "filterNotSet": "Filter Not Set",
+            "loadFailed": "failed to get transaction report",
+            "downloadFailed": "failed to download transaction report"
         },
-        "redeemVoucherInstructions": {
-            "fieldTitle": "Redeem Voucher Instructions",
-            "errorRequired": "Redeem Voucher Instructions is required",
-            "errorMaxLength": "Max. length of Redeem Voucher Instructions is {{maxLength}}"
+        "homeScreen": {
+            "welcome": "Welcome,",
+            "lastLogin": "LAST LOGIN",
+            "addEntry": "Add a New Entry"
         },
-        "endDatetime": {
-            "fieldTitle": "End Date",
-            "errorRequired": "End Date must have date and time format value",
-            "errorMin": "End Date should be more than 1 hr from now",
-            "datePlaceholder": "mm/dd/yyyy"
+        "toDoListScreen": {
+            "title": "Approval Cashout Master",
+            "loadFailed": "failed to get list data",
+            "onApprove": "Aprroval Confirmation",
+            "onReject": "Rejection Confirmation",
+            "description": "Add Description",
+            "succesApprove": "Success Approve",
+            "failedApprove": "Failed Approve",
+            "succesReject": "Success Reject",
+            "failedReject": "Failed Reject"
         },
-        "roleName": {
-            "fieldTitle": "Role Name",
-            "placeholder": "Role name",
-            "errorRequired": "Role Name is required"
-        },
-        "privilege": {
-            "selectAll": "Select All",
-            "options": {
-                "create": "Create",
-                "view": "View",
-                "edit": "Edit",
-                "delete": "Delete",
-                "publish": "Publish",
-                "download": "Download"
+        "approvalListScreen": {
+            "title": "Approval",
+            "getTabsFailed": "failed to get list of approval features",
+            "refreshCountFailed": "failed to refresh approval data count",
+            "loadFailed": {
+                "specialOffer": "failed to get special offer approval list"
+            },
+            "tabsTitle": {
+                "specialOffer": "Sp. Offer"
+            },
+            "successBulkApprove": {
+                "specialOffer": "selected special offers successfully approved"
+            },
+            "successBulkReject": {
+                "specialOffer": "selected special offers successfully rejected"
+            },
+            "bulkApproveFailed": {
+                "specialOffer": "failed to approve selected special offers"
+            },
+            "bulkRejectFailed": {
+                "specialOffer": "failed to reject selected special offers"
+            },
+            "totalFailed": {
+                "specialOffer": "{{totalFailed}} special offers failed"
+            },
+            "successApprove": {
+                "specialOffer": "special offer successfully approved"
+            },
+            "successReject": {
+                "specialOffer": "special offer successfully rejected"
+            },
+            "approveFailed": {
+                "specialOffer": "failed to approve special offer"
+            },
+            "rejectFailed": {
+                "specialOffer": "failed to reject special offer"
+            },
+            "totalRowsSelected": "{{totalRows}} title are selected",
+            "specialOfferNotActive": {
+                "title": {
+                    "bulk": "some special offers has passed their end date",
+                    "single": "special offer has passed its end date"
+                },
+                "content": "changes on inactive special offer will not affect the application"
             }
         },
         "date": {
@@ -497,6 +524,15 @@
         "buttonText": {
             "save": "Save",
             "back": "Back"
+        },
+        "vaMaster": {
+            "type": "VA Master Angsuran",
+            "partial": "Tarik Sebagian",
+            "full": "Tarik Semua",
+            "buttonSubmit": "Submit",
+            "errorFormat": "Kode Pos hanya terdiri dari angka",
+            "errorRequired": "Jenis VA Master is required",
+            "submit": "Submit"
         }
     },
     "loginScreen": {
@@ -956,14 +992,7 @@
     },
     "toDoListScreen": {
         "title": "Approval Cashout Master",
-        "loadFailed": "failed to get list data",
-        "onApprove": "Aprroval Confirmation",
-        "onReject": "Rejection Confirmation",
-        "description": "Add Description",
-        "succesApprove": "Success Approve",
-        "failedApprove": "Failed Approve",
-        "succesReject": "Success Reject",
-        "failedReject": "Failed Reject"
+        "loadFailed": "failed to get list data"
     },
     "approvalListScreen": {
         "title": "Approval",
@@ -1008,7 +1037,50 @@
                 "bulk": "some special offers has passed their end date",
                 "single": "special offer has passed its end date"
             },
-            "content": "changes on inactive special offer will not affect the application"
+            "loadFailed": "failed to get rule list",
+            "totalPersonFormula": "probability x sample size (rounded down)",
+            "lastRowDisclaimer": "This row will be automatically calculated with formula of probability: 100% - total probability row 1-8. Probability should be a positive number",
+            "cantEditRule": "Can't edit rule",
+            "upcomingRuleNotFound": "No upcoming rule found to be edited",
+            "succesCreated": "upcoming rule successfully created",
+            "succesUpdated": "upcoming rule successfully updated",
+            "updateFailed": "failed to update upcoming rule",
+            "createFailed": "failed to create upcoming rule"
+        },
+        "cashbackRewardScreen": {
+            "title": "Cashback Reward",
+            "dateFilter": "Date Filter",
+            "nameFilter": "NPWP Name Filter",
+            "downloadReport": "download report",
+            "filterNotSet": "Filter Not Set"
+        },
+        "features": {
+            "homebanner": "Home Banner",
+            "artikel": "Article",
+            "specialoffer": "Special Offer",
+            "faq": "FAQ",
+            "lokasicabang": "Branch Locator",
+            "ubahnomorhandphone": "Change Phone Number",
+            "simulasikredit": "Credit Simulation",
+            "instruksipembayaran": "Payment Instructions",
+            "notifikasi": "Notifications",
+            "user": "User",
+            "role": "Role",
+            "laporantransaksi": "Transaction Report",
+            "laporansaldo": "Balance Report",
+            "gamificationrule": "Gamification Rule",
+            "cashbackreward": "Cashback Reward",
+            "mobilbaru": "New Car",
+            "mobilbekas": "Secondhand Car",
+            "motorbaru": "New Motorcycle",
+            "motorbekas": "Secondhand Motorcycle",
+            "elektronik": "Electronic",
+            "furnitur": "Furniture",
+            "gadget": "Gadget",
+            "multigunamotor": "Multipurpose Motorcycle",
+            "multigunamobil": "Multipurpose Car",
+            "spmultigunamotor": "SP Multipurpose Motorcycle",
+            "approvecashout": "Approve Cashout"
         }
     },
     "gamificationRuleScreen": {
@@ -1038,6 +1110,17 @@
         "succesUpdated": "upcoming rule successfully updated",
         "updateFailed": "failed to update upcoming rule",
         "createFailed": "failed to create upcoming rule"
+    },
+    "requestWithdrawalScreen": {
+        "title": "Request Withdrawal",
+        "jenisVAMaster": "Jenis VA Master",
+        "currentAmount": "Saldo Saat Ini",
+        "totalWithdrawal": "Jumlah Withdrawal",
+        "typeVAMaster": "Pilih Jenis VA Master"
+    },
+    "trackYourRequestScreen": {
+        "title": "Track Your Request",
+        "find": "Cari"
     },
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
@@ -1072,6 +1155,7 @@
         "multigunamotor": "Multipurpose Motorcycle",
         "multigunamobil": "Multipurpose Car",
         "spmultigunamotor": "SP Multipurpose Motorcycle",
+        "requestwithdrawal": "Request Withdrawal",
         "approvecashout": "Approve Cashout"
     },
     "apiErrors": {

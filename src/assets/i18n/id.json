@@ -497,6 +497,15 @@
         "buttonText": {
             "save": "Simpan",
             "back": "Kembali"
+        },
+        "vaMaster": {
+            "type": "VA Master Angsuran",
+            "partial": "Tarik Sebagian",
+            "full": "Tarik Semua",
+            "buttonSubmit": "Submit",
+            "errorFormat": "Kode Pos hanya terdiri dari angka",
+            "errorRequired": "Jenis VA Master is required",
+            "submit": "Submit"
         }
     },
     "loginScreen": {
@@ -1042,6 +1051,17 @@
         "updateFailed": "gagal mengubah upcoming rule",
         "createFailed": "gagal menambahkan upcoming rule baru"
     },
+    "requestWithdrawalScreen": {
+        "title": "Request Withdrawal",
+        "jenisVAMaster": "Jenis VA Master",
+        "currentAmount": "Saldo Saat Ini",
+        "totalWithdrawal": "Jumlah Withdrawal",
+        "typeVAMaster": "Pilih Jenis VA Master"
+    },
+    "trackYourRequestScreen": {
+        "title": "Track Your Request",
+        "find": "Cari"
+    },
     "cashbackRewardScreen": {
         "title": "Cashback Reward",
         "dateFilter": "Filter Tanggal",
@@ -1074,6 +1094,7 @@
         "multigunamotor": "Multiguna Motor",
         "multigunamobil": "Multiguna Mobil",
         "spmultigunamotor": "SP Multiguna Motor",
+        "requestwithdrawal": "Request Withdrawal",
         "approvecashout": "Approve Cashout"
     },
     "apiErrors": {
