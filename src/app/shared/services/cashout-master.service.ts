@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
+import Utils from '../common/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class CashoutMasterService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  getTrackRequest(page, pageSize) {
-    let url = this.trackYourRequest + '/' + page + '/' + pageSize;
+  getTrackRequest(page, pageSize, search) {
+    let url = this.trackYourRequest + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("ToDoListService | getToDoListAPI ", url);
     return this.authService.wrapTokenGetApi(url)
   }
