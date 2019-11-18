@@ -61,6 +61,11 @@
         "changePassword": "Ubah Password"
     },
     "forms": {
+        "vamaster": {
+            "fieldtypeva": "Jenis VA",
+            "fieldamount": "Jumlah Withdrawal",
+            "fieldStatus": "Pilihan Status"
+        },
         "email": {
             "fieldTitle": "Email",
             "errorRequired": "Email wajib diisi",
@@ -514,6 +519,7 @@
         "amount": "Jumlah",
         "initiator": "Initiator",
         "noRecordsFound": "Data Kosong",
+        "searchNoVa": "Cari Nomor Va",
         "search": "Cari di sini",
         "actions": "Actions",
         "numbers": "No.",
@@ -951,7 +957,16 @@
     },
     "toDoListScreen": {
         "title": "Approval Cashout Master",
-        "loadFailed": "gagal mendapatkan list data"
+        "loadFailed": "gagal mendapatkan list data",
+        "onApprove": "Konfirmasi Persetujuan",
+        "onReject": "Konfirmasi Penolakan",
+        "chooseApprove": "Approve",
+        "chooseReject": "Reject",
+        "description": "Tambahkan Keterangan",
+        "succesApprove": "Sukses Approve",
+        "failedApprove": "Gagal Approve",
+        "succesReject": "Sukses Reject",
+        "failedReject": "Gagal Reject"
     },
     "approvalListScreen": {
         "title": "Approval",
@@ -1203,6 +1218,11 @@
         "07075": "transaksi tidak ditemukan",
         "07078": "transaksi tidak ditemukan",
         "01133": "akun anda terblokir, silakan klik 'Lupa Password' dan masukkan e-mail anda untuk meminta password baru",
-        "01134": "format password salah"
+        "01134": "format password salah",
+        "01147": "deskripsi wajib diisi",
+        "07045": "akun data tidak ditemukan",
+        "01148": "terjadi kesalahan saat proses withdrawal",
+        "07000": "internal server error",
+        "07082": "transaksi sudah di proses"
     }
 }

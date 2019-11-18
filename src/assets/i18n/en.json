@@ -54,7 +54,6 @@
                 "toDoList": "To Do List"
             }
         }
-      }
     },
     "userAction": {
         "logout": "Logout",
@@ -62,6 +61,11 @@
         "changePassword": "Change Password"
     },
     "forms": {
+        "vamaster": {
+            "fieldtypeva": "VA Type",
+            "fieldamount": "Withdrawal Amount",
+            "fieldStatus": "Status"
+        },
         "email": {
             "fieldTitle": "Email",
             "errorRequired": "Email is required",
@@ -952,7 +956,14 @@
     },
     "toDoListScreen": {
         "title": "Approval Cashout Master",
-        "loadFailed": "failed to get list data"
+        "loadFailed": "failed to get list data",
+        "onApprove": "Aprroval Confirmation",
+        "onReject": "Rejection Confirmation",
+        "description": "Add Description",
+        "succesApprove": "Success Approve",
+        "failedApprove": "Failed Approve",
+        "succesReject": "Success Reject",
+        "failedReject": "Failed Reject"
     },
     "approvalListScreen": {
         "title": "Approval",
@@ -1205,6 +1216,11 @@
         "07075": "transaction not found",
         "07078": "transaction not found",
         "01133": "your account is blocked, click on 'Forgot Your Password' and enter your e-mail to ask for new password",
-        "01134": "password format is incorrect"
+        "01134": "password format is incorrect",
+        "01147": "missing description parameter",
+        "07045": "account not found",
+        "01148": "terjadi kesalahan saat proses withdrawal",
+        "07000": "internal server error",
+        "07082": "transaction has been process"
     }
 }
