@@ -522,6 +522,7 @@
     "jenisva": "VA Type",
     "subdate": "Request Date",
     "amount": "Amount",
+    "accountbank": "No. Rekening Tujuan",
     "initiator": "Initiator",
     "noRecordsFound": "No Records Found",
     "search": "search",

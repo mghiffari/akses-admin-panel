@@ -521,6 +521,7 @@
         "jenisva": "Jenis VA",
         "subdate": "Tanggal Pengajuan",
         "amount": "Jumlah",
+        "accountbank": "No. Rekening Tujuan",
         "initiator": "Initiator",
         "noRecordsFound": "Data Kosong",
         "search": "Cari di sini",
