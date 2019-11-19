@@ -30,7 +30,7 @@
           {{'requestWithdrawalScreen.currentAmount' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
-          <div><strong>{{amountValue | currency:'IDR':'symbol-narrow':'1.2-2': locale}}</strong>
+          <div><strong>{{amountValue | currency:'IDR':'symbol-narrow':'1.0': 'id'}}</strong>
           </div>
         </div>
       </div>
@@ -41,10 +41,8 @@
           {{'requestWithdrawalScreen.totalWithdrawal' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="{{'requestWithdrawalScreen.totalWithdrawal' | translate }}"
-              formControlName="amount">
-          </mat-form-field>
+          <app-masked-num-input [formControlName]="'amount'" [type]="inputMaskType.currency">
+          </app-masked-num-input>
           <mat-error class="bottom-error" *ngIf="amount.invalid && (amount.dirty || amount.touched)">
             <span *ngIf="amount.errors.pattern">{{'forms.vaMaster.errorFormat' | translate}}</span>
           </mat-error>

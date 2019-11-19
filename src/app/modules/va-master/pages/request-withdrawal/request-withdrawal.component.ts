@@ -6,6 +6,7 @@ import { CustomValidation } from 'src/app/shared/form-validation/custom-validati
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
 import { CashoutMasterService } from 'src/app/shared/services/cashout-master.service';
+import { MaskedInputType} from 'src/app/shared/components/masked-num-input/masked-num-input.component';
 
 
 @Component({
@@ -20,14 +21,11 @@ export class RequestWithdrawalListComponent implements OnInit {
   vShowPartialPage: boolean = false;
   vShowFullPage: boolean = false;
 
-  //triggered when radio button URL Option clicked
-  showPartialAmount() {
-    console.log('WithdrawalPartial | showPartialAmount');
-  }
+  inputMaskType = {
+    currency: MaskedInputType.Currency
+  };
 
-  showFullAmount() {
-    console.log('WithdrawalPartial | showFullAmount');
-  }
+  //triggered when radio button URL Option clicked
 
   loading = false;
   requestForm
@@ -35,7 +33,7 @@ export class RequestWithdrawalListComponent implements OnInit {
   getAmount = []
   allowCreate = false;
   allowEdit = false;
-  amountValue = 0;
+  amountValue ;
 
   constructor(
     private authService: AuthService,
@@ -43,10 +41,16 @@ export class RequestWithdrawalListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.amountValue = 0
+    
     this.requestForm = new FormGroup({
       jenisvamaster: new FormControl(),
       amount: new FormControl()
     })
+
+    this.inputMaskType = {
+      currency: MaskedInputType.Currency
+    };
 
     console.log('RequestWithdrawalListComponent | ngOnInit');
     this.loading = true;
@@ -73,6 +77,17 @@ export class RequestWithdrawalListComponent implements OnInit {
 
   get jenisvamaster() {
     return this.requestForm.get('jenisvamaster');
+  }
+
+  showPartialAmount() {
+    console.log('WithdrawalPartial | showPartialAmount');
+    this.requestForm.patchValue({amount : 0})
+  }
+
+  showFullAmount() {
+    console.log('WithdrawalFull | showFullAmount');
+    console.log(parseInt(this.amountValue));
+    this.requestForm.patchValue({amount : parseInt(this.amountValue)})
   }
 
   //check button submit disable or not
