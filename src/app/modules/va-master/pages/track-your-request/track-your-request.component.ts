@@ -20,11 +20,6 @@ export class TrackYourRequestListComponent implements OnInit {
   tyc: TrackYourRequest[] = [];
   search = '';
   isFocusedInput = false;
-  searchTexts = [];
-
-
-
-  isFocusedSearch = false;
 
   tycColumns: string[] = [
     'number',
@@ -73,7 +68,6 @@ export class TrackYourRequestListComponent implements OnInit {
   // event handling when user is typing on search input
   onSearch() {
     console.log('TrackYourRequestComponent | onSearch');
-    this.searchTexts.push(this.search)
     if (this.paginatorProps.pageIndex !== 0) {
       this.paginatorProps.pageIndex = 0;
     } else {
@@ -88,7 +82,8 @@ export class TrackYourRequestListComponent implements OnInit {
     this.loading = true;
     this.cashOutMasterService.getTrackRequest(
       this.paginatorProps.pageIndex + 1,
-      this.paginatorProps.pageSize).subscribe(
+      this.paginatorProps.pageSize,
+      this.search).subscribe(
         (response: any) => {
           try {
             console.table(response);

@@ -15,19 +15,25 @@ export class CashoutMasterService {
   rejectRequestApiUrl = this.cashOutMasterApiUrl + '/reject-request';
   listVAMasterApiUrl = this.cashOutMasterApiUrl + '/list-vamaster'
   trackYourRequest = this.cashOutMasterApiUrl + '/track-request';
+  reportApiUrl = this.cashOutMasterApiUrl + '/report';
   constructor(
     private authService: AuthService
   ) { }
 
-  //used to hit get special offer list API
+  getReport(page, pageSize, search) {
+    let url = this.reportApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);;
+    console.log("ToDoListService | getReport ", url);
+    return this.authService.wrapTokenGetApi(url)
+  }
+
   getToDoList(page, pageSize, search) {
-    let url = this.toDoListApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search); ;
+    let url = this.toDoListApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);;
     console.log("ToDoListService | getToDoListAPI ", url);
     return this.authService.wrapTokenGetApi(url)
   }
 
-  getTrackRequest(page, pageSize) {
-    let url = this.trackYourRequest + '/' + page + '/' + pageSize;
+  getTrackRequest(page, pageSize, search) {
+    let url = this.trackYourRequest + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("ToDoListService | getToDoListAPI ", url);
     return this.authService.wrapTokenGetApi(url)
   }
@@ -48,5 +54,26 @@ export class CashoutMasterService {
     let url = this.listVAMasterApiUrl;
     console.log("ToDoListService | getToDoListAPI ", url);
     return this.authService.wrapTokenGetApi(url)
+  }
+
+  //used to get loading status on button submit
+  isLoading() {
+    console.log('CashoutMasterService | isLoading');
+    return this.vLoadingStatus;
+  }
+
+  //used to disable save button
+  isDisableCreateArticle() {
+
+  }
+
+  //used when button submit clicked
+  buttonSubmit() {
+
+  }
+
+  //used to disable save button
+  isDisableCreateRequestWithdrawal() {
+    console.log('CashoutMasterService | isDisableCreateRequestWithdrawal');
   }
 }

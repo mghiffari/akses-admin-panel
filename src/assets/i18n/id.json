@@ -51,7 +51,8 @@
             "children": {
                 "requestWithdrawal": "Request Withdrawal",
                 "trackYourRequest": "Track Your Request",
-                "toDoList": "To Do List"
+                "toDoList": "To Do List",
+                "trackReport": "Report"
             }
         }
     },
@@ -523,10 +524,12 @@
         "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
     },
     "table": {
+        "details": "Lihat Rincian",
         "jenisva": "Jenis VA",
         "subdate": "Tanggal Pengajuan",
         "amount": "Jumlah",
         "initiator": "Initiator",
+        "approver": "Approver",
         "noRecordsFound": "Data Kosong",
         "searchNoVa": "Cari Nomor Va",
         "search": "Cari di sini",
@@ -963,6 +966,11 @@
         "welcome": "Selamat datang,",
         "lastLogin": "TERAKHIR LOGIN",
         "addEntry": "Tambah Entri Baru"
+    },
+    "TrackYourReportScreen": {
+        "onDeatils": "Lihat Catatan",
+        "title": "Track Your Report",
+        "loadFailed": "gagal mendapatkan list data"
     },
     "toDoListScreen": {
         "title": "Approval Cashout Master",

@@ -51,7 +51,8 @@
             "children": {
                 "requestWithdrawal": "Request Withdrawal",
                 "trackYourRequest": "Track Your Request",
-                "toDoList": "To Do List"
+                "toDoList": "To Do List",
+                "trackReport": "Report"
             }
         }
     },
@@ -374,114 +375,82 @@
                 "specialOffer": "Special Offer"
             }
         },
-        "specialOfferListScreen": {
-            "title": "Special Offers Data",
-            "createOffer": "create new special offer",
-            "loadFailed": "failed to get list of special offers",
-            "approvalBy": "by"
+        "specialOfferCategory": {
+            "fieldTitle": "Special Offer Category",
+            "placeholder": "Special offer category",
+            "errorRequired": "Special Offer Category is required"
         },
-        "specialOfferDetailsScreen": {
-            "getOfferFailed": "failed to get Special Offer data",
-            "getCategoryFailed": "failed to get Special Offer categories",
-            "getFileListFailed": "failed to get MPL reicipient file list",
-            "createTitle": "Create New Special Offer",
-            "updateTitle": "Update Special Offer",
-            "viewTitle": "Special Offer Details",
-            "recipientUrlLabel": "Special Offer Recipient",
-            "succesCreated": "Special Offer successfully created",
-            "succesUpdated": "Special Offer successfully updated",
-            "updateFailed": "failed to update special offer",
-            "createFailed": "failed to create new Special Offer",
-            "cantUpdate": {
-                "minDuration": "can't update special offer which expiry date is less than one hour",
-                "approvedOffer": "can't update special offer that has been approved"
-            },
-            "uploadImageFailed": "failed to upload image",
-            "uploadCSVFailed": "failed to upload csv file",
-            "deleteImageFailed": "failed to delete image"
+        "notifSpecialOffer": {
+            "fieldTitle": "Special Offer",
+            "placeholder": "Select a Special Offer",
+            "errorRequired": "Special Offer is required",
+            "searchPlaceholder": "Search special offer"
         },
-        "roleListScreen": {
-            "title": "Roles Data",
-            "createRole": "create new role",
-            "loadFailed": "failed to get list of roles",
-            "deleteConfirmation": "Are you sure you want to delete role {{name}}?",
-            "succesCreated": "role successfully created",
-            "succesUpdated": "role successfully updated",
-            "updateFailed": "failed to update role",
-            "createFailed": "failed to create new role"
+        "articleCategory": {
+            "fieldTitle": "Article Category",
+            "placeholder": "Article category",
+            "errorRequired": "Article Category is required"
         },
-        "balanceReport": {
-            "title": "Balance and Transaction Report",
-            "loadFailed": "failed to get balance and transaction report"
+        "notifArticle": {
+            "fieldTitle": "Article",
+            "placeholder": "Select an Article",
+            "errorRequired": "Article is required",
+            "searchPlaceholder": "Search article"
         },
-        "transactionReport": {
-            "title": "Transaction Report",
-            "dateFilter": "Date Filter",
-            "downloadReport": "download report",
-            "filterNotSet": "Filter Not Set",
-            "loadFailed": "failed to get transaction report",
-            "downloadFailed": "failed to download transaction report"
+        "schedule": {
+            "fieldTitle": "Schedule",
+            "errorTypeRequired": "Schedule type is required",
+            "errorRequired": "Schedule must have date and time format value",
+            "errorMin": "Schedule should be more than 1 hr from now",
+            "options": {
+                "immediate": "Immediate",
+                "certainTime": "Scheduled"
+            },
+            "datePlaceholder": "mm/dd/yyyy"
         },
-        "homeScreen": {
-            "welcome": "Welcome,",
-            "lastLogin": "LAST LOGIN",
-            "addEntry": "Add a New Entry"
+        "offerImage": {
+            "fieldTitle": "Image",
+            "errorRequired": "Image is required",
+            "errorRatio": "Only {{width}}:{{height}} ratio is supported",
+            "errorType": "Only .jpg, .jpeg and .png format are supported",
+            "hint": "Ratio {{width}}:{{height}} (file type: .jpeg / .png )"
         },
-        "toDoListScreen": {
-            "title": "Approval Cashout Master",
-            "loadFailed": "failed to get list data",
-            "onApprove": "Aprroval Confirmation",
-            "onReject": "Rejection Confirmation",
-            "description": "Add Description",
-            "succesApprove": "Success Approve",
-            "failedApprove": "Failed Approve",
-            "succesReject": "Success Reject",
-            "failedReject": "Failed Reject"
+        "description": {
+            "fieldTitle": "Description",
+            "placeholder": "Description",
+            "errorRequired": "Description is required",
+            "errorMaxLength": "Max. length of Description is {{maxLength}}"
         },
-        "approvalListScreen": {
-            "title": "Approval",
-            "getTabsFailed": "failed to get list of approval features",
-            "refreshCountFailed": "failed to refresh approval data count",
-            "loadFailed": {
-                "specialOffer": "failed to get special offer approval list"
-            },
-            "tabsTitle": {
-                "specialOffer": "Sp. Offer"
-            },
-            "successBulkApprove": {
-                "specialOffer": "selected special offers successfully approved"
-            },
-            "successBulkReject": {
-                "specialOffer": "selected special offers successfully rejected"
-            },
-            "bulkApproveFailed": {
-                "specialOffer": "failed to approve selected special offers"
-            },
-            "bulkRejectFailed": {
-                "specialOffer": "failed to reject selected special offers"
-            },
-            "totalFailed": {
-                "specialOffer": "{{totalFailed}} special offers failed"
-            },
-            "successApprove": {
-                "specialOffer": "special offer successfully approved"
-            },
-            "successReject": {
-                "specialOffer": "special offer successfully rejected"
-            },
-            "approveFailed": {
-                "specialOffer": "failed to approve special offer"
-            },
-            "rejectFailed": {
-                "specialOffer": "failed to reject special offer"
-            },
-            "totalRowsSelected": "{{totalRows}} title are selected",
-            "specialOfferNotActive": {
-                "title": {
-                    "bulk": "some special offers has passed their end date",
-                    "single": "special offer has passed its end date"
-                },
-                "content": "changes on inactive special offer will not affect the application"
+        "termsAndConditions": {
+            "fieldTitle": "Terms and Conditions",
+            "errorRequired": "Terms and Conditions is required",
+            "errorMaxLength": "Max. length of Terms and Conditions is {{maxLength}}"
+        },
+        "redeemVoucherInstructions": {
+            "fieldTitle": "Redeem Voucher Instructions",
+            "errorRequired": "Redeem Voucher Instructions is required",
+            "errorMaxLength": "Max. length of Redeem Voucher Instructions is {{maxLength}}"
+        },
+        "endDatetime": {
+            "fieldTitle": "End Date",
+            "errorRequired": "End Date must have date and time format value",
+            "errorMin": "End Date should be more than 1 hr from now",
+            "datePlaceholder": "mm/dd/yyyy"
+        },
+        "roleName": {
+            "fieldTitle": "Role Name",
+            "placeholder": "Role name",
+            "errorRequired": "Role Name is required"
+        },
+        "privilege": {
+            "selectAll": "Select All",
+            "options": {
+                "create": "Create",
+                "view": "View",
+                "edit": "Edit",
+                "delete": "Delete",
+                "publish": "Publish",
+                "download": "Download"
             }
         },
         "date": {
@@ -550,10 +519,12 @@
         "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
     },
     "table": {
+        "details": "See Details",
         "jenisva": "VA Type",
         "subdate": "Request Date",
         "amount": "Amount",
         "initiator": "Initiator",
+        "approver": "Approver",
         "noRecordsFound": "No Records Found",
         "search": "search",
         "actions": "Actions",
@@ -990,9 +961,23 @@
         "lastLogin": "LAST LOGIN",
         "addEntry": "Add a New Entry"
     },
+    "TrackYourReportScreen": {
+        "onDeatils": "See Notes",
+        "title": "Track Your Report",
+        "loadFailed": "failed get data"
+    },
     "toDoListScreen": {
         "title": "Approval Cashout Master",
-        "loadFailed": "failed to get list data"
+        "loadFailed": "failed get data",
+        "onApprove": "Approve Confirmation",
+        "onReject": "Reject Confirmation",
+        "chooseApprove": "Approve",
+        "chooseReject": "Reject",
+        "description": "Add Description",
+        "succesApprove": "Success Approve",
+        "failedApprove": "Failed Approve",
+        "succesReject": "Success Reject",
+        "failedReject": "Failed Reject"
     },
     "approvalListScreen": {
         "title": "Approval",

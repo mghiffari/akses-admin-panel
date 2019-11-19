@@ -161,7 +161,7 @@ export class ToDoListComponent implements OnInit{
             this.table.renderRows();
           }
           if (this.searchInput && isFocusedInput) {
-            setTimeout(() => {
+              setTimeout(() => {
               this.searchInput.nativeElement.focus();
             });
           }
