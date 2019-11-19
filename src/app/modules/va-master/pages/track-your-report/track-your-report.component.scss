@@ -1,0 +1,6 @@
+@import '../../../master/pages/change-phone-list/change-phone-list.component.scss';
+
+.bottom-sticky-toolbar{
+    @extend .bottom-sticky-toolbar;
+    z-index: 1
+}

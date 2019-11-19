@@ -11,15 +11,23 @@ export class CashoutMasterService {
 
   cashOutMasterApiUrl = environment.apiurl + 'cashoutmaster';
   toDoListApiUrl = this.cashOutMasterApiUrl + '/todo-list';
+  approveRequestApiUrl = this.cashOutMasterApiUrl + '/approve-request';
+  rejectRequestApiUrl = this.cashOutMasterApiUrl + '/reject-request';
   listVAMasterApiUrl = this.cashOutMasterApiUrl + '/list-vamaster'
   trackYourRequest = this.cashOutMasterApiUrl + '/track-request';
+  reportApiUrl = this.cashOutMasterApiUrl + '/report';
   constructor(
     private authService: AuthService
   ) { }
 
-  //used to hit get special offer list API
-  getToDoList(page, pageSize) {
-    let url = this.toDoListApiUrl + '/' + page + '/' + pageSize;
+  getReport(page, pageSize, search) {
+    let url = this.reportApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);;
+    console.log("ToDoListService | getReport ", url);
+    return this.authService.wrapTokenGetApi(url)
+  }
+
+  getToDoList(page, pageSize, search) {
+    let url = this.toDoListApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);;
     console.log("ToDoListService | getToDoListAPI ", url);
     return this.authService.wrapTokenGetApi(url)
   }
@@ -28,6 +36,18 @@ export class CashoutMasterService {
     let url = this.trackYourRequest + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);
     console.log("ToDoListService | getToDoListAPI ", url);
     return this.authService.wrapTokenGetApi(url)
+  }
+
+  approveRequest(data){
+    let url = this.approveRequestApiUrl;
+    console.log("ToDoListService | approveRequest ", url);
+    return this.authService.wrapTokenPutApi(url, data)
+  }
+
+  rejectRequest(data){
+    let url = this.rejectRequestApiUrl;
+    console.log("ToDoListService | rejectRequest ", url);
+    return this.authService.wrapTokenPutApi(url, data)
   }
 
   getListVaMaster() {
