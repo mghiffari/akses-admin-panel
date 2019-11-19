@@ -71,13 +71,6 @@ export class RequestWithdrawalListComponent implements OnInit {
     this.amountValue = event.value.balance
   }
 
-  get r1() {
-    return this.requestForm.get('r1');
-  }
-
-  get r2() {
-    return this.requestForm.get('r2');
-  }
 
   get amount() {
     return this.requestForm.get('amount');
