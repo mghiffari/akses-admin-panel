@@ -1,13 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
 import { CashoutMasterService } from 'src/app/shared/services/cashout-master.service';
-import { MaskedInputType} from 'src/app/shared/components/masked-num-input/masked-num-input.component';
-
+import { MaskedInputType } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
+import { requestForm } from '../../models/init-sub-req';
 
 @Component({
   selector: 'app-request-withdrawal',
@@ -26,14 +26,14 @@ export class RequestWithdrawalListComponent implements OnInit {
   };
 
   //triggered when radio button URL Option clicked
-
+  requestForm: FormGroup;
+  userModel: requestForm;
   loading = false;
-  requestForm
   data = []
   getAmount = []
   allowCreate = false;
   allowEdit = false;
-  amountValue ;
+  amountValue;
 
   constructor(
     private authService: AuthService,
@@ -42,10 +42,10 @@ export class RequestWithdrawalListComponent implements OnInit {
 
   ngOnInit() {
     this.amountValue = 0
-    
+
     this.requestForm = new FormGroup({
-      jenisvamaster: new FormControl(),
-      amount: new FormControl()
+      jenisvamaster: new FormControl('', [Validators.required]),
+      amount: new FormControl('', [Validators.required, Validators.min(1)]),
     })
 
     this.inputMaskType = {
@@ -71,6 +71,14 @@ export class RequestWithdrawalListComponent implements OnInit {
     this.amountValue = event.value.balance
   }
 
+  get r1() {
+    return this.requestForm.get('r1');
+  }
+
+  get r2() {
+    return this.requestForm.get('r2');
+  }
+
   get amount() {
     return this.requestForm.get('amount');
   }
@@ -81,13 +89,13 @@ export class RequestWithdrawalListComponent implements OnInit {
 
   showPartialAmount() {
     console.log('WithdrawalPartial | showPartialAmount');
-    this.requestForm.patchValue({amount : 0})
+    this.requestForm.patchValue({ amount: 0 })
   }
 
   showFullAmount() {
     console.log('WithdrawalFull | showFullAmount');
     console.log(parseInt(this.amountValue));
-    this.requestForm.patchValue({amount : parseInt(this.amountValue)})
+    this.requestForm.patchValue({ amount: parseInt(this.amountValue) })
   }
 
   //check button submit disable or not
