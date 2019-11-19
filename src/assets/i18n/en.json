@@ -1022,50 +1022,7 @@
                 "bulk": "some special offers has passed their end date",
                 "single": "special offer has passed its end date"
             },
-            "loadFailed": "failed to get rule list",
-            "totalPersonFormula": "probability x sample size (rounded down)",
-            "lastRowDisclaimer": "This row will be automatically calculated with formula of probability: 100% - total probability row 1-8. Probability should be a positive number",
-            "cantEditRule": "Can't edit rule",
-            "upcomingRuleNotFound": "No upcoming rule found to be edited",
-            "succesCreated": "upcoming rule successfully created",
-            "succesUpdated": "upcoming rule successfully updated",
-            "updateFailed": "failed to update upcoming rule",
-            "createFailed": "failed to create upcoming rule"
-        },
-        "cashbackRewardScreen": {
-            "title": "Cashback Reward",
-            "dateFilter": "Date Filter",
-            "nameFilter": "NPWP Name Filter",
-            "downloadReport": "download report",
-            "filterNotSet": "Filter Not Set"
-        },
-        "features": {
-            "homebanner": "Home Banner",
-            "artikel": "Article",
-            "specialoffer": "Special Offer",
-            "faq": "FAQ",
-            "lokasicabang": "Branch Locator",
-            "ubahnomorhandphone": "Change Phone Number",
-            "simulasikredit": "Credit Simulation",
-            "instruksipembayaran": "Payment Instructions",
-            "notifikasi": "Notifications",
-            "user": "User",
-            "role": "Role",
-            "laporantransaksi": "Transaction Report",
-            "laporansaldo": "Balance Report",
-            "gamificationrule": "Gamification Rule",
-            "cashbackreward": "Cashback Reward",
-            "mobilbaru": "New Car",
-            "mobilbekas": "Secondhand Car",
-            "motorbaru": "New Motorcycle",
-            "motorbekas": "Secondhand Motorcycle",
-            "elektronik": "Electronic",
-            "furnitur": "Furniture",
-            "gadget": "Gadget",
-            "multigunamotor": "Multipurpose Motorcycle",
-            "multigunamobil": "Multipurpose Car",
-            "spmultigunamotor": "SP Multipurpose Motorcycle",
-            "approvecashout": "Approve Cashout"
+            "content": "changes to the non-active special offer will not affect the application"
         }
     },
     "gamificationRuleScreen": {

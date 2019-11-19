@@ -3,5 +3,6 @@ export class TrackYourRequest {
   jenisva: string;
   tanggalpengajuan: string;
   amount: number;
+  accountbank: string;
   status: string;
 }

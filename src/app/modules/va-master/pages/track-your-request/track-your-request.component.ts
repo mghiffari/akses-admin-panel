@@ -26,6 +26,7 @@ export class TrackYourRequestListComponent implements OnInit {
     'jenisva',
     'tanggalpengajuan',
     'amount',
+    'accountbank',
     'status'
   ]
 
