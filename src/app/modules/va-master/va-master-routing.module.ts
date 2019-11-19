@@ -4,6 +4,7 @@ import { CanDeactivateGuard } from 'src/app/_guard/can-deactivate.guard';
 import { RequestWithdrawalListComponent } from './pages/request-withdrawal/request-withdrawal.component';
 import { TrackYourRequestListComponent } from './pages/track-your-request/track-your-request.component';
 import { ToDoListComponent } from './pages/todo-list/todo-list.component';
+import { TrackYourReport } from './pages/track-your-report/track-your-report.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,14 @@ const routes: Routes = [
   {
     path: 'todo-list',
     component: ToDoListComponent,
+    canDeactivate: [CanDeactivateGuard],
+    data: {
+      title: 'To Do List'
+    }
+  },
+  {
+    path: 'report',
+    component: TrackYourReport,
     canDeactivate: [CanDeactivateGuard],
     data: {
       title: 'To Do List'

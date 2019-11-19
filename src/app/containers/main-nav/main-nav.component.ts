@@ -157,6 +157,11 @@ export class MainNavComponent {
           title: 'navMenus.vaMaster.children.toDoList',
           link: '/todo-list',
           getShowFlag: () => { return this.getViewPrivilege(this.featureNames.approvecashout) }
+        },
+        {
+          title: 'navMenus.vaMaster.children.trackReport',
+          link: '/report',
+          getShowFlag: () => { return this.getViewPrivilege(this.featureNames.approvecashout) }
         }
       ]
     }

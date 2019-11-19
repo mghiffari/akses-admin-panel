@@ -10,7 +10,7 @@
         <mat-form-field appearance="fill" class="font-description search">
           <mat-icon matPrefix>search</mat-icon>
           <input #searchInput matInput [(ngModel)]="search" (ngModelChange)="onSearch()"
-            placeholder="{{'table.search' | translate}}" [disabled]="loading" (focus)="isFocusedInput = true"
+            placeholder="{{'table.searchNoVa' | translate}}" [disabled]="loading" (focus)="isFocusedInput = true"
             (blur)="isFocusedInput = false">
         </mat-form-field>
       </div>
