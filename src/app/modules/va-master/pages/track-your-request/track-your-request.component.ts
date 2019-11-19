@@ -21,9 +21,6 @@ export class TrackYourRequestListComponent implements OnInit {
   search = '';
   isFocusedInput = false;
   searchTexts = [];
-
-
-
   isFocusedSearch = false;
 
   tycColumns: string[] = [
@@ -31,6 +28,7 @@ export class TrackYourRequestListComponent implements OnInit {
     'jenisva',
     'tanggalpengajuan',
     'amount',
+    'accountbank',
     'status'
   ]
 
