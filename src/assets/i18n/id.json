@@ -1254,6 +1254,8 @@
         "07045": "akun data tidak ditemukan",
         "01148": "terjadi kesalahan saat proses withdrawal",
         "07000": "internal server error",
-        "07082": "transaksi sudah di proses"
+        "07082": "transaksi sudah di proses",
+        "01150": "verifikasi password tidak sesuai",
+        "01146": "request cashout for this type va-master has been submitted"
     }
 }

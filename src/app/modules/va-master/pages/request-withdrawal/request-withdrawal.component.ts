@@ -35,7 +35,10 @@ export class RequestWithdrawalListComponent implements OnInit {
   getAmount = []
   allowCreate = false;
   allowEdit = false;
+  id;
   amountValue;
+  vaname;
+  vanumber;
 
   constructor(
     private authService: AuthService,
@@ -74,6 +77,9 @@ export class RequestWithdrawalListComponent implements OnInit {
   }
 
   changeAmount(event) {
+    this.id = event.value.id;
+    this.vaname = event.value.va_name;
+    this.vanumber = event.value.va_number;
     this.amountValue = event.value.balance
   }
 
@@ -118,13 +124,19 @@ export class RequestWithdrawalListComponent implements OnInit {
         minWidth: '260px',
         maxWidth: '400px',
         data: {
-          isCreate: true,
-          listData: { ...list }
+          id: this.id,
+          vaname: this.vaname,
+          vanumber: this.vanumber,
+          amount: this.requestForm.value.amount
         }
       });
       modalRef.afterClosed().subscribe(result => {
         if (result) {
-          this.lazyLoadData();
+          this.requestForm.patchValue({
+            amount: 0,
+            jenisvamaster: ''
+          });
+          this.amountValue = 0
         }
       });
     } else {
@@ -146,10 +158,4 @@ export class RequestWithdrawalListComponent implements OnInit {
       }
     )
   }
-
-  lazyLoadData() {
-    console.log('ToDoListComponent | lazyLoadData');
-
-  }
-
 }
