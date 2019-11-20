@@ -1,0 +1,84 @@
+<div mat-dialog-title style="width: 100%" class="no-margin-important">
+    <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%">
+      <div class="font-gotham-bold font-sub-description">
+        <span *ngIf="isCreate">{{'toDoListScreen.onApprove' | translate}}</span>
+        <span *ngIf="!isCreate">{{'toDoListScreen.onReject' | translate}}</span>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-content style="width: 100%">
+    <form [formGroup]="ToDoListForm">
+      <div style="width: 100%">
+        <div fxLayout="column" fxLayoutGap="10px">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+          ngClass.md="border-bottom-gray">
+            <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+              <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+                {{'forms.vamaster.fieldtypeva' | translate}}
+              </div>
+              <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+                {{jnsva}} - {{vanum}}
+              </div>  
+            </div>
+          </div>
+        </div>
+        <div fxLayout="column" fxLayoutGap="10px">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+          ngClass.md="border-bottom-gray">
+            <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+              <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+                {{'forms.vamaster.fieldamount' | translate}}
+              </div>
+              <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="100%">
+                {{amount | currency:'IDR':'symbol-narrow':'1.2-2': locale}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="column" fxLayoutGap="10px">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+          ngClass.md="border-bottom-gray">
+            <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+              <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+                {{'forms.vamaster.fieldStatus' | translate}}
+              </div>
+              <div *ngIf="isCreate" fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+                {{'toDoListScreen.chooseApprove' | translate}}
+              </div>
+              <div *ngIf="!isCreate" fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+                {{'toDoListScreen.chooseReject' | translate}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="column" fxLayoutGap="10px">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+          ngClass.md="border-bottom-gray">
+            <mat-form-field appearance="fill">
+              <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"
+                  placeholder="{{'toDoListScreen.description' | translate}}" formControlName="addings">
+                </textarea>
+              </div>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>  
+  <div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
+    <div fxLayout="row" style="width: 100%" fxLayoutAlign="end center">
+      <button mat-raised-button color="accent" [mat-dialog-close]="false"
+        *ngIf="!onSubmittingForm">{{'cancel' | translate}}</button>
+      <button mat-raised-button color="primary" (click)="save()"
+        *ngIf="!onSubmittingForm">{{'save' | translate}}</button>
+      <button mat-raised-button color="primary" disabled *ngIf="onSubmittingForm">
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <div>
+            <mat-spinner diameter="16"></mat-spinner>
+          </div>
+          <div class="margin-left-5">{{'loading' | translate}}</div>
+        </div>
+      </button>
+    </div>
+  </div>

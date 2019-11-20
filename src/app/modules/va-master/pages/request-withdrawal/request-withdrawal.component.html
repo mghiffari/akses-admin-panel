@@ -30,7 +30,7 @@
           {{'requestWithdrawalScreen.currentAmount' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
-          <div><strong>{{amountValue | currency:'IDR':'symbol-narrow':'1.2-2': locale}}</strong>
+          <div><strong>{{amountValue | currency:'IDR':'symbol-narrow':'1.0': 'id'}}</strong>
           </div>
         </div>
       </div>
@@ -41,10 +41,8 @@
           {{'requestWithdrawalScreen.totalWithdrawal' | translate}}
         </div>
         <div fxFlexAlign="center" fxFlex="70%">
-          <mat-form-field appearance="fill">
-            <input matInput placeholder="{{'requestWithdrawalScreen.totalWithdrawal' | translate }}"
-              formControlName="amount">
-          </mat-form-field>
+          <app-masked-num-input [formControlName]="'amount'" [type]="inputMaskType.currency">
+          </app-masked-num-input>
           <mat-error class="bottom-error" *ngIf="amount.invalid && (amount.dirty || amount.touched)">
             <span *ngIf="amount.errors.pattern">{{'forms.vaMaster.errorFormat' | translate}}</span>
           </mat-error>
@@ -67,17 +65,9 @@
       <div class="text-label" fxFlex="15%" fxFlex.lt-md="100%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%"></div>
 
       <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
-        <button mat-raised-button color="primary" *ngIf="!isLoading()" [disabled]="isDisableCreateRequestWithdrawal()"
-          (click)="isDisableCreateRequestWithdrawal() || submitRequestWithdrawal()">
+        <button mat-raised-button color="primary" [disabled]="!requestForm.valid"
+          (click)="submitRequestWithdrawal()">
           {{'forms.vaMaster.submit' | translate}}
-        </button>
-        <button mat-raised-button color="primary" [disabled]="true" *ngIf="isLoading()">
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <div>
-              <mat-spinner diameter="16"></mat-spinner>
-            </div>
-            <div class="margin-left-5">{{'loading' | translate}}</div>
-          </div>
         </button>
       </div>
     </div>
