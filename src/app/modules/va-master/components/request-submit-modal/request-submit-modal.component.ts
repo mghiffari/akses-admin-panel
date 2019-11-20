@@ -2,28 +2,28 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatSnackBar, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { ToDoListForm } from '../../models/todolist-form';
+import { RequestSubmitForm } from '../../models/request-submit';
 import { constants } from 'src/app/shared/common/constants';
 import { CashoutMasterService } from 'src/app/shared/services/cashout-master.service';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 
 @Component({
-    selector: 'app-request-submit-modal',
-    templateUrl: './request-submit-modal.component.html',
-    styleUrls: ['./request-submit-modal.component.scss']
+  selector: 'app-request-submit-modal',
+  templateUrl: './request-submit-modal.component.html',
+  styleUrls: ['./request-submit-modal.component.scss']
 })
 export class RequestSubmitModalComponent implements OnInit {
   onSubmittingForm = false;
-  ToDoListForm: FormGroup;
-  ToDoListModel: ToDoListForm;
-  isCreate;
+  RequestSubmitForm: FormGroup;
+  RequestSubmitModel = RequestSubmitForm
+  models;
   id;
-  jnsva;
-  vanum;
-  amount;
+  va_name;
+  va_number;
+  amountValue;
 
-  get addings() {
-    return this.ToDoListForm.get('addings');
+  get password() {
+    return this.RequestSubmitForm.get('password');
   }
 
   // constructor
@@ -38,17 +38,17 @@ export class RequestSubmitModalComponent implements OnInit {
 
   ngOnInit() {
     console.log("RequestSubmitModalComponent | ngOnInit")
-    let prvg = this.authService.getFeaturePrivilege(constants.features.approvecashout)
-    if(this.authService.getFeatureViewPrvg(prvg)){
+    let prvg = this.authService.getFeaturePrivilege(constants.features.requestwithdrawal)
+    if (this.authService.getFeatureViewPrvg(prvg)) {
       let dataSend = this.data;
-      this.isCreate = dataSend.isCreate
-      this.id = dataSend.listData.id
-      this.jnsva = dataSend.listData.vamaster_name
-      this.vanum = dataSend.listData.vamaster_number
-      this.amount = dataSend.listData.will_cashout
-      this.ToDoListForm = new FormGroup({
-        addings: new FormControl('')
+      this.id = dataSend.id;
+      this.va_name = dataSend.vaname;
+      this.va_number = dataSend.vanumber;
+      this.amountValue = dataSend.amount;
+      this.RequestSubmitForm = new FormGroup({
+        password: new FormControl('', [Validators.required])
       });
+
     } else {
       this.authService.blockOpenPage()
     }
@@ -57,13 +57,13 @@ export class RequestSubmitModalComponent implements OnInit {
   save() {
     console.log('RequestSubmitModalComponent | save')
     this.onSubmittingForm = true;
-    this.ToDoListModel = {
-      id: this.id,
-      desc: this.ToDoListForm.value.addings
-    };
-    if(this.isCreate == true)
-    {
-      this.cashOutMasterService.approveRequest(this.ToDoListModel)
+    this.models = {
+      vamasterid: this.id,
+      nominalcashout: this.amountValue,
+      password: this.RequestSubmitForm.value.password
+    }
+
+    this.cashOutMasterService.getSubmitRequest(this.models)
       .subscribe(
         (data: any) => {
           this.handleUpdateCreateSuccess('toDoListScreen.succesApprove', data);
@@ -72,22 +72,9 @@ export class RequestSubmitModalComponent implements OnInit {
           this.handleApiError('toDoListScreen.failedApprove', error);
         }
       )
-    }
-    else
-    {
-      this.cashOutMasterService.rejectRequest(this.ToDoListModel)
-      .subscribe(
-        (data: any) => {
-          this.handleUpdateCreateSuccess('toDoListScreen.succesReject', data);
-        },
-        error => {
-          this.handleApiError('toDoListScreen.failedReject', error);
-        }
-      )
-    }
   }
 
-  handleUpdateCreateSuccess(successTitle, response){
+  handleUpdateCreateSuccess(successTitle, response) {
     console.log('RequestSubmitModalComponent | handleUpdateCreateSuccess')
     try {
       console.table(response);
@@ -102,16 +89,16 @@ export class RequestSubmitModalComponent implements OnInit {
         }
       })
       this.dialogRef.close(true)
+      this.RequestSubmitForm.value.password = '';
     } catch (error) {
       console.log(error)
     }
   }
 
-  handleApiError(errorTitle, apiError){
+  handleApiError(errorTitle, apiError) {
     console.log('RequestSubmitModalComponent | handleApiError')
     console.table(apiError);
     this.onSubmittingForm = false;
     this.authService.handleApiError(errorTitle, apiError);
   }
 }
-  

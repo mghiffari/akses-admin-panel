@@ -18,10 +18,17 @@ export class CashoutMasterService {
   listVAMasterApiUrl = this.cashOutMasterApiUrl + '/list-vamaster'
   trackYourRequest = this.cashOutMasterApiUrl + '/track-request';
   reportApiUrl = this.cashOutMasterApiUrl + '/report';
+  submitRequest = this.cashOutMasterApiUrl + '/submit-request';
   constructor(
     private authService: AuthService,
     private snackBar: MatSnackBar
   ) { }
+
+  getSubmitRequest(data) {
+    let url = this.submitRequest;
+    console.log("ToDoListService | getSubmitRequest ", url);
+    return this.authService.wrapTokenPostApi(url, data)
+  }
 
   getReport(page, pageSize, search) {
     let url = this.reportApiUrl + '/' + page + '/' + pageSize + Utils.appendSearchKeyword(search);;
@@ -41,13 +48,13 @@ export class CashoutMasterService {
     return this.authService.wrapTokenGetApi(url)
   }
 
-  approveRequest(data){
+  approveRequest(data) {
     let url = this.approveRequestApiUrl;
     console.log("ToDoListService | approveRequest ", url);
     return this.authService.wrapTokenPutApi(url, data)
   }
 
-  rejectRequest(data){
+  rejectRequest(data) {
     let url = this.rejectRequestApiUrl;
     console.log("ToDoListService | rejectRequest ", url);
     return this.authService.wrapTokenPutApi(url, data)
@@ -80,17 +87,17 @@ export class CashoutMasterService {
     console.log('CashoutMasterService | isDisableCreateRequestWithdrawal');
   }
 
-    // show error for unauthorized action
-    blockPageAction() {
-      console.log('AuthService | blockPageAction');
-      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-        data: {
-          title: 'actionBlockedError.title',
-          content: {
-            text: 'actionBlockedError.content',
-            data: null
-          }
+  // show error for unauthorized action
+  blockPageAction() {
+    console.log('AuthService | blockPageAction');
+    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+      data: {
+        title: 'actionBlockedError.title',
+        content: {
+          text: 'actionBlockedError.content',
+          data: null
         }
-      })
-    }
+      }
+    })
+  }
 }

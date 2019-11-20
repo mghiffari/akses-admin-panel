@@ -1058,7 +1058,8 @@
         "jenisVAMaster": "Jenis VA Master",
         "currentAmount": "Saldo Saat Ini",
         "totalWithdrawal": "Jumlah Withdrawal",
-        "typeVAMaster": "Pilih Jenis VA Master"
+        "typeVAMaster": "Pilih Jenis VA Master",
+        "confirmationPage": "Confirmation"
     },
     "trackYourRequestScreen": {
         "title": "Track Your Request",
@@ -1247,6 +1248,9 @@
         "07045": "account not found",
         "01148": "terjadi kesalahan saat proses withdrawal",
         "07000": "internal server error",
-        "07082": "transaction has been process"
+        "07082": "transaction has been process",
+        "01150": "verifikasi password tidak sesuai",
+        "01146": "request cashout for this type va-master has been submitted",
+        "01144": "insufficient funds in va master balance to make request cashout"
     }
 }
