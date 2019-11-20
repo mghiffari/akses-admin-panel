@@ -89,7 +89,7 @@ export class TrackYourRequestListComponent implements OnInit {
           try {
             console.table(response);
             this.tyc = response.data.rows;
-            this.paginatorProps.length = response.data.totalPage;
+            this.paginatorProps.length = response.data.totalData;
           } catch (error) {
             console.table(error);
             this.tyc = [];

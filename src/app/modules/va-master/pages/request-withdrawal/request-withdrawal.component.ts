@@ -8,6 +8,8 @@ import { constants } from 'src/app/shared/common/constants';
 import { CashoutMasterService } from 'src/app/shared/services/cashout-master.service';
 import { MaskedInputType } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
 import { requestForm } from '../../models/init-sub-req';
+import { RequestSubmitModalComponent } from '../../components/request-submit-modal/request-submit-modal.component';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-request-withdrawal',
@@ -37,7 +39,8 @@ export class RequestWithdrawalListComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private cashoutMasterService: CashoutMasterService
+    private cashoutMasterService: CashoutMasterService,
+    private modal: MatDialog
   ) { }
 
   ngOnInit() {
@@ -91,12 +94,6 @@ export class RequestWithdrawalListComponent implements OnInit {
     this.requestForm.patchValue({ amount: parseInt(this.amountValue) })
   }
 
-  //check button submit disable or not
-  isDisableCreateRequestWithdrawal() {
-    console.log('RequestWithdrawalListComponent | isDisableCreateRequestWithdrawal');
-    return this.cashoutMasterService.isDisableCreateRequestWithdrawal();
-  }
-
   //get loading status for button submit
   isLoading() {
     console.log('RequestWithdrawalListComponent | isLoading');
@@ -104,9 +101,27 @@ export class RequestWithdrawalListComponent implements OnInit {
   }
 
   //when button submit clicked
-  submitRequestWithdrawal() {
-    console.log('RequestWithdrawalListComponent | submitRequestWithdrawal');
-    this.cashoutMasterService.buttonSubmit();
+  submitRequestWithdrawal(list) {
+    console.log('RequestSubmitModalComponent | submitRequestWithdrawal');
+    // this.cashoutMasterService.buttonSubmit();
+    if (this.allowEdit) {
+      const modalRef = this.modal.open(RequestSubmitModalComponent, {
+        width: '80%',
+        minWidth: '260px',
+        maxWidth: '400px',
+        data: {
+          isCreate: true,
+          listData: { ...list }
+        }
+      });
+      modalRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.lazyLoadData();
+        }
+      });
+    } else {
+      this.cashoutMasterService.blockPageAction()
+    }
   }
 
 
@@ -123,4 +138,10 @@ export class RequestWithdrawalListComponent implements OnInit {
       }
     )
   }
+
+  lazyLoadData() {
+    console.log('ToDoListComponent | lazyLoadData');
+    
+  }
+
 }

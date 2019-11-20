@@ -9,6 +9,7 @@ import { ToDoListComponent} from './pages/todo-list/todo-list.component';
 import { TrackYourReport} from './pages/track-your-report/track-your-report.component';
 import { CashoutDetailsModalComponent } from './components/cashout-details-modal/cashout-details-modal.component';
 import { ReportDetailsModalComponent } from './components/report-details-modal/report-details-modal.component';
+import { RequestSubmitModalComponent } from './components/request-submit-modal/request-submit-modal.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ReportDetailsModalComponent } from './components/report-details-modal/r
     ToDoListComponent,
     TrackYourReport,
     CashoutDetailsModalComponent,
-    ReportDetailsModalComponent
+    ReportDetailsModalComponent,
+    RequestSubmitModalComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { ReportDetailsModalComponent } from './components/report-details-modal/r
   ],
   entryComponents: [
     CashoutDetailsModalComponent,
-    ReportDetailsModalComponent
+    ReportDetailsModalComponent,
+    RequestSubmitModalComponent
   ]
 })
 export class VAMasterModule { }

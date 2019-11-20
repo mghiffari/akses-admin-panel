@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 import Utils from '../common/utils';
+import { ErrorSnackbarComponent } from '../components/error-snackbar/error-snackbar.component';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,8 @@ export class CashoutMasterService {
   trackYourRequest = this.cashOutMasterApiUrl + '/track-request';
   reportApiUrl = this.cashOutMasterApiUrl + '/report';
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar
   ) { }
 
   getReport(page, pageSize, search) {
@@ -76,4 +79,18 @@ export class CashoutMasterService {
   isDisableCreateRequestWithdrawal() {
     console.log('CashoutMasterService | isDisableCreateRequestWithdrawal');
   }
+
+    // show error for unauthorized action
+    blockPageAction() {
+      console.log('AuthService | blockPageAction');
+      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
+        data: {
+          title: 'actionBlockedError.title',
+          content: {
+            text: 'actionBlockedError.content',
+            data: null
+          }
+        }
+      })
+    }
 }

@@ -116,7 +116,7 @@ export class TrackYourReport implements OnInit{
               try {
                 console.table(response);
                 this.report = response.data.rows;
-                this.paginatorProps.length = response.data.totalPage;
+                this.paginatorProps.length = response.data.totalData;
               } catch (error) {
               console.table(error);
                 this.report = [];

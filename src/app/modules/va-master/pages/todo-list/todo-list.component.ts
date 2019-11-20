@@ -135,7 +135,7 @@ export class ToDoListComponent implements OnInit{
           try {
             console.table(response);
             this.toDoList = response.data.rows;
-            this.paginatorProps.length = response.data.totalPage;
+            this.paginatorProps.length = response.data.totalData;
           } catch (error) {
             console.table(error);
             this.toDoList = [];

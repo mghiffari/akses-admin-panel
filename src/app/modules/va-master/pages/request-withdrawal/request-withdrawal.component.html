@@ -66,7 +66,7 @@
 
       <div fxFlex="40%" fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%">
         <button mat-raised-button color="primary" [disabled]="!requestForm.valid"
-          (click)="isDisableCreateRequestWithdrawal() || submitRequestWithdrawal()">
+          (click)="submitRequestWithdrawal()">
           {{'forms.vaMaster.submit' | translate}}
         </button>
       </div>
