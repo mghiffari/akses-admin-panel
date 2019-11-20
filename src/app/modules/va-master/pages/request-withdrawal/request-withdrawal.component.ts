@@ -43,7 +43,8 @@ export class RequestWithdrawalListComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private cashoutMasterService: CashoutMasterService,
-    private modal: MatDialog
+    private modal: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -137,6 +138,7 @@ export class RequestWithdrawalListComponent implements OnInit {
             jenisvamaster: ''
           });
           this.amountValue = 0
+          this.router.navigate(['/va-master/trackYourRequest'])
         }
       });
     } else {
