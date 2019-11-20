@@ -497,7 +497,9 @@
         },
         "buttonText": {
             "save": "Simpan",
-            "back": "Kembali"
+            "back": "Kembali",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
         },
         "vaMaster": {
             "type": "VA Master Angsuran",
