@@ -492,7 +492,9 @@
         },
         "buttonText": {
             "save": "Save",
-            "back": "Back"
+            "back": "Back",
+            "confirm": "Confirm",
+            "cancel": "Cancel"
         },
         "vaMaster": {
             "type": "VA Master Angsuran",

@@ -48,9 +48,9 @@
 <div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
   <div fxLayout="row" style="width: 100%" fxLayoutAlign="end center">
     <button mat-raised-button color="accent" [mat-dialog-close]="false"
-      *ngIf="!onSubmittingForm">{{'cancel' | translate}}</button>
+      *ngIf="!onSubmittingForm">{{'forms.buttonText.cancel' | translate}}</button>
     <button mat-raised-button color="primary" [disabled]="!RequestSubmitForm.valid" (click)="save()"
-      *ngIf="!onSubmittingForm">{{'save' | translate}}</button>
+      *ngIf="!onSubmittingForm">{{'forms.buttonText.confirm' | translate}}</button>
     <button mat-raised-button color="primary" disabled *ngIf="onSubmittingForm">
       <div fxLayout="row" fxLayoutAlign="center center">
         <div>
