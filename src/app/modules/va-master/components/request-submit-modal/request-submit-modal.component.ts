@@ -66,10 +66,10 @@ export class RequestSubmitModalComponent implements OnInit {
     this.cashOutMasterService.getSubmitRequest(this.models)
       .subscribe(
         (data: any) => {
-          this.handleUpdateCreateSuccess('toDoListScreen.succesApprove', data);
+          this.handleUpdateCreateSuccess('requestWithdrawalScreen.success', data);
         },
         error => {
-          this.handleApiError('toDoListScreen.failedApprove', error);
+          this.handleApiError('requestWithdrawalScreen.failedSubmit', error);
         }
       )
   }
@@ -81,7 +81,7 @@ export class RequestSubmitModalComponent implements OnInit {
       this.onSubmittingForm = false;
       this.snackBar.openFromComponent(SuccessSnackbarComponent, {
         data: {
-          title: 'success',
+          title: 'requestWithdrawalScreen.submit',
           content: {
             text: successTitle,
             data: null
