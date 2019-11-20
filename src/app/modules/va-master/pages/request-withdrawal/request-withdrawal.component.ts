@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { filter, map, mergeMap, startWith, pairwise } from 'rxjs/operators';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
@@ -49,6 +49,7 @@ export class RequestWithdrawalListComponent implements OnInit {
     this.requestForm = new FormGroup({
       jenisvamaster: new FormControl('', [Validators.required]),
       amount: new FormControl('', [Validators.required, Validators.min(1)]),
+      checkedbutton: new FormControl('', [Validators.required]),
     })
 
     this.inputMaskType = {
@@ -68,12 +69,13 @@ export class RequestWithdrawalListComponent implements OnInit {
     } else {
       this.authService.blockOpenPage()
     }
+
+    this.handleTypeChange();
   }
 
   changeAmount(event) {
     this.amountValue = event.value.balance
   }
-
 
   get amount() {
     return this.requestForm.get('amount');
@@ -83,16 +85,22 @@ export class RequestWithdrawalListComponent implements OnInit {
     return this.requestForm.get('jenisvamaster');
   }
 
-  showPartialAmount() {
-    console.log('WithdrawalPartial | showPartialAmount');
-    this.requestForm.patchValue({ amount: 0 })
+  get checkedbutton() {
+    return this.requestForm.get('checkedbutton');
   }
 
-  showFullAmount() {
-    console.log('WithdrawalFull | showFullAmount');
-    console.log(parseInt(this.amountValue));
-    this.requestForm.patchValue({ amount: parseInt(this.amountValue) })
+  handleTypeChange() {
+    console.log('WithdrawalPartial | showPartialAmount');
+    this.checkedbutton.valueChanges.pipe(startWith(null), pairwise()).subscribe((
+      [prev, next]) => {
+      if (prev === false) {
+        this.requestForm.patchValue({ amount: 0 })
+      } else if (next === false) {
+        this.requestForm.patchValue({ amount: parseInt(this.amountValue) })
+      }
+    })
   }
+
 
   //get loading status for button submit
   isLoading() {
@@ -141,7 +149,7 @@ export class RequestWithdrawalListComponent implements OnInit {
 
   lazyLoadData() {
     console.log('ToDoListComponent | lazyLoadData');
-    
+
   }
 
 }

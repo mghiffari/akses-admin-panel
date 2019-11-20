@@ -1065,7 +1065,8 @@
         "jenisVAMaster": "Jenis VA Master",
         "currentAmount": "Saldo Saat Ini",
         "totalWithdrawal": "Jumlah Withdrawal",
-        "typeVAMaster": "Pilih Jenis VA Master"
+        "typeVAMaster": "Pilih Jenis VA Master",
+        "confirmationPage": "Confirmation"
     },
     "trackYourRequestScreen": {
         "title": "Track Your Request",

@@ -51,12 +51,12 @@
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="center center">
       <div fxFlex="67%" fxFlex.lt-md="100%" fxFlex.lt-lg="35%" fxFlex.lt-sm="100%">
-        <mat-radio-group fxLayout="row wrap">
+        <mat-radio-group fxLayout="row wrap" [formControlName]="'checkedbutton'">
           <mat-radio-button [checked]="vShowPartialPage" fxFlex="30%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
-            fxFlex.lt-sm="100%" color="primary" [value]="true" (change)="showPartialAmount()">
+            fxFlex.lt-sm="100%" color="primary" [value]="true">
             {{ 'forms.vaMaster.partial' | translate }}</mat-radio-button>
           <mat-radio-button [checked]="vShowFullPage" fxFlex="50%" fxFlex.lt-md="100%" fxFlex.lt-lg="100%"
-            fxFlex.lt-sm="100%" color="primary" [value]="false" (change)="showFullAmount()">
+            fxFlex.lt-sm="100%" color="primary" [value]="false">
             {{ 'forms.vaMaster.full' | translate }}</mat-radio-button>
         </mat-radio-group>
       </div>
