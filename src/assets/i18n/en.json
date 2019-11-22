@@ -538,6 +538,7 @@
             "inactive": "Inactive",
             "approved": "Approved",
             "rejected": "Rejected",
+            "process": "Procces",
             "delivered": "Delivered",
             "pending": "Pending",
             "waitingForApproval": "Waiting for Approval"
@@ -976,7 +977,7 @@
         "chooseApprove": "Approve",
         "chooseReject": "Reject",
         "description": "Add Description",
-        "succesApprove": "Success Approve",
+        "succesApprove": "Approval is in process",
         "failedApprove": "Failed Approve",
         "succesReject": "Success Reject",
         "failedReject": "Failed Reject"
@@ -1256,6 +1257,7 @@
         "07082": "transaction has been process",
         "01150": "Password salah! Silakan coba password lainnya",
         "01146": "Request Cashout sedang dalam progress. Silakan menunggu proses sebelumnya selesai",
-        "01144": "Silakan rubah nominal cashout! Nominal yang anda masukkan melebihi saldo"
+        "01144": "Silakan rubah nominal cashout! Nominal yang anda masukkan melebihi saldo",
+        "07083": "nominal balance of va master is not sufficient to make a cashout"
     }
 }

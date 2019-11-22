@@ -78,6 +78,9 @@
             </div>
             <ng-template #notWaiting>
               <div>
+                <span *ngIf="element.status === typeApproval.process" class="text-danger">
+                  {{'table.status.process' | translate}}
+                </span>
                 <span *ngIf="element.status === typeApproval.rejected" class="text-danger">
                   {{'table.status.rejected' | translate}}
                 </span>

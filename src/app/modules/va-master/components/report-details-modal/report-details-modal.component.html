@@ -1,31 +1,32 @@
 <div mat-dialog-title style="width: 100%" class="no-margin-important">
-        <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%">
-          <div class="font-gotham-bold font-sub-description">
-            <span>{{'TrackYourReportScreen.onDeatils' | translate}}</span>
-          </div>
-        </div>
-      </div>
-      <div mat-dialog-content style="width: 100%">
-        <form [formGroup]="ToDoListForm">
-          <div style="width: 100%">
-            <div fxLayout="column" fxLayoutGap="10px">
-              <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
-              ngClass.md="border-bottom-gray">
-                <mat-form-field appearance="fill">
-                  <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
-                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
-                        formControlName="desc">
-                    </textarea>
-                  </div>
-                </mat-form-field>
+  <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%">
+    <div class="font-gotham-bold font-sub-description">
+      <span>{{'TrackYourReportScreen.onDeatils' | translate}}</span>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content style="width: 100%">
+  <form [formGroup]="ToDoListForm">
+    <div style="width: 100%">
+      <div fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+          ngClass.md="border-bottom-gray">
+            <mat-form-field appearance="fill">
+              <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="2"
+                  formControlName="desc">
+                </textarea>
               </div>
-            </div>
+            </mat-form-field>
           </div>
-        </form>
-      </div>  
-      <div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
-        <div fxLayout="row" style="width: 100%" fxLayoutAlign="end center">
-          <button mat-raised-button color="accent" [mat-dialog-close]="false" (click)="ok()"
-            >OK</button>
         </div>
-      </div>
+    </div>
+  </form>
+</div>
+  <div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
+    <div fxLayout="row" style="width: 100%" fxLayoutAlign="end center">
+      <button mat-raised-button color="accent" 
+      [mat-dialog-close]="false" (click)="ok()">
+        OK</button>
+    </div>
+</div>
