@@ -109,6 +109,8 @@ export class RequestWithdrawalListComponent implements OnInit {
         this.requestForm.patchValue({ amount: parseInt(this.amountValue) })
         if (this.checkedbutton.value === false) {
           this.amount.disable()
+          console.log(this.amountValue)
+          console.log(this.checkedbutton.value)
         }
       }
     })
@@ -122,7 +124,7 @@ export class RequestWithdrawalListComponent implements OnInit {
   }
 
   //when button submit clicked
-  submitRequestWithdrawal(list) {
+  submitRequestWithdrawal() {
     console.log('RequestSubmitModalComponent | submitRequestWithdrawal');
     // this.cashoutMasterService.buttonSubmit();
     if (this.allowEdit) {
@@ -134,7 +136,7 @@ export class RequestWithdrawalListComponent implements OnInit {
           id: this.id,
           vaname: this.vaname,
           vanumber: this.vanumber,
-          amount: this.requestForm.value.amount
+          amount: this.amount.value
         }
       });
       modalRef.afterClosed().subscribe(result => {
