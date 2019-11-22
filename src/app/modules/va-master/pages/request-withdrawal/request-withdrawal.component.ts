@@ -102,8 +102,14 @@ export class RequestWithdrawalListComponent implements OnInit {
       [prev, next]) => {
       if (prev === false) {
         this.requestForm.patchValue({ amount: 0 })
+        if (this.checkedbutton.value === true) {
+          this.amount.enable()
+        }
       } else if (next === false) {
         this.requestForm.patchValue({ amount: parseInt(this.amountValue) })
+        if (this.checkedbutton.value === false) {
+          this.amount.disable()
+        }
       }
     })
   }
