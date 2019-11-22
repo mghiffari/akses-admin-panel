@@ -545,6 +545,7 @@
             "inactive": "Non-aktif",
             "approved": "Approved",
             "rejected": "Rejected",
+            "process": "Proses",
             "delivered": "Terkirim",
             "pending": "Pending",
             "waitingForApproval": "Waiting for Approval"

@@ -538,6 +538,7 @@
             "inactive": "Inactive",
             "approved": "Approved",
             "rejected": "Rejected",
+            "process": "Procces",
             "delivered": "Delivered",
             "pending": "Pending",
             "waitingForApproval": "Waiting for Approval"
