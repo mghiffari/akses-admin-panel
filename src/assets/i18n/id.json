@@ -984,7 +984,7 @@
         "chooseApprove": "Approve",
         "chooseReject": "Reject",
         "description": "Tambahkan Keterangan",
-        "succesApprove": "Sukses Approve",
+        "succesApprove": "Persetujuan sedang diproses",
         "failedApprove": "Gagal Approve",
         "succesReject": "Sukses Reject",
         "failedReject": "Gagal Reject"
@@ -1263,6 +1263,7 @@
         "07082": "transaksi sudah di proses",
         "01150": "Password salah! Silakan coba password lainnya",
         "01146": "Request Cashout sedang dalam progress. Silakan menunggu proses sebelumnya selesai",
-        "01144": "Silakan rubah nominal cashout! Nominal yang anda masukkan melebihi saldo"
+        "01144": "Silakan rubah nominal cashout! Nominal yang anda masukkan melebihi saldo",
+        "07083": "Nominal saldo va master tidak mencukupi untuk melakukan cashout"
     }
 }
