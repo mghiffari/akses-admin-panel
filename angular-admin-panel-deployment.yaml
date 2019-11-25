@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sit-fe-admin-panel
-  namespace: sit
+  name: dev-fe-admin-panel
+  namespace: development
   labels:
-    app: sit-fe-admin-panel
+    app: dev-fe-admin-panel
 spec:
   replicas: 2
   strategy:
@@ -14,17 +14,17 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: sit-fe-admin-panel
+      app: dev-fe-admin-panel
       tier: frontend
   template:
     metadata:
       labels:
-        app: sit-fe-admin-panel
+        app: dev-fe-admin-panel
         tier: frontend
     spec:
       containers:
-      - name: sit-fe-admin-panel
-        image: registry-intl.ap-southeast-5.aliyuncs.com/uat-akses/sit-fe-admin-panel:latest
+      - name: dev-fe-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/dev-akses/dev-fe-admin-panel:latest
         imagePullPolicy: Always
         resources: 
           limits:
@@ -35,7 +35,7 @@ spec:
             memory: 150Mi
         ports:
         - containerPort: 80
-          name: sit-fe-adm-pnl
+          name: dev-fe-adm-pnl
       imagePullSecrets:
       - name: regsecret
       restartPolicy: Always
