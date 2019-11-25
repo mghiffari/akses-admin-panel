@@ -1,6 +1,7 @@
 export class TransactionReport{
     oid: string;
     va_number: string;
+    cont_no: string;
     customer_name: string;
     mobile_number: string;
     transaction_code: string;

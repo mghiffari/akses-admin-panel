@@ -1,10 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+<<<<<<< HEAD
   name: sit-fe-admin-panel
   namespace: sit
   labels:
     app: sit-fe-admin-panel
+=======
+  name: dev-fe-admin-panel
+  namespace: development
+  labels:
+    app: dev-fe-admin-panel
+>>>>>>> 713d8841fd98d3af1a2942126b7500e6448b32e4
 spec:
   replicas: 2
   strategy:

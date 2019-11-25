@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiurl: 'https://dev.aksesadirafinance.com',
+  apiurl: 'https://dev.aksesadirafinance.com/ms-admin/',
   endPoint: {
     updateAccount: 'account',
     login: 'auth/login',
