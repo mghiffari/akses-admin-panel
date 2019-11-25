@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
+  production: false,
   apiurl: 'https://sit.aksesadirafinance.com/ms-admin/',
   endPoint: {
     updateAccount: 'account',
