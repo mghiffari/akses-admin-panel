@@ -8,36 +8,36 @@ import { CashoutDetailsModalComponent } from '../../components/cashout-details-m
 import { ToDoList } from '../../models/todolist';
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './todo-list.component.html',
-  styleUrls: ['./todo-list.component.scss']
+  selector: "app-todo-list",
+  templateUrl: "./todo-list.component.html",
+  styleUrls: ["./todo-list.component.scss"]
 })
-
-export class ToDoListComponent implements OnInit{
+export class ToDoListComponent implements OnInit {
   paginatorProps = { ...constants.paginatorProps };
 
   todoListColumns: string[] = [
-    'number',
-    'jenisva',
-    'tanggalpengajuan',
-    'amount',
-    'initiator',
-    'actions'
-  ]
+    "number",
+    "jenisva",
+    "tanggalpengajuan",
+    "amount",
+    "initiator",
+    "actions"
+  ];
+  locale = "id";
   loading = false;
   toDoList: ToDoList[] = [];
   allowCreate = false;
   allowEdit = false;
-  search = '';
+  search = "";
   isFocusedInput = false;
 
   private table: any;
-  @ViewChild('todolistTable') set tabl(table: ElementRef) {
+  @ViewChild("todolistTable") set tabl(table: ElementRef) {
     this.table = table;
   }
 
   private searchInput: ElementRef;
-  @ViewChild('searchInput') set searcInput(searchInput: ElementRef) {
+  @ViewChild("searchInput") set searcInput(searchInput: ElementRef) {
     this.searchInput = searchInput;
   }
 
@@ -47,24 +47,26 @@ export class ToDoListComponent implements OnInit{
     private router: Router,
     private authService: AuthService,
     private modal: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit() {
-    console.log('ToDoListComponent | ngOnInit');
+    console.log("ToDoListComponent | ngOnInit");
     this.allowCreate = false;
     this.allowEdit = false;
-    let prvg = this.authService.getFeaturePrivilege(constants.features.approvecashout)
-    if(this.authService.getFeatureViewPrvg(prvg)){
-      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg)
-      this.allowEdit = this.authService.getFeatureEditPrvg(prvg)
-      this.lazyLoadData()
+    let prvg = this.authService.getFeaturePrivilege(
+      constants.features.approvecashout
+    );
+    if (this.authService.getFeatureViewPrvg(prvg)) {
+      this.allowCreate = this.authService.getFeatureCreatePrvg(prvg);
+      this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
+      this.lazyLoadData();
     } else {
-      this.authService.blockOpenPage()
+      this.authService.blockOpenPage();
     }
   }
 
   onSearch() {
-    console.log('ToDoListComponent | onSearch');
+    console.log("ToDoListComponent | onSearch");
     if (this.paginatorProps.pageIndex !== 0) {
       //this will call paginator change
       this.paginatorProps.pageIndex = 0;
@@ -74,18 +76,18 @@ export class ToDoListComponent implements OnInit{
   }
 
   onPaginatorChange(e) {
-    console.log('ToDoListComponent | onPaginatorChange');
-    this.paginatorProps = Object.assign(this.paginatorProps, e)
-    this.lazyLoadData()
+    console.log("ToDoListComponent | onPaginatorChange");
+    this.paginatorProps = Object.assign(this.paginatorProps, e);
+    this.lazyLoadData();
   }
 
   onReject(list) {
-    console.log('ToDoListComponent | onReject');
+    console.log("ToDoListComponent | onReject");
     if (this.allowEdit) {
       const modalRef = this.modal.open(CashoutDetailsModalComponent, {
-        width: '80%',
-        minWidth: '260px',
-        maxWidth: '400px',
+        width: "80%",
+        minWidth: "260px",
+        maxWidth: "400px",
         data: {
           isCreate: false,
           listData: { ...list }
@@ -97,17 +99,17 @@ export class ToDoListComponent implements OnInit{
         }
       });
     } else {
-      this.authService.blockPageAction()
+      this.authService.blockPageAction();
     }
   }
 
   onApprove(list) {
-    console.log('ToDoListComponent | onApprove');
+    console.log("ToDoListComponent | onApprove");
     if (this.allowEdit) {
       const modalRef = this.modal.open(CashoutDetailsModalComponent, {
-        width: '80%',
-        minWidth: '260px',
-        maxWidth: '400px',
+        width: "80%",
+        minWidth: "260px",
+        maxWidth: "400px",
         data: {
           isCreate: true,
           listData: { ...list }
@@ -119,18 +121,21 @@ export class ToDoListComponent implements OnInit{
         }
       });
     } else {
-      this.authService.blockPageAction()
+      this.authService.blockPageAction();
     }
-  };
+  }
 
   lazyLoadData() {
-    console.log('ToDoListComponent | lazyLoadData');
+    console.log("ToDoListComponent | lazyLoadData");
     let isFocusedInput = this.isFocusedInput;
     this.loading = true;
-    this.cashOutMasterService.getToDoList(
-      this.paginatorProps.pageIndex + 1,
-      this.paginatorProps.pageSize,
-      this.search).subscribe(
+    this.cashOutMasterService
+      .getToDoList(
+        this.paginatorProps.pageIndex + 1,
+        this.paginatorProps.pageSize,
+        this.search
+      )
+      .subscribe(
         (response: any) => {
           try {
             console.table(response);
@@ -140,7 +145,7 @@ export class ToDoListComponent implements OnInit{
             console.table(error);
             this.toDoList = [];
             this.paginatorProps.length = 0;
-            this.paginatorProps.pageIndex = 0
+            this.paginatorProps.pageIndex = 0;
           }
         },
         error => {
@@ -149,23 +154,22 @@ export class ToDoListComponent implements OnInit{
             this.toDoList = [];
             this.paginatorProps.length = 0;
             this.paginatorProps.pageIndex = 0;
-            this.authService.handleApiError('toDoListScreen.loadFailed', error);
+            this.authService.handleApiError("toDoListScreen.loadFailed", error);
           } catch (error) {
-            console.log(error)
-          }
-        }
-      ).add(
-        () => {
-          this.loading = false;
-          if (this.table) {
-            this.table.renderRows();
-          }
-          if (this.searchInput && isFocusedInput) {
-              setTimeout(() => {
-              this.searchInput.nativeElement.focus();
-            });
+            console.log(error);
           }
         }
       )
+      .add(() => {
+        this.loading = false;
+        if (this.table) {
+          this.table.renderRows();
+        }
+        if (this.searchInput && isFocusedInput) {
+          setTimeout(() => {
+            this.searchInput.nativeElement.focus();
+          });
+        }
+      });
   }
 }
