@@ -20,6 +20,7 @@ export class TransReportComponent implements OnInit {
   transactionColumns: string[] = [
     'oid',
     'vaNumber',
+    'contNo',
     'customerName',
     'mobileNumber',
     'transactionCode',
@@ -113,7 +114,7 @@ export class TransReportComponent implements OnInit {
       }, {
           validators: CustomValidation.dateRangeValidaton
         })
-  
+
       this.filterForm.valueChanges.subscribe(value => {
         if (this.filterForm.valid) {
           this.loadData()
@@ -164,7 +165,7 @@ export class TransReportComponent implements OnInit {
     this.authService.openSnackbarError('invalidForm', errorText);
   }
 
-  // parse download link with 
+  // parse download link with
   getDownloadLink() {
     console.log('TransReportComponent | getDownloadLink')
     return this.reportService.parseDownloadLink(this.datePipe.transform(this.startDate.value, 'yyyy-MM-dd'),
