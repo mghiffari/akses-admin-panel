@@ -20,6 +20,7 @@ export class ToDoListComponent implements OnInit {
     "jenisva",
     "tanggalpengajuan",
     "amount",
+    "accountbank",
     "initiator",
     "actions"
   ];
