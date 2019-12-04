@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-fe-admin-panel-svc
-  namespace: dev
+  name: fe-admin-panel
+  namespace: production
   labels:
-    app: dev-fe-admin-panel
+    app: fe-admin-panel
 spec:
   ports:
   - name: http
@@ -12,6 +12,6 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: dev-fe-admin-panel
+    app: fe-admin-panel
     tier: frontend
   type: LoadBalancer
