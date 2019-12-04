@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-fe-admin-panel
-  namespace: development
+  name: pprd-fe-admin-panel
+  namespace: preprod
   labels:
-    app: dev-fe-admin-panel
+    app: pprd-fe-admin-panel
 spec:
   replicas: 2
   strategy:
@@ -14,28 +14,28 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: dev-fe-admin-panel
+      app: pprd-fe-admin-panel
       tier: frontend
   template:
     metadata:
       labels:
-        app: dev-fe-admin-panel
+        app: pprd-fe-admin-panel
         tier: frontend
     spec:
       containers:
-      - name: dev-fe-admin-panel
-        image: registry-intl.ap-southeast-5.aliyuncs.com/dev-akses/dev-fe-admin-panel:latest
+      - name: pprd-fe-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/prod-akses/pprd-fe-admin-panel:latest
         imagePullPolicy: Always
         resources: 
           limits:
-            cpu: 45m
-            memory: 225Mi
+            cpu: 20m
+            memory: 120Mi
           requests:
-            cpu: 30m
-            memory: 150Mi
+            cpu: 15m
+            memory: 80Mi
         ports:
         - containerPort: 80
-          name: dev-fe-adm-pnl
+          name: ppd-fe-adm-pnl
       imagePullSecrets:
       - name: regsecret
       restartPolicy: Always
