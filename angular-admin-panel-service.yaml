@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pprd-fe-admin-panel-svc
-  namespace: preprod
+  name: fe-admin-panel
+  namespace: production
   labels:
-    app: pprd-fe-admin-panel
+    app: fe-admin-panel
 spec:
   ports:
   - name: http
@@ -12,6 +12,6 @@ spec:
     targetPort: 80
     protocol: TCP
   selector:
-    app: pprd-fe-admin-panel
+    app: fe-admin-panel
     tier: frontend
   type: LoadBalancer

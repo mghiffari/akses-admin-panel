@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pprd-fe-admin-panel
-  namespace: preprod
+  name: fe-admin-panel
+  namespace: production
   labels:
-    app: pprd-fe-admin-panel
+    app: fe-admin-panel
 spec:
-  replicas: 2
+  replicas: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -14,28 +14,28 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: pprd-fe-admin-panel
+      app: fe-admin-panel
       tier: frontend
   template:
     metadata:
       labels:
-        app: pprd-fe-admin-panel
+        app: fe-admin-panel
         tier: frontend
     spec:
       containers:
-      - name: pprd-fe-admin-panel
-        image: registry-intl.ap-southeast-5.aliyuncs.com/prod-akses/pprd-fe-admin-panel:latest
+      - name: fe-admin-panel
+        image: registry-intl.ap-southeast-5.aliyuncs.com/prod-akses/fe-admin-panel:latest
         imagePullPolicy: Always
         resources: 
           limits:
-            cpu: 20m
-            memory: 120Mi
+            cpu: 45m
+            memory: 450Mi
           requests:
-            cpu: 15m
-            memory: 80Mi
+            cpu: 30m
+            memory: 300Mi
         ports:
         - containerPort: 80
-          name: ppd-fe-adm-pnl
+          name: fe-admin-panel
       imagePullSecrets:
       - name: regsecret
       restartPolicy: Always
