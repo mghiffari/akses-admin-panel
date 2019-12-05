@@ -52,6 +52,10 @@ const routes: Routes = [
       {
         path: 'gamification',
         loadChildren: './modules/gamification/gamification.module#GamificationModule'
+      },
+      {
+        path: 'va-master',
+        loadChildren: './modules/va-master/va-master.module#VAMasterModule'
       }
     ]
   },

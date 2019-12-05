@@ -1,0 +1,63 @@
+<div mat-dialog-title style="width: 100%" class="no-margin-important">
+  <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%">
+    <div class="font-gotham-bold font-sub-description">
+      <span>{{'requestWithdrawalScreen.confirmationPage' | translate}}</span>
+    </div>
+  </div>
+</div>
+<div mat-dialog-content style="width: 100%">
+  <form [formGroup]="RequestSubmitForm">
+    <div style="width: 100%">
+      <div fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+          ngClass.md="border-bottom-gray">
+          <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+            <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+              {{'forms.vamaster.fieldtypeva' | translate}}
+            </div>
+            <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+              {{va_name}} - {{va_number}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutGap="10px">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" ngClass.gt-md="border-bottom-gray"
+          ngClass.md="border-bottom-gray">
+          <div fxFlex="100%" fxFlex.lt-md="100%" class="padding-16" ngClass.lt-md="border-bottom-gray">
+            <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="50%">
+              {{'forms.vamaster.fieldamount' | translate}}
+            </div>
+            <div fxLayout="row wrap" fxFlexAlign="center" fxFlex="100%">
+              {{amountValue | currency:'IDR':'symbol-narrow':'1.0': 'id'}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <div style="width: 100%">
+          <mat-form-field appearance="fill">
+            <input matInput placeholder="{{'forms.password.placeholder' | translate}}" type="password"
+              formControlName="password">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="margin-top-12 padding-bottom-24-important">
+  <div fxLayout="row" style="width: 100%" fxLayoutAlign="end center">
+    <button mat-raised-button color="accent" [mat-dialog-close]="false"
+      *ngIf="!onSubmittingForm">{{'forms.buttonText.cancel' | translate}}</button>
+    <button mat-raised-button color="primary" [disabled]="!RequestSubmitForm.valid" (click)="save()"
+      *ngIf="!onSubmittingForm">{{'forms.buttonText.confirm' | translate}}</button>
+    <button mat-raised-button color="primary" disabled *ngIf="onSubmittingForm">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div>
+          <mat-spinner diameter="16"></mat-spinner>
+        </div>
+        <div class="margin-left-5">{{'loading' | translate}}</div>
+      </div>
+    </button>
+  </div>
+</div>

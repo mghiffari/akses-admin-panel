@@ -3,14 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
-  apiurl: '//sit.aksesadirafinance.com/',
+  production: false,
+  envName : 'sit',
+  apiurl: 'https://sit.aksesadirafinance.com/ms-admin/',
   endPoint: {
-    updateAccount: 'msa-account',
-    login: 'msap-login',
-    lovType: 'msap-lov',
-    createNotification: 'msap-notification',
-    updateNotification: 'patch-notification'
+    updateAccount: 'account',
+    login: 'auth/login',
+    lovType: 'lov',
+    createNotification: 'notification',
+    updateNotification: 'notification'
   },
   enableAdiraEmailValidation: true,
   version: '1.0.34',

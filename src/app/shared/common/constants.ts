@@ -65,14 +65,18 @@ export const constants = {
         balanceReport: 'laporansaldo',
         gamificationRule: 'gamificationrule',
         cashbackReward: 'cashbackreward',
+        requestwithdrawal: 'requestwithdrawal',
+        approvecashout: 'approvecashout'
     },
     approvalStatus: {
         approved: "1",
         rejected: "0",
-        waitingForApproval: "2"
+        waitingForApproval: "2",
+        process: "3"
     },
     approvalType: {
-        specialOffer: "specialoffer"
+        specialOffer: "specialoffer",
+        cashoutMaster: "cashoutmaster"
     },
     gamification: {
         upcoming: {
