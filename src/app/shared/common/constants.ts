@@ -66,7 +66,8 @@ export const constants = {
         gamificationRule: 'gamificationrule',
         cashbackReward: 'cashbackreward',
         requestwithdrawal: 'requestwithdrawal',
-        approvecashout: 'approvecashout'
+        approvecashout: 'approvecashout',
+        maintenancemode: 'maintenancemode'
     },
     approvalStatus: {
         approved: "1",
