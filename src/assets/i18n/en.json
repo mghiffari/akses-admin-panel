@@ -54,7 +54,10 @@
                 "toDoList": "To Do List",
                 "trackReport": "Report"
             }
-        }
+        },
+         "maintenanceMode": {
+           "title": "Maintenance Mode"
+         }
     },
     "userAction": {
         "logout": "Logout",
@@ -1078,6 +1081,13 @@
         "downloadReport": "download report",
         "filterNotSet": "Filter Not Set"
     },
+    "maintenanceModeScreen":{
+        "title":"Maintenance Mode",
+        "submit": "Submit",
+        "getDataFailed": "Failed to get data maintenance mode",
+        "submitFailed": "Failed to edit page maintenance mode",
+        "submitSuccess":"Success updated page maintenance mode"
+    },
     "features": {
         "homebanner": "Home Banner",
         "artikel": "Article",
@@ -1105,7 +1115,8 @@
         "multigunamobil": "Multipurpose Car",
         "spmultigunamotor": "SP Multipurpose Motorcycle",
         "requestwithdrawal": "Request Withdrawal",
-        "approvecashout": "Approve Cashout"
+        "approvecashout": "Approve Cashout",
+        "maintenancemode": "Maintenance Mode"
     },
     "apiErrors": {
         "noInternet": "no internet connection",
