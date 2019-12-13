@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { MatSnackBar } from "@angular/material";
 import { MaintenanceService } from "src/app/shared/services/maintenance.service";
+import { MaintenancePages } from "src/app/modules/maintenance/models/maintenance-pages";
 import { SuccessSnackbarComponent } from "src/app/shared/components/success-snackbar/success-snackbar.component";
 import { AuthService } from "src/app/shared/services/auth.service";
 
@@ -24,9 +25,20 @@ export class MaintenanceModeListComponent implements OnInit {
   ngOnInit() {
     console.log("MaintenanceMode | ngOnInit");
 
+    const maintenancePages = new MaintenancePages();
+
     this.maintenanceService.getMaintenanceStatus().subscribe(
       response => {
-        this.maintenanceDatas = response.data;
+        this.maintenanceDatas = response.data
+          .filter(respon => {
+            if (maintenancePages[respon.name] == null) {
+              return false;
+            }
+            return true;
+          })
+          .map(respon => {
+            return { ...respon, page: maintenancePages[respon.name] };
+          });
       },
       error => {
         this.authService.handleApiError(
