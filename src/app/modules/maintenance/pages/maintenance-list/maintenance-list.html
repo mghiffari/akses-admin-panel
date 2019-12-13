@@ -7,7 +7,7 @@
   <div fxLayout="row" class="padding-16 margin-left-20 border-bottom-gray"
     *ngFor="let maintenanceData of maintenanceDatas; let idx = index">
     <mat-checkbox color="primary" [checked]="maintenanceData.value === 'true' ? true : false"
-      (change)="changeDataMaintenance(idx, $event)">{{maintenanceData.name}}</mat-checkbox>
+      (change)="changeDataMaintenance(idx, $event)">{{maintenanceData.page}}</mat-checkbox>
   </div>
   <div fxLayout="row" class="margin-top-20 margin-left-20">
     <div fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%" fxLayoutAlign="start center">
