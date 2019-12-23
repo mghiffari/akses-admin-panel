@@ -1,17 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-<<<<<<< HEAD
   name: pprd-fe-admin-panel
   namespace: preprod
   labels:
     app: pprd-fe-admin-panel
-=======
-  name: sit-fe-admin-panel
-  namespace: sit
-  labels:
-    app: sit-fe-admin-panel
->>>>>>> 6a91019c3b5af5d2cd7a9460c3084a101ccf80f9
 spec:
   replicas: 2
   strategy:
