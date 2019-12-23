@@ -1,0 +1,18 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      {{'maintenanceModeScreen.title' | translate}}
+    </div>
+  </div>
+  <div fxLayout="row" class="padding-16 margin-left-20 border-bottom-gray"
+    *ngFor="let maintenanceData of maintenanceDatas; let idx = index">
+    <mat-checkbox color="primary" [checked]="maintenanceData.value === 'true' ? true : false"
+      (change)="changeDataMaintenance(idx, $event)">{{maintenanceData.page}}</mat-checkbox>
+  </div>
+  <div fxLayout="row" class="margin-top-20 margin-left-20">
+    <div fxFlex.lt-md="40%" fxFlex.lt-lg="35%" fxFlex.lt-sm="70%" fxLayoutAlign="start center">
+      <button mat-raised-button color="primary" (click)="updateDataMaintenance()"
+        block-button>{{'maintenanceModeScreen.submit' | translate}}</button>
+    </div>
+  </div>
+</div>
