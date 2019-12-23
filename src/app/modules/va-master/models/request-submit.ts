@@ -1,5 +1,5 @@
-export class RequestSubmitForm{
-    vamasterid: string;
-    nominalcashout: string;
-    password: string;
+export class RequestSubmitForm {
+  vamasterid: string;
+  nominalcashout: string;
+  password: string;
 }
