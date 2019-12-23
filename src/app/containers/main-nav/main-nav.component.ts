@@ -206,7 +206,7 @@ export class MainNavComponent {
       title: "navMenus.maintenanceMode.title",
       link: "/maintenance-mode",
       getShowFlag: () => {
-        return this.getViewPrivilege(this.featureNames.approvecashout);
+        return this.getViewPrivilege(this.featureNames.maintenancemode);
       }
     }
   ];
