@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiurl: 'https://preprod.aksesadirafinance.com/ms-admin/',
+  apiurl: 'https://prod.aksesadirafinance.com/ms-admin/',
   endPoint: {
     updateAccount: 'account',
     login: 'auth/login',
