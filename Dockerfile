@@ -13,9 +13,9 @@ RUN echo "worker_processes auto;\
     }\
     http {\
         server_tokens off;\
-        add_header X-Frame-Options SAMEORIGIN;\
-        add_header X-Content-Type-Options nosniff;\
-        add_header X-XSS-Protection '1;mode=block';\
+        #add_header X-Frame-Options SAMEORIGIN;\
+        #add_header X-Content-Type-Options nosniff;\
+        #add_header X-XSS-Protection '1;mode=block';\
         include       /etc/nginx/mime.types;\
         default_type  application/octet-stream;\
         access_log off;\
