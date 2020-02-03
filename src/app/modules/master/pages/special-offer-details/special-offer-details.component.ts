@@ -277,7 +277,9 @@ export class SpecialOfferDetailsComponent implements OnInit {
                   let errorSnackbar = this.authService.handleApiError('specialOfferDetailsScreen.getFileListFailed', error)
                   if (errorSnackbar) {
                     errorSnackbar.afterDismissed().subscribe(() => {
-                      this.goToListScreen()
+                      // this.goToListScreen()
+                      this.fileList = response.data
+                      this.filteredFileList = this.fileList
                     })
                   }
                 }
