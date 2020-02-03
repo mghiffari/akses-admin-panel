@@ -11,7 +11,7 @@ export class SpecialOfferService {
   saveApiUrl = this.specialOfferApiUrl + '/save'
   bulkApproveApiUrl = this.specialOfferApiUrl + '/approve'
   bulkRejectApiUrl = this.specialOfferApiUrl + '/reject'
-  recipientFileListApiUrl = this.specialOfferApiUrl + '/mpllist'
+  recipientFileListApiUrl = this.specialOfferApiUrl + '/mpl-recipient-file'
 
   constructor(
     private authService: AuthService
