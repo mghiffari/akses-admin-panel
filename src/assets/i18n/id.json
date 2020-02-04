@@ -7,6 +7,7 @@
         "articles": "Artikel",
         "specialOffers": "Special Offer",
         "faqs": "FAQ",
+        "categoryFaq": "Kategory FAQ",
         "branches": "Lokasi Cabang",
         "changePhonenumberRequests": "Ubah Nomor Handphone"
       }
@@ -529,6 +530,7 @@
     "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
   },
   "table": {
+    "cat_faq": "Kategori FAQ",
     "details": "Lihat Rincian",
     "jenisva": "Jenis VA",
     "subdate": "Tanggal Pengajuan",
@@ -697,6 +699,7 @@
   "dataDeleted": "data berhasil dihapus",
   "failedToDelete": "gagal menghapus data",
   "backToList": "kembali ke list",
+  "back": "kembali",
   "approve": "approve",
   "reject": "reject",
   "add": "tambah",
@@ -768,8 +771,15 @@
     "bookmarkSuccess": "berhasil menambahkan FAQ ke bookmark",
     "removeBookmarkSuccess": "berhasil menghapus FAQ dari bookmark",
     "bookmarkFailed": "gagal menambahkan FAQ ke bookmark",
-    "removeBookmarkFailed": "gagal menghapus FAQ dari bookmark"
+    "removeBookmarkFailed": "gagal menghapus FAQ dari bookmark",
+    "createCategoryFAQ": "tambahkan kategori"
   },
+  "faqCategoryScreen": {
+    "createCategoryFaq": "Tambahkan kategori faq",
+    "createTitle": "Tambahkan Kategori FAQ Baru",
+    "updateTitle": "Ubah Kategori FAQ",
+    "loadFailed": "gagal mendapatkan list lov"
+},
   "faqDetailsScreen": {
     "getFaqFailed": "gagal mendapatkan data FAQ",
     "createTitle": "Tambahkan FAQ Baru",
@@ -1100,6 +1110,7 @@
     "artikel": "Artikel",
     "specialoffer": "Special Offer",
     "faq": "FAQ",
+    "categoryfaq": "Kategori FAQ",
     "lokasicabang": "Lokasi Cabang",
     "ubahnomorhandphone": "Ubah Nomor Handphone",
     "instruksipembayaran": "Instruksi Pembayaran",

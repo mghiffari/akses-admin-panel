@@ -7,6 +7,7 @@
                 "articles": "Articles",
                 "specialOffers": "Special Offers",
                 "faqs": "FAQs",
+                "categoryFaq": "FAQ Category",
                 "branches": "Branch Locations",
                 "changePhonenumberRequests": "Change Phonenumber Requests"
             }
@@ -55,9 +56,9 @@
                 "trackReport": "Report"
             }
         },
-         "maintenanceMode": {
-           "title": "Maintenance Mode"
-         }
+        "maintenanceMode": {
+            "title": "Maintenance Mode"
+        }
     },
     "userAction": {
         "logout": "Logout",
@@ -524,6 +525,7 @@
         "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
     },
     "table": {
+        "cat_faq": "Category FAQ",
         "details": "See Details",
         "jenisva": "VA Type",
         "subdate": "Request Date",
@@ -689,6 +691,7 @@
     "dataDeleted": "data deleted",
     "failedToDelete": "delete failed",
     "backToList": "back to list",
+    "back": "back",
     "upload": "upload",
     "approve": "approve",
     "reject": "reject",
@@ -778,7 +781,14 @@
         "bookmarkSuccess": "FAQ is now bookmarked",
         "removeBookmarkSuccess": "FAQ is removed from bookmark",
         "bookmarkFailed": "failed to bookmark FAQ",
-        "removeBookmarkFailed": "failed to remove FAQ from bookmark"
+        "removeBookmarkFailed": "failed to remove FAQ from bookmark",
+        "createCategoryFAQ": "create category"
+    },
+    "faqCategoryScreen": {
+        "createCategoryFaq": "create category faq",
+        "createTitle": "Create New Category FAQ",
+        "updateTitle": "Update Category FAQ",
+        "loadFailed": "failed to get list of lov"
     },
     "faqDetailsScreen": {
         "getFaqFailed": "failed to get FAQ data",
@@ -1081,18 +1091,19 @@
         "downloadReport": "download report",
         "filterNotSet": "Filter Not Set"
     },
-    "maintenanceModeScreen":{
-        "title":"Maintenance Mode",
+    "maintenanceModeScreen": {
+        "title": "Maintenance Mode",
         "submit": "Submit",
         "getDataFailed": "Failed to get data maintenance mode",
         "submitFailed": "Failed to edit page maintenance mode",
-        "submitSuccess":"Success updated page maintenance mode"
+        "submitSuccess": "Success updated page maintenance mode"
     },
     "features": {
         "homebanner": "Home Banner",
         "artikel": "Article",
         "specialoffer": "Special Offer",
         "faq": "FAQ",
+        "categoryfaq": "FAQ Category",
         "lokasicabang": "Branch Locator",
         "ubahnomorhandphone": "Change Phone Number",
         "simulasikredit": "Credit Simulation",

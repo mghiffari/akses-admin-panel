@@ -12,6 +12,8 @@ import { ChangePhoneListComponent } from './pages/change-phone-list/change-phone
 import { SpecialOfferListComponent } from './pages/special-offer-list/special-offer-list.component';
 import { SpecialOfferDetailsComponent } from './pages/special-offer-details/special-offer-details.component';
 import { CanDeactivateGuard } from 'src/app/_guard/can-deactivate.guard';
+import { FaqCategoryComponent } from "./pages/faq-category/faq-category.component";
+import { FaqCategoryDetailsComponent } from "./pages/faq-category-details/faq-category-details.component";
 
 const routes: Routes = [
   {
@@ -127,7 +129,28 @@ const routes: Routes = [
     data: {
       title: 'Update Special Offer'
     }
-  }
+  },
+  {
+    path: 'categoryfaq',
+    component: FaqCategoryComponent,
+    data: {
+      title: 'FAQ Category'
+    }
+  },
+  {
+    path: 'categoryfaq/create',
+    component: FaqCategoryDetailsComponent,
+    data: {
+      title: 'Create Category FAQ'
+    }
+  },
+  {
+    path: 'categoryfaq/edit/:id',
+    component: FaqCategoryDetailsComponent,
+    data: {
+      title: 'Update Category FAQ',
+    }
+  },
 ];
 
 @NgModule({
