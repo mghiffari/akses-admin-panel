@@ -431,7 +431,7 @@ export class BannerDetailsService {
     image = files;
     if (files.length === 0)
       return;
-    let types = ['jpeg', 'jpg', 'png']
+    let types = ['jpeg', 'jpg', 'png','JPEG', 'JPG', 'PNG']
     let errorType = false
     let splits = files[0].name.split('.');
     if (splits.length > 1) {
