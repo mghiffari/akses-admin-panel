@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiurl: 'http://149.129.250.31:30001/api/v1/',
+  // apiurl: 'https://dev.aksesadirafinance.com/ms-admin/',
+  apiurl: 'http://localhost:8080/api/v1/',
   endPoint: {
     updateAccount: 'account',
     login: 'auth/login',
@@ -13,8 +14,8 @@ export const environment = {
     updateNotification: 'notification'
   },
   enableAdiraEmailValidation: false,
-  version: '1.0.33',
-  versionDate: new Date(2019, 9, 1)
+  version: '1.0.34',
+  versionDate: new Date(2019, 9, 23)
 };
 
 

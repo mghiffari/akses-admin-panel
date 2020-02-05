@@ -3,7 +3,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { constants } from 'src/app/shared/common/constants';
 import { MatSnackBar } from '@angular/material';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { ApprovalService } from 'src/app/shared/services/approval.service';
 import { ApprovalTab } from 'src/app/shared/models/approval-tab';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -121,15 +120,7 @@ export class ApprovalListComponent implements OnInit {
         this.resetPage()
         this.resetTable()
         if (this.filterForm.errors && this.filterForm.errors.dateRange) {
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'invalidForm',
-              content: {
-                text: 'forms.date.errorRange',
-                data: null
-              }
-            }
-          })
+          this.authService.openSnackbarError('invalidForm', 'forms.date.errorRange')
         }
       }
     })
@@ -166,18 +157,10 @@ export class ApprovalListComponent implements OnInit {
         }
       }, error => {
         try {
-          console.table(error)
+          console.table(error);
           this.loading = false
           this.filterForm.enable({ emitEvent: false })
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'approvalListScreen.getTabsFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
+          this.authService.handleApiError('approvalListScreen.getTabsFailed', error)
         } catch (error) {
           console.error(error)
           this.loading = false
@@ -355,52 +338,11 @@ export class ApprovalListComponent implements OnInit {
     })
     this.specialOfferService.bulkRejectSpecialOffer(data).subscribe(
       response => {
-        try {
-          console.table(response)
-          if (response.data.rowUpdated < data.length) {
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: errorText,
-                content: {
-                  text: totalFailedText,
-                  data: {
-                    totalFailed: data.length
-                  }
-                }
-              }
-            })
-          } else {
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: successText,
-                  data: null
-                }
-              }
-            })
-          }
-          this.loadData()
-        } catch (error) {
-          console.error(error)
-          this.loading = false;
-        }
+        this.handleReturnSuccessApproval(response, data, errorText, totalFailedText, successText);
       }, error => {
-        try {
-          console.table(error)
-          this.loading = false
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: errorText,
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.error(error)
-        }
+        console.table(error);
+        this.loading = false
+        this.authService.handleApiError(errorText, error)
       }
     )
   }
@@ -473,52 +415,11 @@ export class ApprovalListComponent implements OnInit {
     })
     this.specialOfferService.bulkApproveSpecialOffer(data).subscribe(
       response => {
-        try {
-          console.table(response)
-          if (response.data.rowUpdated < data.length) {
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: errorText,
-                content: {
-                  text: totalFailedText,
-                  data: {
-                    totalFailed: data.length
-                  }
-                }
-              }
-            })
-          } else {
-            this.snackBar.openFromComponent(SuccessSnackbarComponent, {
-              data: {
-                title: 'success',
-                content: {
-                  text: successText,
-                  data: null
-                }
-              }
-            })
-          }
-          this.loadData()
-        } catch (error) {
-          console.error(error)
-          this.loading = false;
-        }
+        this.handleReturnSuccessApproval(response, data, errorText, totalFailedText, successText);
       }, error => {
-        try {
-          console.table(error)
-          this.loading = false
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: errorText,
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-        } catch (error) {
-          console.error(error)
-        }
+        console.table(error)
+        this.loading = false
+        this.authService.handleApiError(errorText, error)
       }
     )
   }
@@ -558,20 +459,8 @@ export class ApprovalListComponent implements OnInit {
             console.error(error)
           }
         }, error => {
-          try {
-            console.table(error)
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'approvalListScreen.refreshCountFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.error(error)
-          }
+          console.table(error)
+          this.authService.handleApiError('approvalListScreen.refreshCountFailed', error)
         }
       ).add(() => {
         if (this.isSelectedTabSpecialOffer()) {
@@ -617,15 +506,7 @@ export class ApprovalListComponent implements OnInit {
           console.table(error);
           this.resetPage()
           this.resetTable()
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'approvalListScreen.loadFailed.specialOffer',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
+          this.authService.handleApiError('approvalListScreen.loadFailed.specialOffer', error)
         } catch (error) {
           console.log(error)
         }
@@ -679,5 +560,33 @@ export class ApprovalListComponent implements OnInit {
     console.log('ApprovalListComponent | isSelectedTab');
     let selectedTab = this.tabs[this.selectedTabIndex]
     return selectedTab && selectedTab.type === type
+  }
+
+  // handle api success (status 200) approval api
+  handleReturnSuccessApproval(response, data, errorText, totalFailedText, successText){
+    console.log('ApprovalListComponent | handleReturnSuccessApproval')
+    try {
+      console.table(response)
+      if (response.data.rowUpdated < data.length) {
+        let failCount = {
+          totalFailed: data.length - response.data.rowUpdated
+        }
+        this.authService.openSnackbarError(errorText, totalFailedText, failCount)
+      } else {
+        this.snackBar.openFromComponent(SuccessSnackbarComponent, {
+          data: {
+            title: 'success',
+            content: {
+              text: successText,
+              data: null
+            }
+          }
+        })
+      }
+      this.loadData()
+    } catch (error) {
+      console.error(error)
+      this.loading = false;
+    }
   }
 }

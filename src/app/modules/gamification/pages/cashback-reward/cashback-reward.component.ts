@@ -9,14 +9,12 @@ import { CashbackRewardData } from '../../models/cashback-reward';
 
 // services
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { GamificationService } from '../../services/gamification.service';
 
 // constants
 import { constants } from 'src/app/shared/common/constants';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 
-// components
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
-import { GamificationService } from '../../services/gamification.service';
 
 @Component({
   selector: 'app-cashback-reward',
@@ -162,20 +160,15 @@ export class CashbackRewardComponent implements OnInit {
   // show form error in snackbar
   showFormError(errorText) {
     console.log('CashbackRewardComponent | showFormError')
-    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'invalidForm',
-        content: {
-          text: errorText,
-          data: null
-        }
-      }
-    })
+    this.authService.openSnackbarError('invalidForm', errorText)
   }
 
   // parse download link with 
   getDownloadLink() {
     console.log('CashbackRewardComponent | getDownloadLink');
+    return this.gamificationService.parseDownloadLink(this.datePipe.transform(this.startDate.value, 'yyyy-MM-dd'),
+    this.datePipe.transform(this.endDate.value, 'yyyy-MM-dd'),
+    this.search.value)
   }
 
   // Method to load data from API
@@ -209,15 +202,7 @@ export class CashbackRewardComponent implements OnInit {
           console.table(error);
           this.resetPage()
           this.resetTable()
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'transactionReport.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
+          this.authService.handleApiError('transactionReport.loadFailed', error)
         } catch (error) {
           console.log(error)
         }

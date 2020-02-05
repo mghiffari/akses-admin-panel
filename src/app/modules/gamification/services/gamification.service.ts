@@ -8,6 +8,7 @@ import Utils from '../../../shared/common/utils';
 export class GamificationService {
   gamificationApiUrl = environment.apiurl + 'gamification';
   cashbackRewardApiUrl = this.gamificationApiUrl + '/cashback';
+  downloadRewardsApiUrl = this.cashbackRewardApiUrl + '/download'
 
   // constructor
   constructor(
@@ -37,5 +38,15 @@ export class GamificationService {
       to_date: toDate
     }
     return this.authService.wrapTokenPostApi(url, data);
+  }
+
+  // return download link parsed with needed parameter
+  parseDownloadLink(fromDate, toDate, search) {
+    console.log("Gamification Service | parseDownloadLink");
+    return this.downloadRewardsApiUrl 
+      + '?from_date=' + fromDate 
+      + '&to_date='+ toDate 
+      + ((search && search !== '') ? ('&search_key=' + encodeURIComponent(search)) : '')
+      + '&token=' + this.authService.getAccessToken();
   }
 }

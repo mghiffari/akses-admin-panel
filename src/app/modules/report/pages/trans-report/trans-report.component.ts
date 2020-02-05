@@ -4,7 +4,6 @@ import { CustomValidation } from 'src/app/shared/form-validation/custom-validati
 import { TransactionReport } from '../../models/transaction-report';
 import { constants } from 'src/app/shared/common/constants';
 import { TranslateService } from '@ngx-translate/core';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { MatSnackBar } from '@angular/material';
 import { ReportService } from '../../services/report.service';
 import { DatePipe } from '@angular/common';
@@ -21,6 +20,7 @@ export class TransReportComponent implements OnInit {
   transactionColumns: string[] = [
     'oid',
     'vaNumber',
+    'contNo',
     'customerName',
     'mobileNumber',
     'transactionCode',
@@ -50,8 +50,7 @@ export class TransReportComponent implements OnInit {
   isFocusedSearch = false;
   allowDownload = false;
   filterForm: FormGroup;
-  searchValidation = CustomValidation.transactionSearch
-  now = new Date()
+  now = new Date();
 
   private table: any;
   @ViewChild('transactionTable') set tabl(table: ElementRef) {
@@ -111,11 +110,11 @@ export class TransReportComponent implements OnInit {
       this.filterForm = new FormGroup({
         startDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
         endDate: new FormControl(null, [Validators.required, CustomValidation.maxToday]),
-        search: new FormControl('', [Validators.required, Validators.minLength(this.searchValidation.minLength)])
+        search: new FormControl('', Validators.required)
       }, {
           validators: CustomValidation.dateRangeValidaton
         })
-  
+
       this.filterForm.valueChanges.subscribe(value => {
         if (this.filterForm.valid) {
           this.loadData()
@@ -163,18 +162,10 @@ export class TransReportComponent implements OnInit {
   // show form error in snackbar
   showFormError(errorText) {
     console.log('TransReportComponent | editNotifError')
-    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-      data: {
-        title: 'invalidForm',
-        content: {
-          text: errorText,
-          data: null
-        }
-      }
-    })
+    this.authService.openSnackbarError('invalidForm', errorText);
   }
 
-  // parse download link with 
+  // parse download link with
   getDownloadLink() {
     console.log('TransReportComponent | getDownloadLink')
     return this.reportService.parseDownloadLink(this.datePipe.transform(this.startDate.value, 'yyyy-MM-dd'),
@@ -213,17 +204,9 @@ export class TransReportComponent implements OnInit {
           console.table(error);
           this.resetPage()
           this.resetTable()
-          this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'transactionReport.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
+          this.authService.handleApiError('transactionReport.loadFailed', error)
         } catch (error) {
-          console.log(error)
+          console.error(error)
         }
       }
     ).add(

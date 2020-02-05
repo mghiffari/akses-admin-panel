@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { constants } from 'src/app/shared/common/constants';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { GamificationService } from '../../services/gamification.service';
 import { Syspref } from '../../models/syspref';
 import { Rule } from '../../models/rule';
@@ -140,7 +139,7 @@ export class RuleDetailsComponent implements OnInit {
   }
 
   // call api to initialize form value
-  initForm(){
+  initForm() {
     console.log('RuleDetailsComponent | initForm')
     this.loading = true
     this.gamificationService.getRuleConfig().subscribe(
@@ -176,7 +175,7 @@ export class RuleDetailsComponent implements OnInit {
                 upcomingRule.push(rul)
               }
             }
-            if(this.isCreate){
+            if (this.isCreate) {
               if (!replaceTime || replaceTime.getTime() > activeSince.getTime()) {
                 ruleArrayForm = this.getRuleFormValue(upcomingRule)
                 sampleSize = upcomingSampleSize
@@ -189,15 +188,7 @@ export class RuleDetailsComponent implements OnInit {
                 ruleArrayForm = this.getRuleFormValue(upcomingRule)
                 sampleSize = upcomingSampleSize
               } else {
-                let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: 'gamificationRuleScreen.cantEditRule',
-                    content: {
-                      text: 'gamificationRuleScreen.upcomingRuleNotFound',
-                      data: null
-                    }
-                  }
-                })
+                let errorSnackbar = this.authService.openSnackbarError('gamificationRuleScreen.cantEditRule', 'gamificationRuleScreen.upcomingRuleNotFound')
                 errorSnackbar.afterDismissed().subscribe(() => {
                   this.goToListScreen()
                 })
@@ -213,23 +204,13 @@ export class RuleDetailsComponent implements OnInit {
           console.error(error)
         }
       }, error => {
-        console.table(error)
-        try {
-          let errorSnackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-            data: {
-              title: 'gamificationRuleScreen.loadFailed',
-              content: {
-                text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                data: null
-              }
-            }
-          })
-          errorSnackbar.afterDismissed().subscribe(() => {
-            this.goToListScreen()
-          })
-        } catch (error) {
-          console.error(error)
-        }
+        console.table(error)        
+          let errorSnackbar = this.authService.handleApiError('gamificationRuleScreen.loadFailed', error)
+          if(errorSnackbar){
+            errorSnackbar.afterDismissed().subscribe(() => {
+              this.goToListScreen()
+            })
+          }
       }
     ).add(() => {
       this.loading = false
@@ -237,15 +218,15 @@ export class RuleDetailsComponent implements OnInit {
   }
 
   // method to get new form value based on current rule
-  getRuleFormValue(ruleArray: Rule[]){
+  getRuleFormValue(ruleArray: Rule[]) {
     console.log('RuleDetailsComponent | setFormValue')
     let ruleArrayForm = this.rule.value
-    for(let i = 0; i < ruleArrayForm.length; i++){
+    for (let i = 0; i < ruleArrayForm.length; i++) {
       let ruleData = ruleArray[i]
-      if(ruleData){
+      if (ruleData) {
         ruleArrayForm[i] = {
           reward: ruleData.reward,
-          totalPerson: ruleData.ceiling && ruleData.floor ? ruleData.ceiling-ruleData.floor+1 : null,
+          totalPerson: ruleData.ceiling && ruleData.floor ? ruleData.ceiling - ruleData.floor + 1 : null,
           probability: ruleData.probability,
           blended: ruleData.blended,
           runningFloor: ruleData.floor,
@@ -271,7 +252,7 @@ export class RuleDetailsComponent implements OnInit {
     let totalPersonAddition = 0;
     let totalProbability = 0;
     let decimalTolerance = Math.pow(10, 12)
-    let ruleFormArray = this.rule as FormArray
+    let ruleFormArray = this.rule;
     for (let i = 0; i < ruleFormArray.length; i++) {
       let rowForm = ruleFormArray.at(i)
       let ruleRow = rowForm.value;
@@ -285,7 +266,7 @@ export class RuleDetailsComponent implements OnInit {
         probability = ruleRow.probability
         if ((this.getProbability(rowForm).valid || !this.getProbability(rowForm).errors.required)) {
           totalProbability += Math.floor(probability * decimalTolerance)
-          if(isValidSampleSize){
+          if (isValidSampleSize) {
             totalPerson = Math.floor(sampleSize * probability)
             totalPersonAddition += totalPerson
             if (totalPerson > 0) {
@@ -300,12 +281,12 @@ export class RuleDetailsComponent implements OnInit {
         }
       } else {
         probability = (decimalTolerance - totalProbability) / decimalTolerance
-        if (probability >= 0 ) {
-          if(this.getReward(rowForm).valid || !this.getReward(rowForm).errors.required){
+        if (probability >= 0) {
+          if (this.getReward(rowForm).valid || !this.getReward(rowForm).errors.required) {
             blended = probability * reward
-          } 
+          }
         }
-        if(isValidSampleSize){
+        if (isValidSampleSize) {
           totalPerson = sampleSize - totalPersonAddition
           if (totalPerson > 0) {
             floor = currentCount + 1;
@@ -330,7 +311,7 @@ export class RuleDetailsComponent implements OnInit {
     let modalContentText = ''
     let errorText = ''
     let successText = ''
-    if(this.isCreate){
+    if (this.isCreate) {
       allowSave = this.allowCreate
       modalTitle = 'gamificationRuleScreen.confirmationModal.newRule.title'
       modalContentText = 'gamificationRuleScreen.confirmationModal.newRule.content'
@@ -343,7 +324,7 @@ export class RuleDetailsComponent implements OnInit {
       errorText = 'gamificationRuleScreen.updateFailed'
       successText = 'gamificationRuleScreen.succesUpdated'
     }
-    if(allowSave){
+    if (allowSave) {
       const modalRef = this.modal.open(ConfirmationModalComponent, {
         width: '260px',
         restoreFocus: false,
@@ -363,7 +344,7 @@ export class RuleDetailsComponent implements OnInit {
           let ruleForm = new RuleForm()
           ruleForm.cycleNumber = formValue.sampleSize
           ruleForm.draftRule = []
-          for(let rule of formValue.rule){
+          for (let rule of formValue.rule) {
             let newRuleData = new Rule()
             newRuleData.blended = rule.blended;
             newRuleData.floor = rule.runningFloor;
@@ -383,24 +364,13 @@ export class RuleDetailsComponent implements OnInit {
                     data: null
                   }
                 }
-              }) 
+              })
               successSnackbar.afterDismissed().subscribe(() => {
                 this.goToListScreen()
               })
             }, error => {
-              try {
-                this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                  data: {
-                    title: errorText,
-                    content: {
-                      text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                      data: null
-                    }
-                  }
-                })        
-              } catch (error) {
-                console.error(error)
-              } 
+              console.table(error)
+              this.authService.handleApiError(errorText, error);
             }
           ).add(() => {
             this.ruleForm.enable()

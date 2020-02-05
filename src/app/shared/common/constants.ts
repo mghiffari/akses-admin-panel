@@ -54,6 +54,7 @@ export const constants = {
         article: 'artikel',
         specialOffer: 'specialoffer',
         faq: 'faq',
+        categoryFaq: 'categoryfaq',
         branchLocation: 'lokasicabang',
         changePhoneNumber: 'ubahnomorhandphone',
         creditSimulation: 'simulasikredit',
@@ -65,14 +66,19 @@ export const constants = {
         balanceReport: 'laporansaldo',
         gamificationRule: 'gamificationrule',
         cashbackReward: 'cashbackreward',
+        requestwithdrawal: 'requestwithdrawal',
+        approvecashout: 'approvecashout',
+        maintenancemode: 'maintenancemode'
     },
     approvalStatus: {
         approved: "1",
         rejected: "0",
-        waitingForApproval: "2"
+        waitingForApproval: "2",
+        process: "3"
     },
     approvalType: {
-        specialOffer: "specialoffer"
+        specialOffer: "specialoffer",
+        cashoutMaster: "cashoutmaster"
     },
     gamification: {
         upcoming: {

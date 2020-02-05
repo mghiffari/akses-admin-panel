@@ -56,15 +56,9 @@
             placeholder="{{'forms.transactionSearch.placeholder' | translate}}"
             (focus)="isFocusedSearch = true" (blur)="isFocusedSearch = false">
         </mat-form-field>
-        <mat-error class="bottom-error" *ngIf="search.invalid && (filterForm.dirty || filterForm.touched); else searchHint">
+        <mat-error class="bottom-error" *ngIf="search.invalid && (filterForm.dirty || filterForm.touched)">
             <span *ngIf="search.errors.required">{{'forms.transactionSearch.errorRequired' | translate}}</span>
-            <span *ngIf="search.errors.minlength">{{'forms.transactionSearch.hint' | translate: searchValidation}}</span>
         </mat-error>
-        <ng-template #searchHint>
-          <mat-hint class="bottom-hint">
-            {{'forms.transactionSearch.hint' | translate : searchValidation}}
-          </mat-hint>
-        </ng-template>
       </div>
 
     </div>
@@ -109,6 +103,14 @@
           {{'table.transactionTable.vaNumber' | translate}} </th>
         <td mat-cell *matCellDef="let element">
           {{element.va_number}}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="contNo">
+        <th mat-header-cell *matHeaderCellDef class="font-th th-min-width">
+          {{'table.transactionTable.contNo' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{element.cont_no}}
         </td>
       </ng-container>
       <ng-container matColumnDef="customerName">
@@ -265,7 +267,7 @@
       {{'loading' | translate}}...
     </div>
   </div>
-  <div fxFlex="grow" style="min-height:150px" fxLayout="row wrap" fxLayoutAlign="center center" 
+  <div fxFlex="grow" style="min-height:150px" fxLayout="row wrap" fxLayoutAlign="center center"
   *ngIf="!loading && filterForm.invalid">
       <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
         <mat-icon class="error-icon text-gray">error</mat-icon>

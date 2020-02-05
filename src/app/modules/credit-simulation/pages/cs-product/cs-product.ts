@@ -7,16 +7,14 @@ import { CSProduct } from 'src/app/shared/models/cs-product';
 import { map, catchError } from 'rxjs/operators';
 import { of, forkJoin, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ErrorSnackbarComponent } from 'src/app/shared/components/error-snackbar/error-snackbar.component';
 import { CSProductComp } from '../../models/cs-product-comp';
 import { CreditSimulation } from '../../models/credit-simulation';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { ConfirmationModalComponent } from 'src/app/shared/components/confirmation-modal/confirmation-modal.component';
-import { MaskedInputFormat, MaskedInputType } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
+import { MaskedInputType } from 'src/app/shared/components/masked-num-input/masked-num-input.component';
 import { CustomValidation } from 'src/app/shared/form-validation/custom-validation';
 import { SuccessSnackbarComponent } from 'src/app/shared/components/success-snackbar/success-snackbar.component';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { constants } from 'src/app/shared/common/constants';
 
 @Component({
   selector: 'app-cs-product',
@@ -118,27 +116,19 @@ export class CSProductComponent implements OnInit {
         this.creditSimulationService.getProductById(this.productId).subscribe(
           resp => {
             let prvg = this.authService.getFeaturePrivilege(resp.data.unique_tag);
-            if(prvg && this.authService.getFeatureViewPrvg(prvg)) {
+            if (prvg && this.authService.getFeatureViewPrvg(prvg)) {
               this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
               let tasks = [
                 this.creditSimulationService.getProductById(this.productId).pipe(map(res => res), catchError(e => of(e))),
                 this.creditSimulationService.getProductComponents(this.productId).pipe(map(res => res), catchError(e => of(e)))
               ]
-      
+
               forkJoin(tasks).subscribe((response: any) => {
                 try {
                   console.table(response[0])
                   const error = response[0];
                   if (response[0] instanceof HttpErrorResponse) {
-                    this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                      data: {
-                        title: 'productCreditSimulationScreen.getProductFailed',
-                        content: {
-                          text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                          data: null
-                        }
-                      }
-                    })
+                    this.authService.handleApiError('productCreditSimulationScreen.getProductFailed', error)
                   } else {
                     this.product = response[0].data;
                   }
@@ -149,15 +139,7 @@ export class CSProductComponent implements OnInit {
                     console.table(response[1])
                     const error = response[1];
                     if (response[1] instanceof HttpErrorResponse) {
-                      this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                        data: {
-                          title: 'productCreditSimulationScreen.getProdCompFailed',
-                          content: {
-                            text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                            data: null
-                          }
-                        }
-                      })
+                      this.authService.handleApiError('productCreditSimulationScreen.getProdCompFailed', error)
                     } else {
                       this.components = response[1].data;
                       if (this.components.length > 0) {
@@ -175,20 +157,8 @@ export class CSProductComponent implements OnInit {
               this.authService.blockOpenPage()
             }
           }, error => {
-            try {
-              console.table(error)
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'productCreditSimulationScreen.getProductFailed',
-                  content: {
-                    text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                    data: null
-                  }
-                }
-              })
-            } catch (error) {
-              console.table(error)
-            }
+            console.table(error)
+            this.authService.handleApiError('productCreditSimulationScreen.getProductFailed', error);
           }
         );
       } catch (error) {
@@ -201,7 +171,6 @@ export class CSProductComponent implements OnInit {
   interceptTabChange(tab: MatTab, tabHeader: MatTabHeader, idx: number) {
     console.log('CreditSimulationProductComponent | interceptTabChange');
     if (this.edit && idx !== this.selectedIndex) {
-      let args = arguments;
       const modalRef = this.modalConfirmation.open(ConfirmationModalComponent, {
         width: '260px',
         restoreFocus: false,
@@ -302,7 +271,7 @@ export class CSProductComponent implements OnInit {
   //call api to save updated value 
   onSaveEdit() {
     console.log('CreditSimulationProductComponent | onSaveEdit')
-    if(this.allowEdit){
+    if (this.allowEdit) {
       this.onSubmittingForm = true;
       const dataParam = this.csFormGroup.get('areaForms').value
       this.creditSimulationService.updateProdCompCS(dataParam).subscribe(
@@ -324,15 +293,7 @@ export class CSProductComponent implements OnInit {
                 }
               })
             } else {
-              this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-                data: {
-                  title: 'fail',
-                  content: {
-                    text: 'productCreditSimulationScreen.updateFailed',
-                    data: null
-                  }
-                }
-              })
+              this.authService.openSnackbarError('fail', 'productCreditSimulationScreen.updateFailed');
             }
             if (result.successCount > 0) {
               this.edit = false;
@@ -344,22 +305,9 @@ export class CSProductComponent implements OnInit {
             this.onSubmittingForm = false;
           }
         }, error => {
-          try {
             console.table(error)
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'productCreditSimulationScreen.updateFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
-          } catch (error) {
-            console.table(error)
-          } finally {
             this.onSubmittingForm = false;
-          }
+            this.authService.handleApiError('productCreditSimulationScreen.updateFailed', error)
         }
       )
     } else {
@@ -394,15 +342,7 @@ export class CSProductComponent implements OnInit {
             if (this.table) {
               this.table.renderRows();
             }
-            this.snackBar.openFromComponent(ErrorSnackbarComponent, {
-              data: {
-                title: 'productCreditSimulationScreen.getCreditSimulationFailed',
-                content: {
-                  text: 'apiErrors.' + (error.status ? error.error.err_code : 'noInternet'),
-                  data: null
-                }
-              }
-            })
+            this.authService.handleApiError('productCreditSimulationScreen.getCreditSimulationFailed', error)
           } catch (error) {
             console.table(error)
           } finally {
@@ -410,7 +350,6 @@ export class CSProductComponent implements OnInit {
           }
         }
       )
-      this.loading = false;
     } else {
       this.loading = false;
     }
