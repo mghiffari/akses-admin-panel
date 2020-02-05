@@ -775,11 +775,14 @@
     "createCategoryFAQ": "tambahkan kategori"
   },
   "faqCategoryScreen": {
+    "title": "Data Kategori FAQ",
+    "createFAQ": "tambahkan kategori faq baru",
+    "deleteConfirmation": "Apakah anda yakin untuk menghapus kategori FAQ {{title}}?",
     "createCategoryFaq": "Tambahkan kategori faq",
     "createTitle": "Tambahkan Kategori FAQ Baru",
     "updateTitle": "Ubah Kategori FAQ",
     "loadFailed": "gagal mendapatkan list lov"
-},
+  },
   "faqDetailsScreen": {
     "getFaqFailed": "gagal mendapatkan data FAQ",
     "createTitle": "Tambahkan FAQ Baru",

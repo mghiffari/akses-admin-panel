@@ -785,6 +785,9 @@
         "createCategoryFAQ": "create category"
     },
     "faqCategoryScreen": {
+        "title": "Category FAQ Data",
+        "createFAQ": "create category faq",
+        "deleteConfirmation": "Are you sure you want to delete category FAQ {{title}}?",
         "createCategoryFaq": "create category faq",
         "createTitle": "Create New Category FAQ",
         "updateTitle": "Update Category FAQ",

@@ -74,7 +74,7 @@ export class FaqCategoryComponent implements OnInit {
         data: {
           title: 'deleteConfirmation',
           content: {
-            string: 'faqListScreen.deleteConfirmation',
+            string: 'faqCategoryScreen.deleteConfirmation',
             data: {
               title: "title"
             }
