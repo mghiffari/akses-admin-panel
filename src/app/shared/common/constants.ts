@@ -54,6 +54,7 @@ export const constants = {
         article: 'artikel',
         specialOffer: 'specialoffer',
         faq: 'faq',
+        categoryFaq: 'categoryfaq',
         branchLocation: 'lokasicabang',
         changePhoneNumber: 'ubahnomorhandphone',
         creditSimulation: 'simulasikredit',

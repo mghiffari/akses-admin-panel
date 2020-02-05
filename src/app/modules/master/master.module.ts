@@ -20,6 +20,8 @@ import { ChangePhoneService } from './services/change-phone.service';
 import { RemarkInputModalComponent } from './components/remark-input-modal/remark-input-modal.component';
 import { SpecialOfferListComponent } from './pages/special-offer-list/special-offer-list.component';
 import { SpecialOfferDetailsComponent } from './pages/special-offer-details/special-offer-details.component';
+import { FaqCategoryComponent } from "./pages/faq-category/faq-category.component";
+import { FaqCategoryDetailsComponent } from "./pages/faq-category-details/faq-category-details.component";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { SpecialOfferDetailsComponent } from './pages/special-offer-details/spec
     ChangePhoneListComponent,
     RemarkInputModalComponent,
     SpecialOfferListComponent,
-    SpecialOfferDetailsComponent
+    SpecialOfferDetailsComponent,
+    FaqCategoryComponent,
+    FaqCategoryDetailsComponent,
   ],
   imports: [
     CommonModule,

@@ -59,6 +59,13 @@ export class MainNavComponent {
           }
         },
         {
+          title: "navMenus.master.children.categoryFaq",
+          link: "/categoryfaq",
+          getShowFlag: () => {
+            return this.getViewPrivilege(this.featureNames.categoryFaq);
+          }
+        },
+        {
           title: "navMenus.master.children.faqs",
           link: "/faqs",
           getShowFlag: () => {
