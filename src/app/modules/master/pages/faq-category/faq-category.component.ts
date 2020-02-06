@@ -86,7 +86,7 @@ export class FaqCategoryComponent implements OnInit {
           this.loading = true;
           let delLOV: LOV = Object.assign(new LOV(), element);
           delLOV.is_deleted = true;
-          this.lovService.deleteLOV(delLOV).subscribe(
+          this.lovService.updateLOV(delLOV).subscribe(
             (data: any) => {
               try {
                 console.table(data);

@@ -45,7 +45,7 @@ export class FaqCategoryDetailsComponent implements OnInit {
     this.allowEdit = this.authService.getFeatureEditPrvg(prvg);
     this.faqForm = new FormGroup({
       category: new FormControl("", [Validators.required]),
-      order: new FormControl("", [Validators.required])
+      order: new FormControl(null, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")])
     })
 
     this.lovService.getFAQCategory().subscribe(
@@ -61,7 +61,7 @@ export class FaqCategoryDetailsComponent implements OnInit {
               let editedLOV: LOV = temp[0];
               this.faqForm = new FormGroup({
                 category: new FormControl(editedLOV.value, [Validators.required]),
-                order: new FormControl(editedLOV.numvalue_1 ? editedLOV.numvalue_1.toString() : '', [Validators.required])
+                order: new FormControl(editedLOV.numvalue_1, [Validators.required, Validators.min(1), Validators.pattern("^[0-9]*$")])
               })
             }
           } else {
