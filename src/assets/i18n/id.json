@@ -5,6 +5,7 @@
       "children": {
         "banners": "Home Banner",
         "articles": "Artikel",
+        "categoryArticle": "Kategory Artikel",
         "specialOffers": "Special Offer",
         "faqs": "FAQ",
         "categoryFaq": "Kategory FAQ",
@@ -530,6 +531,7 @@
     "failedCount": "Anda telah mencoba login sebanyak {{count}} kali, anda memiliki kesempatan {{remaining}} kali lagi hingga akun anda terblokir otomatis"
   },
   "table": {
+    "cat_article" : "Kategori ARTIKEL",
     "cat_faq": "Kategori FAQ",
     "details": "Lihat Rincian",
     "jenisva": "Jenis VA",
@@ -794,7 +796,14 @@
     "title": "Data Artikel",
     "createArticle": "tambahkan artikel baru",
     "deleteConfirmation": "Apakah anda yakin untuk menghapus artikel {{title}}?",
-    "loadFailed": "gagal mendapatkan list artikel"
+    "loadFailed": "gagal mendapatkan list artikel",
+    "createCategoryARTICLE": "tambahkan kategori"
+  },
+  "articleCategoryScreen": {
+    "createCategoryArticle": "Tambahkan kategori Artikel",
+    "createTitle": "Tambahkan Kategori Artikel Baru",
+    "updateTitle": "Ubah Kategori Artikel",
+    "loadFailed": "gagal mendapatkan list lov"
   },
   "articleDetailsScreen": {
     "createArticleTitle": "Tambahkan Artikel Baru",
@@ -1108,6 +1117,7 @@
   "features": {
     "homebanner": "Home Banner",
     "artikel": "Artikel",
+    "categoryarticle": "Kategori ARTIKEL",
     "specialoffer": "Special Offer",
     "faq": "FAQ",
     "categoryfaq": "Kategori FAQ",

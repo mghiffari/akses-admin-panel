@@ -52,6 +52,7 @@ export const constants = {
     features: {
         banner: 'homebanner',
         article: 'artikel',
+        categoryArticle: 'categoryarticle',
         specialOffer: 'specialoffer',
         faq: 'faq',
         categoryFaq: 'categoryfaq',

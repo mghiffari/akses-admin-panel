@@ -1,0 +1,72 @@
+<div fxLayout="column" style="min-height: 100%">
+  <div fxLayout="row" style="width: 100%; min-height: 64px;" class="padding-16">
+    <div fxFlex="100%" class="page-title" fxLayout="row wrap" fxLayoutAlign="start center">
+      <span *ngIf="!isEdit">{{'articleCategoryScreen.createTitle' | translate}}</span>
+      <span *ngIf="isEdit">{{'articleCategoryScreen.updateTitle' | translate}}</span>
+    </div>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" class="padding-16 border-bottom-gray">
+    <div fxFlex="100%">
+      <a class="top-action-text" routerLink="/master/categoryarticle" fxLayoutAlign="start center">
+        <mat-icon class="margin-right-10">keyboard_arrow_left</mat-icon>
+        <div>
+          {{'backToList' | translate}}
+        </div>
+      </a>
+    </div>
+  </div>
+  <form [formGroup]="articleForm" *ngIf="!loading">
+    <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.articleCategory.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput placeholder="{{'forms.articleCategory.placeholder' | translate}}" formControlName="category">
+        </mat-form-field>
+        <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">
+          <span *ngIf="category.errors.required">{{'forms.articleTitle.errorRequired' | translate}}</span>
+        </mat-error>
+      </div>
+    </div>
+
+    <!-- <div fxLayout="row" class="padding-16 border-bottom-gray">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+        {{'forms.articleOrder.fieldTitle' | translate}}
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
+        <mat-form-field appearance="fill">
+          <input matInput placeholder="{{'forms.articleOrder.placeholder' | translate}}" formControlName="order">
+        </mat-form-field>
+        <mat-error class="bottom-error" *ngIf="order.invalid && (order.dirty || order.touched)">
+          <span *ngIf="order.errors.required">{{'forms.articleOrder.errorRequired' | translate}}</span>
+        </mat-error>
+      </div>
+    </div> -->
+
+    <div fxLayout="row" class="padding-16">
+      <div fxFlexAlign="center" fxFlex="20%" fxFlex.lt-md="30%" fxFlex.lt-lg="20%" fxFlex.lt-sm="30%">
+      </div>
+      <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%" fxLayoutAlign="start center">
+        <button *ngIf="!onSubmittingForm" mat-raised-button color="primary" (click)="onSave()"
+          [disabled]="!articleForm.valid">{{'save' | translate}}</button>
+        <button mat-raised-button color="primary" [disabled]="true" *ngIf="onSubmittingForm">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div>
+              <mat-spinner diameter="16"></mat-spinner>
+            </div>
+            <div class="margin-left-5">{{'loading' | translate}}</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </form>
+  <div fxFlex="grow" style="min-height:100px" fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="loading">
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" class="margin-top-10 font-title">
+      {{'loading' | translate}}...
+    </div>
+  </div>
+</div>
