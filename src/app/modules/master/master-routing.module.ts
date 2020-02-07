@@ -14,6 +14,8 @@ import { SpecialOfferDetailsComponent } from './pages/special-offer-details/spec
 import { CanDeactivateGuard } from 'src/app/_guard/can-deactivate.guard';
 import { FaqCategoryComponent } from "./pages/faq-category/faq-category.component";
 import { FaqCategoryDetailsComponent } from "./pages/faq-category-details/faq-category-details.component";
+import { ArticleCategoryComponent } from "./pages/article-category/article-category.component";
+import { ArticleCategoryDetailsComponent } from "./pages/article-category-details/article-category-details.component";
 
 const routes: Routes = [
   {
@@ -149,6 +151,27 @@ const routes: Routes = [
     component: FaqCategoryDetailsComponent,
     data: {
       title: 'Update Category FAQ',
+    }
+  },
+  {
+    path: 'categoryarticle',
+    component: ArticleCategoryComponent,
+    data: {
+      title: 'Article Category'
+    }
+  },
+  {
+    path: 'categoryarticle/create',
+    component: ArticleCategoryDetailsComponent,
+    data: {
+      title: 'Create Category Article'
+    }
+  },
+  {
+    path: 'categoryarticle/edit/:id',
+    component : ArticleCategoryDetailsComponent,
+    data: {
+      title: 'Update Category Article',
     }
   },
 ];

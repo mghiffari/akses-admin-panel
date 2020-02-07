@@ -22,6 +22,8 @@ import { SpecialOfferListComponent } from './pages/special-offer-list/special-of
 import { SpecialOfferDetailsComponent } from './pages/special-offer-details/special-offer-details.component';
 import { FaqCategoryComponent } from "./pages/faq-category/faq-category.component";
 import { FaqCategoryDetailsComponent } from "./pages/faq-category-details/faq-category-details.component";
+import { ArticleCategoryComponent } from "./pages/article-category/article-category.component";
+import { ArticleCategoryDetailsComponent } from "./pages/article-category-details/article-category-details.component";
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { FaqCategoryDetailsComponent } from "./pages/faq-category-details/faq-ca
     SpecialOfferDetailsComponent,
     FaqCategoryComponent,
     FaqCategoryDetailsComponent,
+    ArticleCategoryComponent,
+    ArticleCategoryDetailsComponent,
   ],
   imports: [
     CommonModule,
