@@ -5,6 +5,7 @@
             "children": {
                 "banners": "Home Banners",
                 "articles": "Articles",
+                "categoryArticle": "Article Category",
                 "specialOffers": "Special Offers",
                 "faqs": "FAQs",
                 "categoryFaq": "FAQ Category",
@@ -525,6 +526,7 @@
         "failedCount": "You have attempted to login {{count}} times, you have {{remaining}} more chance until you account will be blocked"
     },
     "table": {
+        "cat_article": "Category ARTICLE",
         "cat_faq": "Category FAQ",
         "details": "See Details",
         "jenisva": "VA Type",
@@ -758,7 +760,14 @@
         "title": "Articles Data",
         "createArticle": "create article",
         "deleteConfirmation": "Are you sure you want to delete article {{title}}?",
-        "loadFailed": "failed to get list of articles"
+        "loadFailed": "failed to get list of articles",
+        "createCategoryArticle" : "create category"
+    },
+    "articleCategoryScreen": {
+        "createCategoryArticle": "create category article",
+        "createTitle": "Create New Category Article",
+        "updateTitle": "Update Category Article",
+        "loadFailed": "failed to get list lov"
     },
     "articleDetailsScreen": {
         "createArticleTitle": "Create New Article",
@@ -804,7 +813,7 @@
         "getFaqCategoriesFailed": "failed to get FAQ categories"
     },
     "branchDetailsScreen": {
-        "getBranchFailed": "failed to get Branch Location data",
+        "getBranchFailed": "ed to get Branch Location data",
         "createTitle": "Create New Branch Location",
         "updateTitle": "Update Branch Location",
         "succesCreated": "new Branch Location successfully created",
@@ -1104,6 +1113,7 @@
     "features": {
         "homebanner": "Home Banner",
         "artikel": "Article",
+        "categoryarticle": "ARTICLE Category",
         "specialoffer": "Special Offer",
         "faq": "FAQ",
         "categoryfaq": "FAQ Category",
