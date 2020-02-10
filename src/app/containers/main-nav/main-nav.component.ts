@@ -45,6 +45,13 @@ export class MainNavComponent {
           }
         },
         {
+          title: "navMenus.master.children.categoryArticle",
+          link: "/categoryarticle",
+          getShowFlag: () => {
+            return this.getViewPrivilege(this.featureNames.categoryArticle);
+          }
+        },
+        {
           title: "navMenus.master.children.articles",
           link: "/articles",
           getShowFlag: () => {
@@ -56,6 +63,13 @@ export class MainNavComponent {
           link: "/special-offers",
           getShowFlag: () => {
             return this.getViewPrivilege(this.featureNames.specialOffer);
+          }
+        },
+        {
+          title: "navMenus.master.children.categoryFaq",
+          link: "/categoryfaq",
+          getShowFlag: () => {
+            return this.getViewPrivilege(this.featureNames.categoryFaq);
           }
         },
         {
