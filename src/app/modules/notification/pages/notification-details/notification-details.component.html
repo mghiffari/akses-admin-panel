@@ -182,7 +182,7 @@
                   delete
                 </mat-icon>
                 <mat-icon color="primary" class="cursor-pointer" (click)="iconInput.click()">cloud_upload</mat-icon>
-                <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeLargeIcon($event)">
+                <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG" (change)="onChangeLargeIcon($event)">
               </div>
             </div>
             <mat-hint class="bottom-hint">
@@ -221,7 +221,7 @@
                   delete
                 </mat-icon>
                 <mat-icon color="primary" class="cursor-pointer" (click)="imageInput.click()">cloud_upload</mat-icon>
-                <input hidden #imageInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeBigImage($event)">
+                <input hidden #imageInput type="file" accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG" (change)="onChangeBigImage($event)">
               </div>
             </div>
             <mat-hint class="bottom-hint">

@@ -121,7 +121,7 @@
                 <mat-icon class="text-medium-gray cursor-not-allowed" *ngIf="(!image.value || image.value==='')">delete
                 </mat-icon>
                 <mat-icon color="primary" class="cursor-pointer" (click)="imageInput.click()">cloud_upload</mat-icon>
-                <input hidden #imageInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeImageFile($event)">
+                <input hidden #imageInput type="file" accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG" (change)="onChangeImageFile($event)">
               </div>
             </div>
             <mat-hint class="bottom-hint">
