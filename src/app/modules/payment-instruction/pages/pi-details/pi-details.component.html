@@ -34,7 +34,7 @@
             <mat-icon class="cursor-pointer" (click)="onDeleteIcon()" *ngIf="(icon.value && icon.value!=='')">delete</mat-icon>
             <mat-icon class="text-medium-gray cursor-not-allowed" *ngIf="(!icon.value || icon.value==='')">delete</mat-icon>
             <mat-icon color="primary" class="cursor-pointer" (click)="iconInput.click()">cloud_upload</mat-icon>
-            <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png" (change)="onChangeFile($event)">
+            <input hidden #iconInput type="file" accept=".jpg,.jpeg,.png,.JPG,.JPEG,.PNG" (change)="onChangeFile($event)">
           </div>
           <div fxFlex="100%">
             <mat-error class="bottom-error"

@@ -167,7 +167,7 @@ export class SpecialOfferDetailsComponent implements OnInit {
         category: new FormControl('', Validators.required),
         image: new FormControl(null, Validators.required),
         imageFile: new FormControl(null, [
-          CustomValidation.type(['jpg', 'jpeg', 'png'])
+          CustomValidation.type(['jpg', 'jpeg', 'png','JPEG', 'JPG', 'PNG'])
         ]),
         oldImage: new FormControl(null),
         title: new FormControl(null, [Validators.required, Validators.maxLength(this.offerTitle.maxLength)]),
