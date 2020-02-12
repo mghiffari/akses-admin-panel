@@ -800,7 +800,9 @@
         "createCategoryFaq": "create category faq",
         "createTitle": "Create New Category FAQ",
         "updateTitle": "Update Category FAQ",
-        "loadFailed": "failed to get list of lov"
+        "loadFailed": "failed to get list of lov",
+        "placeholder": "Input Category",
+        "error": "Category FAQ is required"
     },
     "faqDetailsScreen": {
         "getFaqFailed": "failed to get FAQ data",
