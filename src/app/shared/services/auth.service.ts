@@ -244,10 +244,10 @@ export class AuthService {
     console.log('AuthService | wrapTokenGetApi ', url);
     const api = () => {
       return this.http
-      .get<HttpResponse<Object>>(url, {
-        observe: 'response',
-        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
-      })
+        .get<HttpResponse<Object>>(url, {
+          observe: 'response',
+          headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
+        })
     }
     return this.wrapApiCall(api);
   }
@@ -257,10 +257,10 @@ export class AuthService {
     console.log('AuthService | wrapTokenPutApi ', url);
     const api = () => {
       return this.http
-      .put<HttpResponse<Object>>(url, data, {
-        observe: 'response',
-        headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
-      })
+        .put<HttpResponse<Object>>(url, data, {
+          observe: 'response',
+          headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
+        })
     }
     return this.wrapApiCall(api);
   }
@@ -270,10 +270,10 @@ export class AuthService {
     console.log('AuthService | wrapTokenPatchApi ', url);
     const api = () => {
       return this.http
-      .patch<HttpResponse<Object>>(url, data, {
-        observe: 'response',
-        headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
-      })
+        .patch<HttpResponse<Object>>(url, data, {
+          observe: 'response',
+          headers: this.appendAuthHeaders(this.initRequestHeaders(), accessToken)
+        })
     }
     return this.wrapApiCall(api);
   }
@@ -286,10 +286,10 @@ export class AuthService {
     } else {
       const api = () => {
         return this.http
-        .delete<HttpResponse<Object>>(url, {
-          observe: 'response',
-          headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
-        })
+          .delete<HttpResponse<Object>>(url, {
+            observe: 'response',
+            headers: this.appendAuthHeaders(headers ? headers : this.initRequestHeaders(), accessToken)
+          })
       }
       return this.wrapApiCall(api);
     }
@@ -353,7 +353,7 @@ export class AuthService {
   }
 
   // handle showing snackbar
-  openSnackbarError(title, contentText, contentData = null){
+  openSnackbarError(title, contentText, contentData = null) {
     console.log('AuthService | showSnackbarError');
     let snackbar = this.snackBar.openFromComponent(ErrorSnackbarComponent, {
       data: {
@@ -367,12 +367,12 @@ export class AuthService {
     return snackbar;
   }
 
-  handleApiError(snackbarTitle, apiError, contentData = null){
+  handleApiError(snackbarTitle, apiError, contentData = null) {
     let snackbar = null;
     try {
       let errorText = 'apiErrors.';
-      if(apiError.status){
-        if(apiError.error && apiError.error.err_code) {
+      if (apiError.status) {
+        if (apiError.error && apiError.error.err_code) {
           errorText += apiError.error.err_code;
         } else {
           errorText = apiError.statusText;
