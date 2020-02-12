@@ -22,10 +22,10 @@
       </div>
       <div fxFlex="40%" fxFlex.lt-md="60%" fxFlex.lt-lg="50%" fxFlex.lt-sm="70%">
         <mat-form-field appearance="fill">
-          <input matInput placeholder="{{'forms.faqCategory.placeholder' | translate}}" formControlName="category">
+          <input matInput placeholder="{{'faqCategoryScreen.placeholder' | translate}}" formControlName="category">
         </mat-form-field>
         <mat-error class="bottom-error" *ngIf="category.invalid && (category.dirty || category.touched)">
-          <span *ngIf="category.errors.required">{{'forms.faqTitle.errorRequired' | translate}}</span>
+          <span *ngIf="category.errors.required">{{'faqCategoryScreen.error' | translate}}</span>
         </mat-error>
       </div>
     </div>

@@ -783,7 +783,9 @@
     "createCategoryFaq": "Tambahkan kategori faq",
     "createTitle": "Tambahkan Kategori FAQ Baru",
     "updateTitle": "Ubah Kategori FAQ",
-    "loadFailed": "gagal mendapatkan list lov"
+    "loadFailed": "gagal mendapatkan list lov",
+    "placeholder": "Masukkan kategori",
+    "error": "Kategori wajib diisi"
   },
   "faqDetailsScreen": {
     "getFaqFailed": "gagal mendapatkan data FAQ",
