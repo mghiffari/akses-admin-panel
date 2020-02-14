@@ -279,7 +279,14 @@ export class BannerDetailsService {
       return true;
     } else if (this.vBannerData.clickable_flg) {
       if (!this.vBannerData.clickable_is_detail && !this.vBannerData.clickable_is_internal) {
-        return true;
+        if(!this.vRegexURL.test(this.vBannerData.clickable_redirect)){
+          this._translateService.get('bannersDetailScreen.urlNotValid').subscribe(res => {
+            this.vErrorMessage.extUrlShow = res;
+          })
+          return true;
+        }
+        this.resetErrorMessage();
+        return false;
       } else {
         if (!this.vBannerData.clickable_is_detail) {
           if (!this.vBannerData.clickable_is_internal) {
