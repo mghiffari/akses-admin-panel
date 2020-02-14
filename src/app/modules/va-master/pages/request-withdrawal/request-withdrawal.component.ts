@@ -82,6 +82,11 @@ export class RequestWithdrawalListComponent implements OnInit {
     this.vaname = event.value.va_name;
     this.vanumber = event.value.va_number;
     this.amountValue = event.value.balance
+    if(this.checkedbutton.value === false){
+      this.requestForm.patchValue({ amount: parseInt(this.amountValue) })
+    }else{
+      this.requestForm.patchValue({ amount: 0 })
+    }
   }
 
   get amount() {

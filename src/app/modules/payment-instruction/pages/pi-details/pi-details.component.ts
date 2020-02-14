@@ -135,7 +135,7 @@ export class PIDetailsComponent implements OnInit {
             icon: new FormControl('', Validators.required),
             // validate file size, file type
             iconFile: new FormControl(null, [
-              CustomValidation.type(['jpg', 'jpeg', 'png'])
+              CustomValidation.type(['jpg', 'jpeg', 'png','JPEG', 'JPG', 'PNG'])
             ]),
             oldIcon: new FormControl(''),
             grpTitle: new FormControl('', Validators.required),
